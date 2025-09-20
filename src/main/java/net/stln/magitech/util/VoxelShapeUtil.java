@@ -1,13 +1,13 @@
 package net.stln.magitech.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class VoxelShapeUtil {
 
@@ -78,13 +78,16 @@ public class VoxelShapeUtil {
                 new Vec3(box.maxX, box.minY, box.minZ),
                 new Vec3(box.maxX, box.minY, box.maxZ),
                 new Vec3(box.maxX, box.maxY, box.minZ),
-                new Vec3(box.maxX, box.maxY, box.maxZ)
-        );
+                new Vec3(box.maxX, box.maxY, box.maxZ));
     }
 
     private static AABB buildAABB(List<Vec3> points) {
-        double minX = Double.POSITIVE_INFINITY, minY = Double.POSITIVE_INFINITY, minZ = Double.POSITIVE_INFINITY;
-        double maxX = Double.NEGATIVE_INFINITY, maxY = Double.NEGATIVE_INFINITY, maxZ = Double.NEGATIVE_INFINITY;
+        double minX = Double.POSITIVE_INFINITY,
+                minY = Double.POSITIVE_INFINITY,
+                minZ = Double.POSITIVE_INFINITY;
+        double maxX = Double.NEGATIVE_INFINITY,
+                maxY = Double.NEGATIVE_INFINITY,
+                maxZ = Double.NEGATIVE_INFINITY;
 
         for (Vec3 p : points) {
             minX = Math.min(minX, p.x);
@@ -115,6 +118,5 @@ public class VoxelShapeUtil {
         return new RotationAngles((360 - rot.x) % 360, (360 - rot.y) % 360);
     }
 
-    private record RotationAngles(int x, int y) {
-    }
+    private record RotationAngles(int x, int y) {}
 }

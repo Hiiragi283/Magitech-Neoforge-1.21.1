@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.particle.particle_option.UnstableSquareParticleEffect;
+
 import org.joml.Vector3f;
 
 public class RedstoneCrystalClusterBlock extends CrystalClusterBlock {
@@ -20,12 +21,14 @@ public class RedstoneCrystalClusterBlock extends CrystalClusterBlock {
     }
 
     @Override
-    protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+    protected int getSignal(
+            BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return 15;
     }
 
     @Override
-    protected int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+    protected int getDirectSignal(
+            BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return state.getValue(FACING) == direction ? 15 : 0;
     }
 
@@ -48,12 +51,29 @@ public class RedstoneCrystalClusterBlock extends CrystalClusterBlock {
             double d3 = Mth.nextDouble(level.random, -0.2, 0.2);
             double d4 = Mth.nextDouble(level.random, -0.2, 0.2);
             double d5 = Mth.nextDouble(level.random, -0.2, 0.2);
-            level.addParticle(new UnstableSquareParticleEffect(new Vector3f(1.0F, 0.0F, 0.0F), new Vector3f(1.0F, 0.0F, 0.0F), 1.0F, 5, 0), d0, d1, d2, d3, d4, d5);
+            level.addParticle(
+                    new UnstableSquareParticleEffect(
+                            new Vector3f(1.0F, 0.0F, 0.0F),
+                            new Vector3f(1.0F, 0.0F, 0.0F),
+                            1.0F,
+                            5,
+                            0),
+                    d0,
+                    d1,
+                    d2,
+                    d3,
+                    d4,
+                    d5);
         }
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    protected void onRemove(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            BlockState newState,
+            boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
             this.updateNeighbours(state, level, pos);
 

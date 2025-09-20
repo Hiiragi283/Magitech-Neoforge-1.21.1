@@ -1,6 +1,7 @@
 package net.stln.magitech.item.tool.material;
 
-import com.mojang.serialization.Codec;
+import java.util.Objects;
+
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -9,13 +10,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.stln.magitech.MagitechRegistries;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.trait.Trait;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
+import com.mojang.serialization.Codec;
 
-public record ToolMaterial(ToolStats stats, ToolStats spellCasterStats, Trait trait) implements ToolMaterialLike {
+public record ToolMaterial(ToolStats stats, ToolStats spellCasterStats, Trait trait)
+        implements ToolMaterialLike {
+
     public static final Codec<ToolMaterial> CODEC = MagitechRegistries.TOOL_MATERIAL.byNameCodec();
-    public static final StreamCodec<RegistryFriendlyByteBuf, ToolMaterial> STREAM_CODEC = ByteBufCodecs.registry(MagitechRegistries.Keys.TOOL_MATERIAL);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ToolMaterial> STREAM_CODEC =
+            ByteBufCodecs.registry(MagitechRegistries.Keys.TOOL_MATERIAL);
 
     public @NotNull ResourceLocation getId() {
         return Objects.requireNonNull(MagitechRegistries.TOOL_MATERIAL.getKey(this));

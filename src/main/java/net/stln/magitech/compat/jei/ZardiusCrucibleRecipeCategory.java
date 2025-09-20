@@ -1,14 +1,8 @@
 package net.stln.magitech.compat.jei;
 
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
-import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.neoforge.NeoForgeTypes;
-import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -23,23 +17,36 @@ import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.ToolMaterialRecipe;
 import net.stln.magitech.recipe.ZardiusCrucibleRecipe;
 import net.stln.magitech.util.ClientHelper;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.neoforge.NeoForgeTypes;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 
-public class ZardiusCrucibleRecipeCategory extends AbstractMagitechRecipeCategory<ZardiusCrucibleRecipe> {
+public class ZardiusCrucibleRecipeCategory
+        extends AbstractMagitechRecipeCategory<ZardiusCrucibleRecipe> {
+
     public static final ResourceLocation UID = Magitech.id("recipe.magitech.zardius_crucible");
     public static final ResourceLocation TEXTURE = Magitech.id("textures/gui/jei_widgets.png");
 
-    public static final RecipeType<ZardiusCrucibleRecipe> ZARDIUS_CRUCIBLE_RECIPE_TYPE = new RecipeType<>(UID, ZardiusCrucibleRecipe.class);
+    public static final RecipeType<ZardiusCrucibleRecipe> ZARDIUS_CRUCIBLE_RECIPE_TYPE =
+            new RecipeType<>(UID, ZardiusCrucibleRecipe.class);
 
     public ZardiusCrucibleRecipeCategory(IDrawable icon) {
         super(icon);
     }
-    
+
     public ZardiusCrucibleRecipeCategory(IGuiHelper helper) {
-        this(helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockInit.ZARDIUS_CRUCIBLE)));
+        this(
+                helper.createDrawableIngredient(
+                        VanillaTypes.ITEM_STACK, new ItemStack(BlockInit.ZARDIUS_CRUCIBLE)));
     }
 
     @Override
@@ -53,7 +60,12 @@ public class ZardiusCrucibleRecipeCategory extends AbstractMagitechRecipeCategor
     }
 
     @Override
-    public void draw(@NotNull ZardiusCrucibleRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(
+            @NotNull ZardiusCrucibleRecipe recipe,
+            @NotNull IRecipeSlotsView recipeSlotsView,
+            @NotNull GuiGraphics guiGraphics,
+            double mouseX,
+            double mouseY) {
         super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
         int size = recipe.getIngredients().size();
 
@@ -113,11 +125,16 @@ public class ZardiusCrucibleRecipeCategory extends AbstractMagitechRecipeCategor
     }
 
     @Override
-    protected void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull ZardiusCrucibleRecipe recipe, @NotNull IFocusGroup focuses, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess access) {
-        List<ToolMaterialRecipe> materialRecipes = ClientHelper.getAllRecipes(RecipeInit.TOOL_MATERIAL_TYPE);
-        List<ToolMaterial> materials = materialRecipes.stream()
-                .map(ToolMaterialRecipe::getToolMaterial)
-                .toList();
+    protected void setRecipe(
+            @NotNull IRecipeLayoutBuilder builder,
+            @NotNull ZardiusCrucibleRecipe recipe,
+            @NotNull IFocusGroup focuses,
+            @NotNull RecipeManager recipeManager,
+            @NotNull RegistryAccess access) {
+        List<ToolMaterialRecipe> materialRecipes =
+                ClientHelper.getAllRecipes(RecipeInit.TOOL_MATERIAL_TYPE);
+        List<ToolMaterial> materials =
+                materialRecipes.stream().map(ToolMaterialRecipe::getToolMaterial).toList();
 
         List<Ingredient> ingredients = recipe.getIngredients();
 
@@ -156,24 +173,48 @@ public class ZardiusCrucibleRecipeCategory extends AbstractMagitechRecipeCategor
                     .addIngredients(ingredients.get(i));
         }
         builder.addSlot(RecipeIngredientRole.INPUT, 74, 14)
-                .addIngredients(NeoForgeTypes.FLUID_STACK, Arrays.stream(recipe.fluidIngredient().getFluids()).toList()).addRichTooltipCallback((recipeSlotView, tooltip) -> {
-                    recipeSlotView.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).ifPresent(fluid -> {
-                        int amount = fluid.getAmount();
-                        // mB単位で表示
-                        tooltip.add(Component.literal(amount + " mB").withColor(0x808080));
-                    });
-                });
+                .addIngredients(
+                        NeoForgeTypes.FLUID_STACK,
+                        Arrays.stream(recipe.fluidIngredient().getFluids()).toList())
+                .addRichTooltipCallback(
+                        (recipeSlotView, tooltip) -> {
+                            recipeSlotView
+                                    .getDisplayedIngredient(NeoForgeTypes.FLUID_STACK)
+                                    .ifPresent(
+                                            fluid -> {
+                                                int amount = fluid.getAmount();
+                                                // mB単位で表示
+                                                tooltip.add(
+                                                        Component.literal(amount + " mB")
+                                                                .withColor(0x808080));
+                                            });
+                        });
         if (!recipe.getResultItem(access).isEmpty()) {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 121, 14)
                     .addItemStack(recipe.getResultItem(access));
         }
-        recipe.resultFluid().ifPresent(fluidStack -> builder.addSlot(RecipeIngredientRole.INPUT, 139, 14)
-                .addIngredient(NeoForgeTypes.FLUID_STACK, fluidStack).addRichTooltipCallback((recipeSlotView, tooltip) -> {
-                    recipeSlotView.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).ifPresent(fluid -> {
-                        int amount = fluid.getAmount();
-                        // mB単位で表示
-                        tooltip.add(Component.literal(amount + " mB").withColor(0x808080));
-                    });
-                }));
+        recipe.resultFluid()
+                .ifPresent(
+                        fluidStack ->
+                                builder.addSlot(RecipeIngredientRole.INPUT, 139, 14)
+                                        .addIngredient(NeoForgeTypes.FLUID_STACK, fluidStack)
+                                        .addRichTooltipCallback(
+                                                (recipeSlotView, tooltip) -> {
+                                                    recipeSlotView
+                                                            .getDisplayedIngredient(
+                                                                    NeoForgeTypes.FLUID_STACK)
+                                                            .ifPresent(
+                                                                    fluid -> {
+                                                                        int amount =
+                                                                                fluid.getAmount();
+                                                                        // mB単位で表示
+                                                                        tooltip.add(
+                                                                                Component.literal(
+                                                                                                amount
+                                                                                                        + " mB")
+                                                                                        .withColor(
+                                                                                                0x808080));
+                                                                    });
+                                                }));
     }
 }

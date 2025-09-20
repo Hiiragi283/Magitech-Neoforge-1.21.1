@@ -1,5 +1,11 @@
 package net.stln.magitech.worldgen.terrain;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -13,16 +19,10 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.stln.magitech.block.BlockInit;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Predicate;
-
 public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
 
     public ScorchedLavaLakeFeature() {
-    super(NoneFeatureConfiguration.CODEC);
+        super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
@@ -31,10 +31,15 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
         NoneFeatureConfiguration none = context.config();
         RandomSource randomsource = context.random();
         BlockPos blockpos = context.origin();
-        Predicate<BlockState> predicate = p_204782_ -> p_204782_.is(BlockInit.SCORCHED_GRASS_SOIL.get()) || p_204782_.is(BlockInit.SCORCHED_SOIL.get()) || p_204782_.is(Blocks.STONE);
+        Predicate<BlockState> predicate =
+                p_204782_ ->
+                        p_204782_.is(BlockInit.SCORCHED_GRASS_SOIL.get())
+                                || p_204782_.is(BlockInit.SCORCHED_SOIL.get())
+                                || p_204782_.is(Blocks.STONE);
         int i = randomsource.nextInt(4, 7) + 1;
         int j = randomsource.nextInt(4, 7) + 1;
-        Set<BlockPos> set = this.placeGroundPatch(worldgenlevel, none, randomsource, blockpos, predicate, i, j);
+        Set<BlockPos> set =
+                this.placeGroundPatch(worldgenlevel, none, randomsource, blockpos, predicate, i, j);
         return !set.isEmpty();
     }
 
@@ -45,8 +50,7 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
             BlockPos pos,
             Predicate<BlockState> state,
             int xRadius,
-            int zRadius
-    ) {
+            int zRadius) {
         Set<BlockPos> set = placeGroundPatch1(level, config, random, pos, state, xRadius, zRadius);
         Set<BlockPos> set1 = new HashSet<>();
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
@@ -60,7 +64,11 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
         for (BlockPos blockpos1 : set1) {
             level.setBlock(blockpos1, Blocks.LAVA.defaultBlockState(), 2);
 
-            Predicate<BlockState> predicate = p_204782_ -> p_204782_.is(BlockInit.SCORCHED_GRASS_SOIL.get()) || p_204782_.is(BlockInit.SCORCHED_SOIL.get()) || p_204782_.is(Blocks.STONE);
+            Predicate<BlockState> predicate =
+                    p_204782_ ->
+                            p_204782_.is(BlockInit.SCORCHED_GRASS_SOIL.get())
+                                    || p_204782_.is(BlockInit.SCORCHED_SOIL.get())
+                                    || p_204782_.is(Blocks.STONE);
             List<Direction> directions = Arrays.asList(Direction.values().clone());
             directions.remove(Direction.UP);
             for (Direction direction : directions) {
@@ -82,8 +90,7 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
             BlockPos pos,
             Predicate<BlockState> state,
             int xRadius,
-            int zRadius
-    ) {
+            int zRadius) {
         BlockPos.MutableBlockPos blockpos$mutableblockpos = pos.mutable();
         BlockPos.MutableBlockPos blockpos$mutableblockpos1 = blockpos$mutableblockpos.mutable();
         Direction direction = Direction.DOWN;
@@ -105,31 +112,42 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
                 // --- 楕円形の判定 + 中心のずらし ---
                 float dist = (f1 * f1) / (xRadius * xRadius) + (f2 * f2) / (zRadius * zRadius);
 
-                if (dist <= 0.9 && !flag3 && (!flag4 || 0.7F != 0.0F && !(random.nextFloat() > 0.7F))) {
+                if (dist <= 0.9
+                        && !flag3
+                        && (!flag4 || 0.7F != 0.0F && !(random.nextFloat() > 0.7F))) {
                     blockpos$mutableblockpos.setWithOffset(pos, i, 0, j);
 
                     for (int k = 0;
-                         level.isStateAtPosition(blockpos$mutableblockpos, BlockBehaviour.BlockStateBase::isAir) && k < 5;
-                         k++
-                    ) {
+                            level.isStateAtPosition(
+                                            blockpos$mutableblockpos,
+                                            BlockBehaviour.BlockStateBase::isAir)
+                                    && k < 5;
+                            k++) {
                         blockpos$mutableblockpos.move(direction);
                     }
 
                     for (int i1 = 0;
-                         level.isStateAtPosition(blockpos$mutableblockpos, p_284926_ -> !p_284926_.isAir()) && i1 < 5;
-                         i1++
-                    ) {
+                            level.isStateAtPosition(
+                                            blockpos$mutableblockpos,
+                                            p_284926_ -> !p_284926_.isAir())
+                                    && i1 < 5;
+                            i1++) {
                         blockpos$mutableblockpos.move(direction1);
                     }
 
-                    blockpos$mutableblockpos1.setWithOffset(blockpos$mutableblockpos, Direction.DOWN);
+                    blockpos$mutableblockpos1.setWithOffset(
+                            blockpos$mutableblockpos, Direction.DOWN);
                     BlockState blockstate = level.getBlockState(blockpos$mutableblockpos1);
                     if (level.isEmptyBlock(blockpos$mutableblockpos)
-                            && blockstate.isFaceSturdy(level, blockpos$mutableblockpos1, Direction.DOWN.getOpposite())) {
-                        int l = 3
-                                + (0.8F > 0.0F && random.nextFloat() < 0.8F ? 1 : 0);
+                            && blockstate.isFaceSturdy(
+                                    level,
+                                    blockpos$mutableblockpos1,
+                                    Direction.DOWN.getOpposite())) {
+                        int l = 3 + (0.8F > 0.0F && random.nextFloat() < 0.8F ? 1 : 0);
                         BlockPos blockpos = blockpos$mutableblockpos1.immutable();
-                        boolean flag5 = this.placeGround(level, config, state, random, blockpos$mutableblockpos1, l);
+                        boolean flag5 =
+                                this.placeGround(
+                                        level, config, state, random, blockpos$mutableblockpos1, l);
                         if (flag5) {
                             set.add(blockpos);
                         }
@@ -147,8 +165,7 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
             Predicate<BlockState> replaceableblocks,
             RandomSource random,
             BlockPos.MutableBlockPos mutablePos,
-            int maxDistance
-    ) {
+            int maxDistance) {
         for (int i = 0; i < maxDistance; i++) {
             BlockState blockstate = Blocks.SMOOTH_BASALT.defaultBlockState();
             BlockState blockstate1 = level.getBlockState(mutablePos);
@@ -165,7 +182,11 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    private static boolean isExposed(WorldGenLevel level, Set<BlockPos> positions, BlockPos pos, BlockPos.MutableBlockPos mutablePos) {
+    private static boolean isExposed(
+            WorldGenLevel level,
+            Set<BlockPos> positions,
+            BlockPos pos,
+            BlockPos.MutableBlockPos mutablePos) {
         return isExposedDirection(level, pos, mutablePos, Direction.NORTH)
                 || isExposedDirection(level, pos, mutablePos, Direction.EAST)
                 || isExposedDirection(level, pos, mutablePos, Direction.SOUTH)
@@ -173,8 +194,13 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
                 || isExposedDirection(level, pos, mutablePos, Direction.DOWN);
     }
 
-    private static boolean isExposedDirection(WorldGenLevel level, BlockPos pos, BlockPos.MutableBlockPos mutablePos, Direction direction) {
+    private static boolean isExposedDirection(
+            WorldGenLevel level,
+            BlockPos pos,
+            BlockPos.MutableBlockPos mutablePos,
+            Direction direction) {
         mutablePos.setWithOffset(pos, direction);
-        return !level.getBlockState(mutablePos).isFaceSturdy(level, mutablePos, direction.getOpposite());
+        return !level.getBlockState(mutablePos)
+                .isFaceSturdy(level, mutablePos, direction.getOpposite());
     }
 }

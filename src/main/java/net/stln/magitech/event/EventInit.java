@@ -5,8 +5,7 @@ import net.fabricmc.api.Environment;
 
 public class EventInit {
 
-    public static void registerEvent() {
-    }
+    public static void registerEvent() {}
 
     @Environment(EnvType.CLIENT)
     public static void registerClientEvent() {

@@ -8,9 +8,11 @@ import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.particle.particle_option.UnstableSquareParticleEffect;
+
 import org.joml.Vector3f;
 
 public class MistaliaPetalsBlock extends PinkPetalsBlock {
+
     public MistaliaPetalsBlock(Properties p_273335_) {
         super(p_273335_);
     }
@@ -25,8 +27,19 @@ public class MistaliaPetalsBlock extends PinkPetalsBlock {
             double d3 = Mth.nextDouble(level.random, -0.05, 0.05);
             double d4 = Mth.nextDouble(level.random, 0, 0.05);
             double d5 = Mth.nextDouble(level.random, -0.05, 0.05);
-            level.addParticle(new UnstableSquareParticleEffect(new Vector3f(0.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 0.5F, 1, 0), d0, d1, d2, d3, d4, d5);
+            level.addParticle(
+                    new UnstableSquareParticleEffect(
+                            new Vector3f(0.0F, 1.0F, 1.0F),
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            0.5F,
+                            1,
+                            0),
+                    d0,
+                    d1,
+                    d2,
+                    d3,
+                    d4,
+                    d5);
         }
     }
-
 }

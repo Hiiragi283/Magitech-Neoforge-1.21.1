@@ -1,5 +1,7 @@
 package net.stln.magitech.util;
 
+import java.util.function.Supplier;
+
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -7,15 +9,20 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
 import org.joml.Math;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import java.util.function.Supplier;
-
 public class EffectUtil {
 
-    public static void lineEffect(Level level, ParticleOptions particleOptions, Vec3 start, Vec3 end, int density, boolean alwaysVisible) {
+    public static void lineEffect(
+            Level level,
+            ParticleOptions particleOptions,
+            Vec3 start,
+            Vec3 end,
+            int density,
+            boolean alwaysVisible) {
         if (!level.isClientSide) {
             return;
         }
@@ -25,30 +32,72 @@ public class EffectUtil {
         for (int i = 0; i < amount; i++) {
             double offset = (double) i / (amount - 1);
             Vec3 currentPos = start.add(end.subtract(start).multiply(offset, offset, offset));
-            displayParticle(level, particleOptions, alwaysVisible, currentPos.x, currentPos.y, currentPos.z, 0, 0, 0);
+            displayParticle(
+                    level,
+                    particleOptions,
+                    alwaysVisible,
+                    currentPos.x,
+                    currentPos.y,
+                    currentPos.z,
+                    0,
+                    0,
+                    0);
         }
     }
 
-    public static void entityEffect(Level level, ParticleOptions particleOptions, Entity entity, int amount) {
+    public static void entityEffect(
+            Level level, ParticleOptions particleOptions, Entity entity, int amount) {
         entityEffect(level, () -> particleOptions, () -> new Vec3(0, 0, 0), entity, amount);
     }
 
-    public static void entityEffect(Level level, Supplier<ParticleOptions> particleOptions, Supplier<Vec3> vector, Entity entity, int amount) {
+    public static void entityEffect(
+            Level level,
+            Supplier<ParticleOptions> particleOptions,
+            Supplier<Vec3> vector,
+            Entity entity,
+            int amount) {
         for (int i = 0; i < amount; i++) {
             Vec3 vec3 = vector.get();
-            Vec3 randomBody = new Vec3(entity.getX() + (entity.getBbWidth() + 0.5F) * (entity.getRandom().nextFloat() - 0.5),
-                    entity.getY(0.5F) + (entity.getBbHeight() + 0.5F) * (entity.getRandom().nextFloat() - 0.5),
-                    entity.getZ() + (entity.getBbWidth() + 0.5F) * (entity.getRandom().nextFloat() - 0.5));
+            Vec3 randomBody =
+                    new Vec3(
+                            entity.getX()
+                                    + (entity.getBbWidth() + 0.5F)
+                                            * (entity.getRandom().nextFloat() - 0.5),
+                            entity.getY(0.5F)
+                                    + (entity.getBbHeight() + 0.5F)
+                                            * (entity.getRandom().nextFloat() - 0.5),
+                            entity.getZ()
+                                    + (entity.getBbWidth() + 0.5F)
+                                            * (entity.getRandom().nextFloat() - 0.5));
 
-            level.addParticle(particleOptions.get(), randomBody.x, randomBody.y, randomBody.z, vec3.x, vec3.y, vec3.z);
+            level.addParticle(
+                    particleOptions.get(),
+                    randomBody.x,
+                    randomBody.y,
+                    randomBody.z,
+                    vec3.x,
+                    vec3.y,
+                    vec3.z);
         }
     }
 
-    public static void sweepEffect(Player player, Level world, ParticleOptions particleEffect, double randomizer, Vec3 center, double startDeg, double endDeg, int density, double radius, double slopeDeg, boolean alwaysVisible) {
+    public static void sweepEffect(
+            Player player,
+            Level world,
+            ParticleOptions particleEffect,
+            double randomizer,
+            Vec3 center,
+            double startDeg,
+            double endDeg,
+            int density,
+            double radius,
+            double slopeDeg,
+            boolean alwaysVisible) {
         if (!world.isClientSide) {
             return; // クライアント側のみ処理
         }
-        if (player.getRandom().nextFloat() > (player.getMainArm() == HumanoidArm.LEFT ? 0.2F : 0.8F)) {
+        if (player.getRandom().nextFloat()
+                > (player.getMainArm() == HumanoidArm.LEFT ? 0.2F : 0.8F)) {
             startDeg *= -1;
             endDeg *= -1;
         }
@@ -89,14 +138,37 @@ public class EffectUtil {
 
             int delay = (int) Math.floor(t * 3);
             if (delay < 0) {
-                displayParticle(world, particleEffect, alwaysVisible, x, y, z, xOffset, yOffset, zOffset);
+                displayParticle(
+                        world, particleEffect, alwaysVisible, x, y, z, xOffset, yOffset, zOffset);
             } else {
-                TickScheduler.schedule(delay, () -> displayParticle(world, particleEffect, alwaysVisible, x, y, z, xOffset, yOffset, zOffset), true);
+                TickScheduler.schedule(
+                        delay,
+                        () ->
+                                displayParticle(
+                                        world,
+                                        particleEffect,
+                                        alwaysVisible,
+                                        x,
+                                        y,
+                                        z,
+                                        xOffset,
+                                        yOffset,
+                                        zOffset),
+                        true);
             }
         }
     }
 
-    private static void displayParticle(Level world, ParticleOptions particleEffect, boolean alwaysVisible, double x, double y, double z, double xOffset, double yOffset, double zOffset) {
+    private static void displayParticle(
+            Level world,
+            ParticleOptions particleEffect,
+            boolean alwaysVisible,
+            double x,
+            double y,
+            double z,
+            double xOffset,
+            double yOffset,
+            double zOffset) {
         // **パーティクルをスポーン**
         if (world != null) {
             if (alwaysVisible) {
@@ -110,8 +182,8 @@ public class EffectUtil {
     /**
      * 指定した軸と角度で回転を適用する
      *
-     * @param vector       回転させる3Dベクトル
-     * @param axis         回転軸（正規化された Vec3f）
+     * @param vector 回転させる3Dベクトル
+     * @param axis 回転軸（正規化された Vec3f）
      * @param angleDegrees 回転角度（度単位）
      * @return 回転後のベクトル
      */

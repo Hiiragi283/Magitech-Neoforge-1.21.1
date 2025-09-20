@@ -1,7 +1,5 @@
 package net.stln.magitech.block.block_entity.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -16,14 +14,22 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.stln.magitech.block.block_entity.AthanorPillarBlockEntity;
 
-public class AthanorPillarBlockEntityRenderer implements BlockEntityRenderer<AthanorPillarBlockEntity> {
-    public AthanorPillarBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 
-    }
+public class AthanorPillarBlockEntityRenderer
+        implements BlockEntityRenderer<AthanorPillarBlockEntity> {
+
+    public AthanorPillarBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
 
     @Override
-    public void render(AthanorPillarBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack,
-                       MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
+    public void render(
+            AthanorPillarBlockEntity pBlockEntity,
+            float pPartialTick,
+            PoseStack pPoseStack,
+            MultiBufferSource pBufferSource,
+            int pPackedLight,
+            int pPackedOverlay) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemStack stack = pBlockEntity.inventory.getStackInSlot(0);
 
@@ -32,11 +38,19 @@ public class AthanorPillarBlockEntityRenderer implements BlockEntityRenderer<Ath
         pPoseStack.scale(0.5f, 0.5f, 0.5f);
 
         if (pBlockEntity.getLevel() != null) {
-            pPoseStack.mulPose(Axis.YP.rotationDegrees((pBlockEntity.tickCounter + pPartialTick) / 2 % 360));
+            pPoseStack.mulPose(
+                    Axis.YP.rotationDegrees((pBlockEntity.tickCounter + pPartialTick) / 2 % 360));
         }
 
-        itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, getLightLevel(pBlockEntity.getLevel(),
-                pBlockEntity.getBlockPos()), OverlayTexture.NO_OVERLAY, pPoseStack, pBufferSource, pBlockEntity.getLevel(), 1);
+        itemRenderer.renderStatic(
+                stack,
+                ItemDisplayContext.FIXED,
+                getLightLevel(pBlockEntity.getLevel(), pBlockEntity.getBlockPos()),
+                OverlayTexture.NO_OVERLAY,
+                pPoseStack,
+                pBufferSource,
+                pBlockEntity.getLevel(),
+                1);
         pPoseStack.popPose();
     }
 

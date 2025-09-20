@@ -1,7 +1,9 @@
 package net.stln.magitech.worldgen.tree;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiConsumer;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -13,15 +15,16 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiConsumer;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class RandomShortBranchingTrunkPlacer extends TrunkPlacer {
-    public static final MapCodec<RandomShortBranchingTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(
-            p_70261_ -> trunkPlacerParts(p_70261_).apply(p_70261_, RandomShortBranchingTrunkPlacer::new)
-    );
 
+    public static final MapCodec<RandomShortBranchingTrunkPlacer> CODEC =
+            RecordCodecBuilder.mapCodec(
+                    p_70261_ ->
+                            trunkPlacerParts(p_70261_)
+                                    .apply(p_70261_, RandomShortBranchingTrunkPlacer::new));
 
     private final int branchLength;
 
@@ -42,8 +45,7 @@ public class RandomShortBranchingTrunkPlacer extends TrunkPlacer {
             RandomSource random,
             int height,
             BlockPos startPos,
-            TreeConfiguration config
-    ) {
+            TreeConfiguration config) {
         List<FoliagePlacer.FoliageAttachment> foliage = new ArrayList<>();
         BlockPos.MutableBlockPos pos = startPos.mutable();
         Direction[] directions = Direction.Plane.HORIZONTAL.stream().toArray(Direction[]::new);
@@ -92,12 +94,26 @@ public class RandomShortBranchingTrunkPlacer extends TrunkPlacer {
         return foliage;
     }
 
-    private void placeLog(LevelSimulatedReader reader, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, BlockPos pos, TreeConfiguration config, Direction.Axis axisDir) {
-        BlockState log = config.trunkProvider.getState(random, pos).setValue(RotatedPillarBlock.AXIS, axisDir);
+    private void placeLog(
+            LevelSimulatedReader reader,
+            BiConsumer<BlockPos, BlockState> replacer,
+            RandomSource random,
+            BlockPos pos,
+            TreeConfiguration config,
+            Direction.Axis axisDir) {
+        BlockState log =
+                config.trunkProvider
+                        .getState(random, pos)
+                        .setValue(RotatedPillarBlock.AXIS, axisDir);
         replacer.accept(pos, log);
     }
 
-    protected boolean placeLog(LevelSimulatedReader reader, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, BlockPos pos, TreeConfiguration config) {
+    protected boolean placeLog(
+            LevelSimulatedReader reader,
+            BiConsumer<BlockPos, BlockState> replacer,
+            RandomSource random,
+            BlockPos pos,
+            TreeConfiguration config) {
         placeLog(reader, replacer, random, pos, config, Direction.Axis.Y);
         return false;
     }

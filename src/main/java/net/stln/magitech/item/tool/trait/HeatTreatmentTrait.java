@@ -1,13 +1,13 @@
 package net.stln.magitech.item.tool.trait;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.material.MaterialInit;
 import net.stln.magitech.util.ComponentHelper;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class HeatTreatmentTrait extends Trait {
 
@@ -21,7 +21,11 @@ public class HeatTreatmentTrait extends Trait {
             float mul = 0.35F * traitLevel;
             modified.put(ToolStats.ELM_ATK_STAT, statsMap.get(ToolStats.ELM_ATK_STAT) * mul);
             modified.put(ToolStats.MIN_STAT, statsMap.get(ToolStats.MIN_STAT) * mul);
-            return new ToolStats(modified, defaultStats.getElement(), defaultStats.getMiningLevel(), defaultStats.getTier());
+            return new ToolStats(
+                    modified,
+                    defaultStats.getElement(),
+                    defaultStats.getMiningLevel(),
+                    defaultStats.getTier());
         }
         return defaultStats;
     }
@@ -36,7 +40,11 @@ public class HeatTreatmentTrait extends Trait {
             float mul = 0.35F * traitLevel;
             modified.put(ToolStats.ELM_ATK_STAT, statsMap.get(ToolStats.ELM_ATK_STAT) * mul);
             modified.put(ToolStats.MIN_STAT, statsMap.get(ToolStats.MIN_STAT) * mul);
-            return new ToolStats(modified, defaultStats.getElement(), defaultStats.getMiningLevel(), defaultStats.getTier());
+            return new ToolStats(
+                    modified,
+                    defaultStats.getElement(),
+                    defaultStats.getMiningLevel(),
+                    defaultStats.getTier());
         }
         return defaultStats;
     }

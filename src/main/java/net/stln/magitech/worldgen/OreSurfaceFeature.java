@@ -1,5 +1,7 @@
 package net.stln.magitech.worldgen;
 
+import java.util.List;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.ChunkPos;
@@ -12,14 +14,14 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.List;
-
 public class OreSurfaceFeature extends Feature<NoneFeatureConfiguration> {
+
     private final BlockState blockToPlace;
     private final List<Block> blockToPlaced;
     private final double propability;
 
-    public OreSurfaceFeature(BlockState blockToPlace, List<Block> blockToPlaced, double propability) {
+    public OreSurfaceFeature(
+            BlockState blockToPlace, List<Block> blockToPlaced, double propability) {
         super(NoneFeatureConfiguration.CODEC);
         this.blockToPlace = blockToPlace;
         this.blockToPlaced = blockToPlaced;
@@ -47,13 +49,19 @@ public class OreSurfaceFeature extends Feature<NoneFeatureConfiguration> {
                     if (isTargetBlock) {
                         for (Direction dir : Direction.values()) {
                             BlockPos facePos = pos.relative(dir);
-                            if ((level.getBlockState(facePos).isAir() || level.getBlockState(facePos).is(Blocks.WATER)) && level.getRandom().nextFloat() < propability) {
+                            if ((level.getBlockState(facePos).isAir()
+                                            || level.getBlockState(facePos).is(Blocks.WATER))
+                                    && level.getRandom().nextFloat() < propability) {
                                 BlockState blockState = blockToPlace;
                                 if (blockToPlace.hasProperty(BlockStateProperties.FACING)) {
-                                    blockState = blockState.setValue(BlockStateProperties.FACING, dir);
+                                    blockState =
+                                            blockState.setValue(BlockStateProperties.FACING, dir);
                                 }
-                                if (level.getBlockState(facePos).is(Blocks.WATER) && blockToPlace.hasProperty(BlockStateProperties.FACING)) {
-                                    blockState = blockState.setValue(BlockStateProperties.WATERLOGGED, true);
+                                if (level.getBlockState(facePos).is(Blocks.WATER)
+                                        && blockToPlace.hasProperty(BlockStateProperties.FACING)) {
+                                    blockState =
+                                            blockState.setValue(
+                                                    BlockStateProperties.WATERLOGGED, true);
                                 }
                                 level.setBlock(facePos, blockState, 2);
                             }

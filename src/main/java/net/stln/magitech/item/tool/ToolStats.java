@@ -1,17 +1,20 @@
 package net.stln.magitech.item.tool;
 
-import net.stln.magitech.item.tool.material.MiningLevel;
-import net.stln.magitech.element.Element;
-import oshi.annotation.concurrent.Immutable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.stln.magitech.element.Element;
+import net.stln.magitech.item.tool.material.MiningLevel;
+
+import oshi.annotation.concurrent.Immutable;
+
 public class ToolStats {
+
     @Immutable
-    public static final ToolStats DEFAULT = new ToolStats(0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, Element.NONE, MiningLevel.NONE, 0);
+    public static final ToolStats DEFAULT =
+            new ToolStats(0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, Element.NONE, MiningLevel.NONE, 0);
 
     public static String ATK_STAT = "attack";
     public static String ELM_ATK_STAT = "element_attack";
@@ -34,7 +37,18 @@ public class ToolStats {
     private final MiningLevel miningLevel;
     private final int tier;
 
-    public ToolStats(float atk, float elmAtk, float spd, float min, float def, float rng, float swp, float dur, Element elm, MiningLevel miningLevel, int tier) {
+    public ToolStats(
+            float atk,
+            float elmAtk,
+            float spd,
+            float min,
+            float def,
+            float rng,
+            float swp,
+            float dur,
+            Element elm,
+            MiningLevel miningLevel,
+            int tier) {
         this.miningLevel = miningLevel;
         this.tier = tier;
         this.stats.put(ATK_STAT, atk);
@@ -97,16 +111,27 @@ public class ToolStats {
 
                 Element currentElm = stats.getElement();
                 if (map.get(ELM_ATK_STAT) != null) {
-                    elementMap.put(currentElm, elementMap.getOrDefault(currentElm, 0.0F) + map.get(ELM_ATK_STAT));
+                    elementMap.put(
+                            currentElm,
+                            elementMap.getOrDefault(currentElm, 0.0F) + map.get(ELM_ATK_STAT));
                 }
                 if (stats.getMiningLevel().getTier() > minLv.getTier()) {
                     minLv = stats.getMiningLevel();
                 }
                 tier += stats.getTier();
             }
-
         }
-        List<Element> elementList = new ArrayList<>(List.of(Element.EMBER, Element.GLACE, Element.SURGE, Element.PHANTOM, Element.TREMOR, Element.MAGIC, Element.FLOW, Element.HOLLOW));
+        List<Element> elementList =
+                new ArrayList<>(
+                        List.of(
+                                Element.EMBER,
+                                Element.GLACE,
+                                Element.SURGE,
+                                Element.PHANTOM,
+                                Element.TREMOR,
+                                Element.MAGIC,
+                                Element.FLOW,
+                                Element.HOLLOW));
         for (Element element1 : elementList) {
             if (elementMap.getOrDefault(element1, 0.0F) > elmAtk) {
                 elm = element1;
@@ -124,7 +149,9 @@ public class ToolStats {
         elementList.add(Element.NONE);
         for (Element element1 : elementList) {
             if (element1 != elm) {
-                elmAtk += elementMap.getOrDefault(element1, 0.0F) * (element1 == Element.NONE ? 1F : 0.5F);
+                elmAtk +=
+                        elementMap.getOrDefault(element1, 0.0F)
+                                * (element1 == Element.NONE ? 1F : 0.5F);
             }
         }
 
@@ -173,16 +200,28 @@ public class ToolStats {
 
                 Element currentElm = stats.getElement();
                 if (map.get(ELM_ATK_STAT) != null) {
-                    elementMap.put(currentElm, elementMap.getOrDefault(currentElm, 0.0F) + map.get(ELM_ATK_STAT));
+                    elementMap.put(
+                            currentElm,
+                            elementMap.getOrDefault(currentElm, 0.0F) + map.get(ELM_ATK_STAT));
                 }
                 if (stats.getMiningLevel().getTier() > minLv.getTier()) {
                     minLv = stats.getMiningLevel();
                 }
                 tier += stats.getTier();
             }
-
         }
-        List<Element> elementList = new ArrayList<>(List.of(Element.NONE, Element.EMBER, Element.GLACE, Element.SURGE, Element.PHANTOM, Element.TREMOR, Element.MAGIC, Element.FLOW, Element.HOLLOW));
+        List<Element> elementList =
+                new ArrayList<>(
+                        List.of(
+                                Element.NONE,
+                                Element.EMBER,
+                                Element.GLACE,
+                                Element.SURGE,
+                                Element.PHANTOM,
+                                Element.TREMOR,
+                                Element.MAGIC,
+                                Element.FLOW,
+                                Element.HOLLOW));
         for (Element element1 : elementList) {
             if (elementMap.getOrDefault(element1, 0.0F) > elmAtk) {
                 elm = element1;
@@ -199,7 +238,9 @@ public class ToolStats {
         elementList.add(Element.NONE);
         for (Element element1 : elementList) {
             if (element1 != elm) {
-                elmAtk += elementMap.getOrDefault(element1, 0.0F) * (element1 == Element.NONE ? 1F : 0.5F);
+                elmAtk +=
+                        elementMap.getOrDefault(element1, 0.0F)
+                                * (element1 == Element.NONE ? 1F : 0.5F);
             }
         }
 

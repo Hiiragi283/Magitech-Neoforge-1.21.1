@@ -1,9 +1,8 @@
 package net.stln.magitech.gui;
 
-import io.wispforest.owo.ui.container.Containers;
-import io.wispforest.owo.ui.container.FlowLayout;
-import io.wispforest.owo.ui.core.OwoUIAdapter;
-import io.wispforest.owo.ui.core.Positioning;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -23,14 +22,19 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.recipe.PartCuttingRecipe;
 import net.stln.magitech.util.ClientHelper;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.wispforest.owo.ui.container.Containers;
+import io.wispforest.owo.ui.container.FlowLayout;
+import io.wispforest.owo.ui.core.OwoUIAdapter;
+import io.wispforest.owo.ui.core.Positioning;
 
 @OnlyIn(Dist.CLIENT)
 public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> {
-    private static final ResourceLocation BG_LOCATION = Magitech.id("textures/gui/part_cutting.png");
+
+    private static final ResourceLocation BG_LOCATION =
+            Magitech.id("textures/gui/part_cutting.png");
     private static final int SCROLLER_WIDTH = 8;
     private static final int SCROLLER_HEIGHT = 8;
     private static final int RECIPES_COLUMNS = 4;
@@ -46,15 +50,17 @@ public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> 
 
     private int bgWidth = 176;
     private int panelWidth = 160;
-    /**
-     * Is {@code true} if the player clicked on the scroll wheel in the GUI.
-     */
+
+    /** Is {@code true} if the player clicked on the scroll wheel in the GUI. */
     private boolean scrolling;
+
     /**
-     * The index of the first recipe to display.
-     * The number of recipes displayed at any time is 12 (4 recipes per row, and 3 rows). If the player scrolled down one row, this value would be 4 (representing the index of the first slot on the second row).
+     * The index of the first recipe to display. The number of recipes displayed at any time is 12
+     * (4 recipes per row, and 3 rows). If the player scrolled down one row, this value would be 4
+     * (representing the index of the first slot on the second row).
      */
     private int startIndex;
+
     private boolean displayRecipes;
 
     public PartCuttingScreen(PartCuttingMenu menu, Inventory playerInventory, Component title) {
@@ -85,13 +91,20 @@ public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> 
     private void reloadUI() {
         FlowLayout root = this.uiAdapter.rootComponent;
         root.clearChildren();
-        ToolStatsPanel.addPartPanel(root, Positioning.absolute(leftPos + bgWidth, topPos), menu.resultSlot.getItem(), Component.translatable("recipe.magitech.tool_stats_panel"), getPanelText());
+        ToolStatsPanel.addPartPanel(
+                root,
+                Positioning.absolute(leftPos + bgWidth, topPos),
+                menu.resultSlot.getItem(),
+                Component.translatable("recipe.magitech.tool_stats_panel"),
+                getPanelText());
         this.uiAdapter.inflateAndMount();
     }
 
     private static List<Component> getPanelText() {
         List<Component> components = new ArrayList<>();
-        components.add(Component.translatable("recipe.magitech.part_cutting.panel.title").withStyle(Style.EMPTY.withUnderlined(true)));
+        components.add(
+                Component.translatable("recipe.magitech.part_cutting.panel.title")
+                        .withStyle(Style.EMPTY.withUnderlined(true)));
         components.add(Component.translatable("recipe.magitech.part_cutting.panel.text"));
         return components;
     }
@@ -100,12 +113,13 @@ public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> 
      * Renders the graphical user interface (GUI) element.
      *
      * @param guiGraphics the GuiGraphics object used for rendering.
-     * @param mouseX      the x-coordinate of the mouse cursor.
-     * @param mouseY      the y-coordinate of the mouse cursor.
+     * @param mouseX the x-coordinate of the mouse cursor.
+     * @param mouseY the y-coordinate of the mouse cursor.
      * @param partialTick the partial tick time.
      */
     @Override
-    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(
+            @NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
@@ -139,14 +153,30 @@ public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> 
                 int j1 = i + i1 % 4 * 18;
                 int k1 = j + i1 / 4 * 18 + 2;
                 if (x >= j1 && x < j1 + 18 && y >= k1 && y < k1 + 18) {
-                    guiGraphics.renderTooltip(this.font, list.get(l).value().assemble(new SingleRecipeInput(this.menu.inputSlot.getItem()), this.minecraft.level.registryAccess()), x, y);
+                    guiGraphics.renderTooltip(
+                            this.font,
+                            list.get(l)
+                                    .value()
+                                    .assemble(
+                                            new SingleRecipeInput(this.menu.inputSlot.getItem()),
+                                            this.minecraft.level.registryAccess()),
+                            x,
+                            y);
                 }
             }
         }
     }
 
-    private void renderButtons(GuiGraphics guiGraphics, int mouseX, int mouseY, int x, int y, int lastVisibleElementIndex) {
-        for (int i = this.startIndex; i < lastVisibleElementIndex && i < this.menu.getNumRecipes(); i++) {
+    private void renderButtons(
+            GuiGraphics guiGraphics,
+            int mouseX,
+            int mouseY,
+            int x,
+            int y,
+            int lastVisibleElementIndex) {
+        for (int i = this.startIndex;
+                i < lastVisibleElementIndex && i < this.menu.getNumRecipes();
+                i++) {
             int j = i - this.startIndex;
             int k = x + j % 4 * 18;
             int l = j / 4;
@@ -173,14 +203,19 @@ public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> 
             int i1 = y + l * 18 + 2;
             PartCuttingRecipe recipe = list.get(i).value();
             int count = recipe.inputCount();
-            ItemStack assembled = recipe.assemble(new SingleRecipeInput(this.menu.inputSlot.getItem()), this.minecraft.level.registryAccess());
-            guiGraphics.drawString(Minecraft.getInstance().font, String.valueOf(count), k, i1, 0x999999, false);
+            ItemStack assembled =
+                    recipe.assemble(
+                            new SingleRecipeInput(this.menu.inputSlot.getItem()),
+                            this.minecraft.level.registryAccess());
+            guiGraphics.drawString(
+                    Minecraft.getInstance().font, String.valueOf(count), k, i1, 0x999999, false);
             guiGraphics.renderItem(assembled, k, i1);
         }
     }
 
     /**
      * Called when a mouse button is clicked within the GUI element.
+     *
      * <p>
      *
      * @param mouseX the X coordinate of the mouse.
@@ -202,8 +237,16 @@ public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> 
                 int i1 = l - this.startIndex;
                 double d0 = mouseX - (double) (i + i1 % 4 * 18);
                 double d1 = mouseY - (double) (j + i1 / 4 * 18);
-                if (d0 >= 0.0 && d1 >= 0.0 && d0 < 18.0 && d1 < 18.0 && this.menu.clickMenuButton(player, l)) {
-                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
+                if (d0 >= 0.0
+                        && d1 >= 0.0
+                        && d0 < 18.0
+                        && d1 < 18.0
+                        && this.menu.clickMenuButton(player, l)) {
+                    Minecraft.getInstance()
+                            .getSoundManager()
+                            .play(
+                                    SimpleSoundInstance.forUI(
+                                            SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
                     this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, l);
                     return true;
                 }
@@ -211,7 +254,10 @@ public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> 
 
             i = this.leftPos + 119;
             j = this.topPos + 9;
-            if (mouseX >= (double) i && mouseX < (double) (i + 12) && mouseY >= (double) j && mouseY < (double) (j + 54)) {
+            if (mouseX >= (double) i
+                    && mouseX < (double) (i + 12)
+                    && mouseY >= (double) j
+                    && mouseY < (double) (j + 54)) {
                 this.scrolling = true;
             }
         }
@@ -221,23 +267,26 @@ public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> 
 
     /**
      * Called when the mouse is dragged within the GUI element.
+     *
      * <p>
      *
      * @param mouseX the X coordinate of the mouse.
      * @param mouseY the Y coordinate of the mouse.
      * @param button the button that is being dragged.
-     * @param dragX  the X distance of the drag.
-     * @param dragY  the Y distance of the drag.
+     * @param dragX the X distance of the drag.
+     * @param dragY the Y distance of the drag.
      * @return {@code true} if the event is consumed, {@code false} otherwise.
      */
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+    public boolean mouseDragged(
+            double mouseX, double mouseY, int button, double dragX, double dragY) {
         if (this.scrolling && this.isScrollBarActive()) {
             int i = this.topPos + 14;
             int j = i + 54;
             this.scrollOffs = ((float) mouseY - (float) i - 7.5F) / ((float) (j - i) - 15.0F);
             this.scrollOffs = Mth.clamp(this.scrollOffs, 0.0F, 1.0F);
-            this.startIndex = (int) ((double) (this.scrollOffs * (float) this.getOffscreenRows()) + 0.5) * 4;
+            this.startIndex =
+                    (int) ((double) (this.scrollOffs * (float) this.getOffscreenRows()) + 0.5) * 4;
             return true;
         } else {
             return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
@@ -248,7 +297,10 @@ public class PartCuttingScreen extends AbstractContainerScreen<PartCuttingMenu> 
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         int i = this.leftPos + 119;
         int j = this.topPos + 9;
-        if (mouseX >= (double) i && mouseX < (double) (i + 12) && mouseY >= (double) j && mouseY < (double) (j + 54)) {
+        if (mouseX >= (double) i
+                && mouseX < (double) (i + 12)
+                && mouseY >= (double) j
+                && mouseY < (double) (j + 54)) {
             this.scrolling = true;
         }
         if (this.isScrollBarActive() && this.scrolling) {

@@ -19,8 +19,10 @@ import net.stln.magitech.entity.SpellProjectileEntity;
 import net.stln.magitech.particle.particle_option.FlameParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.DataMapHelper;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -36,18 +38,31 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
 
     public IgniscaEntity(Level world, LivingEntity owner, float damage) {
         super(EntityInit.IGNISCA_ENTITY.get(), owner, world, null, damage);
-
     }
 
     public IgniscaEntity(Level world, LivingEntity owner, ItemStack weapon, float damage) {
         super(EntityInit.IGNISCA_ENTITY.get(), owner, world, weapon, damage);
     }
 
-    public IgniscaEntity(EntityType<? extends SpellProjectileEntity> type, double x, double y, double z, Level world, ItemStack stack, @Nullable ItemStack weapon, float damage) {
+    public IgniscaEntity(
+            EntityType<? extends SpellProjectileEntity> type,
+            double x,
+            double y,
+            double z,
+            Level world,
+            ItemStack stack,
+            @Nullable ItemStack weapon,
+            float damage) {
         super(type, x, y, z, world, weapon, damage);
     }
 
-    public IgniscaEntity(EntityType<? extends SpellProjectileEntity> type, LivingEntity owner, Level world, ItemStack stack, @Nullable ItemStack shotFrom, float damage) {
+    public IgniscaEntity(
+            EntityType<? extends SpellProjectileEntity> type,
+            LivingEntity owner,
+            Level world,
+            ItemStack stack,
+            @Nullable ItemStack shotFrom,
+            float damage) {
         super(type, owner, world, shotFrom, damage);
     }
 
@@ -70,7 +85,14 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
                 double vx = deltaMovement.x / 4;
                 double vy = deltaMovement.y / 4;
                 double vz = deltaMovement.z / 4;
-                world.addParticle(new FlameParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
+                world.addParticle(
+                        new FlameParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed),
+                        x,
+                        y,
+                        z,
+                        vx,
+                        vy,
+                        vz);
             }
         }
     }
@@ -84,10 +106,12 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
         ResourceKey<DamageType> damageType = this.getElement().getDamageType();
         DamageSource elementalDamageSource = getElementalDamageSource(owner, damageType);
 
-        float finalDamage = this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
+        float finalDamage =
+                this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
         applyDamage(entity, elementalDamageSource, finalDamage);
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.setRemainingFireTicks(Math.min(livingEntity.getRemainingFireTicks() + 80, 200));
+            livingEntity.setRemainingFireTicks(
+                    Math.min(livingEntity.getRemainingFireTicks() + 80, 200));
         }
         hitParticle();
 
@@ -134,13 +158,25 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
             for (int i = 0; i < particleAmount; i++) {
                 int twinkle = 1;
 
-                double x = this.getX() - this.getDeltaMovement().x + (random.nextFloat() - 0.5) / 10;
-                double y = this.getY(0.5F) - this.getDeltaMovement().y + (random.nextFloat() - 0.5) / 10;
-                double z = this.getZ() - this.getDeltaMovement().z + (random.nextFloat() - 0.5) / 10;
+                double x =
+                        this.getX() - this.getDeltaMovement().x + (random.nextFloat() - 0.5) / 10;
+                double y =
+                        this.getY(0.5F)
+                                - this.getDeltaMovement().y
+                                + (random.nextFloat() - 0.5) / 10;
+                double z =
+                        this.getZ() - this.getDeltaMovement().z + (random.nextFloat() - 0.5) / 10;
                 double vx = (random.nextFloat() - 0.5) / 6;
                 double vy = (random.nextFloat() - 0.5) / 6;
                 double vz = (random.nextFloat() - 0.5) / 6;
-                world.addParticle(new FlameParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
+                world.addParticle(
+                        new FlameParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed),
+                        x,
+                        y,
+                        z,
+                        vx,
+                        vy,
+                        vz);
             }
         }
     }
@@ -151,9 +187,7 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-
-    }
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

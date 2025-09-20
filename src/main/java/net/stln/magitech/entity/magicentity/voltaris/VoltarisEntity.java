@@ -21,8 +21,10 @@ import net.stln.magitech.particle.particle_option.SparkParticleEffect;
 import net.stln.magitech.particle.particle_option.ZapParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.DataMapHelper;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -47,11 +49,25 @@ public class VoltarisEntity extends SpellProjectileEntity {
         super(EntityInit.VOLTARIS_ENTITY.get(), player, world, weapon, damage);
     }
 
-    public VoltarisEntity(EntityType<? extends SpellProjectileEntity> type, double x, double y, double z, Level world, ItemStack stack, @Nullable ItemStack weapon, float damage) {
+    public VoltarisEntity(
+            EntityType<? extends SpellProjectileEntity> type,
+            double x,
+            double y,
+            double z,
+            Level world,
+            ItemStack stack,
+            @Nullable ItemStack weapon,
+            float damage) {
         super(type, x, y, z, world, weapon, damage);
     }
 
-    public VoltarisEntity(EntityType<? extends SpellProjectileEntity> type, LivingEntity owner, Level world, ItemStack stack, @Nullable ItemStack shotFrom, float damage) {
+    public VoltarisEntity(
+            EntityType<? extends SpellProjectileEntity> type,
+            LivingEntity owner,
+            Level world,
+            ItemStack stack,
+            @Nullable ItemStack shotFrom,
+            float damage) {
         super(type, owner, world, shotFrom, damage);
     }
 
@@ -74,7 +90,14 @@ public class VoltarisEntity extends SpellProjectileEntity {
                 double vx = deltaMovement.x / 4;
                 double vy = deltaMovement.y / 4;
                 double vz = deltaMovement.z / 4;
-                world.addParticle(new SparkParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
+                world.addParticle(
+                        new SparkParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed),
+                        x,
+                        y,
+                        z,
+                        vx,
+                        vy,
+                        vz);
             }
             Vec3 deltaMovement = this.getDeltaMovement();
             double x = this.getX();
@@ -83,8 +106,23 @@ public class VoltarisEntity extends SpellProjectileEntity {
             double vx = deltaMovement.x;
             double vy = deltaMovement.y;
             double vz = deltaMovement.z;
-            Vector3f endPos = this.position().add(0, this.getBbHeight() * 0.5, 0).add(new Vec3(this.random.nextFloat() * 2 - 1, this.random.nextFloat() * 2 - 1, this.random.nextFloat() * 2 - 1)).toVector3f();
-            world.addParticle(new ZapParticleEffect(fromColor, toColor, endPos, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
+            Vector3f endPos =
+                    this.position()
+                            .add(0, this.getBbHeight() * 0.5, 0)
+                            .add(
+                                    new Vec3(
+                                            this.random.nextFloat() * 2 - 1,
+                                            this.random.nextFloat() * 2 - 1,
+                                            this.random.nextFloat() * 2 - 1))
+                            .toVector3f();
+            world.addParticle(
+                    new ZapParticleEffect(fromColor, toColor, endPos, scale, twinkle, rotSpeed),
+                    x,
+                    y,
+                    z,
+                    vx,
+                    vy,
+                    vz);
         }
     }
 
@@ -97,8 +135,8 @@ public class VoltarisEntity extends SpellProjectileEntity {
         ResourceKey<DamageType> damageType = this.getElement().getDamageType();
         DamageSource elementalDamageSource = getElementalDamageSource(owner, damageType);
 
-
-        float finalDamage = this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
+        float finalDamage =
+                this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
         applyDamage(entity, elementalDamageSource, finalDamage);
         hitParticle();
 
@@ -145,16 +183,42 @@ public class VoltarisEntity extends SpellProjectileEntity {
             for (int i = 0; i < particleAmount; i++) {
                 int twinkle = random.nextInt(3, 7);
 
-                double x = this.getX() - this.getDeltaMovement().x + (random.nextFloat() - 0.5) / 10;
-                double y = this.getY(0.5F) - this.getDeltaMovement().y + (random.nextFloat() - 0.5) / 10;
-                double z = this.getZ() - this.getDeltaMovement().z + (random.nextFloat() - 0.5) / 10;
+                double x =
+                        this.getX() - this.getDeltaMovement().x + (random.nextFloat() - 0.5) / 10;
+                double y =
+                        this.getY(0.5F)
+                                - this.getDeltaMovement().y
+                                + (random.nextFloat() - 0.5) / 10;
+                double z =
+                        this.getZ() - this.getDeltaMovement().z + (random.nextFloat() - 0.5) / 10;
                 double vx = (random.nextFloat() - 0.5) / 6;
                 double vy = (random.nextFloat() - 0.5) / 6;
                 double vz = (random.nextFloat() - 0.5) / 6;
-                Vector3f endPos = this.position().add(new Vec3(this.random.nextFloat() * 4 - 2, this.random.nextFloat() * 4 - 2, this.random.nextFloat() * 4 - 2)).toVector3f();
+                Vector3f endPos =
+                        this.position()
+                                .add(
+                                        new Vec3(
+                                                this.random.nextFloat() * 4 - 2,
+                                                this.random.nextFloat() * 4 - 2,
+                                                this.random.nextFloat() * 4 - 2))
+                                .toVector3f();
 
-                world.addParticle(new SparkParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
-                world.addParticle(new ZapParticleEffect(fromColor, toColor, endPos, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
+                world.addParticle(
+                        new SparkParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed),
+                        x,
+                        y,
+                        z,
+                        vx,
+                        vy,
+                        vz);
+                world.addParticle(
+                        new ZapParticleEffect(fromColor, toColor, endPos, scale, twinkle, rotSpeed),
+                        x,
+                        y,
+                        z,
+                        vx,
+                        vy,
+                        vz);
             }
         }
     }
@@ -166,7 +230,8 @@ public class VoltarisEntity extends SpellProjectileEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "idle", (event) -> event.setAndContinue(IDLE)));
+        controllers.add(
+                new AnimationController<>(this, "idle", (event) -> event.setAndContinue(IDLE)));
     }
 
     @Override

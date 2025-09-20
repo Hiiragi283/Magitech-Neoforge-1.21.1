@@ -1,15 +1,11 @@
 package net.stln.magitech.block;
 
-import com.ibm.icu.impl.Pair;
-import com.mojang.serialization.MapCodec;
+import javax.annotation.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +15,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -27,56 +22,47 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.stln.magitech.block.block_entity.AlchemetricPylonBlockEntity;
 import net.stln.magitech.block.block_entity.AthanorPillarBlockEntity;
-import net.stln.magitech.particle.particle_option.ManaZapParticleEffect;
-import net.stln.magitech.particle.particle_option.SquareParticleEffect;
-import net.stln.magitech.particle.particle_option.UnstableSquareParticleEffect;
-import net.stln.magitech.util.EffectUtil;
-import net.stln.magitech.util.StructureHelper;
-import net.stln.magitech.util.TickScheduler;
-import org.joml.Vector3f;
 
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.function.Predicate;
+import com.mojang.serialization.MapCodec;
 
 public class AthanorPillarBlock extends BaseEntityBlock {
+
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final VoxelShape SHAPE = Shapes.or(
-            Block.box(2, 0, 2, 14, 4, 14),
-            Block.box(0, 10, 0, 16, 16, 16),
-            Block.box(4, 4, 4, 12, 10, 12),
-            Block.box(2, 4, 6, 4, 6, 10),
-            Block.box(12, 4, 6, 14, 6, 10),
-            Block.box(0, 8, 0, 4, 10, 4),
-            Block.box(0, 8, 12, 4, 10, 16),
-            Block.box(12, 8, 0, 16, 10, 4),
-            Block.box(12, 8, 12, 16, 10, 16),
-            Block.box(6, 4, 2, 10, 6, 4),
-            Block.box(6, 4, 12, 10, 6, 14)
-    );
+    public static final VoxelShape SHAPE =
+            Shapes.or(
+                    Block.box(2, 0, 2, 14, 4, 14),
+                    Block.box(0, 10, 0, 16, 16, 16),
+                    Block.box(4, 4, 4, 12, 10, 12),
+                    Block.box(2, 4, 6, 4, 6, 10),
+                    Block.box(12, 4, 6, 14, 6, 10),
+                    Block.box(0, 8, 0, 4, 10, 4),
+                    Block.box(0, 8, 12, 4, 10, 16),
+                    Block.box(12, 8, 0, 16, 10, 4),
+                    Block.box(12, 8, 12, 16, 10, 16),
+                    Block.box(6, 4, 2, 10, 6, 4),
+                    Block.box(6, 4, 12, 10, 6, 14));
     public static final MapCodec<AthanorPillarBlock> CODEC = simpleCodec(AthanorPillarBlock::new);
 
     public AthanorPillarBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
-                this.stateDefinition.any().setValue(LIT, Boolean.valueOf(false)).setValue(WATERLOGGED, Boolean.valueOf(false))
-        );
+                this.stateDefinition
+                        .any()
+                        .setValue(LIT, Boolean.valueOf(false))
+                        .setValue(WATERLOGGED, Boolean.valueOf(false)));
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getShape(
+            BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
@@ -92,20 +78,24 @@ public class AthanorPillarBlock extends BaseEntityBlock {
         return RenderShape.MODEL;
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new AthanorPillarBlockEntity(blockPos, blockState);
     }
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+    @Nullable @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         return createTicker(level, blockEntityType, BlockInit.ATHANOR_PILLAR_ENTITY.get());
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    protected void onRemove(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            BlockState newState,
+            boolean movedByPiston) {
         if (state.getBlock() != newState.getBlock()) {
             if (level.getBlockEntity(pos) instanceof AthanorPillarBlockEntity pylonBlockEntity) {
                 pylonBlockEntity.drops();
@@ -119,13 +109,19 @@ public class AthanorPillarBlock extends BaseEntityBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
         boolean flag = fluidstate.getType() == Fluids.WATER;
-        return this.defaultBlockState().setValue(LIT, Boolean.valueOf(false)).setValue(WATERLOGGED, Boolean.valueOf(flag));
+        return this.defaultBlockState()
+                .setValue(LIT, Boolean.valueOf(false))
+                .setValue(WATERLOGGED, Boolean.valueOf(flag));
     }
 
     @Override
     protected BlockState updateShape(
-            BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos
-    ) {
+            BlockState state,
+            Direction direction,
+            BlockState neighborState,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         if (state.getValue(WATERLOGGED)) {
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
@@ -134,7 +130,9 @@ public class AthanorPillarBlock extends BaseEntityBlock {
 
     @Override
     protected FluidState getFluidState(BlockState state) {
-        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED)
+                ? Fluids.WATER.getSource(false)
+                : super.getFluidState(state);
     }
 
     @Override
@@ -143,8 +141,14 @@ public class AthanorPillarBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-                                              Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected ItemInteractionResult useItemOn(
+            ItemStack stack,
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            InteractionHand hand,
+            BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof AthanorPillarBlockEntity pylonBlockEntity) {
             if (pylonBlockEntity.inventory.getStackInSlot(0).isEmpty() && !stack.isEmpty()) {
                 pylonBlockEntity.inventory.insertItem(0, stack.copy(), false);
@@ -172,16 +176,19 @@ public class AthanorPillarBlock extends BaseEntityBlock {
         return ItemInteractionResult.SUCCESS;
     }
 
-    @Nullable
-    protected <T extends BlockEntity> BlockEntityTicker<T> createTicker(
-            Level level, BlockEntityType<T> serverType, BlockEntityType<? extends AthanorPillarBlockEntity> clientType
-    ) {
-        return createTickerHelper(serverType, clientType, (pLevel1, pPos, pState1, pBlockEntity) -> {
-            if (pLevel1.isClientSide) {
-                pBlockEntity.clientTick(pLevel1, pPos, pState1, pBlockEntity);
-            } else {
-                pBlockEntity.serverTick(pLevel1, pPos, pState1, pBlockEntity);
-            }
-        });
+    @Nullable protected <T extends BlockEntity> BlockEntityTicker<T> createTicker(
+            Level level,
+            BlockEntityType<T> serverType,
+            BlockEntityType<? extends AthanorPillarBlockEntity> clientType) {
+        return createTickerHelper(
+                serverType,
+                clientType,
+                (pLevel1, pPos, pState1, pBlockEntity) -> {
+                    if (pLevel1.isClientSide) {
+                        pBlockEntity.clientTick(pLevel1, pPos, pState1, pBlockEntity);
+                    } else {
+                        pBlockEntity.serverTick(pLevel1, pPos, pState1, pBlockEntity);
+                    }
+                });
     }
 }

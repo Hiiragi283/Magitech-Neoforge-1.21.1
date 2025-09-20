@@ -3,11 +3,13 @@ package net.stln.magitech.util;
 import java.awt.*;
 
 public class ColorHelper {
+
     public static int channelFromFloat(float value) {
         return MathHelper.floor(value * 255.0F);
     }
 
     public static class Abgr {
+
         public static int getAlpha(int abgr) {
             return abgr >>> 24;
         }
@@ -54,10 +56,10 @@ public class ColorHelper {
     }
 
     /**
-     * Contains color-related helper methods that use ARGB colors represented
-     * as {@code 0xAARRGGBB}.
+     * Contains color-related helper methods that use ARGB colors represented as {@code 0xAARRGGBB}.
      */
     public static class Argb {
+
         /**
          * {@return the alpha value of {@code argb}}
          *
@@ -94,9 +96,7 @@ public class ColorHelper {
             return argb & 0xFF;
         }
 
-        /**
-         * {@return the ARGB color value from its components}
-         */
+        /** {@return the ARGB color value from its components} */
         public static int getArgb(int alpha, int red, int green, int blue) {
             return alpha << 24 | red << 16 | green << 8 | blue;
         }
@@ -110,8 +110,7 @@ public class ColorHelper {
                     getAlpha(first) * getAlpha(second) / 255,
                     getRed(first) * getRed(second) / 255,
                     getGreen(first) * getGreen(second) / 255,
-                    getBlue(first) * getBlue(second) / 255
-            );
+                    getBlue(first) * getBlue(second) / 255);
         }
 
         public static int lerp(float delta, int start, int end) {
@@ -131,11 +130,19 @@ public class ColorHelper {
         }
 
         public static int fromFloats(float a, float r, float g, float b) {
-            return getArgb(ColorHelper.channelFromFloat(a), ColorHelper.channelFromFloat(r), ColorHelper.channelFromFloat(g), ColorHelper.channelFromFloat(b));
+            return getArgb(
+                    ColorHelper.channelFromFloat(a),
+                    ColorHelper.channelFromFloat(r),
+                    ColorHelper.channelFromFloat(g),
+                    ColorHelper.channelFromFloat(b));
         }
 
         public static int averageArgb(int a, int b) {
-            return getArgb((getAlpha(a) + getAlpha(b)) / 2, (getRed(a) + getRed(b)) / 2, (getGreen(a) + getGreen(b)) / 2, (getBlue(a) + getBlue(b)) / 2);
+            return getArgb(
+                    (getAlpha(a) + getAlpha(b)) / 2,
+                    (getRed(a) + getRed(b)) / 2,
+                    (getGreen(a) + getGreen(b)) / 2,
+                    (getBlue(a) + getBlue(b)) / 2);
         }
 
         public static int mul(int color, int mulColor) {
@@ -197,7 +204,7 @@ public class ColorHelper {
     }
 
     private static double interpolateHue(double h1, double h2, double t) {
-        double delta = ((h2 - h1 + 540) % 360) - 180;  // 最短経路を計算
+        double delta = ((h2 - h1 + 540) % 360) - 180; // 最短経路を計算
         return (h1 + delta * t + 360) % 360;
     }
 
@@ -212,12 +219,31 @@ public class ColorHelper {
 
         double r = 0, g = 0, b = 0;
 
-        if (0 <= h && h < 60)      { r = c; g = x; b = 0; }
-        else if (h < 120)          { r = x; g = c; b = 0; }
-        else if (h < 180)          { r = 0; g = c; b = x; }
-        else if (h < 240)          { r = 0; g = x; b = c; }
-        else if (h < 300)          { r = x; g = 0; b = c; }
-        else                       { r = c; g = 0; b = x; }
+        if (0 <= h && h < 60) {
+            r = c;
+            g = x;
+            b = 0;
+        } else if (h < 120) {
+            r = x;
+            g = c;
+            b = 0;
+        } else if (h < 180) {
+            r = 0;
+            g = c;
+            b = x;
+        } else if (h < 240) {
+            r = 0;
+            g = x;
+            b = c;
+        } else if (h < 300) {
+            r = x;
+            g = 0;
+            b = c;
+        } else {
+            r = c;
+            g = 0;
+            b = x;
+        }
 
         int R = (int) Math.round((r + m) * 255);
         int G = (int) Math.round((g + m) * 255);
@@ -235,4 +261,3 @@ public class ColorHelper {
         return Math.max(0, Math.min(255, val));
     }
 }
-

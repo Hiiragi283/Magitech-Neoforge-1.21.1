@@ -9,10 +9,12 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.stln.magitech.Magitech;
+
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
 public class TierUpToast implements Toast {
+
     private static final ResourceLocation TEXTURE = Magitech.id("textures/gui/tier_up_toast.png");
     private final int newTier;
     private final ItemStack stack;
@@ -25,18 +27,34 @@ public class TierUpToast implements Toast {
     }
 
     @Override
-    public @NotNull Visibility render(@NotNull GuiGraphics guiGraphics, @NotNull ToastComponent toastComponent, long timeSinceLastVisible) {
+    public @NotNull Visibility render(
+            @NotNull GuiGraphics guiGraphics,
+            @NotNull ToastComponent toastComponent,
+            long timeSinceLastVisible) {
         if (this.changed) {
             this.lastChanged = timeSinceLastVisible;
             this.changed = false;
         }
         guiGraphics.blit(TEXTURE, 0, 0, 0, 0, this.width(), this.height());
-        guiGraphics.drawString(toastComponent.getMinecraft().font, Component.translatable("toast.magitech.tier_up.title"), 30, 7, 0xebf7f8, false);
-        guiGraphics.drawString(toastComponent.getMinecraft().font, getDescription(newTier), 30, 18, 0xBAEE57, false);
+        guiGraphics.drawString(
+                toastComponent.getMinecraft().font,
+                Component.translatable("toast.magitech.tier_up.title"),
+                30,
+                7,
+                0xebf7f8,
+                false);
+        guiGraphics.drawString(
+                toastComponent.getMinecraft().font,
+                getDescription(newTier),
+                30,
+                18,
+                0xBAEE57,
+                false);
         guiGraphics.pose().pushPose();
         guiGraphics.renderFakeItem(stack, 8, 8);
         guiGraphics.pose().popPose();
-        return (double)(timeSinceLastVisible - this.lastChanged) >= 5000.0 * toastComponent.getNotificationDisplayTimeMultiplier()
+        return (double) (timeSinceLastVisible - this.lastChanged)
+                        >= 5000.0 * toastComponent.getNotificationDisplayTimeMultiplier()
                 ? Toast.Visibility.HIDE
                 : Toast.Visibility.SHOW;
     }

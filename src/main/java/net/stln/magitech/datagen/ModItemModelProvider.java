@@ -12,6 +12,7 @@ import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.tool.model.ModelRegistrar;
 
 public class ModItemModelProvider extends ItemModelProvider {
+
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, Magitech.MOD_ID, existingFileHelper);
     }
@@ -92,45 +93,70 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(BlockInit.CELIFERN_DOOR_ITEM.get());
         getBuilder(BlockInit.CELIFERN_SAPLING_ITEM.get().toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", Magitech.id("block/" + BlockInit.CELIFERN_SAPLING_ITEM.getId().getPath()));
+                .texture(
+                        "layer0",
+                        Magitech.id("block/" + BlockInit.CELIFERN_SAPLING_ITEM.getId().getPath()));
         basicItem(BlockInit.CELIFERN_SIGN_ITEM.get());
         basicItem(BlockInit.CELIFERN_HANGING_SIGN_ITEM.get());
         basicItem(BlockInit.CHARCOAL_BIRCH_DOOR_ITEM.get());
         getBuilder(BlockInit.CHARCOAL_BIRCH_SAPLING_ITEM.get().toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", Magitech.id("block/" + BlockInit.CHARCOAL_BIRCH_SAPLING_ITEM.getId().getPath()));
+                .texture(
+                        "layer0",
+                        Magitech.id(
+                                "block/"
+                                        + BlockInit.CHARCOAL_BIRCH_SAPLING_ITEM.getId().getPath()));
         basicItem(BlockInit.CHARCOAL_BIRCH_SIGN_ITEM.get());
         basicItem(BlockInit.CHARCOAL_BIRCH_HANGING_SIGN_ITEM.get());
         basicItem(BlockInit.MISTALIA_PETALS_ITEM.get());
 
-        MagitechRegistries.TOOL_MATERIAL.stream().forEach(toolMaterial -> {
-            for (String type : ModelRegistrar.toolTypes) {
-                for (String part : ModelRegistrar.partTypes) {
-                    if (existingFileHelper.exists(ModelRegistrar.getPartTextureId(toolMaterial, type, part), ModelProvider.TEXTURE)) {
-                        String parent = "item/handheld";
-                        if (type.equals("heavy_sword") ||
-                                type.equals("hammer") ||
-                                type.equals("scythe") ||
-                                type.equals("spear") ||
-                                type.equals("staff")) {
-                            parent = "magitech:item/heavy_tool";
-                        }
-                        getBuilder(ModelRegistrar.getPartModelName(toolMaterial, type, part))
-                                .parent(new ModelFile.UncheckedModelFile(parent))
-                                .texture("layer0", ModelRegistrar.getPartTextureId(toolMaterial, type, part));
-                    }
-                }
-            }
-        });
-        MagitechRegistries.TOOL_MATERIAL.stream().forEach(toolMaterial -> {
-            for (String part : ModelRegistrar.partTypes) {
-                if (existingFileHelper.exists(ModelRegistrar.getPartItemTextureId(toolMaterial, part), ModelProvider.TEXTURE)) {
-                    String parent = "item/generated";
-                    getBuilder(ModelRegistrar.getPartItemModelName(toolMaterial, part))
-                            .parent(new ModelFile.UncheckedModelFile(parent))
-                            .texture("layer0", ModelRegistrar.getPartItemTextureId(toolMaterial, part));
-                }
-            }
-        });
+        MagitechRegistries.TOOL_MATERIAL.stream()
+                .forEach(
+                        toolMaterial -> {
+                            for (String type : ModelRegistrar.toolTypes) {
+                                for (String part : ModelRegistrar.partTypes) {
+                                    if (existingFileHelper.exists(
+                                            ModelRegistrar.getPartTextureId(
+                                                    toolMaterial, type, part),
+                                            ModelProvider.TEXTURE)) {
+                                        String parent = "item/handheld";
+                                        if (type.equals("heavy_sword")
+                                                || type.equals("hammer")
+                                                || type.equals("scythe")
+                                                || type.equals("spear")
+                                                || type.equals("staff")) {
+                                            parent = "magitech:item/heavy_tool";
+                                        }
+                                        getBuilder(
+                                                        ModelRegistrar.getPartModelName(
+                                                                toolMaterial, type, part))
+                                                .parent(new ModelFile.UncheckedModelFile(parent))
+                                                .texture(
+                                                        "layer0",
+                                                        ModelRegistrar.getPartTextureId(
+                                                                toolMaterial, type, part));
+                                    }
+                                }
+                            }
+                        });
+        MagitechRegistries.TOOL_MATERIAL.stream()
+                .forEach(
+                        toolMaterial -> {
+                            for (String part : ModelRegistrar.partTypes) {
+                                if (existingFileHelper.exists(
+                                        ModelRegistrar.getPartItemTextureId(toolMaterial, part),
+                                        ModelProvider.TEXTURE)) {
+                                    String parent = "item/generated";
+                                    getBuilder(
+                                                    ModelRegistrar.getPartItemModelName(
+                                                            toolMaterial, part))
+                                            .parent(new ModelFile.UncheckedModelFile(parent))
+                                            .texture(
+                                                    "layer0",
+                                                    ModelRegistrar.getPartItemTextureId(
+                                                            toolMaterial, part));
+                                }
+                            }
+                        });
     }
 }

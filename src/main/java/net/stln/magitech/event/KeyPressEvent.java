@@ -21,6 +21,7 @@ import net.stln.magitech.network.ThreadBoundSelectPayload;
 import net.stln.magitech.util.ClientHelper;
 import net.stln.magitech.util.ComponentHelper;
 import net.stln.magitech.util.CuriosHelper;
+
 import vazkii.patchouli.api.PatchouliAPI;
 import vazkii.patchouli.common.book.Book;
 import vazkii.patchouli.common.book.BookRegistry;
@@ -28,6 +29,7 @@ import vazkii.patchouli.common.item.PatchouliDataComponents;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID, value = Dist.CLIENT)
 public class KeyPressEvent {
+
     public static int jumpCount = 0;
     public static int onGroundMarker = 0;
 
@@ -35,24 +37,37 @@ public class KeyPressEvent {
     public static void onClientTick(ClientTickEvent.Post event) {
         Player player = ClientHelper.getPlayer();
         if (player == null) return;
-        
+
         while (KeyMappingEvent.TRAIT_ACTION.get().consumeClick()) {
-            if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof PartToolItem || player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof PartToolItem) {
-                InteractionHand hand = player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof PartToolItem ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
-                ((PartToolItem) player.getItemInHand(hand).getItem()).traitAction(player.level(), player, hand);
+            if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof PartToolItem
+                    || player.getItemInHand(InteractionHand.OFF_HAND).getItem()
+                            instanceof PartToolItem) {
+                InteractionHand hand =
+                        player.getItemInHand(InteractionHand.MAIN_HAND).getItem()
+                                        instanceof PartToolItem
+                                ? InteractionHand.MAIN_HAND
+                                : InteractionHand.OFF_HAND;
+                ((PartToolItem) player.getItemInHand(hand).getItem())
+                        .traitAction(player.level(), player, hand);
             }
         }
         while (KeyMappingEvent.DOUBLE_JUMP.get().consumeClick()) {
-            if (player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemInit.AETHER_LIFTER.get() && onGroundMarker > 2) {
+            if (player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemInit.AETHER_LIFTER.get()
+                    && onGroundMarker > 2) {
                 PacketDistributor.sendToServer(new DoubleJumpPayload(jumpCount, player.getUUID()));
-                AetherLifterItem.doubleJump(player, jumpCount, player.getItemBySlot(EquipmentSlot.FEET));
+                AetherLifterItem.doubleJump(
+                        player, jumpCount, player.getItemBySlot(EquipmentSlot.FEET));
                 jumpCount++;
             }
         }
         while (KeyMappingEvent.LONG_JUMP.get().consumeClick()) {
-            if (player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemInit.FLAMGLIDE_STRIDER.get() && onGroundMarker < 2 && player.isSprinting()) {
+            if (player.getItemBySlot(EquipmentSlot.FEET).getItem()
+                            == ItemInit.FLAMGLIDE_STRIDER.get()
+                    && onGroundMarker < 2
+                    && player.isSprinting()) {
                 PacketDistributor.sendToServer(new LongJumpPayload(jumpCount, player.getUUID()));
-                FlamglideStriderItem.longJump(player, jumpCount, player.getItemBySlot(EquipmentSlot.FEET));
+                FlamglideStriderItem.longJump(
+                        player, jumpCount, player.getItemBySlot(EquipmentSlot.FEET));
                 jumpCount++;
             }
         }
@@ -62,42 +77,77 @@ public class KeyPressEvent {
             onGroundMarker = 0;
         }
         while (KeyMappingEvent.SPELL_SHIFT_RIGHT.get().consumeClick()) {
-            CuriosHelper.getThreadBoundStack(player).ifPresent(stack -> {
-                ComponentHelper.updateSpells(stack, component -> {
-                    int selected = component.selected();
-                    int select = selected < 0 || selected >= component.spells().size() - 1 ? 0 : selected + 1;
+            CuriosHelper.getThreadBoundStack(player)
+                    .ifPresent(
+                            stack -> {
+                                ComponentHelper.updateSpells(
+                                        stack,
+                                        component -> {
+                                            int selected = component.selected();
+                                            int select =
+                                                    selected < 0
+                                                                    || selected
+                                                                            >= component
+                                                                                            .spells()
+                                                                                            .size()
+                                                                                    - 1
+                                                            ? 0
+                                                            : selected + 1;
 
-                    PacketDistributor.sendToServer(new ThreadBoundSelectPayload(select, player.getUUID()));
-                    return component.setSelected(selected);
-                });
-            });
+                                            PacketDistributor.sendToServer(
+                                                    new ThreadBoundSelectPayload(
+                                                            select, player.getUUID()));
+                                            return component.setSelected(selected);
+                                        });
+                            });
         }
         while (KeyMappingEvent.SPELL_SHIFT_LEFT.get().consumeClick()) {
-            CuriosHelper.getThreadBoundStack(player).ifPresent(stack -> {
-                ComponentHelper.updateSpells(stack, component -> {
-                    int selected = component.selected();
-                    int select = selected < 1 || selected >= component.spells().size() ? component.spells().size() - 1 : selected - 1;
-                    PacketDistributor.sendToServer(new ThreadBoundSelectPayload(select, player.getUUID()));
-                    return component.setSelected(selected);
-                });
-            });
+            CuriosHelper.getThreadBoundStack(player)
+                    .ifPresent(
+                            stack -> {
+                                ComponentHelper.updateSpells(
+                                        stack,
+                                        component -> {
+                                            int selected = component.selected();
+                                            int select =
+                                                    selected < 1
+                                                                    || selected
+                                                                            >= component
+                                                                                    .spells()
+                                                                                    .size()
+                                                            ? component.spells().size() - 1
+                                                            : selected - 1;
+                                            PacketDistributor.sendToServer(
+                                                    new ThreadBoundSelectPayload(
+                                                            select, player.getUUID()));
+                                            return component.setSelected(selected);
+                                        });
+                            });
         }
         while (KeyMappingEvent.open_thread_bound_page_screen.get().consumeClick()) {
             PacketDistributor.sendToServer(new OpenThreadBoundPageScreenPayload(player.getUUID()));
         }
         while (KeyMappingEvent.OPEN_SPELLBOUND_AS_GUIDEBOOK.get().consumeClick()) {
-            if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ThreadBoundItem) {
-                Book book = BookRegistry.INSTANCE.books.get(player.getItemInHand(InteractionHand.MAIN_HAND).get(PatchouliDataComponents.BOOK));
+            if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem()
+                    instanceof ThreadBoundItem) {
+                Book book =
+                        BookRegistry.INSTANCE.books.get(
+                                player.getItemInHand(InteractionHand.MAIN_HAND)
+                                        .get(PatchouliDataComponents.BOOK));
                 if (book != null) {
                     PatchouliAPI.get().openBookGUI(book.id);
                 }
             } else {
-                CuriosHelper.getThreadBoundStack(player).ifPresent(stack -> {
-                    Book book = BookRegistry.INSTANCE.books.get(stack.get(PatchouliDataComponents.BOOK));
-                    if (book != null) {
-                        PatchouliAPI.get().openBookGUI(book.id);
-                    }
-                });
+                CuriosHelper.getThreadBoundStack(player)
+                        .ifPresent(
+                                stack -> {
+                                    Book book =
+                                            BookRegistry.INSTANCE.books.get(
+                                                    stack.get(PatchouliDataComponents.BOOK));
+                                    if (book != null) {
+                                        PatchouliAPI.get().openBookGUI(book.id);
+                                    }
+                                });
             }
         }
     }

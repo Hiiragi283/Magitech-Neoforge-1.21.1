@@ -1,6 +1,5 @@
 package net.stln.magitech.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Camera;
@@ -9,8 +8,11 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.stln.magitech.particle.particle_option.BlowParticleEffect;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 public class BlowParticle extends GlowingParticle {
 
@@ -18,8 +20,16 @@ public class BlowParticle extends GlowingParticle {
     private final Vector3f startColor;
     private final Vector3f endColor;
 
-    public BlowParticle(ClientLevel clientWorld, double x, double y, double z, double vx, double vy, double vz,
-                        BlowParticleEffect parameters, SpriteSet spriteProvider) {
+    public BlowParticle(
+            ClientLevel clientWorld,
+            double x,
+            double y,
+            double z,
+            double vx,
+            double vy,
+            double vz,
+            BlowParticleEffect parameters,
+            SpriteSet spriteProvider) {
         super(clientWorld, x, y, z, vx, vy, vz);
         this.xd = vx + (clientWorld.random.nextFloat() - 0.5F) / 15;
         this.yd = vy + (clientWorld.random.nextFloat() - 0.5F) / 15;
@@ -41,7 +51,8 @@ public class BlowParticle extends GlowingParticle {
     public void render(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
         this.updateColor(tickDelta);
         if (this.twinkle > 1) {
-            float multiplier = Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
+            float multiplier =
+                    Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
             this.rCol *= multiplier;
             this.gCol *= multiplier;
             this.bCol *= multiplier;
@@ -81,6 +92,7 @@ public class BlowParticle extends GlowingParticle {
 
     @Environment(EnvType.CLIENT)
     public static class Provider implements ParticleProvider<BlowParticleEffect> {
+
         private final SpriteSet spriteProvider;
 
         public Provider(SpriteSet spriteProvider) {
@@ -88,7 +100,15 @@ public class BlowParticle extends GlowingParticle {
         }
 
         @Override
-        public @Nullable Particle createParticle(BlowParticleEffect parameters, ClientLevel world, double x, double y, double z, double xd, double yd, double zd) {
+        public @Nullable Particle createParticle(
+                BlowParticleEffect parameters,
+                ClientLevel world,
+                double x,
+                double y,
+                double z,
+                double xd,
+                double yd,
+                double zd) {
             return new BlowParticle(world, x, y, z, xd, yd, zd, parameters, this.spriteProvider);
         }
     }

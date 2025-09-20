@@ -1,7 +1,7 @@
 package net.stln.magitech.element;
 
+import java.util.Locale;
 
-import com.mojang.serialization.Codec;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
@@ -10,9 +10,10 @@ import net.minecraft.world.damagesource.DamageType;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.damage.DamageTypeInit;
 import net.stln.magitech.damage.ElementAffinityRegister;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
+import com.mojang.serialization.Codec;
 
 public enum Element implements StringRepresentable {
     NONE("none", 0xFFFFFF, 0x404040, 0xA0FFD0, 0x005060, DamageTypeInit.MANA_DAMAGE),
@@ -26,35 +27,59 @@ public enum Element implements StringRepresentable {
     HOLLOW("hollow", 0x8020C0, 0x200040, 0x8020C0, 0x200040, DamageTypeInit.HOLLOW_DAMAGE);
 
     public static final Codec<Element> CODEC = StringRepresentable.fromEnum(Element::values);
-    
+
     public static void registerElements() {
         Magitech.LOGGER.info("Registering Elements for" + Magitech.MOD_ID);
-        ElementAffinityRegister.registerAffinity(Element.EMBER, ElementAffinityRegister.INEFFICIENT, Element.EMBER);
-        ElementAffinityRegister.registerAffinity(Element.GLACE, ElementAffinityRegister.INEFFICIENT, Element.GLACE);
-        ElementAffinityRegister.registerAffinity(Element.SURGE, ElementAffinityRegister.INEFFICIENT, Element.SURGE);
-        ElementAffinityRegister.registerAffinity(Element.PHANTOM, ElementAffinityRegister.INEFFICIENT, Element.PHANTOM);
-        ElementAffinityRegister.registerAffinity(Element.TREMOR, ElementAffinityRegister.INEFFICIENT, Element.TREMOR);
-        ElementAffinityRegister.registerAffinity(Element.MAGIC, ElementAffinityRegister.INEFFICIENT, Element.MAGIC);
-        ElementAffinityRegister.registerAffinity(Element.FLOW, ElementAffinityRegister.INEFFICIENT, Element.FLOW);
-        ElementAffinityRegister.registerAffinity(Element.HOLLOW, ElementAffinityRegister.INEFFICIENT, Element.HOLLOW);
+        ElementAffinityRegister.registerAffinity(
+                Element.EMBER, ElementAffinityRegister.INEFFICIENT, Element.EMBER);
+        ElementAffinityRegister.registerAffinity(
+                Element.GLACE, ElementAffinityRegister.INEFFICIENT, Element.GLACE);
+        ElementAffinityRegister.registerAffinity(
+                Element.SURGE, ElementAffinityRegister.INEFFICIENT, Element.SURGE);
+        ElementAffinityRegister.registerAffinity(
+                Element.PHANTOM, ElementAffinityRegister.INEFFICIENT, Element.PHANTOM);
+        ElementAffinityRegister.registerAffinity(
+                Element.TREMOR, ElementAffinityRegister.INEFFICIENT, Element.TREMOR);
+        ElementAffinityRegister.registerAffinity(
+                Element.MAGIC, ElementAffinityRegister.INEFFICIENT, Element.MAGIC);
+        ElementAffinityRegister.registerAffinity(
+                Element.FLOW, ElementAffinityRegister.INEFFICIENT, Element.FLOW);
+        ElementAffinityRegister.registerAffinity(
+                Element.HOLLOW, ElementAffinityRegister.INEFFICIENT, Element.HOLLOW);
 
-        ElementAffinityRegister.registerAffinity(Element.EMBER, ElementAffinityRegister.EFFICIENT, Element.SURGE);
-        ElementAffinityRegister.registerAffinity(Element.SURGE, ElementAffinityRegister.EFFICIENT, Element.TREMOR);
-        ElementAffinityRegister.registerAffinity(Element.TREMOR, ElementAffinityRegister.EFFICIENT, Element.GLACE);
-        ElementAffinityRegister.registerAffinity(Element.GLACE, ElementAffinityRegister.EFFICIENT, Element.PHANTOM);
-        ElementAffinityRegister.registerAffinity(Element.PHANTOM, ElementAffinityRegister.EFFICIENT, Element.MAGIC);
-        ElementAffinityRegister.registerAffinity(Element.MAGIC, ElementAffinityRegister.EFFICIENT, Element.FLOW);
-        ElementAffinityRegister.registerAffinity(Element.FLOW, ElementAffinityRegister.EFFICIENT, Element.HOLLOW);
-        ElementAffinityRegister.registerAffinity(Element.HOLLOW, ElementAffinityRegister.EFFICIENT, Element.EMBER);
+        ElementAffinityRegister.registerAffinity(
+                Element.EMBER, ElementAffinityRegister.EFFICIENT, Element.SURGE);
+        ElementAffinityRegister.registerAffinity(
+                Element.SURGE, ElementAffinityRegister.EFFICIENT, Element.TREMOR);
+        ElementAffinityRegister.registerAffinity(
+                Element.TREMOR, ElementAffinityRegister.EFFICIENT, Element.GLACE);
+        ElementAffinityRegister.registerAffinity(
+                Element.GLACE, ElementAffinityRegister.EFFICIENT, Element.PHANTOM);
+        ElementAffinityRegister.registerAffinity(
+                Element.PHANTOM, ElementAffinityRegister.EFFICIENT, Element.MAGIC);
+        ElementAffinityRegister.registerAffinity(
+                Element.MAGIC, ElementAffinityRegister.EFFICIENT, Element.FLOW);
+        ElementAffinityRegister.registerAffinity(
+                Element.FLOW, ElementAffinityRegister.EFFICIENT, Element.HOLLOW);
+        ElementAffinityRegister.registerAffinity(
+                Element.HOLLOW, ElementAffinityRegister.EFFICIENT, Element.EMBER);
 
-        ElementAffinityRegister.registerAffinity(Element.EMBER, ElementAffinityRegister.EFFICIENT, Element.GLACE);
-        ElementAffinityRegister.registerAffinity(Element.GLACE, ElementAffinityRegister.EFFICIENT, Element.MAGIC);
-        ElementAffinityRegister.registerAffinity(Element.MAGIC, ElementAffinityRegister.EFFICIENT, Element.SURGE);
-        ElementAffinityRegister.registerAffinity(Element.SURGE, ElementAffinityRegister.EFFICIENT, Element.PHANTOM);
-        ElementAffinityRegister.registerAffinity(Element.PHANTOM, ElementAffinityRegister.EFFICIENT, Element.HOLLOW);
-        ElementAffinityRegister.registerAffinity(Element.HOLLOW, ElementAffinityRegister.EFFICIENT, Element.TREMOR);
-        ElementAffinityRegister.registerAffinity(Element.TREMOR, ElementAffinityRegister.EFFICIENT, Element.FLOW);
-        ElementAffinityRegister.registerAffinity(Element.FLOW, ElementAffinityRegister.EFFICIENT, Element.EMBER);
+        ElementAffinityRegister.registerAffinity(
+                Element.EMBER, ElementAffinityRegister.EFFICIENT, Element.GLACE);
+        ElementAffinityRegister.registerAffinity(
+                Element.GLACE, ElementAffinityRegister.EFFICIENT, Element.MAGIC);
+        ElementAffinityRegister.registerAffinity(
+                Element.MAGIC, ElementAffinityRegister.EFFICIENT, Element.SURGE);
+        ElementAffinityRegister.registerAffinity(
+                Element.SURGE, ElementAffinityRegister.EFFICIENT, Element.PHANTOM);
+        ElementAffinityRegister.registerAffinity(
+                Element.PHANTOM, ElementAffinityRegister.EFFICIENT, Element.HOLLOW);
+        ElementAffinityRegister.registerAffinity(
+                Element.HOLLOW, ElementAffinityRegister.EFFICIENT, Element.TREMOR);
+        ElementAffinityRegister.registerAffinity(
+                Element.TREMOR, ElementAffinityRegister.EFFICIENT, Element.FLOW);
+        ElementAffinityRegister.registerAffinity(
+                Element.FLOW, ElementAffinityRegister.EFFICIENT, Element.EMBER);
 
         // EntityElementRegister.registerEntityElement(Blaze.class, Element.EMBER);
         // EntityElementRegister.registerEntityElement(MagmaCube.class, Element.EMBER);
@@ -66,14 +91,16 @@ public enum Element implements StringRepresentable {
         // EntityElementRegister.registerEntityElement(Evoker.class, Element.MAGIC);
         // EntityElementRegister.registerEntityElement(Drowned.class, Element.FLOW);
         // EntityElementRegister.registerEntityElement(Guardian.class, Element.FLOW);
-        // EntityElementRegister.registerEntityElement(ElderGuardian.class, Element.FLOW);
+        // EntityElementRegister.registerEntityElement(ElderGuardian.class,
+        // Element.FLOW);
         // EntityElementRegister.registerEntityElement(Breeze.class, Element.FLOW);
         // EntityElementRegister.registerEntityElement(EnderMan.class, Element.HOLLOW);
-        // EntityElementRegister.registerEntityElement(EnderDragon.class, Element.HOLLOW);
+        // EntityElementRegister.registerEntityElement(EnderDragon.class,
+        // Element.HOLLOW);
         // EntityElementRegister.registerEntityElement(Endermite.class, Element.HOLLOW);
         // EntityElementRegister.registerEntityElement(Shulker.class, Element.HOLLOW);
     }
-    
+
     private final String id;
     private final int color;
     private final int dark;
@@ -81,7 +108,13 @@ public enum Element implements StringRepresentable {
     private final int spellDark;
     private final ResourceKey<DamageType> damageType;
 
-    Element(String id, int color, int dark, int spellColor, int spellDark, ResourceKey<DamageType> damageType) {
+    Element(
+            String id,
+            int color,
+            int dark,
+            int spellColor,
+            int spellDark,
+            ResourceKey<DamageType> damageType) {
         this.id = id;
         this.color = color;
         this.dark = dark;

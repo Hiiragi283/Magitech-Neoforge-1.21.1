@@ -1,6 +1,7 @@
 package net.stln.magitech.compat.jade;
 
 import net.stln.magitech.block.ManaVesselBlock;
+
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaPlugin;
 import snownee.jade.api.WailaPlugin;

@@ -1,8 +1,8 @@
 package net.stln.magitech.recipe;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -17,19 +17,27 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 import net.stln.magitech.recipe.input.GroupedMultiStackRecipeInput;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackRecipeInput> {
+
     protected final List<List<Ingredient>> ingredients;
     protected final ItemStack result;
     protected final String group;
     protected final ItemStack base;
     protected final int mana;
 
-    public AthanorPillarInfusionRecipe(String group, ItemStack base, List<List<Ingredient>> ingredients, int mana, ItemStack result) {
+    public AthanorPillarInfusionRecipe(
+            String group,
+            ItemStack base,
+            List<List<Ingredient>> ingredients,
+            int mana,
+            ItemStack result) {
         this.base = base;
         this.mana = mana;
         this.ingredients = ingredients;
@@ -44,7 +52,9 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
         } else {
             for (int i = 0; i < input.outerSize(); i++) {
                 List<ItemStack> group = input.stacks().get(i);
-                if (i >= this.ingredients.size() || (group.size() != this.ingredients.get(i).size() && !this.ingredients.get(i).isEmpty())) {
+                if (i >= this.ingredients.size()
+                        || (group.size() != this.ingredients.get(i).size()
+                                && !this.ingredients.get(i).isEmpty())) {
                     return false;
                 }
                 var nonEmptyItems = new java.util.ArrayList<ItemStack>(input.ingredientCount());
@@ -59,7 +69,8 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
                         nonEmptyIngredients.add(item);
                     }
                 }
-                if (RecipeMatcher.findMatches(nonEmptyItems, nonEmptyIngredients) == null && (!nonEmptyItems.isEmpty() || !nonEmptyIngredients.isEmpty())) {
+                if (RecipeMatcher.findMatches(nonEmptyItems, nonEmptyIngredients) == null
+                        && (!nonEmptyItems.isEmpty() || !nonEmptyIngredients.isEmpty())) {
                     return false;
                 }
             }
@@ -67,7 +78,9 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
         }
     }
 
-    public @NotNull ItemStack assemble(@NotNull GroupedMultiStackRecipeInput input, HolderLookup.@NotNull Provider registries) {
+    public @NotNull ItemStack assemble(
+            @NotNull GroupedMultiStackRecipeInput input,
+            HolderLookup.@NotNull Provider registries) {
         return this.result.copy();
     }
 
@@ -113,39 +126,65 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
     }
 
     public interface Factory<T extends AthanorPillarInfusionRecipe> {
-        T create(String group, ItemStack base, List<List<Ingredient>> ingredients, int mana, ItemStack result);
+
+        T create(
+                String group,
+                ItemStack base,
+                List<List<Ingredient>> ingredients,
+                int mana,
+                ItemStack result);
     }
 
-    public static class Serializer<T extends AthanorPillarInfusionRecipe> implements RecipeSerializer<T> {
+    public static class Serializer<T extends AthanorPillarInfusionRecipe>
+            implements RecipeSerializer<T> {
+
         final AthanorPillarInfusionRecipe.Factory<T> factory;
         private final MapCodec<T> codec;
         private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
         protected Serializer(AthanorPillarInfusionRecipe.Factory<T> factory) {
             this.factory = factory;
-            this.codec = RecordCodecBuilder.mapCodec(
-                    p_340781_ -> p_340781_.group(
-                                    Codec.STRING.optionalFieldOf("group", "").forGetter(p_300947_ -> p_300947_.group),
-                                    ItemStack.STRICT_CODEC.fieldOf("base").forGetter(p_300947_ -> p_300947_.base),
-                                    Ingredient.LIST_CODEC.listOf().fieldOf("ingredients").forGetter(p_300947_ -> p_300947_.ingredients),
-                                    Codec.INT.optionalFieldOf("mana", 0).forGetter(p_300947_ -> p_300947_.mana),
-                                    ItemStack.STRICT_CODEC.fieldOf("result").forGetter(p_302316_ -> p_302316_.result)
-                            )
-                            .apply(p_340781_, factory::create)
-            );
-            this.streamCodec = StreamCodec.composite(
-                    ByteBufCodecs.STRING_UTF8,
-                    r -> r.group,
-                    ItemStack.STREAM_CODEC,
-                    r -> r.base,
-                    Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).apply(ByteBufCodecs.list()),
-                    r -> r.ingredients,
-                    ByteBufCodecs.INT,
-                    r -> r.mana,
-                    ItemStack.STREAM_CODEC,
-                    r -> r.result,
-                    factory::create
-            );
+            this.codec =
+                    RecordCodecBuilder.mapCodec(
+                            p_340781_ ->
+                                    p_340781_
+                                            .group(
+                                                    Codec.STRING
+                                                            .optionalFieldOf("group", "")
+                                                            .forGetter(
+                                                                    p_300947_ -> p_300947_.group),
+                                                    ItemStack.STRICT_CODEC
+                                                            .fieldOf("base")
+                                                            .forGetter(p_300947_ -> p_300947_.base),
+                                                    Ingredient.LIST_CODEC
+                                                            .listOf()
+                                                            .fieldOf("ingredients")
+                                                            .forGetter(
+                                                                    p_300947_ ->
+                                                                            p_300947_.ingredients),
+                                                    Codec.INT
+                                                            .optionalFieldOf("mana", 0)
+                                                            .forGetter(p_300947_ -> p_300947_.mana),
+                                                    ItemStack.STRICT_CODEC
+                                                            .fieldOf("result")
+                                                            .forGetter(
+                                                                    p_302316_ -> p_302316_.result))
+                                            .apply(p_340781_, factory::create));
+            this.streamCodec =
+                    StreamCodec.composite(
+                            ByteBufCodecs.STRING_UTF8,
+                            r -> r.group,
+                            ItemStack.STREAM_CODEC,
+                            r -> r.base,
+                            Ingredient.CONTENTS_STREAM_CODEC
+                                    .apply(ByteBufCodecs.list())
+                                    .apply(ByteBufCodecs.list()),
+                            r -> r.ingredients,
+                            ByteBufCodecs.INT,
+                            r -> r.mana,
+                            ItemStack.STREAM_CODEC,
+                            r -> r.result,
+                            factory::create);
         }
 
         @Override

@@ -14,36 +14,46 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.stln.magitech.block.BlockInit;
+
 import org.jetbrains.annotations.Nullable;
 
 public class AlchemetricPylonBlockEntity extends BlockEntity {
-    public final ItemStackHandler inventory = new ItemStackHandler(1) {
-        @Override
-        protected int getStackLimit(int slot, ItemStack stack) {
-            return 1;
-        }
 
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-            if(!level.isClientSide()) {
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-            }
-        }
-    };
+    public final ItemStackHandler inventory =
+            new ItemStackHandler(1) {
+
+                @Override
+                protected int getStackLimit(int slot, ItemStack stack) {
+                    return 1;
+                }
+
+                @Override
+                protected void onContentsChanged(int slot) {
+                    setChanged();
+                    if (!level.isClientSide()) {
+                        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                    }
+                }
+            };
     public int tickCounter = 0;
 
     public AlchemetricPylonBlockEntity(BlockPos pos, BlockState blockState) {
         super(BlockInit.ALCHEMETRIC_PYLON_ENTITY.get(), pos, blockState);
     }
 
-    public void clientTick(Level level, BlockPos pos, BlockState state, AlchemetricPylonBlockEntity alchemetricPylonBlockEntity) {
+    public void clientTick(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            AlchemetricPylonBlockEntity alchemetricPylonBlockEntity) {
         tickCounter++;
     }
 
-    public void serverTick(Level level, BlockPos pos, BlockState state, AlchemetricPylonBlockEntity alchemetricPylonBlockEntity) {
-
-    }
+    public void serverTick(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            AlchemetricPylonBlockEntity alchemetricPylonBlockEntity) {}
 
     public void clearContents() {
         inventory.setStackInSlot(0, ItemStack.EMPTY);
@@ -51,7 +61,7 @@ public class AlchemetricPylonBlockEntity extends BlockEntity {
 
     public void drops() {
         SimpleContainer inv = new SimpleContainer(inventory.getSlots());
-        for(int i = 0; i < inventory.getSlots(); i++) {
+        for (int i = 0; i < inventory.getSlots(); i++) {
             inv.setItem(i, inventory.getStackInSlot(i));
         }
 
@@ -70,8 +80,7 @@ public class AlchemetricPylonBlockEntity extends BlockEntity {
         inventory.deserializeNBT(registries, tag.getCompound("inventory"));
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }

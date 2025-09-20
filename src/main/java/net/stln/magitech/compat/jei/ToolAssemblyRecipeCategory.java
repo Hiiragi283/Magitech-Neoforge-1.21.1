@@ -1,13 +1,10 @@
 package net.stln.magitech.compat.jei;
 
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
-import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -25,27 +22,36 @@ import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.ToolAssemblyRecipe;
 import net.stln.magitech.recipe.ToolMaterialRecipe;
 import net.stln.magitech.util.ClientHelper;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 
 public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<ToolAssemblyRecipe> {
+
     public static final ResourceLocation UID = Magitech.id("tool_assembly");
     public static final ResourceLocation TEXTURE = Magitech.id("textures/gui/jei_widgets.png");
-    
+
     private static final Random RANDOM = new Random();
 
-    public static final RecipeType<ToolAssemblyRecipe> TOOL_ASSEMBLY_RECIPE_TYPE = new RecipeType<>(UID, ToolAssemblyRecipe.class);
+    public static final RecipeType<ToolAssemblyRecipe> TOOL_ASSEMBLY_RECIPE_TYPE =
+            new RecipeType<>(UID, ToolAssemblyRecipe.class);
 
     public ToolAssemblyRecipeCategory(IDrawable icon) {
         super(icon);
     }
 
     public ToolAssemblyRecipeCategory(IGuiHelper helper) {
-        this(helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockInit.ASSEMBLY_WORKBENCH)));
+        this(
+                helper.createDrawableIngredient(
+                        VanillaTypes.ITEM_STACK, new ItemStack(BlockInit.ASSEMBLY_WORKBENCH)));
     }
 
     @Override
@@ -59,7 +65,12 @@ public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<T
     }
 
     @Override
-    public void draw(@NotNull ToolAssemblyRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(
+            @NotNull ToolAssemblyRecipe recipe,
+            @NotNull IRecipeSlotsView recipeSlotsView,
+            @NotNull GuiGraphics guiGraphics,
+            double mouseX,
+            double mouseY) {
         super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
         int partCount = recipe.getIngredients().size();
 
@@ -104,11 +115,16 @@ public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<T
     }
 
     @Override
-    protected void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull ToolAssemblyRecipe recipe, @NotNull IFocusGroup focuses, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess access) {
-        List<ToolMaterialRecipe> materialRecipes = ClientHelper.getAllRecipes(RecipeInit.TOOL_MATERIAL_TYPE);
-        List<ToolMaterial> materials = materialRecipes.stream()
-                .map(ToolMaterialRecipe::getToolMaterial)
-                .toList();
+    protected void setRecipe(
+            @NotNull IRecipeLayoutBuilder builder,
+            @NotNull ToolAssemblyRecipe recipe,
+            @NotNull IFocusGroup focuses,
+            @NotNull RecipeManager recipeManager,
+            @NotNull RegistryAccess access) {
+        List<ToolMaterialRecipe> materialRecipes =
+                ClientHelper.getAllRecipes(RecipeInit.TOOL_MATERIAL_TYPE);
+        List<ToolMaterial> materials =
+                materialRecipes.stream().map(ToolMaterialRecipe::getToolMaterial).toList();
 
         List<Ingredient> ingredients = recipe.getIngredients();
 
@@ -122,14 +138,18 @@ public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<T
                 int materialIndex = RANDOM.nextInt(materials.size());
 
                 ItemStack partStack = value.getItems()[0].copy(); // NOTE: 複数アイテムある場合は適宜対応
-                partStack.set(ComponentInit.MATERIAL_COMPONENT, new MaterialComponent(materials.get(materialIndex)));
+                partStack.set(
+                        ComponentInit.MATERIAL_COMPONENT,
+                        new MaterialComponent(materials.get(materialIndex)));
                 parts.add(partStack);
                 toolMaterials.add(materials.get(materialIndex));
             }
 
             // 完成品 ItemStack を生成
             ItemStack resultStack = recipe.getResultItem(access).copy();
-            resultStack.set(ComponentInit.PART_MATERIAL_COMPONENT, new PartMaterialComponent(toolMaterials));
+            resultStack.set(
+                    ComponentInit.PART_MATERIAL_COMPONENT,
+                    new PartMaterialComponent(toolMaterials));
             results.add(resultStack);
         }
         // 各パーツに対して、全ToolMaterialを使った ItemStack を用意
@@ -172,7 +192,8 @@ public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<T
                 y = 4 + row * 18;
             }
 
-            builder.addSlot(RecipeIngredientRole.INPUT, x + 1, y + 1).addItemStacks(partInputStacks.get(i)); // 全素材のリストを渡す
+            builder.addSlot(RecipeIngredientRole.INPUT, x + 1, y + 1)
+                    .addItemStacks(partInputStacks.get(i)); // 全素材のリストを渡す
         }
 
         // 出力スロット（すべての組み合わせ）

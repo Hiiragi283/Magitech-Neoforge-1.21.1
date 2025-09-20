@@ -1,10 +1,10 @@
 package net.stln.magitech.entity.mobeffect;
 
-
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
 class PhaseLockMobEffect extends CustomMobEffect {
+
     protected PhaseLockMobEffect(MobEffectCategory mobEffectCategory, int i) {
         super(mobEffectCategory, i);
     }

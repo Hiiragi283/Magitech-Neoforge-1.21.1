@@ -1,5 +1,7 @@
 package net.stln.magitech.network;
 
+import java.util.Objects;
+
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -9,27 +11,36 @@ import net.stln.magitech.gui.ThreadboundMenuType;
 import net.stln.magitech.item.ThreadBoundItem;
 import net.stln.magitech.util.CuriosHelper;
 
-import java.util.Objects;
-
 public class OpenThreadBoundPageScreenPayLoadHandler {
 
-    public static void handleDataOnMainC2S(final OpenThreadBoundPageScreenPayload payload, final IPayloadContext context) {
+    public static void handleDataOnMainC2S(
+            final OpenThreadBoundPageScreenPayload payload, final IPayloadContext context) {
         Player player;
         Level level = context.player().level();
-        player = level.players().stream().filter(search -> Objects.equals(search.getUUID(), payload.uuid())).findFirst().orElse(null);
+        player =
+                level.players().stream()
+                        .filter(search -> Objects.equals(search.getUUID(), payload.uuid()))
+                        .findFirst()
+                        .orElse(null);
         if (player == null) {
             return;
         }
         if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ThreadBoundItem) {
-            player.openMenu(new SimpleMenuProvider(
-                    (containerId, playerInventory, player2) -> new ThreadboundMenuType(containerId, playerInventory),
-                    player.getItemInHand(InteractionHand.MAIN_HAND).getDisplayName()
-            ));
+            player.openMenu(
+                    new SimpleMenuProvider(
+                            (containerId, playerInventory, player2) ->
+                                    new ThreadboundMenuType(containerId, playerInventory),
+                            player.getItemInHand(InteractionHand.MAIN_HAND).getDisplayName()));
         } else {
-            CuriosHelper.getThreadBoundStack(player).ifPresent(stack -> player.openMenu(new SimpleMenuProvider(
-                    (containerId, playerInventory, player2) -> new ThreadboundMenuType(containerId, playerInventory),
-                    stack.getDisplayName()
-            )));
+            CuriosHelper.getThreadBoundStack(player)
+                    .ifPresent(
+                            stack ->
+                                    player.openMenu(
+                                            new SimpleMenuProvider(
+                                                    (containerId, playerInventory, player2) ->
+                                                            new ThreadboundMenuType(
+                                                                    containerId, playerInventory),
+                                                    stack.getDisplayName())));
         }
     }
 }

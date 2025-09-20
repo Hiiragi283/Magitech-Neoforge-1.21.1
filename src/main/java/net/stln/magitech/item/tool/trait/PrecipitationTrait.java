@@ -1,5 +1,7 @@
 package net.stln.magitech.item.tool.trait;
 
+import java.util.*;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -8,44 +10,55 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.item.tool.toolitem.PartToolItem;
 import net.stln.magitech.particle.particle_option.PowerupParticleEffect;
 import net.stln.magitech.util.BlockUtil;
 import net.stln.magitech.util.EffectUtil;
-import org.joml.Vector3f;
 
-import java.util.*;
+import org.joml.Vector3f;
 
 public class PrecipitationTrait extends Trait {
 
     @Override
-    public ToolStats modifyStatsConditional1(Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats) {
+    public ToolStats modifyStatsConditional1(
+            Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats) {
         if (player.isInWater()) {
             ToolStats aDefault = ToolStats.DEFAULT;
             Map<String, Float> modified = new HashMap<>(aDefault.getStats());
             float mul = traitLevel * 0.45F;
             Float atk = stats.getStats().get(ToolStats.ATK_STAT);
             modified.put(ToolStats.ATK_STAT, atk * mul);
-            return new ToolStats(modified, stats.getElement(), stats.getMiningLevel(), aDefault.getTier());
+            return new ToolStats(
+                    modified, stats.getElement(), stats.getMiningLevel(), aDefault.getTier());
         }
         return super.modifyStatsConditional1(player, level, stack, traitLevel, stats);
     }
 
     @Override
-    public ToolStats modifySpellCasterStatsConditional1(Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats) {
+    public ToolStats modifySpellCasterStatsConditional1(
+            Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats) {
         if (player.isInWater()) {
             ToolStats aDefault = ToolStats.DEFAULT;
             Map<String, Float> modified = new HashMap<>(aDefault.getStats());
             float mul = traitLevel * 0.45F;
             Float atk = stats.getStats().get(ToolStats.ATK_STAT);
             modified.put(ToolStats.ATK_STAT, atk * mul);
-            return new ToolStats(modified, stats.getElement(), stats.getMiningLevel(), aDefault.getTier());
+            return new ToolStats(
+                    modified, stats.getElement(), stats.getMiningLevel(), aDefault.getTier());
         }
         return super.modifySpellCasterStatsConditional1(player, level, stack, traitLevel, stats);
     }
 
     @Override
-    public Set<BlockPos> addAdditionalBlockBreakSecond(Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats, BlockState blockState, BlockPos pos, int damageAmount, Direction direction) {
+    public Set<BlockPos> addAdditionalBlockBreakSecond(
+            Player player,
+            Level level,
+            ItemStack stack,
+            int traitLevel,
+            ToolStats stats,
+            BlockState blockState,
+            BlockPos pos,
+            int damageAmount,
+            Direction direction) {
         boolean flag = true;
         boolean flag2 = true;
         boolean flag3 = true;
@@ -63,24 +76,69 @@ public class PrecipitationTrait extends Trait {
     }
 
     @Override
-    public boolean emitEffect(Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats, BlockState blockState, BlockPos pos, int damageAmount, boolean isInitial) {
+    public boolean emitEffect(
+            Player player,
+            Level level,
+            ItemStack stack,
+            int traitLevel,
+            ToolStats stats,
+            BlockState blockState,
+            BlockPos pos,
+            int damageAmount,
+            boolean isInitial) {
         return !isInitial;
     }
 
     @Override
-    public void addEffect(Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats, BlockState blockState, BlockPos pos, int damageAmount, boolean isInitial) {
-        super.addEffect(player, level, stack, traitLevel, stats, blockState, pos, damageAmount, isInitial);
+    public void addEffect(
+            Player player,
+            Level level,
+            ItemStack stack,
+            int traitLevel,
+            ToolStats stats,
+            BlockState blockState,
+            BlockPos pos,
+            int damageAmount,
+            boolean isInitial) {
+        super.addEffect(
+                player, level, stack, traitLevel, stats, blockState, pos, damageAmount, isInitial);
         for (int i = 0; i < 20; i++) {
-            level.addParticle(new PowerupParticleEffect(new Vector3f(0.8F, 0.7F, 0.5F), new Vector3f(0.8F, 0.7F, 0.5F), 1F, 1, 0),
-                    pos.getX() + player.getRandom().nextFloat(), pos.getY() + player.getRandom().nextFloat(), pos.getZ() + player.getRandom().nextFloat(), 0, 0, 0);
+            level.addParticle(
+                    new PowerupParticleEffect(
+                            new Vector3f(0.8F, 0.7F, 0.5F),
+                            new Vector3f(0.8F, 0.7F, 0.5F),
+                            1F,
+                            1,
+                            0),
+                    pos.getX() + player.getRandom().nextFloat(),
+                    pos.getY() + player.getRandom().nextFloat(),
+                    pos.getZ() + player.getRandom().nextFloat(),
+                    0,
+                    0,
+                    0);
         }
     }
 
     @Override
-    public void tick(Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats, boolean isHost) {
+    public void tick(
+            Player player,
+            Level level,
+            ItemStack stack,
+            int traitLevel,
+            ToolStats stats,
+            boolean isHost) {
         super.tick(player, level, stack, traitLevel, stats, isHost);
         if (player.isInWater()) {
-            EffectUtil.entityEffect(level, new PowerupParticleEffect(new Vector3f(0.8F, 0.7F, 0.5F), new Vector3f(0.8F, 0.7F, 0.5F), 1F, 1, 0), player, 1);
+            EffectUtil.entityEffect(
+                    level,
+                    new PowerupParticleEffect(
+                            new Vector3f(0.8F, 0.7F, 0.5F),
+                            new Vector3f(0.8F, 0.7F, 0.5F),
+                            1F,
+                            1,
+                            0),
+                    player,
+                    1);
         }
     }
 
@@ -93,5 +151,4 @@ public class PrecipitationTrait extends Trait {
     public Component getName() {
         return Component.translatable("trait.magitech.precipitation");
     }
-
 }

@@ -11,18 +11,20 @@ import net.stln.magitech.network.LeftClickPayload;
 public class ClientLeftClickEvent {
 
     public static void register() {
-        ClientPreAttackCallback.EVENT.register(((client, player, clickCount) -> {
-            LeftClickPayload payload = new LeftClickPayload(clickCount, player.getUUID());
-            PacketDistributor.sendToServer(payload);
-            return callOnLeftClick(player, clickCount) != InteractionResult.PASS;
-        }));
+        ClientPreAttackCallback.EVENT.register(
+                ((client, player, clickCount) -> {
+                    LeftClickPayload payload = new LeftClickPayload(clickCount, player.getUUID());
+                    PacketDistributor.sendToServer(payload);
+                    return callOnLeftClick(player, clickCount) != InteractionResult.PASS;
+                }));
     }
 
-
     public static InteractionResult callOnLeftClick(Player player, int clickCount) {
-        if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof LeftClickOverrideItem leftClickOverrideItem) {
+        if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem()
+                instanceof LeftClickOverrideItem leftClickOverrideItem) {
             if (clickCount != 0) {
-                return leftClickOverrideItem.onLeftClick(player, InteractionHand.MAIN_HAND, player.level());
+                return leftClickOverrideItem.onLeftClick(
+                        player, InteractionHand.MAIN_HAND, player.level());
             }
             return InteractionResult.PASS;
         }

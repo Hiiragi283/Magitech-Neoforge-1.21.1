@@ -1,13 +1,5 @@
 package net.stln.magitech.compat.jei;
 
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
-import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -18,20 +10,35 @@ import net.stln.magitech.Magitech;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.recipe.SpellConversionRecipe;
 import net.stln.magitech.util.ComponentHelper;
+
 import org.jetbrains.annotations.NotNull;
 
-public class SpellConversionRecipeCategory extends AbstractMagitechRecipeCategory<SpellConversionRecipe> {
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
+
+public class SpellConversionRecipeCategory
+        extends AbstractMagitechRecipeCategory<SpellConversionRecipe> {
+
     public static final ResourceLocation UID = Magitech.id("spell_conversion");
     public static final ResourceLocation TEXTURE = Magitech.id("textures/gui/jei_widgets.png");
 
-    public static final RecipeType<SpellConversionRecipe> SPELL_CONVERSION_RECIPE_TYPE = new RecipeType<>(UID, SpellConversionRecipe.class);
+    public static final RecipeType<SpellConversionRecipe> SPELL_CONVERSION_RECIPE_TYPE =
+            new RecipeType<>(UID, SpellConversionRecipe.class);
 
     public SpellConversionRecipeCategory(IDrawable icon) {
         super(icon);
     }
 
     public SpellConversionRecipeCategory(IGuiHelper helper) {
-        this(helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ItemInit.WAND.get())));
+        this(
+                helper.createDrawableIngredient(
+                        VanillaTypes.ITEM_STACK, new ItemStack(ItemInit.WAND.get())));
     }
 
     @Override
@@ -45,7 +52,12 @@ public class SpellConversionRecipeCategory extends AbstractMagitechRecipeCategor
     }
 
     @Override
-    public void draw(@NotNull SpellConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(
+            @NotNull SpellConversionRecipe recipe,
+            @NotNull IRecipeSlotsView recipeSlotsView,
+            @NotNull GuiGraphics guiGraphics,
+            double mouseX,
+            double mouseY) {
         super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
         guiGraphics.blit(TEXTURE, 18, 12, 0, 0, 18, 18);
         guiGraphics.blit(recipe.spell().getIconId(), 38, 5, 0, 0, 32, 32, 32, 32);
@@ -65,13 +77,19 @@ public class SpellConversionRecipeCategory extends AbstractMagitechRecipeCategor
     }
 
     @Override
-    protected void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull SpellConversionRecipe recipe, @NotNull IFocusGroup focuses, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess access) {
+    protected void setRecipe(
+            @NotNull IRecipeLayoutBuilder builder,
+            @NotNull SpellConversionRecipe recipe,
+            @NotNull IFocusGroup focuses,
+            @NotNull RecipeManager recipeManager,
+            @NotNull RegistryAccess access) {
         builder.addSlot(RecipeIngredientRole.INPUT, 19, 13).addIngredients(recipe.ingredient());
 
         ItemStack threadPage = new ItemStack(ItemInit.THREAD_PAGE.get());
         ComponentHelper.setThreadPage(threadPage, recipe.spell());
         builder.addSlot(RecipeIngredientRole.INPUT, 69, 25).addItemStack(threadPage);
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 100, 13).addItemStack(recipe.getResultItem(access));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 100, 13)
+                .addItemStack(recipe.getResultItem(access));
     }
 }

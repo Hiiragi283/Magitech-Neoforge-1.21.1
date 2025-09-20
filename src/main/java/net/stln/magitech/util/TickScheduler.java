@@ -1,14 +1,16 @@
 package net.stln.magitech.util;
 
-import net.minecraft.server.TickTask;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.server.TickTask;
+
+import org.jetbrains.annotations.Nullable;
+
 // 遅延実行マネージャー（サーバー用）
 public class TickScheduler {
+
     private static final List<TickTask> scheduledTasksServer = new ArrayList<>();
     private static final List<TickTask> scheduledTasksClient = new ArrayList<>();
 
@@ -26,7 +28,7 @@ public class TickScheduler {
     public static void tick(boolean isClient) {
         tick(!isClient ? scheduledTasksServer : scheduledTasksClient);
     }
-    
+
     private static void tick(List<TickTask> tasks) {
         Iterator<TickTask> iterator = tasks.iterator();
         List<TickTask> nextTask = new ArrayList<>();

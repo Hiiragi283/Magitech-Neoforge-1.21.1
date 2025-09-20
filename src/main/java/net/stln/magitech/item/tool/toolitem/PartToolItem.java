@@ -1,5 +1,10 @@
 package net.stln.magitech.item.tool.toolitem;
 
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -61,16 +66,13 @@ import net.stln.magitech.network.TierUpToastPayload;
 import net.stln.magitech.network.TraitTickPayload;
 import net.stln.magitech.particle.particle_option.*;
 import net.stln.magitech.util.*;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
-
 public abstract class PartToolItem extends Item implements LeftClickOverrideItem {
+
     ResourceLocation atkId = Magitech.id("part_tool_attack_damage_modifier");
     ResourceLocation spdId = Magitech.id("part_tool_attack_speed_modifier");
     ResourceLocation defId = Magitech.id("part_tool_defense_modifier");
@@ -94,9 +96,16 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
                     value = ((PartToolItem) stack.getItem()).getMultiplier(toolPart);
                 }
                 if (!(stack.getItem() instanceof SpellCasterItem)) {
-                    stats.add(ToolStats.mulWithoutElementCode(ToolStats.mulWithoutElementCode(toolMaterial.stats(), base), value));
+                    stats.add(
+                            ToolStats.mulWithoutElementCode(
+                                    ToolStats.mulWithoutElementCode(toolMaterial.stats(), base),
+                                    value));
                 } else {
-                    stats.add(ToolStats.mulWithoutElementCode(ToolStats.mulWithoutElementCode(toolMaterial.spellCasterStats(), base), value));
+                    stats.add(
+                            ToolStats.mulWithoutElementCode(
+                                    ToolStats.mulWithoutElementCode(
+                                            toolMaterial.spellCasterStats(), base),
+                                    value));
                 }
             }
             return ToolStats.add(stats);
@@ -112,7 +121,10 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         List<UpgradeInstance> upgrades = ComponentHelper.getUpgrades(stack);
         List<ToolStats> upgradeStats = new ArrayList<>();
         for (UpgradeInstance upgrade : upgrades) {
-            upgradeStats.add(ToolStats.mulWithoutElementCode(ToolMaterialRegister.getBaseStats(toolType), upgrade.upgrade().getUpgradeStats(upgrade.level())));
+            upgradeStats.add(
+                    ToolStats.mulWithoutElementCode(
+                            ToolMaterialRegister.getBaseStats(toolType),
+                            upgrade.upgrade().getUpgradeStats(upgrade.level())));
         }
         upgradeStats.add(stats);
         return ToolStats.add(upgradeStats);
@@ -140,33 +152,53 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         if (ComponentHelper.isBroken(stack)) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)) && stats.getMiningLevel().getTier() <= MiningLevel.NETHERITE.getTier()) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_NETHERITE_TOOL))
+                && stats.getMiningLevel().getTier() <= MiningLevel.NETHERITE.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)) && stats.getMiningLevel().getTier() <= MiningLevel.DIAMOND.getTier()) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_DIAMOND_TOOL))
+                && stats.getMiningLevel().getTier() <= MiningLevel.DIAMOND.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_IRON_TOOL)) && stats.getMiningLevel().getTier() <= MiningLevel.IRON.getTier()) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_IRON_TOOL))
+                && stats.getMiningLevel().getTier() <= MiningLevel.IRON.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_STONE_TOOL)) && stats.getMiningLevel().getTier() <= MiningLevel.STONE.getTier()) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_STONE_TOOL))
+                && stats.getMiningLevel().getTier() <= MiningLevel.STONE.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_GOLD_TOOL)) && stats.getMiningLevel().getTier() <= MiningLevel.NONE.getTier()) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_GOLD_TOOL))
+                && stats.getMiningLevel().getTier() <= MiningLevel.NONE.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_WOODEN_TOOL)) && stats.getMiningLevel().getTier() <= MiningLevel.NONE.getTier()) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_WOODEN_TOOL))
+                && stats.getMiningLevel().getTier() <= MiningLevel.NONE.getTier()) {
             return false;
         }
         return true;
     }
 
-    public static Direction getBreakDirection(double range, BlockPos initalBlockPos, Player player) {
+    public static Direction getBreakDirection(
+            double range, BlockPos initalBlockPos, Player player) {
         List<BlockPos> positions = new ArrayList<>();
 
-        BlockHitResult traceResult = player.level().clip(new ClipContext(player.getEyePosition(1f),
-                (player.getEyePosition(1f).add(player.getViewVector(1f).scale(player.getAttribute(Attributes.BLOCK_INTERACTION_RANGE).getValue()))),
-                ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
+        BlockHitResult traceResult =
+                player.level()
+                        .clip(
+                                new ClipContext(
+                                        player.getEyePosition(1f),
+                                        (player.getEyePosition(1f)
+                                                .add(
+                                                        player.getViewVector(1f)
+                                                                .scale(
+                                                                        player.getAttribute(
+                                                                                        Attributes
+                                                                                                .BLOCK_INTERACTION_RANGE)
+                                                                                .getValue()))),
+                                        ClipContext.Block.COLLIDER,
+                                        ClipContext.Fluid.NONE,
+                                        player));
         return traceResult.getDirection();
     }
 
@@ -178,28 +210,35 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         Map<Trait, Integer> traits = getTraitLevel(getTraits(stack));
         List<ToolStats> statsList = new ArrayList<>();
         statsList.add(getBaseStats(stack));
-        traits.forEach((trait, value) -> {
-            if (trait != null) {
-                statsList.add(trait.modifyStats1(stack, value, getBaseStats(stack)));
-                statsList.add(trait.modifyStatsConditional1(player, level, stack, value, getBaseStats(stack)));
-            }
-        });
+        traits.forEach(
+                (trait, value) -> {
+                    if (trait != null) {
+                        statsList.add(trait.modifyStats1(stack, value, getBaseStats(stack)));
+                        statsList.add(
+                                trait.modifyStatsConditional1(
+                                        player, level, stack, value, getBaseStats(stack)));
+                    }
+                });
         ToolStats stats1 = ToolStats.add(statsList);
 
-        traits.forEach((trait, value) -> {
-            if (trait != null) {
-                statsList.add(trait.modifyStats2(stack, value, stats1));
-                statsList.add(trait.modifyStatsConditional2(player, level, stack, value, stats1));
-            }
-        });
+        traits.forEach(
+                (trait, value) -> {
+                    if (trait != null) {
+                        statsList.add(trait.modifyStats2(stack, value, stats1));
+                        statsList.add(
+                                trait.modifyStatsConditional2(player, level, stack, value, stats1));
+                    }
+                });
         ToolStats stats2 = ToolStats.add(statsList);
 
-        traits.forEach((trait, value) -> {
-            if (trait != null) {
-                statsList.add(trait.modifyStats3(stack, value, stats2));
-                statsList.add(trait.modifyStatsConditional3(player, level, stack, value, stats2));
-            }
-        });
+        traits.forEach(
+                (trait, value) -> {
+                    if (trait != null) {
+                        statsList.add(trait.modifyStats3(stack, value, stats2));
+                        statsList.add(
+                                trait.modifyStatsConditional3(player, level, stack, value, stats2));
+                    }
+                });
         return ToolStats.add(statsList);
     }
 
@@ -211,59 +250,78 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         Map<Trait, Integer> traits = getTraitLevel(getTraits(stack));
         List<ToolStats> statsList = new ArrayList<>();
         statsList.add(getBaseStats(stack));
-        traits.forEach((trait, value) -> {
-            if (trait != null) {
-                statsList.add(trait.modifyStats1(stack, value, getBaseStats(stack)));
-            }
-        });
+        traits.forEach(
+                (trait, value) -> {
+                    if (trait != null) {
+                        statsList.add(trait.modifyStats1(stack, value, getBaseStats(stack)));
+                    }
+                });
         ToolStats stats1 = ToolStats.add(statsList);
 
-        traits.forEach((trait, value) -> {
-            if (trait != null) {
-                statsList.add(trait.modifyStats2(stack, value, stats1));
-            }
-        });
+        traits.forEach(
+                (trait, value) -> {
+                    if (trait != null) {
+                        statsList.add(trait.modifyStats2(stack, value, stats1));
+                    }
+                });
         ToolStats stats2 = ToolStats.add(statsList);
 
-        traits.forEach((trait, value) -> {
-            if (trait != null) {
-                statsList.add(trait.modifyStats3(stack, value, stats2));
-            }
-        });
+        traits.forEach(
+                (trait, value) -> {
+                    if (trait != null) {
+                        statsList.add(trait.modifyStats3(stack, value, stats2));
+                    }
+                });
         return ToolStats.add(statsList);
     }
 
-    public boolean isCorrectTool(ItemStack stack, BlockState state, PartToolItem partToolItem, ToolStats stats) {
+    public boolean isCorrectTool(
+            ItemStack stack, BlockState state, PartToolItem partToolItem, ToolStats stats) {
         if (ComponentHelper.isBroken(stack)) {
             return false;
         }
         final Boolean[] flag = {null};
-        getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-            Boolean isCorrect = trait.isCorrectTool(stack, integer, this.getModifiedStatsWithoutConditional(stack), state);
-            if (isCorrect != null) {
-                flag[0] = isCorrect;
-                if (!isCorrect) {
-                    return;
-                }
-            }
-        });
+        getTraitLevel(getTraits(stack))
+                .forEach(
+                        (trait, integer) -> {
+                            Boolean isCorrect =
+                                    trait.isCorrectTool(
+                                            stack,
+                                            integer,
+                                            this.getModifiedStatsWithoutConditional(stack),
+                                            state);
+                            if (isCorrect != null) {
+                                flag[0] = isCorrect;
+                                if (!isCorrect) {
+                                    return;
+                                }
+                            }
+                        });
         if (flag[0] != null) {
             return flag[0];
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_AXE)) && partToolItem.getToolType() == ToolType.AXE) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_AXE))
+                && partToolItem.getToolType() == ToolType.AXE) {
             return hasCorrectTier(stack, state, stats);
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_PICKAXE)) && (partToolItem.getToolType() == ToolType.PICKAXE || partToolItem.getToolType() == ToolType.HAMMER)) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_PICKAXE))
+                && (partToolItem.getToolType() == ToolType.PICKAXE
+                        || partToolItem.getToolType() == ToolType.HAMMER)) {
             return hasCorrectTier(stack, state, stats);
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_SHOVEL)) && partToolItem.getToolType() == ToolType.SHOVEL) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_SHOVEL))
+                && partToolItem.getToolType() == ToolType.SHOVEL) {
             return hasCorrectTier(stack, state, stats);
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_HOE)) && partToolItem.getToolType() == ToolType.SCYTHE) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_HOE))
+                && partToolItem.getToolType() == ToolType.SCYTHE) {
             return hasCorrectTier(stack, state, stats);
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.SWORD_EFFICIENT)) && (partToolItem.getToolType() == ToolType.DAGGER
-                || partToolItem.getToolType() == ToolType.LIGHT_SWORD || partToolItem.getToolType() == ToolType.HEAVY_SWORD || partToolItem.getToolType() == ToolType.SCYTHE)) {
+        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.SWORD_EFFICIENT))
+                && (partToolItem.getToolType() == ToolType.DAGGER
+                        || partToolItem.getToolType() == ToolType.LIGHT_SWORD
+                        || partToolItem.getToolType() == ToolType.HEAVY_SWORD
+                        || partToolItem.getToolType() == ToolType.SCYTHE)) {
             return hasCorrectTier(stack, state, stats);
         }
         return false;
@@ -275,22 +333,30 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
             return false;
         }
         PartToolItem partToolItem = (PartToolItem) stack.getItem();
-        if (ItemAbilities.DEFAULT_AXE_ACTIONS.contains(itemAbility) && partToolItem.getToolType() == ToolType.AXE) {
+        if (ItemAbilities.DEFAULT_AXE_ACTIONS.contains(itemAbility)
+                && partToolItem.getToolType() == ToolType.AXE) {
             return true;
-    }
-        if (ItemAbilities.DEFAULT_PICKAXE_ACTIONS.contains(itemAbility) && (partToolItem.getToolType() == ToolType.PICKAXE || partToolItem.getToolType() == ToolType.HAMMER)) {
+        }
+        if (ItemAbilities.DEFAULT_PICKAXE_ACTIONS.contains(itemAbility)
+                && (partToolItem.getToolType() == ToolType.PICKAXE
+                        || partToolItem.getToolType() == ToolType.HAMMER)) {
             return true;
-    }
-        if (ItemAbilities.DEFAULT_SHOVEL_ACTIONS.contains(itemAbility) && partToolItem.getToolType() == ToolType.SHOVEL) {
+        }
+        if (ItemAbilities.DEFAULT_SHOVEL_ACTIONS.contains(itemAbility)
+                && partToolItem.getToolType() == ToolType.SHOVEL) {
             return true;
-    }
-        if (ItemAbilities.DEFAULT_HOE_ACTIONS.contains(itemAbility) && partToolItem.getToolType() == ToolType.SCYTHE) {
+        }
+        if (ItemAbilities.DEFAULT_HOE_ACTIONS.contains(itemAbility)
+                && partToolItem.getToolType() == ToolType.SCYTHE) {
             return true;
-    }
-        if (ItemAbilities.DEFAULT_SWORD_ACTIONS.contains(itemAbility) && (partToolItem.getToolType() == ToolType.DAGGER
-                || partToolItem.getToolType() == ToolType.LIGHT_SWORD || partToolItem.getToolType() == ToolType.HEAVY_SWORD || partToolItem.getToolType() == ToolType.SCYTHE)) {
-        return true;
-    }
+        }
+        if (ItemAbilities.DEFAULT_SWORD_ACTIONS.contains(itemAbility)
+                && (partToolItem.getToolType() == ToolType.DAGGER
+                        || partToolItem.getToolType() == ToolType.LIGHT_SWORD
+                        || partToolItem.getToolType() == ToolType.HEAVY_SWORD
+                        || partToolItem.getToolType() == ToolType.SCYTHE)) {
+            return true;
+        }
         return super.canPerformAction(stack, itemAbility);
     }
 
@@ -299,22 +365,49 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
     public abstract float getMultiplier(ToolPart part);
 
     @Override
-    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level world, @NotNull Entity entity, int slot, boolean selected) {
+    public void inventoryTick(
+            @NotNull ItemStack stack,
+            @NotNull Level world,
+            @NotNull Entity entity,
+            int slot,
+            boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
         if (entity instanceof Player player) {
-            if (player.getItemInHand(InteractionHand.MAIN_HAND) == stack || player.getItemInHand(InteractionHand.OFF_HAND) == stack) {
-                getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-                    trait.tick(player, world, stack, integer, getBaseStats(stack), true);
-                });
+            if (player.getItemInHand(InteractionHand.MAIN_HAND) == stack
+                    || player.getItemInHand(InteractionHand.OFF_HAND) == stack) {
+                getTraitLevel(getTraits(stack))
+                        .forEach(
+                                (trait, integer) -> {
+                                    trait.tick(
+                                            player,
+                                            world,
+                                            stack,
+                                            integer,
+                                            getBaseStats(stack),
+                                            true);
+                                });
                 if (world.isClientSide) {
-                    PacketDistributor.sendToServer(new TraitTickPayload(player.getItemInHand(InteractionHand.MAIN_HAND) == stack, false, slot, entity.getUUID()));
+                    PacketDistributor.sendToServer(
+                            new TraitTickPayload(
+                                    player.getItemInHand(InteractionHand.MAIN_HAND) == stack,
+                                    false,
+                                    slot,
+                                    entity.getUUID()));
                 }
             }
-            getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-                trait.inventoryTick(player, world, stack, integer, getBaseStats(stack), true);
-            });
+            getTraitLevel(getTraits(stack))
+                    .forEach(
+                            (trait, integer) -> {
+                                trait.inventoryTick(
+                                        player, world, stack, integer, getBaseStats(stack), true);
+                            });
             if (world.isClientSide) {
-                PacketDistributor.sendToServer(new TraitTickPayload(player.getItemInHand(InteractionHand.MAIN_HAND) == stack, true, slot, entity.getUUID()));
+                PacketDistributor.sendToServer(
+                        new TraitTickPayload(
+                                player.getItemInHand(InteractionHand.MAIN_HAND) == stack,
+                                true,
+                                slot,
+                                entity.getUUID()));
             }
         }
 
@@ -326,7 +419,6 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
     @Override
     public void onCraftedPostProcess(@NotNull ItemStack stack, @NotNull Level level) {
         super.onCraftedPostProcess(stack, level);
-
     }
 
     @Override
@@ -337,36 +429,74 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
             ToolType toolType = partToolItem.getToolType();
             var firstMaterial = materials.getFirst();
             var secondMaterial = materials.get(1);
-            if (materials.size() == toolType.getSize() && firstMaterial != null && secondMaterial != null) {
+            if (materials.size() == toolType.getSize()
+                    && firstMaterial != null
+                    && secondMaterial != null) {
                 if (Objects.equals(firstMaterial, secondMaterial)) {
-                    component.append(Component.translatable("item.magitech." + toolType.getId() + ".simple", firstMaterial.getDescription()));
+                    component.append(
+                            Component.translatable(
+                                    "item.magitech." + toolType.getId() + ".simple",
+                                    firstMaterial.getDescription()));
                 } else {
-                    component.append(Component.translatable("item.magitech." + toolType.getId() + ".complex", firstMaterial.getDescription(), secondMaterial.getDescription()));
+                    component.append(
+                            Component.translatable(
+                                    "item.magitech." + toolType.getId() + ".complex",
+                                    firstMaterial.getDescription(),
+                                    secondMaterial.getDescription()));
                 }
             } else {
-                component.append(Component.translatable("item.magitech." + ((PartToolItem) stack.getItem()).getToolType().getId()));
+                component.append(
+                        Component.translatable(
+                                "item.magitech."
+                                        + ((PartToolItem) stack.getItem()).getToolType().getId()));
             }
         }
         return component;
     }
 
     public void reloadComponent(Player player, Level level, ItemStack stack) {
-
         List<ItemAttributeModifiers.Entry> entries = new ArrayList<>();
-
 
         ToolStats finalStats = getSumStats(player, level, stack);
         Map<String, Float> map = finalStats.getStats();
 
-        stack.set(ComponentInit.BROKEN_COMPONENT, stack.getDamageValue() + 1 >= stack.getMaxDamage());
+        stack.set(
+                ComponentInit.BROKEN_COMPONENT, stack.getDamageValue() + 1 >= stack.getMaxDamage());
 
         if (!ComponentHelper.isBroken(stack)) {
 
-            entries.add(new ItemAttributeModifiers.Entry(Attributes.ATTACK_DAMAGE, new AttributeModifier(atkId, map.get(ToolStats.ATK_STAT), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND));
-            entries.add(new ItemAttributeModifiers.Entry(Attributes.ATTACK_SPEED, new AttributeModifier(spdId, map.get(ToolStats.SPD_STAT) - 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND));
-            entries.add(new ItemAttributeModifiers.Entry(Attributes.ARMOR, new AttributeModifier(defId, map.get(ToolStats.DEF_STAT), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND));
-            entries.add(new ItemAttributeModifiers.Entry(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(rngId, map.get(ToolStats.RNG_STAT) - 3, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND));
-
+            entries.add(
+                    new ItemAttributeModifiers.Entry(
+                            Attributes.ATTACK_DAMAGE,
+                            new AttributeModifier(
+                                    atkId,
+                                    map.get(ToolStats.ATK_STAT),
+                                    AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND));
+            entries.add(
+                    new ItemAttributeModifiers.Entry(
+                            Attributes.ATTACK_SPEED,
+                            new AttributeModifier(
+                                    spdId,
+                                    map.get(ToolStats.SPD_STAT) - 4,
+                                    AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND));
+            entries.add(
+                    new ItemAttributeModifiers.Entry(
+                            Attributes.ARMOR,
+                            new AttributeModifier(
+                                    defId,
+                                    map.get(ToolStats.DEF_STAT),
+                                    AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND));
+            entries.add(
+                    new ItemAttributeModifiers.Entry(
+                            Attributes.ENTITY_INTERACTION_RANGE,
+                            new AttributeModifier(
+                                    rngId,
+                                    map.get(ToolStats.RNG_STAT) - 3,
+                                    AttributeModifier.Operation.ADD_VALUE),
+                            EquipmentSlotGroup.MAINHAND));
         }
         modifyTraitAttribute(player, level, stack, finalStats, entries);
         ItemAttributeModifiers component = new ItemAttributeModifiers(entries, false);
@@ -386,18 +516,39 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
     }
 
     protected void setTier(ItemStack stack, ToolStats finalStats) {
-        stack.update(ComponentInit.TIER_COMPONENT, finalStats.getTier() * 5 / this.getToolType().getSize(), UnaryOperator.identity());
-        ComponentHelper.updateUpgradePoint(stack, value -> Math.max(0, value - finalStats.getTier() * 5 / this.getToolType().getSize()));
+        stack.update(
+                ComponentInit.TIER_COMPONENT,
+                finalStats.getTier() * 5 / this.getToolType().getSize(),
+                UnaryOperator.identity());
+        ComponentHelper.updateUpgradePoint(
+                stack,
+                value ->
+                        Math.max(
+                                0,
+                                value - finalStats.getTier() * 5 / this.getToolType().getSize()));
         stack.update(ComponentInit.PROGRESSION_COMPONENT, 0, UnaryOperator.identity());
-        stack.update(ComponentInit.MAX_PROGRESSION_COMPONENT, getMaxProgression(ComponentHelper.getTier(stack)), UnaryOperator.identity());
+        stack.update(
+                ComponentInit.MAX_PROGRESSION_COMPONENT,
+                getMaxProgression(ComponentHelper.getTier(stack)),
+                UnaryOperator.identity());
     }
 
-    protected void modifyTraitAttribute(Player player, Level level, ItemStack stack, ToolStats finalStats, List<ItemAttributeModifiers.Entry> entries) {
-        getTraitLevel(getTraits(stack)).forEach((trait, value) -> trait.modifyAttribute(player, level, stack, value, finalStats, entries));
+    protected void modifyTraitAttribute(
+            Player player,
+            Level level,
+            ItemStack stack,
+            ToolStats finalStats,
+            List<ItemAttributeModifiers.Entry> entries) {
+        getTraitLevel(getTraits(stack))
+                .forEach(
+                        (trait, value) ->
+                                trait.modifyAttribute(
+                                        player, level, stack, value, finalStats, entries));
     }
 
     @Override
-    public void postHurtEnemy(ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
+    public void postHurtEnemy(
+            ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
         stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
         progress(stack, attacker.level(), attacker);
     }
@@ -412,14 +563,21 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
     }
 
     @Override
-    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, @Nullable T entity, Consumer<Item> onBroken) {
+    public <T extends LivingEntity> int damageItem(
+            ItemStack stack, int amount, @Nullable T entity, Consumer<Item> onBroken) {
         if (stack.getMaxDamage() - stack.getDamageValue() - 1 <= amount) {
             if (stack.getMaxDamage() - stack.getDamageValue() <= amount) {
                 return 0;
             }
             if (entity != null && !ComponentHelper.isBroken(stack)) {
-                entity.level().playSound(null, entity.getOnPos(),
-                        SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F);
+                entity.level()
+                        .playSound(
+                                null,
+                                entity.getOnPos(),
+                                SoundEvents.ITEM_BREAK,
+                                SoundSource.PLAYERS,
+                                1.0F,
+                                1.0F);
             }
             stack.set(ComponentInit.BROKEN_COMPONENT, true);
         }
@@ -427,7 +585,11 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
+    public void appendHoverText(
+            @NotNull ItemStack stack,
+            @NotNull TooltipContext context,
+            @NotNull List<Component> tooltipComponents,
+            @NotNull TooltipFlag tooltipFlag) {
         addStatsHoverText(stack, tooltipComponents);
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
@@ -438,90 +600,225 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
 
         addDefaultComponents(stack, tooltipComponents);
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.attack_damage").append(": ").withColor(0xa0a0a0)
-                .append(Component.literal(String.valueOf(
-                        MathUtil.round(finalStats.getStats().get(ToolStats.ATK_STAT) + 1.0F, 2)
-                )).withColor(0xFF4040)));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.attack_damage")
+                        .append(": ")
+                        .withColor(0xa0a0a0)
+                        .append(
+                                Component.literal(
+                                                String.valueOf(
+                                                        MathUtil.round(
+                                                                finalStats
+                                                                                .getStats()
+                                                                                .get(
+                                                                                        ToolStats
+                                                                                                .ATK_STAT)
+                                                                        + 1.0F,
+                                                                2)))
+                                        .withColor(0xFF4040)));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.elemental_damage").append(": ").withColor(0xa0a0a0)
-                .append(Component.translatable("element.magitech." + finalStats.getElement().get())
-                        .append(" ")
-                        .append(Component.literal(String.valueOf(
-                                MathUtil.round(finalStats.getStats().get(ToolStats.ELM_ATK_STAT), 2)
-                        ))).withColor(finalStats.getElement().getColor())));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.elemental_damage")
+                        .append(": ")
+                        .withColor(0xa0a0a0)
+                        .append(
+                                Component.translatable(
+                                                "element.magitech." + finalStats.getElement().get())
+                                        .append(" ")
+                                        .append(
+                                                Component.literal(
+                                                        String.valueOf(
+                                                                MathUtil.round(
+                                                                        finalStats
+                                                                                .getStats()
+                                                                                .get(
+                                                                                        ToolStats
+                                                                                                .ELM_ATK_STAT),
+                                                                        2))))
+                                        .withColor(finalStats.getElement().getColor())));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.attack_speed").append(": ").withColor(0xa0a0a0)
-                .append(Component.literal(String.valueOf(
-                        MathUtil.round(finalStats.getStats().get(ToolStats.SPD_STAT), 2)
-                )).withColor(0x40FFC0)));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.attack_speed")
+                        .append(": ")
+                        .withColor(0xa0a0a0)
+                        .append(
+                                Component.literal(
+                                                String.valueOf(
+                                                        MathUtil.round(
+                                                                finalStats
+                                                                        .getStats()
+                                                                        .get(ToolStats.SPD_STAT),
+                                                                2)))
+                                        .withColor(0x40FFC0)));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.mining_speed").append(": ").withColor(0xa0a0a0)
-                .append(Component.literal(String.valueOf(
-                        MathUtil.round(finalStats.getStats().get(ToolStats.MIN_STAT), 2)
-                )).withColor(0x4080C0)));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.mining_speed")
+                        .append(": ")
+                        .withColor(0xa0a0a0)
+                        .append(
+                                Component.literal(
+                                                String.valueOf(
+                                                        MathUtil.round(
+                                                                finalStats
+                                                                        .getStats()
+                                                                        .get(ToolStats.MIN_STAT),
+                                                                2)))
+                                        .withColor(0x4080C0)));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.defense").append(": ").withColor(0xa0a0a0)
-                .append(Component.literal(String.valueOf(
-                        MathUtil.round(finalStats.getStats().get(ToolStats.DEF_STAT), 2)
-                )).withColor(0xA0C0C0)));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.defense")
+                        .append(": ")
+                        .withColor(0xa0a0a0)
+                        .append(
+                                Component.literal(
+                                                String.valueOf(
+                                                        MathUtil.round(
+                                                                finalStats
+                                                                        .getStats()
+                                                                        .get(ToolStats.DEF_STAT),
+                                                                2)))
+                                        .withColor(0xA0C0C0)));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.attack_range").append(": ").withColor(0xa0a0a0)
-                .append(Component.literal(String.valueOf(
-                        MathUtil.round(finalStats.getStats().get(ToolStats.RNG_STAT), 2)
-                )).withColor(0x80c0FF)));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.attack_range")
+                        .append(": ")
+                        .withColor(0xa0a0a0)
+                        .append(
+                                Component.literal(
+                                                String.valueOf(
+                                                        MathUtil.round(
+                                                                finalStats
+                                                                        .getStats()
+                                                                        .get(ToolStats.RNG_STAT),
+                                                                2)))
+                                        .withColor(0x80c0FF)));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.sweep_range").append(": ").withColor(0xa0a0a0)
-                .append(Component.literal(String.valueOf(
-                        MathUtil.round(finalStats.getStats().get(ToolStats.SWP_STAT), 2)
-                )).withColor(0xFFFF80)));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.sweep_range")
+                        .append(": ")
+                        .withColor(0xa0a0a0)
+                        .append(
+                                Component.literal(
+                                                String.valueOf(
+                                                        MathUtil.round(
+                                                                finalStats
+                                                                        .getStats()
+                                                                        .get(ToolStats.SWP_STAT),
+                                                                2)))
+                                        .withColor(0xFFFF80)));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.durability").append(": ").withColor(0xa0a0a0)
-                .append(Component.literal(
-                        (Math.round(finalStats.getStats().get(ToolStats.DUR_STAT)) - stack.getDamageValue() - 1) + " / " + Math.round(finalStats.getStats().get(ToolStats.DUR_STAT) - 1)
-                ).withColor(0xFFFFFF)));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.durability")
+                        .append(": ")
+                        .withColor(0xa0a0a0)
+                        .append(
+                                Component.literal(
+                                                (Math.round(
+                                                                        finalStats
+                                                                                .getStats()
+                                                                                .get(
+                                                                                        ToolStats
+                                                                                                .DUR_STAT))
+                                                                - stack.getDamageValue()
+                                                                - 1)
+                                                        + " / "
+                                                        + Math.round(
+                                                                finalStats
+                                                                                .getStats()
+                                                                                .get(
+                                                                                        ToolStats
+                                                                                                .DUR_STAT)
+                                                                        - 1))
+                                        .withColor(0xFFFFFF)));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.mining_level").append(": ").withColor(0xa0a0a0)
-                .append(Component.translatable("attribute.magitech.mining_level." + finalStats.getMiningLevel().get()).withColor(finalStats.getMiningLevel().getColor())));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.mining_level")
+                        .append(": ")
+                        .withColor(0xa0a0a0)
+                        .append(
+                                Component.translatable(
+                                                "attribute.magitech.mining_level."
+                                                        + finalStats.getMiningLevel().get())
+                                        .withColor(finalStats.getMiningLevel().getColor())));
 
         tooltipComponents.add(Component.empty());
 
         Map<Trait, Integer> traitIntegerMap = getTraitLevel(getTraits(stack));
-        traitIntegerMap.forEach(((trait, integer) -> {
-            if (trait != null) {
-                MutableComponent component = trait.getComponent().append(" ");
-                if (integer < 6 && trait.getMaxLevel() != 1) {
-                    for (int i = 0; i < (trait.getMaxLevel() == -1 ? integer : Math.min(integer, trait.getMaxLevel())); i++) {
-                        component.append("|");
+        traitIntegerMap.forEach(
+                ((trait, integer) -> {
+                    if (trait != null) {
+                        MutableComponent component = trait.getComponent().append(" ");
+                        if (integer < 6 && trait.getMaxLevel() != 1) {
+                            for (int i = 0;
+                                    i
+                                            < (trait.getMaxLevel() == -1
+                                                    ? integer
+                                                    : Math.min(integer, trait.getMaxLevel()));
+                                    i++) {
+                                component.append("|");
+                            }
+                        } else if (trait.getMaxLevel() != 1) {
+                            component.append(integer.toString());
+                        }
+                        tooltipComponents.add(component);
                     }
-                } else if (trait.getMaxLevel() != 1) {
-                    component.append(integer.toString());
-                }
-                tooltipComponents.add(component);
-
-            }
-        }
-        ));
+                }));
     }
 
-    protected static void addDefaultComponents(@NotNull ItemStack stack, List<Component> tooltipComponents) {
+    protected static void addDefaultComponents(
+            @NotNull ItemStack stack, List<Component> tooltipComponents) {
         tooltipComponents.add(Component.empty());
         if (ComponentHelper.isBroken(stack)) {
-            tooltipComponents.add(Component.translatable("attribute.magitech.broken").withColor(0xFF8080));
+            tooltipComponents.add(
+                    Component.translatable("attribute.magitech.broken").withColor(0xFF8080));
         }
-        tooltipComponents.add(Component.translatable("attribute.magitech.tier").append(" ")
-                .append(String.valueOf(ComponentHelper.getTier(stack))
-                ).withColor(ColorHelper.getTierColor(ComponentHelper.getTier(stack))));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.tier")
+                        .append(" ")
+                        .append(String.valueOf(ComponentHelper.getTier(stack)))
+                        .withColor(ColorHelper.getTierColor(ComponentHelper.getTier(stack))));
 
         tooltipComponents.add(
-                RenderHelper.getGradationGauge(0, stack.getOrDefault(ComponentInit.MAX_PROGRESSION_COMPONENT, 0), stack.getOrDefault(ComponentInit.PROGRESSION_COMPONENT, 0), 30,
-                        ColorHelper.getTierColor(ComponentHelper.getTier(stack)), ColorHelper.getTierColor(ComponentHelper.getTier(stack) + 1)));
+                RenderHelper.getGradationGauge(
+                        0,
+                        stack.getOrDefault(ComponentInit.MAX_PROGRESSION_COMPONENT, 0),
+                        stack.getOrDefault(ComponentInit.PROGRESSION_COMPONENT, 0),
+                        30,
+                        ColorHelper.getTierColor(ComponentHelper.getTier(stack)),
+                        ColorHelper.getTierColor(ComponentHelper.getTier(stack) + 1)));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.progress").withColor(0xa0a0a0).append(": ")
-                .append(Component.literal(String.valueOf(stack.getOrDefault(ComponentInit.PROGRESSION_COMPONENT, 0))).withColor(0xFFFFFF)).append(" / ").append(Component.literal(String.valueOf(stack.getOrDefault(ComponentInit.MAX_PROGRESSION_COMPONENT, 0)))
-                        .withColor(ColorHelper.getTierColor(ComponentHelper.getTier(stack)))));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.progress")
+                        .withColor(0xa0a0a0)
+                        .append(": ")
+                        .append(
+                                Component.literal(
+                                                String.valueOf(
+                                                        stack.getOrDefault(
+                                                                ComponentInit.PROGRESSION_COMPONENT,
+                                                                0)))
+                                        .withColor(0xFFFFFF))
+                        .append(" / ")
+                        .append(
+                                Component.literal(
+                                                String.valueOf(
+                                                        stack.getOrDefault(
+                                                                ComponentInit
+                                                                        .MAX_PROGRESSION_COMPONENT,
+                                                                0)))
+                                        .withColor(
+                                                ColorHelper.getTierColor(
+                                                        ComponentHelper.getTier(stack)))));
 
-        tooltipComponents.add(Component.translatable("attribute.magitech.upgrade_point").withColor(0xa0a0a0).append(": ")
-                .append(Component.literal(String.valueOf(ComponentHelper.getUpgradePoint(stack))).withColor(0xC0FF60)));
+        tooltipComponents.add(
+                Component.translatable("attribute.magitech.upgrade_point")
+                        .withColor(0xa0a0a0)
+                        .append(": ")
+                        .append(
+                                Component.literal(
+                                                String.valueOf(
+                                                        ComponentHelper.getUpgradePoint(stack)))
+                                        .withColor(0xC0FF60)));
     }
 
     public void traitAction(Level level, Player player, InteractionHand usedHand) {
@@ -535,15 +832,41 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         double mul = 256;
         Vec3 maxReachPos = playerEyePos.add(forward.multiply(mul, mul, mul));
 
-        EntityHitResult result = EntityUtil.getEntityHitResult(player, playerEyePos, maxReachPos, level);
+        EntityHitResult result =
+                EntityUtil.getEntityHitResult(player, playerEyePos, maxReachPos, level);
         if (result != null) {
-            getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-                trait.traitAction(player, level, result.getEntity(), result.getLocation(), stack, integer, getSumStats(player, level, stack), usedHand, true);
-            });
+            getTraitLevel(getTraits(stack))
+                    .forEach(
+                            (trait, integer) -> {
+                                trait.traitAction(
+                                        player,
+                                        level,
+                                        result.getEntity(),
+                                        result.getLocation(),
+                                        stack,
+                                        integer,
+                                        getSumStats(player, level, stack),
+                                        usedHand,
+                                        true);
+                            });
         } else {
-            getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-                trait.traitAction(player, level, null, new Vec3(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE), stack, integer, getSumStats(player, level, stack), usedHand, true);
-            });
+            getTraitLevel(getTraits(stack))
+                    .forEach(
+                            (trait, integer) -> {
+                                trait.traitAction(
+                                        player,
+                                        level,
+                                        null,
+                                        new Vec3(
+                                                Double.MAX_VALUE,
+                                                Double.MAX_VALUE,
+                                                Double.MAX_VALUE),
+                                        stack,
+                                        integer,
+                                        getSumStats(player, level, stack),
+                                        usedHand,
+                                        true);
+                            });
         }
     }
 
@@ -558,12 +881,36 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         double mul = user.getAttributeValue(Attributes.ENTITY_INTERACTION_RANGE);
         Vec3 maxReachPos = playerEyePos.add(forward.multiply(mul, mul, mul));
 
-        if (EntityUtil.getEntityHitResult(user, playerEyePos, maxReachPos, world) != null || getPlayerPOVHitResult(world, user, ClipContext.Fluid.NONE).getType() != BlockHitResult.Type.BLOCK) {
+        if (EntityUtil.getEntityHitResult(user, playerEyePos, maxReachPos, world) != null
+                || getPlayerPOVHitResult(world, user, ClipContext.Fluid.NONE).getType()
+                        != BlockHitResult.Type.BLOCK) {
             if (user.getAttackStrengthScale(0.5F) > 0.7F) {
-                world.playSound(user, user.getX(), user.getY(), user.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0F, (getSumStats(user, world, user.getItemInHand(hand)).getStats().get(ToolStats.SPD_STAT)) / 2);
+                world.playSound(
+                        user,
+                        user.getX(),
+                        user.getY(),
+                        user.getZ(),
+                        SoundEvents.PLAYER_ATTACK_SWEEP,
+                        SoundSource.PLAYERS,
+                        1.0F,
+                        (getSumStats(user, world, user.getItemInHand(hand))
+                                        .getStats()
+                                        .get(ToolStats.SPD_STAT))
+                                / 2);
                 sweepAttack(world, hand, user);
             } else {
-                world.playSound(user, user.getX(), user.getY(), user.getZ(), SoundEvents.PLAYER_ATTACK_NODAMAGE, SoundSource.PLAYERS, 1.0F, (getSumStats(user, world, user.getItemInHand(hand)).getStats().get(ToolStats.SPD_STAT)) / 2);
+                world.playSound(
+                        user,
+                        user.getX(),
+                        user.getY(),
+                        user.getZ(),
+                        SoundEvents.PLAYER_ATTACK_NODAMAGE,
+                        SoundSource.PLAYERS,
+                        1.0F,
+                        (getSumStats(user, world, user.getItemInHand(hand))
+                                        .getStats()
+                                        .get(ToolStats.SPD_STAT))
+                                / 2);
             }
             user.swing(hand);
             return InteractionResult.SUCCESS;
@@ -572,7 +919,12 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
     }
 
     @Override
-    public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level level, BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity miningEntity) {
+    public boolean mineBlock(
+            @NotNull ItemStack stack,
+            @NotNull Level level,
+            BlockState state,
+            @NotNull BlockPos pos,
+            @NotNull LivingEntity miningEntity) {
         List<Trait> traits = getTraits(stack);
         if (state.getDestroySpeed(level, pos) != 0) {
             stack.hurtAndBreak(1, (ServerLevel) level, miningEntity, item -> {});
@@ -585,7 +937,9 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         ItemStack stack = user.getItemInHand(hand);
         ToolStats stats = getSumStats(user, world, stack);
         float swp = stats.getStats().get(ToolStats.SWP_STAT);
-        Vec3 effectCenter = EntityUtil.getAttackTargetPosition(user, user.entityInteractionRange(), 0.5, swp * 0.7F);
+        Vec3 effectCenter =
+                EntityUtil.getAttackTargetPosition(
+                        user, user.entityInteractionRange(), 0.5, swp * 0.7F);
 
         float red = ((float) ((stats.getElement().getColor() & 0xFF0000) >> 16)) / 255;
         float green = ((float) ((stats.getElement().getColor() & 0x00FF00) >> 8)) / 255;
@@ -595,28 +949,174 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         float blue2 = blue * blue;
 
         if (stats.getElement() == Element.EMBER) {
-            EffectUtil.sweepEffect(user, world, new FlameParticleEffect(new Vector3f(1, 1, 1), new Vector3f(1, 1, 1), 2F, 1, 0), 0, effectCenter, -45.0, 45.0, 50, swp * 0.7F, (user.getRandom().nextFloat() - 0.5) * 45.0, false);
+            EffectUtil.sweepEffect(
+                    user,
+                    world,
+                    new FlameParticleEffect(new Vector3f(1, 1, 1), new Vector3f(1, 1, 1), 2F, 1, 0),
+                    0,
+                    effectCenter,
+                    -45.0,
+                    45.0,
+                    50,
+                    swp * 0.7F,
+                    (user.getRandom().nextFloat() - 0.5) * 45.0,
+                    false);
         } else if (stats.getElement() == Element.GLACE) {
-            EffectUtil.sweepEffect(user, world, new FrostParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 2F, 1, 0), 0, effectCenter, -45.0, 45.0, 50, swp * 0.7F, (user.getRandom().nextFloat() - 0.5) * 45.0, false);
+            EffectUtil.sweepEffect(
+                    user,
+                    world,
+                    new FrostParticleEffect(
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            2F,
+                            1,
+                            0),
+                    0,
+                    effectCenter,
+                    -45.0,
+                    45.0,
+                    50,
+                    swp * 0.7F,
+                    (user.getRandom().nextFloat() - 0.5) * 45.0,
+                    false);
         } else if (stats.getElement() == Element.SURGE) {
-            EffectUtil.sweepEffect(user, world, new SparkParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 2F, 3, 0), 0, effectCenter, -45.0, 45.0, 50, swp * 0.7F, (user.getRandom().nextFloat() - 0.5) * 45.0, false);
+            EffectUtil.sweepEffect(
+                    user,
+                    world,
+                    new SparkParticleEffect(
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            2F,
+                            3,
+                            0),
+                    0,
+                    effectCenter,
+                    -45.0,
+                    45.0,
+                    50,
+                    swp * 0.7F,
+                    (user.getRandom().nextFloat() - 0.5) * 45.0,
+                    false);
         } else if (stats.getElement() == Element.PHANTOM) {
-            EffectUtil.sweepEffect(user, world, new MembraneParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 2F, 1, 0), 0, effectCenter, -45.0, 45.0, 50, swp * 0.7F, (user.getRandom().nextFloat() - 0.5) * 45.0, false);
+            EffectUtil.sweepEffect(
+                    user,
+                    world,
+                    new MembraneParticleEffect(
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            2F,
+                            1,
+                            0),
+                    0,
+                    effectCenter,
+                    -45.0,
+                    45.0,
+                    50,
+                    swp * 0.7F,
+                    (user.getRandom().nextFloat() - 0.5) * 45.0,
+                    false);
         } else if (stats.getElement() == Element.TREMOR) {
-            EffectUtil.sweepEffect(user, world, new WaveParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 2F, 1, 0), 0, effectCenter, -45.0, 45.0, 50, swp * 0.7F, (user.getRandom().nextFloat() - 0.5) * 45.0, false);
+            EffectUtil.sweepEffect(
+                    user,
+                    world,
+                    new WaveParticleEffect(
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            2F,
+                            1,
+                            0),
+                    0,
+                    effectCenter,
+                    -45.0,
+                    45.0,
+                    50,
+                    swp * 0.7F,
+                    (user.getRandom().nextFloat() - 0.5) * 45.0,
+                    false);
         } else if (stats.getElement() == Element.MAGIC) {
-            EffectUtil.sweepEffect(user, world, new RuneParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 2F, 1, 0), 0, effectCenter, -45.0, 45.0, 50, swp * 0.7F, (user.getRandom().nextFloat() - 0.5) * 45.0, false);
+            EffectUtil.sweepEffect(
+                    user,
+                    world,
+                    new RuneParticleEffect(
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            2F,
+                            1,
+                            0),
+                    0,
+                    effectCenter,
+                    -45.0,
+                    45.0,
+                    50,
+                    swp * 0.7F,
+                    (user.getRandom().nextFloat() - 0.5) * 45.0,
+                    false);
         } else if (stats.getElement() == Element.FLOW) {
-            EffectUtil.sweepEffect(user, world, new BlowParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 2F, 1, 0), 0, effectCenter, -45.0, 45.0, 50, swp * 0.7F, (user.getRandom().nextFloat() - 0.5) * 45.0, false);
+            EffectUtil.sweepEffect(
+                    user,
+                    world,
+                    new BlowParticleEffect(
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            2F,
+                            1,
+                            0),
+                    0,
+                    effectCenter,
+                    -45.0,
+                    45.0,
+                    50,
+                    swp * 0.7F,
+                    (user.getRandom().nextFloat() - 0.5) * 45.0,
+                    false);
         } else if (stats.getElement() == Element.HOLLOW) {
-            EffectUtil.sweepEffect(user, world, new VoidGlowParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 2F, 1, 0), 0, effectCenter, -45.0, 45.0, 50, swp * 0.7F, (user.getRandom().nextFloat() - 0.5) * 45.0, false);
+            EffectUtil.sweepEffect(
+                    user,
+                    world,
+                    new VoidGlowParticleEffect(
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            2F,
+                            1,
+                            0),
+                    0,
+                    effectCenter,
+                    -45.0,
+                    45.0,
+                    50,
+                    swp * 0.7F,
+                    (user.getRandom().nextFloat() - 0.5) * 45.0,
+                    false);
         } else {
-            EffectUtil.sweepEffect(user, world, new SquareParticleEffect(new Vector3f(red, green, blue), new Vector3f(red2, green2, blue2), 1F, 1, 0), 0.01, effectCenter, -45.0, 45.0, 100, swp * 0.7F, (user.getRandom().nextFloat() - 0.5) * 45.0, false);
+            EffectUtil.sweepEffect(
+                    user,
+                    world,
+                    new SquareParticleEffect(
+                            new Vector3f(red, green, blue),
+                            new Vector3f(red2, green2, blue2),
+                            1F,
+                            1,
+                            0),
+                    0.01,
+                    effectCenter,
+                    -45.0,
+                    45.0,
+                    100,
+                    swp * 0.7F,
+                    (user.getRandom().nextFloat() - 0.5) * 45.0,
+                    false);
         }
 
-        Vec3 center = EntityUtil.getAttackTargetPosition(user, user.entityInteractionRange(), 2, 0.0);
-        List<Entity> attackList = EntityUtil.getEntitiesInBox(world, user, center, new Vec3(swp, swp / 3.0F, swp));
-        attackList.removeIf(e -> !(e instanceof LivingEntity livingEntity) || e == user || !user.canAttack(livingEntity) || e.isInvulnerable());
+        Vec3 center =
+                EntityUtil.getAttackTargetPosition(user, user.entityInteractionRange(), 2, 0.0);
+        List<Entity> attackList =
+                EntityUtil.getEntitiesInBox(world, user, center, new Vec3(swp, swp / 3.0F, swp));
+        attackList.removeIf(
+                e ->
+                        !(e instanceof LivingEntity livingEntity)
+                                || e == user
+                                || !user.canAttack(livingEntity)
+                                || e.isInvulnerable());
 
         float cooldown = ((AdjustableAttackStrengthEntity) user).getLastAttackedTicks();
         for (Entity target : attackList) {
@@ -640,8 +1140,11 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
             return;
         }
         if (stack.has(ComponentInit.PROGRESSION_COMPONENT)) {
-            stack.set(ComponentInit.PROGRESSION_COMPONENT, stack.getOrDefault(ComponentInit.PROGRESSION_COMPONENT, 0) + 1);
-            if (stack.getOrDefault(ComponentInit.PROGRESSION_COMPONENT, 0) >= stack.getOrDefault(ComponentInit.MAX_PROGRESSION_COMPONENT, 0)) {
+            stack.set(
+                    ComponentInit.PROGRESSION_COMPONENT,
+                    stack.getOrDefault(ComponentInit.PROGRESSION_COMPONENT, 0) + 1);
+            if (stack.getOrDefault(ComponentInit.PROGRESSION_COMPONENT, 0)
+                    >= stack.getOrDefault(ComponentInit.MAX_PROGRESSION_COMPONENT, 0)) {
                 int tier = ComponentHelper.getTier(stack);
                 stack.set(ComponentInit.TIER_COMPONENT, tier + 1);
                 ComponentHelper.updateUpgradePoint(stack, value -> value + 1);
@@ -649,9 +1152,14 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
                 stack.set(ComponentInit.MAX_PROGRESSION_COMPONENT, getMaxProgression(tier + 1));
                 if (entity instanceof Player player) {
                     if (level.isClientSide) {
-//                        addToast(stack, tier);
+                        // addToast(stack, tier);
                     } else {
-                        PacketDistributor.sendToPlayer((ServerPlayer) player, new TierUpToastPayload(player.getInventory().findSlotMatchingItem(stack), tier + 1, player.getUUID()));
+                        PacketDistributor.sendToPlayer(
+                                (ServerPlayer) player,
+                                new TierUpToastPayload(
+                                        player.getInventory().findSlotMatchingItem(stack),
+                                        tier + 1,
+                                        player.getUUID()));
                     }
                 }
             }
@@ -667,35 +1175,41 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         return (int) Math.round(100 * Math.exp(Math.log(3) * Math.sqrt(level) / Math.sqrt(5)));
     }
 
-
     public void applyElementDamage(Player attacker, Entity target, ItemStack stack) {
-        ResourceKey<DamageType> damageType = getSumStats(attacker, attacker.level(), stack).getElement().getDamageType();
+        ResourceKey<DamageType> damageType =
+                getSumStats(attacker, attacker.level(), stack).getElement().getDamageType();
         if (damageType != null) {
             ToolStats stats = getSumStats(attacker, attacker.level(), stack);
             float baseAttackDamage = stats.getStats().get(ToolStats.ELM_ATK_STAT);
 
             float h = attacker.getAttackStrengthScale(0.5F);
             baseAttackDamage *= 0.2F + h * h * 0.8F;
-            boolean bl3 = h > 0.9F
-                    && attacker.fallDistance > 0.0F
-                    && !attacker.onGround()
-                    && !attacker.onClimbable()
-                    && !attacker.isInWater()
-                    && !attacker.hasEffect(MobEffects.BLINDNESS)
-                    && attacker.getVehicle() == null
-                    && target instanceof LivingEntity
-                    && !attacker.isSprinting();
+            boolean bl3 =
+                    h > 0.9F
+                            && attacker.fallDistance > 0.0F
+                            && !attacker.onGround()
+                            && !attacker.onClimbable()
+                            && !attacker.isInWater()
+                            && !attacker.hasEffect(MobEffects.BLINDNESS)
+                            && attacker.getVehicle() == null
+                            && target instanceof LivingEntity
+                            && !attacker.isSprinting();
             if (bl3) {
                 baseAttackDamage *= 1.5F;
             }
 
-            DamageSource elementalDamageSource = attacker.damageSources().source(damageType, attacker);
-            float damage = baseAttackDamage * DataMapHelper.getElementMultiplier(target, stats.getElement());
+            DamageSource elementalDamageSource =
+                    attacker.damageSources().source(damageType, attacker);
+            float damage =
+                    baseAttackDamage
+                            * DataMapHelper.getElementMultiplier(target, stats.getElement());
             if (target instanceof LivingEntity livingEntity) {
                 float targetHealth = livingEntity.getHealth();
                 if (!target.isInvulnerableTo(elementalDamageSource)) {
                     livingEntity.setLastHurtByPlayer(attacker);
-                    attacker.awardStat(Stats.DAMAGE_DEALT, Math.round((targetHealth - livingEntity.getHealth()) * 10));
+                    attacker.awardStat(
+                            Stats.DAMAGE_DEALT,
+                            Math.round((targetHealth - livingEntity.getHealth()) * 10));
                 }
                 target.hurt(elementalDamageSource, damage);
             } else {
@@ -708,49 +1222,109 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
     }
 
     @Override
-    public int getEnchantmentLevel(@NotNull ItemStack stack, @NotNull Holder<Enchantment> enchantment) {
+    public int getEnchantmentLevel(
+            @NotNull ItemStack stack, @NotNull Holder<Enchantment> enchantment) {
         if (ComponentHelper.isBroken(stack)) {
             return super.getEnchantmentLevel(stack, enchantment);
         }
         int level = super.getEnchantmentLevel(stack, enchantment);
         final int[] add = {0};
         final int[] enhance = {0};
-        getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-            add[0] = Math.max(add[0], trait.addEnchantments(stack, integer, getBaseStats(stack), enchantment, level));
-        });
-        getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-            enhance[0] += trait.enhanceEnchantments(stack, integer, getBaseStats(stack), enchantment, add[0] + level);
-        });
+        getTraitLevel(getTraits(stack))
+                .forEach(
+                        (trait, integer) -> {
+                            add[0] =
+                                    Math.max(
+                                            add[0],
+                                            trait.addEnchantments(
+                                                    stack,
+                                                    integer,
+                                                    getBaseStats(stack),
+                                                    enchantment,
+                                                    level));
+                        });
+        getTraitLevel(getTraits(stack))
+                .forEach(
+                        (trait, integer) -> {
+                            enhance[0] +=
+                                    trait.enhanceEnchantments(
+                                            stack,
+                                            integer,
+                                            getBaseStats(stack),
+                                            enchantment,
+                                            add[0] + level);
+                        });
         return Math.max(0, level + add[0] + enhance[0]);
     }
 
     public void callTraitAttackEntity(Level world, Player user, Entity target, ItemStack stack) {
-        getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-            trait.onAttackEntity(user, world, stack, integer, getModifiedStats(user, world, stack), target);
-        });
+        getTraitLevel(getTraits(stack))
+                .forEach(
+                        (trait, integer) -> {
+                            trait.onAttackEntity(
+                                    user,
+                                    world,
+                                    stack,
+                                    integer,
+                                    getModifiedStats(user, world, stack),
+                                    target);
+                        });
     }
 
     public void callTraitSpellHitEntity(Level world, Player user, Entity target, ItemStack stack) {
-        getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-            trait.onSpellHitEntity(user, world, stack, integer, getModifiedStats(user, world, stack), target);
-        });
+        getTraitLevel(getTraits(stack))
+                .forEach(
+                        (trait, integer) -> {
+                            trait.onSpellHitEntity(
+                                    user,
+                                    world,
+                                    stack,
+                                    integer,
+                                    getModifiedStats(user, world, stack),
+                                    target);
+                        });
     }
 
     public void callTraitDamageEntity(Level world, Player user, Entity target, ItemStack stack) {
-        getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-            trait.onDamageEntity(user, world, stack, integer, getModifiedStats(user, world, stack), target);
-        });
+        getTraitLevel(getTraits(stack))
+                .forEach(
+                        (trait, integer) -> {
+                            trait.onDamageEntity(
+                                    user,
+                                    world,
+                                    stack,
+                                    integer,
+                                    getModifiedStats(user, world, stack),
+                                    target);
+                        });
     }
 
     public void callTestRepair(Level world, Player user, int amount, ItemStack stack) {
-        getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-            trait.testRepair(user, world, stack, integer, getModifiedStats(user, world, stack), amount);
-        });
+        getTraitLevel(getTraits(stack))
+                .forEach(
+                        (trait, integer) -> {
+                            trait.testRepair(
+                                    user,
+                                    world,
+                                    stack,
+                                    integer,
+                                    getModifiedStats(user, world, stack),
+                                    amount);
+                        });
     }
+
     public void callOnRepair(Level world, Player user, int amount, ItemStack stack) {
-        getTraitLevel(getTraits(stack)).forEach((trait, integer) -> {
-            trait.onRepair(user, world, stack, integer, getModifiedStats(user, world, stack), amount);
-        });
+        getTraitLevel(getTraits(stack))
+                .forEach(
+                        (trait, integer) -> {
+                            trait.onRepair(
+                                    user,
+                                    world,
+                                    stack,
+                                    integer,
+                                    getModifiedStats(user, world, stack),
+                                    amount);
+                        });
     }
 
     @Override
@@ -759,7 +1333,8 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
     }
 
     @Override
-    public boolean supportsEnchantment(@NotNull ItemStack stack, @NotNull Holder<Enchantment> enchantment) {
+    public boolean supportsEnchantment(
+            @NotNull ItemStack stack, @NotNull Holder<Enchantment> enchantment) {
         return false;
     }
 }

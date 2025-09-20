@@ -9,7 +9,8 @@ import net.stln.magitech.util.ClientHelper;
 
 public class TierUpToastPayLoadHandler {
 
-    public static void handleDataOnMainS2C(final TierUpToastPayload payload, final IPayloadContext context) {
+    public static void handleDataOnMainS2C(
+            final TierUpToastPayload payload, final IPayloadContext context) {
         addToast(payload);
     }
 
@@ -17,6 +18,11 @@ public class TierUpToastPayLoadHandler {
     private static void addToast(TierUpToastPayload payload) {
         var player = ClientHelper.getPlayer();
         if (player == null) return;
-        Minecraft.getInstance().getToasts().addToast(new TierUpToast(payload.newTier(), player.getInventory().getItem(payload.slot()).copy()));
+        Minecraft.getInstance()
+                .getToasts()
+                .addToast(
+                        new TierUpToast(
+                                payload.newTier(),
+                                player.getInventory().getItem(payload.slot()).copy()));
     }
 }

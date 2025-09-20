@@ -1,9 +1,8 @@
 package net.stln.magitech.gui;
 
-import io.wispforest.owo.ui.container.Containers;
-import io.wispforest.owo.ui.container.FlowLayout;
-import io.wispforest.owo.ui.core.OwoUIAdapter;
-import io.wispforest.owo.ui.core.Positioning;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -17,12 +16,16 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.stln.magitech.Magitech;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.wispforest.owo.ui.container.Containers;
+import io.wispforest.owo.ui.container.FlowLayout;
+import io.wispforest.owo.ui.core.OwoUIAdapter;
+import io.wispforest.owo.ui.core.Positioning;
 
 @OnlyIn(Dist.CLIENT)
 public class ToolRepairingScreen extends AbstractContainerScreen<ToolRepairingMenu> {
-    private static final ResourceLocation CRAFTING_TABLE_LOCATION = Magitech.id("textures/gui/tool_repairing.png");
+
+    private static final ResourceLocation CRAFTING_TABLE_LOCATION =
+            Magitech.id("textures/gui/tool_repairing.png");
     private OwoUIAdapter<FlowLayout> uiAdapter;
     ItemStack stack = null;
 
@@ -56,13 +59,20 @@ public class ToolRepairingScreen extends AbstractContainerScreen<ToolRepairingMe
     private void reloadUI() {
         FlowLayout root = this.uiAdapter.rootComponent;
         root.clearChildren();
-        ToolStatsPanel.addPanel(root, Positioning.absolute(leftPos + bgWidth, topPos), menu.slots.get(0).getItem(), Component.translatable("recipe.magitech.tool_stats_panel"), getPanelText());
+        ToolStatsPanel.addPanel(
+                root,
+                Positioning.absolute(leftPos + bgWidth, topPos),
+                menu.slots.get(0).getItem(),
+                Component.translatable("recipe.magitech.tool_stats_panel"),
+                getPanelText());
         this.uiAdapter.inflateAndMount();
     }
 
     private static List<Component> getPanelText() {
         List<Component> components = new ArrayList<>();
-        components.add(Component.translatable("recipe.magitech.tool_repairing.panel.title").withStyle(Style.EMPTY.withUnderlined(true)));
+        components.add(
+                Component.translatable("recipe.magitech.tool_repairing.panel.title")
+                        .withStyle(Style.EMPTY.withUnderlined(true)));
         components.add(Component.translatable("recipe.magitech.tool_repairing.panel.text"));
         return components;
     }
@@ -71,8 +81,8 @@ public class ToolRepairingScreen extends AbstractContainerScreen<ToolRepairingMe
      * Renders the graphical user interface (GUI) element.
      *
      * @param guiGraphics the GuiGraphics object used for rendering.
-     * @param mouseX      the x-coordinate of the mouse cursor.
-     * @param mouseY      the y-coordinate of the mouse cursor.
+     * @param mouseX the x-coordinate of the mouse cursor.
+     * @param mouseY the y-coordinate of the mouse cursor.
      * @param partialTick the partial tick time.
      */
     @Override
@@ -90,9 +100,7 @@ public class ToolRepairingScreen extends AbstractContainerScreen<ToolRepairingMe
         guiGraphics.blit(CRAFTING_TABLE_LOCATION, i, j, 0, 0, this.bgWidth, this.imageHeight);
     }
 
-    /**
-     * Called when the mouse is clicked over a slot or outside the gui.
-     */
+    /** Called when the mouse is clicked over a slot or outside the gui. */
     @Override
     protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
         super.slotClicked(slot, slotId, mouseButton, type);

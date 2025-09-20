@@ -1,5 +1,11 @@
 package net.stln.magitech.gui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Predicate;
+
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -22,15 +28,11 @@ import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.ToolMaterialRecipe;
 import net.stln.magitech.recipe.input.MultiStackRecipeInput;
 import net.stln.magitech.util.ComponentHelper;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Predicate;
-
 public class ToolRepairingMenu extends AbstractContainerMenu {
+
     public static final int RESULT_SLOT = 0;
     private static final int CRAFT_SLOT_START = 1;
     private static final int CRAFT_SLOT_END = 10;
@@ -38,13 +40,15 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_END = 37;
     private static final int USE_ROW_SLOT_START = 37;
     private static final int USE_ROW_SLOT_END = 46;
-    private final Container inputSlots = new SimpleContainer(3) {
-        @Override
-        public void setChanged() {
-            super.setChanged();
-            ToolRepairingMenu.this.slotsChanged(this);
-        }
-    };
+    private final Container inputSlots =
+            new SimpleContainer(3) {
+
+                @Override
+                public void setChanged() {
+                    super.setChanged();
+                    ToolRepairingMenu.this.slotsChanged(this);
+                }
+            };
     private final ResultContainer resultSlots = new ResultContainer();
     private final ContainerLevelAccess access;
     private final Player player;
@@ -55,33 +59,38 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
         this(containerId, playerInventory, ContainerLevelAccess.NULL);
     }
 
-    public ToolRepairingMenu(int containerId, Inventory playerInventory, ContainerLevelAccess access) {
+    public ToolRepairingMenu(
+            int containerId, Inventory playerInventory, ContainerLevelAccess access) {
         super(GuiInit.TOOL_REPAIRING_MENU.get(), containerId);
         this.level = playerInventory.player.level();
         this.access = access;
         this.player = playerInventory.player;
-        this.addSlot(new Slot(this.resultSlots, 0, 134, 49) {
-        @Override
-        public boolean mayPlace(@NotNull ItemStack stack) {
-            return false;
-        }
+        this.addSlot(
+                new Slot(this.resultSlots, 0, 134, 49) {
 
-        @Override
-        public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
-            stack.onCraftedBy(player.level(), player, stack.getCount());
-            ToolRepairingMenu.this.resultSlots.awardUsedRecipes(player, this.getRelevantItems());
-            removeCount();
-            super.onTake(player, stack);
-            ToolRepairingMenu.this.slotsChanged(inputSlots);
-        }
+                    @Override
+                    public boolean mayPlace(@NotNull ItemStack stack) {
+                        return false;
+                    }
 
-        private List<ItemStack> getRelevantItems() {
-            return createRecipeInput(inputSlots).stacks();
-        };
-        });
-            for (int i = 0; i < 3; i++) {
-                this.addSlot(new Slot(this.inputSlots, i, 20 + i * 18, 49));
-            }
+                    @Override
+                    public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
+                        stack.onCraftedBy(player.level(), player, stack.getCount());
+                        ToolRepairingMenu.this.resultSlots.awardUsedRecipes(
+                                player, this.getRelevantItems());
+                        removeCount();
+                        super.onTake(player, stack);
+                        ToolRepairingMenu.this.slotsChanged(inputSlots);
+                    }
+
+                    private List<ItemStack> getRelevantItems() {
+                        return createRecipeInput(inputSlots).stacks();
+                    }
+                    ;
+                });
+        for (int i = 0; i < 3; i++) {
+            this.addSlot(new Slot(this.inputSlots, i, 20 + i * 18, 49));
+        }
 
         for (int k = 0; k < 3; k++) {
             for (int i1 = 0; i1 < 9; i1++) {
@@ -97,10 +106,13 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
     private void removeCount() {
         int repairCount = 0;
         ItemStack stack = inputSlots.getItem(0).copy();
-        for (int i = 0; i < Math.min(inputSlots.getItem(1).getCount(), inputSlots.getItem(2).getCount()); i++) {
+        for (int i = 0;
+                i < Math.min(inputSlots.getItem(1).getCount(), inputSlots.getItem(2).getCount());
+                i++) {
             if (stack.getDamageValue() > 0) {
                 stack.setDamageValue(stack.getDamageValue() - stack.getMaxDamage() / 5);
-                ((PartToolItem) stack.getItem()).callOnRepair(level, player, stack.getMaxDamage() / 5, stack);
+                ((PartToolItem) stack.getItem())
+                        .callOnRepair(level, player, stack.getMaxDamage() / 5, stack);
                 repairCount++;
             }
         }
@@ -109,7 +121,12 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
         inputSlots.removeItem(2, repairCount);
     }
 
-    protected static void slotChangedCraftingGrid(AbstractContainerMenu menu, Level level, Player player, Container craftSlots, ResultContainer resultSlots) {
+    protected static void slotChangedCraftingGrid(
+            AbstractContainerMenu menu,
+            Level level,
+            Player player,
+            Container craftSlots,
+            ResultContainer resultSlots) {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             MultiStackRecipeInput recipeInput = createRecipeInput(craftSlots);
             ItemStack stack = recipeInput.getItem(0).copy();
@@ -118,30 +135,53 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
             ItemStack stack1 = stack;
             level.getRecipeManager()
                     .getRecipeFor(RecipeInit.TOOL_MATERIAL_TYPE.get(), input, level)
-                    .ifPresent(holder -> {
-                        if (!recipeInput.getItem(2).is(ItemTagKeys.REPAIR_COMPONENT)) {
-                            var recipe = holder.value();
-                            if (resultSlots.setRecipeUsed(level, serverPlayer, holder)) {
-                                ToolMaterial toolMaterial = recipe.getToolMaterial();
-                                if (ComponentHelper.getPartMaterials(stack1).contains(toolMaterial)) {
-                                    for (int i = 0; i < Math.min(recipeInput.getItem(1).getCount(), recipeInput.getItem(2).getCount()); i++) {
-                                        if (stack1.getDamageValue() > 0 && (stack1.getItem() instanceof PartToolItem partToolItem)) {
-                                            stack1.setDamageValue(stack1.getDamageValue() - stack1.getMaxDamage() / 5);
-                                            partToolItem.callTestRepair(level, player, stack1.getMaxDamage() / 5, stack1);
-                                            partToolItem.reloadComponent(player, level, stack1);
-                                            isRepairable.set(true);
+                    .ifPresent(
+                            holder -> {
+                                if (!recipeInput.getItem(2).is(ItemTagKeys.REPAIR_COMPONENT)) {
+                                    var recipe = holder.value();
+                                    if (resultSlots.setRecipeUsed(level, serverPlayer, holder)) {
+                                        ToolMaterial toolMaterial = recipe.getToolMaterial();
+                                        if (ComponentHelper.getPartMaterials(stack1)
+                                                .contains(toolMaterial)) {
+                                            for (int i = 0;
+                                                    i
+                                                            < Math.min(
+                                                                    recipeInput
+                                                                            .getItem(1)
+                                                                            .getCount(),
+                                                                    recipeInput
+                                                                            .getItem(2)
+                                                                            .getCount());
+                                                    i++) {
+                                                if (stack1.getDamageValue() > 0
+                                                        && (stack1.getItem()
+                                                                instanceof
+                                                                PartToolItem partToolItem)) {
+                                                    stack1.setDamageValue(
+                                                            stack1.getDamageValue()
+                                                                    - stack1.getMaxDamage() / 5);
+                                                    partToolItem.callTestRepair(
+                                                            level,
+                                                            player,
+                                                            stack1.getMaxDamage() / 5,
+                                                            stack1);
+                                                    partToolItem.reloadComponent(
+                                                            player, level, stack1);
+                                                    isRepairable.set(true);
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        }
-                    });
+                            });
             if (!isRepairable.get()) {
                 stack = ItemStack.EMPTY;
             }
             resultSlots.setItem(0, stack);
             menu.setRemoteSlot(0, stack);
-            serverPlayer.connection.send(new ClientboundContainerSetSlotPacket(menu.containerId, menu.incrementStateId(), 0, stack));
+            serverPlayer.connection.send(
+                    new ClientboundContainerSetSlotPacket(
+                            menu.containerId, menu.incrementStateId(), 0, stack));
         }
     }
 
@@ -153,35 +193,37 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
         return new MultiStackRecipeInput(stacks);
     }
 
-    /**
-     * Callback for when the crafting matrix is changed.
-     */
+    /** Callback for when the crafting matrix is changed. */
     @Override
     public void slotsChanged(@NotNull Container inventory) {
         if (!this.placingRecipe) {
-            this.access.execute((p_344363_, p_344364_) -> slotChangedCraftingGrid(this, p_344363_, this.player, this.inputSlots, this.resultSlots));
+            this.access.execute(
+                    (p_344363_, p_344364_) ->
+                            slotChangedCraftingGrid(
+                                    this,
+                                    p_344363_,
+                                    this.player,
+                                    this.inputSlots,
+                                    this.resultSlots));
         }
     }
 
-    /**
-     * Called when the container is closed.
-     */
+    /** Called when the container is closed. */
     @Override
     public void removed(@NotNull Player player) {
         super.removed(player);
         this.access.execute((p_39371_, p_39372_) -> this.clearContainer(player, this.inputSlots));
     }
 
-    /**
-     * Determines whether supplied player can use this container
-     */
+    /** Determines whether supplied player can use this container */
     @Override
     public boolean stillValid(@NotNull Player player) {
         return stillValid(this.access, player, BlockInit.REPAIRING_WORKBENCH.get());
     }
 
     /**
-     * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player inventory and the other inventory(s).
+     * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack
+     * between the player inventory and the other inventory(s).
      */
     @Override
     public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
@@ -191,7 +233,9 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
             if (index == 0) {
-                this.access.execute((p_39378_, p_39379_) -> itemstack1.getItem().onCraftedBy(itemstack1, p_39378_, player));
+                this.access.execute(
+                        (p_39378_, p_39379_) ->
+                                itemstack1.getItem().onCraftedBy(itemstack1, p_39378_, player));
                 if (!this.moveItemStackTo(itemstack1, 4, 40, true)) {
                     return ItemStack.EMPTY;
                 }
@@ -232,13 +276,16 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
 
     private boolean moveToSlots(ItemStack itemStack) {
         SingleRecipeInput recipeInput = new SingleRecipeInput(inputSlots.getItem(1));
-        List<RecipeHolder<ToolMaterialRecipe>> optional = level
-                .getRecipeManager()
-                .getAllRecipesFor(RecipeInit.TOOL_MATERIAL_TYPE.get());
+        List<RecipeHolder<ToolMaterialRecipe>> optional =
+                level.getRecipeManager().getAllRecipesFor(RecipeInit.TOOL_MATERIAL_TYPE.get());
 
         if (itemStack.getItem() instanceof PartToolItem) {
             return this.moveItemStackTo(itemStack, 1, 2, false);
-        } else if (optional.stream().anyMatch(recipe -> Arrays.stream(recipe.value().getIngredients().get(0).getItems()).anyMatch(stack -> stack.is(itemStack.getItem())))) {
+        } else if (optional.stream()
+                .anyMatch(
+                        recipe ->
+                                Arrays.stream(recipe.value().getIngredients().get(0).getItems())
+                                        .anyMatch(stack -> stack.is(itemStack.getItem())))) {
             return this.moveItemStackTo(itemStack, 2, 3, false);
         } else if (itemStack.getTags().anyMatch(Predicate.isEqual(ItemTagKeys.REPAIR_COMPONENT))) {
             return this.moveItemStackTo(itemStack, 3, 4, false);
@@ -247,7 +294,8 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
     }
 
     /**
-     * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in is null for the initial slot that was double-clicked.
+     * Called to determine if the current slot is valid for the stack merging (double-click) code.
+     * The stack passed in is null for the initial slot that was double-clicked.
      */
     @Override
     public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slot) {

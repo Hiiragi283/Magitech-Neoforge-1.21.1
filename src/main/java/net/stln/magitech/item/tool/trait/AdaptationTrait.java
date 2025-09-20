@@ -1,16 +1,16 @@
 package net.stln.magitech.item.tool.trait;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.material.ToolMaterial;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
 import net.stln.magitech.util.ComponentHelper;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class AdaptationTrait extends Trait {
 
@@ -31,7 +31,11 @@ public class AdaptationTrait extends Trait {
         modified.put(ToolStats.RNG_STAT, (statsMap.get(ToolStats.RNG_STAT)) * mul);
         modified.put(ToolStats.SWP_STAT, statsMap.get(ToolStats.SWP_STAT) * mul);
         modified.put(ToolStats.DUR_STAT, statsMap.get(ToolStats.DUR_STAT) * mul);
-        return new ToolStats(modified, defaultStats.getElement(), defaultStats.getMiningLevel(), defaultStats.getTier());
+        return new ToolStats(
+                modified,
+                defaultStats.getElement(),
+                defaultStats.getMiningLevel(),
+                defaultStats.getTier());
     }
 
     @Override
@@ -51,7 +55,11 @@ public class AdaptationTrait extends Trait {
         modified.put(ToolStats.RNG_STAT, (statsMap.get(ToolStats.RNG_STAT)) * mul);
         modified.put(ToolStats.SWP_STAT, statsMap.get(ToolStats.SWP_STAT) * mul);
         modified.put(ToolStats.DUR_STAT, statsMap.get(ToolStats.DUR_STAT) * mul);
-        return new ToolStats(modified, defaultStats.getElement(), defaultStats.getMiningLevel(), defaultStats.getTier());
+        return new ToolStats(
+                modified,
+                defaultStats.getElement(),
+                defaultStats.getMiningLevel(),
+                defaultStats.getTier());
     }
 
     @Override
