@@ -1,5 +1,7 @@
 package net.stln.magitech.network;
 
+import java.util.Objects;
+
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,11 +14,10 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.armor.AetherLifterItem;
 
-import java.util.Objects;
-
 public class DoubleJumpPayLoadHandler {
 
-    public static void handleDataOnMainS2C(final DoubleJumpPayload payload, final IPayloadContext context) {
+    public static void handleDataOnMainS2C(
+            final DoubleJumpPayload payload, final IPayloadContext context) {
         Player player = null;
         Level level = context.player().level();
         for (Player search : level.players()) {
@@ -34,7 +35,8 @@ public class DoubleJumpPayLoadHandler {
         }
     }
 
-    public static void handleDataOnMainC2S(final DoubleJumpPayload payload, final IPayloadContext context) {
+    public static void handleDataOnMainC2S(
+            final DoubleJumpPayload payload, final IPayloadContext context) {
         Player player = context.player().level().getPlayerByUUID(payload.uuid());
         if (player == null) {
             return;
@@ -43,7 +45,10 @@ public class DoubleJumpPayLoadHandler {
         if (boots.getItem() == ItemInit.AETHER_LIFTER.get()) {
             AetherLifterItem.doubleJump(player, payload.jumpCount(), boots);
         }
-        MinecraftServer server = Objects.requireNonNull(ServerLifecycleHooks.getCurrentServer(), "Cannot send clientbound payloads on the client");
+        MinecraftServer server =
+                Objects.requireNonNull(
+                        ServerLifecycleHooks.getCurrentServer(),
+                        "Cannot send clientbound payloads on the client");
         for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers())
             if (player.getUUID() != serverPlayer.getUUID()) {
                 PacketDistributor.sendToPlayer(serverPlayer, payload);

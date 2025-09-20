@@ -1,15 +1,10 @@
 package net.stln.magitech.magic.spell.surge;
 
-import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
-import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
-import dev.kosmx.playerAnim.api.layered.IAnimation;
-import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
-import dev.kosmx.playerAnim.api.layered.ModifierLayer;
-import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
-import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.kosmx.playerAnim.core.util.Ease;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -28,12 +23,19 @@ import net.stln.magitech.particle.particle_option.ZapParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EntityUtil;
 import net.stln.magitech.util.SpellShape;
+
 import org.joml.Vector3f;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
+import dev.kosmx.playerAnim.api.layered.IAnimation;
+import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
+import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
+import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
+import dev.kosmx.playerAnim.core.util.Ease;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 
 public class Sparkion extends Spell {
 
@@ -76,12 +78,22 @@ public class Sparkion extends Spell {
 
     @Override
     protected void playAnimation(Player user) {
-        var playerAnimationData = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user).get(Magitech.id("animation"));
+        var playerAnimationData =
+                (ModifierLayer<IAnimation>)
+                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
+                                .get(Magitech.id("animation"));
         if (playerAnimationData != null) {
 
             user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, Ease.INSINE), new KeyframeAnimationPlayer((KeyframeAnimation) PlayerAnimationRegistry.getAnimation(Magitech.id("wand_spray")))
-                    .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL).setFirstPersonConfiguration(new FirstPersonConfiguration(true, true, true, true)));
+            playerAnimationData.replaceAnimationWithFade(
+                    AbstractFadeModifier.standardFadeIn(3, Ease.INSINE),
+                    new KeyframeAnimationPlayer(
+                                    (KeyframeAnimation)
+                                            PlayerAnimationRegistry.getAnimation(
+                                                    Magitech.id("wand_spray")))
+                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                            .setFirstPersonConfiguration(
+                                    new FirstPersonConfiguration(true, true, true, true)));
         }
     }
 
@@ -105,17 +117,23 @@ public class Sparkion extends Spell {
         Vec3 center2 = center.add(forward.scale(2));
         Set<Entity> attackList = new HashSet<>();
         Set<Entity> attackListLast = new HashSet<>();
-        attackList.addAll(EntityUtil.getEntitiesInBox(level, livingEntity, center, new Vec3(3.0, 3.0, 3.0)));
-        attackList.addAll(EntityUtil.getEntitiesInBox(level, livingEntity, center2, new Vec3(4.0, 4.0, 4.0)));
+        attackList.addAll(
+                EntityUtil.getEntitiesInBox(level, livingEntity, center, new Vec3(3.0, 3.0, 3.0)));
+        attackList.addAll(
+                EntityUtil.getEntitiesInBox(level, livingEntity, center2, new Vec3(4.0, 4.0, 4.0)));
         Vec3 startPos = offset;
         for (Entity entity : attackList) {
-            attackListLast.addAll(EntityUtil.getEntitiesInBox(level, livingEntity, entity.position(), new Vec3(4.0, 4.0, 4.0)));
+            attackListLast.addAll(
+                    EntityUtil.getEntitiesInBox(
+                            level, livingEntity, entity.position(), new Vec3(4.0, 4.0, 4.0)));
         }
         attackList.clear();
         attackList.addAll(attackListLast);
         attackListLast.clear();
         for (Entity entity : attackList) {
-            attackListLast.addAll(EntityUtil.getEntitiesInBox(level, livingEntity, entity.position(), new Vec3(3.0, 3.0, 3.0)));
+            attackListLast.addAll(
+                    EntityUtil.getEntitiesInBox(
+                            level, livingEntity, entity.position(), new Vec3(3.0, 3.0, 3.0)));
         }
         boolean hitEntity = false;
         for (Entity entity : attackListLast) {
@@ -123,36 +141,94 @@ public class Sparkion extends Spell {
             if (startPos.distanceTo(targetBodyPos) > offset.distanceTo(targetBodyPos)) {
                 startPos = offset;
             }
-            if (level.clip(new ClipContext(targetBodyPos, offset, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, livingEntity)).getType() == HitResult.Type.BLOCK) {
+            if (level.clip(
+                                    new ClipContext(
+                                            targetBodyPos,
+                                            offset,
+                                            ClipContext.Block.COLLIDER,
+                                            ClipContext.Fluid.NONE,
+                                            livingEntity))
+                            .getType()
+                    == HitResult.Type.BLOCK) {
                 continue;
             }
             hitEntity = true;
             if (usingTick % 2 == 0 || startPos == offset) {
-                level.addParticle(new ZapParticleEffect(new Vector3f(1), new Vector3f(1), targetBodyPos.toVector3f(), 2F, 3, 0), startPos.x, startPos.y, startPos.z,
-                        0, 0, 0);
+                level.addParticle(
+                        new ZapParticleEffect(
+                                new Vector3f(1),
+                                new Vector3f(1),
+                                targetBodyPos.toVector3f(),
+                                2F,
+                                3,
+                                0),
+                        startPos.x,
+                        startPos.y,
+                        startPos.z,
+                        0,
+                        0,
+                        0);
             }
             startPos = targetBodyPos;
         }
         if (!hitEntity) {
-            level.addParticle(new ZapParticleEffect(new Vector3f(1), new Vector3f(1),
-                            center2.add(new Vec3(livingEntity.getRandom().nextFloat() - 0.5, livingEntity.getRandom().nextFloat() - 0.5, livingEntity.getRandom().nextFloat() - 0.5).scale(3)).toVector3f(),
-                            2F, 3, 0), offset.x, offset.y, offset.z,
-                    0, 0, 0);
+            level.addParticle(
+                    new ZapParticleEffect(
+                            new Vector3f(1),
+                            new Vector3f(1),
+                            center2.add(
+                                            new Vec3(
+                                                            livingEntity.getRandom().nextFloat()
+                                                                    - 0.5,
+                                                            livingEntity.getRandom().nextFloat()
+                                                                    - 0.5,
+                                                            livingEntity.getRandom().nextFloat()
+                                                                    - 0.5)
+                                                    .scale(3))
+                                    .toVector3f(),
+                            2F,
+                            3,
+                            0),
+                    offset.x,
+                    offset.y,
+                    offset.z,
+                    0,
+                    0,
+                    0);
         }
         if (livingEntity instanceof Player player) {
             if (usingTick % 5 == 0) {
-                level.playSound(player, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundInit.ZAP.get(), SoundSource.PLAYERS, 1.0F, 0.7F + (player.getRandom().nextFloat() * 0.6F));
+                level.playSound(
+                        player,
+                        livingEntity.getX(),
+                        livingEntity.getY(),
+                        livingEntity.getZ(),
+                        SoundInit.ZAP.get(),
+                        SoundSource.PLAYERS,
+                        1.0F,
+                        0.7F + (player.getRandom().nextFloat() * 0.6F));
             }
         }
         for (Entity target : attackListLast) {
             if (livingEntity instanceof Player user) {
-                this.applyDamage(tickBaseDamage, this.getTickCost(level, user, stack), this.getElement(), stack, user, target);
+                this.applyDamage(
+                        tickBaseDamage,
+                        this.getTickCost(level, user, stack),
+                        this.getElement(),
+                        stack,
+                        user,
+                        target);
             }
         }
     }
 
     @Override
-    public void finishUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged, boolean isHost) {
+    public void finishUsing(
+            ItemStack stack,
+            Level level,
+            LivingEntity livingEntity,
+            int timeCharged,
+            boolean isHost) {
         super.finishUsing(stack, level, livingEntity, timeCharged, isHost);
         if (livingEntity instanceof Player player) {
             addCooldown(level, player, stack);

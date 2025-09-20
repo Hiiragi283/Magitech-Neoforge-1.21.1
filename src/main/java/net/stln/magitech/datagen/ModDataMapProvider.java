@@ -1,5 +1,7 @@
 package net.stln.magitech.datagen;
 
+import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
@@ -7,12 +9,13 @@ import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.stln.magitech.data.DataMapTypeInit;
 import net.stln.magitech.data.EntityElementData;
 import net.stln.magitech.element.Element;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.CompletableFuture;
-
 public class ModDataMapProvider extends DataMapProvider {
-    public ModDataMapProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+
+    public ModDataMapProvider(
+            PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(packOutput, lookupProvider);
     }
 
@@ -42,7 +45,10 @@ public class ModDataMapProvider extends DataMapProvider {
     }
 
     @SuppressWarnings("deprecation")
-    private static void addElement(Builder<EntityElementData, EntityType<?>> builder, EntityType<?> entityType, Element element) {
+    private static void addElement(
+            Builder<EntityElementData, EntityType<?>> builder,
+            EntityType<?> entityType,
+            Element element) {
         builder.add(entityType.builtInRegistryHolder(), new EntityElementData(element), false);
     }
 }

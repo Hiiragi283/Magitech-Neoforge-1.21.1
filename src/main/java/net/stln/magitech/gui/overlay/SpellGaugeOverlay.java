@@ -14,6 +14,7 @@ import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.util.ClientHelper;
 import net.stln.magitech.util.MathUtil;
 import net.stln.magitech.util.RenderHelper;
+
 import org.jetbrains.annotations.NotNull;
 
 public class SpellGaugeOverlay implements LayeredDraw.Layer {
@@ -30,24 +31,41 @@ public class SpellGaugeOverlay implements LayeredDraw.Layer {
                 double chargeProgress = charge.getCharge() / charge.getMaxCharge();
                 int chargeGaugeWidth = (int) (chargeProgress * 40);
                 Element element = charge.getElement();
-                int offset = switch (element) {
-                    case NONE -> 0;
-                    case EMBER -> 1;
-                    case GLACE -> 2;
-                    case SURGE -> 3;
-                    case PHANTOM -> 4;
-                    case TREMOR -> 5;
-                    case MAGIC -> 6;
-                    case FLOW -> 7;
-                    case HOLLOW -> 8;
-                } * 24;
+                int offset =
+                        switch (element) {
+                                    case NONE -> 0;
+                                    case EMBER -> 1;
+                                    case GLACE -> 2;
+                                    case SURGE -> 3;
+                                    case PHANTOM -> 4;
+                                    case TREMOR -> 5;
+                                    case MAGIC -> 6;
+                                    case FLOW -> 7;
+                                    case HOLLOW -> 8;
+                                }
+                                * 24;
 
-                guiGraphics.blit(TEXTURE, guiGraphics.guiWidth() / 2 - 24, guiGraphics.guiHeight() * 2 / 3 - 12, 0, offset, 48, 23);
+                guiGraphics.blit(
+                        TEXTURE,
+                        guiGraphics.guiWidth() / 2 - 24,
+                        guiGraphics.guiHeight() * 2 / 3 - 12,
+                        0,
+                        offset,
+                        48,
+                        23);
 
-                guiGraphics.blit(TEXTURE, guiGraphics.guiWidth() / 2 - 20, guiGraphics.guiHeight() * 2 / 3 - 6, 48, offset, chargeGaugeWidth, 11);
+                guiGraphics.blit(
+                        TEXTURE,
+                        guiGraphics.guiWidth() / 2 - 20,
+                        guiGraphics.guiHeight() * 2 / 3 - 6,
+                        48,
+                        offset,
+                        chargeGaugeWidth,
+                        11);
 
                 Font font = Minecraft.getInstance().font;
-                String text = MathUtil.round((charge.getMaxCharge() - charge.getCharge()) / 20, 1) + "s";
+                String text =
+                        MathUtil.round((charge.getMaxCharge() - charge.getCharge()) / 20, 1) + "s";
                 int renderx = guiGraphics.guiWidth() / 2 - font.width(text) / 2;
                 int rendery = guiGraphics.guiHeight() * 2 / 3 - 4;
                 RenderHelper.renderFramedText(guiGraphics, font, text, renderx, rendery, element);

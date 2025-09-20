@@ -1,5 +1,7 @@
 package net.stln.magitech.item.tool.trait;
 
+import java.util.Optional;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -15,8 +17,6 @@ import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.ToolType;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
 
-import java.util.Optional;
-
 @EventBusSubscriber(modid = Magitech.MOD_ID)
 public class ModifyBreakSpeedEvent {
 
@@ -28,16 +28,26 @@ public class ModifyBreakSpeedEvent {
         Optional<BlockPos> blockPosOptional = event.getPosition();
         BlockState state = event.getState();
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-        Direction direction = PartToolItem.getBreakDirection(player.blockInteractionRange(), blockPosOptional.orElse(BlockPos.ZERO), player);
+        Direction direction =
+                PartToolItem.getBreakDirection(
+                        player.blockInteractionRange(),
+                        blockPosOptional.orElse(BlockPos.ZERO),
+                        player);
         if (stack.getItem() instanceof PartToolItem partToolItem) {
 
             ToolStats stats = ((PartToolItem) stack.getItem()).getSumStats(player, level, stack);
-            if (partToolItem.isCorrectTool(stack, state, partToolItem, stats) && blockPosOptional.isPresent()) {
+            if (partToolItem.isCorrectTool(stack, state, partToolItem, stats)
+                    && blockPosOptional.isPresent()) {
                 BlockPos pos = blockPosOptional.get();
                 final float[] speed = {stats.getStats().get(ToolStats.MIN_STAT)};
-                PartToolItem.getTraitLevel(PartToolItem.getTraits(stack)).forEach((trait, integer) -> {
-                    speed[0] += trait.modifyMiningSpeed(player, level, stack, integer, stats, state, pos);
-                });
+                PartToolItem.getTraitLevel(PartToolItem.getTraits(stack))
+                        .forEach(
+                                (trait, integer) -> {
+                                    speed[0] +=
+                                            trait.modifyMiningSpeed(
+                                                    player, level, stack, integer, stats, state,
+                                                    pos);
+                                });
                 if (partToolItem.getToolType() == ToolType.HAMMER) {
                     speed[0] = getHammerMineSpeed(player, stack, pos, direction, speed[0]);
                 }
@@ -46,7 +56,8 @@ public class ModifyBreakSpeedEvent {
         }
     }
 
-    private static float getHammerMineSpeed(Player player, ItemStack stack, BlockPos pos, Direction direction, float defaultSpeed) {
+    private static float getHammerMineSpeed(
+            Player player, ItemStack stack, BlockPos pos, Direction direction, float defaultSpeed) {
         int x = 0;
         int y = 0;
         int z = 0;
@@ -69,8 +80,17 @@ public class ModifyBreakSpeedEvent {
         for (int i = -x; i <= x; i++) {
             for (int j = -y; j <= y; j++) {
                 for (int k = -z; k <= z; k++) {
-                    if (((PartToolItem) stack.getItem()).isCorrectTool(stack, player.level().getBlockState(pos.offset(i, j, k)), (PartToolItem) stack.getItem(), ((PartToolItem) stack.getItem()).getSumStats(player, player.level(), stack))) {
-                        hard += player.level().getBlockState(pos.offset(i, j, k)).getDestroySpeed(player.level(), pos.offset(i, j, k));
+                    if (((PartToolItem) stack.getItem())
+                            .isCorrectTool(
+                                    stack,
+                                    player.level().getBlockState(pos.offset(i, j, k)),
+                                    (PartToolItem) stack.getItem(),
+                                    ((PartToolItem) stack.getItem())
+                                            .getSumStats(player, player.level(), stack))) {
+                        hard +=
+                                player.level()
+                                        .getBlockState(pos.offset(i, j, k))
+                                        .getDestroySpeed(player.level(), pos.offset(i, j, k));
                         count++;
                     }
                 }

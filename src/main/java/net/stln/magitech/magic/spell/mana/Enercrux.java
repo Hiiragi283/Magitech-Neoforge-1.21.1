@@ -1,5 +1,8 @@
 package net.stln.magitech.magic.spell.mana;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -20,10 +23,8 @@ import net.stln.magitech.particle.particle_option.UnstableSquareParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.SpellShape;
-import org.joml.Vector3f;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.joml.Vector3f;
 
 public class Enercrux extends BeamSpell {
 
@@ -60,7 +61,12 @@ public class Enercrux extends BeamSpell {
     }
 
     @Override
-    public void finishUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged, boolean isHost) {
+    public void finishUsing(
+            ItemStack stack,
+            Level level,
+            LivingEntity livingEntity,
+            int timeCharged,
+            boolean isHost) {
         super.finishUsing(stack, level, livingEntity, timeCharged, isHost);
     }
 
@@ -74,26 +80,84 @@ public class Enercrux extends BeamSpell {
         super.applyEffectToBlock(level, user, stack, target);
         BlockEntity blockEntity = level.getBlockEntity(target);
         if (blockEntity instanceof ManaContainerBlockEntity manaContainerBlockEntity) {
-            manaContainerBlockEntity.addMana((int) Math.min(this.getRequiredMana(level, user, stack).get(ManaUtil.ManaType.MANA), this.getBaseRequiredMana().get(ManaUtil.ManaType.MANA) * 0.75));
+            manaContainerBlockEntity.addMana(
+                    (int)
+                            Math.min(
+                                    this.getRequiredMana(level, user, stack)
+                                            .get(ManaUtil.ManaType.MANA),
+                                    this.getBaseRequiredMana().get(ManaUtil.ManaType.MANA) * 0.75));
         }
     }
 
     @Override
     protected void playBeamSound(Level level, Player user) {
-        level.playSound(user, user.getX(), user.getY(), user.getZ(), SoundInit.ENERCRUX.get(), SoundSource.PLAYERS, 1.0F, 0.75F + (user.getRandom().nextFloat() * 0.5F));
+        level.playSound(
+                user,
+                user.getX(),
+                user.getY(),
+                user.getZ(),
+                SoundInit.ENERCRUX.get(),
+                SoundSource.PLAYERS,
+                1.0F,
+                0.75F + (user.getRandom().nextFloat() * 0.5F));
     }
 
     @Override
     protected void addVisualEffect(Level level, Player user, Vec3 start, Vec3 hitPos) {
-        EffectUtil.lineEffect(level, new UnstableSquareParticleEffect(new Vector3f(0.8F, 1.0F, 0.7F), new Vector3f(0.0F, 1.0F, 0.9F), 1.0F, user.getRandom().nextInt(2, 5), 0), start, hitPos, 2, false);
-        level.addParticle(new BeamParticleEffect(new Vector3f(0.8F, 1.0F, 0.7F), new Vector3f(0.0F, 1.0F, 0.9F), hitPos.toVector3f(), 0.4F, user.getRandom().nextInt(2, 5), 10), start.x, start.y, start.z, 0, 0, 0);
+        EffectUtil.lineEffect(
+                level,
+                new UnstableSquareParticleEffect(
+                        new Vector3f(0.8F, 1.0F, 0.7F),
+                        new Vector3f(0.0F, 1.0F, 0.9F),
+                        1.0F,
+                        user.getRandom().nextInt(2, 5),
+                        0),
+                start,
+                hitPos,
+                2,
+                false);
+        level.addParticle(
+                new BeamParticleEffect(
+                        new Vector3f(0.8F, 1.0F, 0.7F),
+                        new Vector3f(0.0F, 1.0F, 0.9F),
+                        hitPos.toVector3f(),
+                        0.4F,
+                        user.getRandom().nextInt(2, 5),
+                        10),
+                start.x,
+                start.y,
+                start.z,
+                0,
+                0,
+                0);
         for (int i = 0; i < 20; i++) {
-            level.addParticle(new UnstableSquareParticleEffect(new Vector3f(0.8F, 1.0F, 0.7F), new Vector3f(0.0F, 1.0F, 0.9F), 1.0F, user.getRandom().nextInt(2, 5), 0),
-                    hitPos.x + (user.getRandom().nextFloat() - 0.5) / 3, hitPos.y + (user.getRandom().nextFloat() - 0.5) / 3, hitPos.z + (user.getRandom().nextFloat() - 0.5) / 3,
-                    Mth.nextFloat(user.getRandom(), -0.2F, 0.2F), Mth.nextFloat(user.getRandom(), -0.2F, 0.2F), Mth.nextFloat(user.getRandom(), -0.2F, 0.2F));
+            level.addParticle(
+                    new UnstableSquareParticleEffect(
+                            new Vector3f(0.8F, 1.0F, 0.7F),
+                            new Vector3f(0.0F, 1.0F, 0.9F),
+                            1.0F,
+                            user.getRandom().nextInt(2, 5),
+                            0),
+                    hitPos.x + (user.getRandom().nextFloat() - 0.5) / 3,
+                    hitPos.y + (user.getRandom().nextFloat() - 0.5) / 3,
+                    hitPos.z + (user.getRandom().nextFloat() - 0.5) / 3,
+                    Mth.nextFloat(user.getRandom(), -0.2F, 0.2F),
+                    Mth.nextFloat(user.getRandom(), -0.2F, 0.2F),
+                    Mth.nextFloat(user.getRandom(), -0.2F, 0.2F));
         }
-        level.addParticle(new ManaZapParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F),
-                        new Vector3f((float) (hitPos.x), (float) (hitPos.y), (float) (hitPos.z)), 1.0F, user.getRandom().nextInt(2, 5), 0),
-                start.x, start.y, start.z, 0, 0, 0);
+        level.addParticle(
+                new ManaZapParticleEffect(
+                        new Vector3f(1.0F, 1.0F, 1.0F),
+                        new Vector3f(1.0F, 1.0F, 1.0F),
+                        new Vector3f((float) (hitPos.x), (float) (hitPos.y), (float) (hitPos.z)),
+                        1.0F,
+                        user.getRandom().nextInt(2, 5),
+                        0),
+                start.x,
+                start.y,
+                start.z,
+                0,
+                0,
+                0);
     }
 }

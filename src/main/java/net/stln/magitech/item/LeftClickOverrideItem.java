@@ -7,5 +7,6 @@ import net.minecraft.world.level.Level;
 
 @FunctionalInterface
 public interface LeftClickOverrideItem {
+
     InteractionResult onLeftClick(Player player, InteractionHand hand, Level world);
 }

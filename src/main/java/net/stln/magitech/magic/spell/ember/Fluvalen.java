@@ -1,15 +1,10 @@
 package net.stln.magitech.magic.spell.ember;
 
-import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
-import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
-import dev.kosmx.playerAnim.api.layered.IAnimation;
-import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
-import dev.kosmx.playerAnim.api.layered.ModifierLayer;
-import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
-import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.kosmx.playerAnim.core.util.Ease;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -28,12 +23,19 @@ import net.stln.magitech.particle.particle_option.FlameParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EntityUtil;
 import net.stln.magitech.util.SpellShape;
+
 import org.joml.Vector3f;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
+import dev.kosmx.playerAnim.api.layered.IAnimation;
+import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
+import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
+import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
+import dev.kosmx.playerAnim.core.util.Ease;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 
 public class Fluvalen extends Spell {
 
@@ -74,12 +76,22 @@ public class Fluvalen extends Spell {
 
     @Override
     protected void playAnimation(Player user) {
-        var playerAnimationData = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user).get(Magitech.id("animation"));
+        var playerAnimationData =
+                (ModifierLayer<IAnimation>)
+                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
+                                .get(Magitech.id("animation"));
         if (playerAnimationData != null) {
 
             user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, Ease.INSINE), new KeyframeAnimationPlayer((KeyframeAnimation) PlayerAnimationRegistry.getAnimation(Magitech.id("wand_spray")))
-                    .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL).setFirstPersonConfiguration(new FirstPersonConfiguration(true, true, true, true)));
+            playerAnimationData.replaceAnimationWithFade(
+                    AbstractFadeModifier.standardFadeIn(3, Ease.INSINE),
+                    new KeyframeAnimationPlayer(
+                                    (KeyframeAnimation)
+                                            PlayerAnimationRegistry.getAnimation(
+                                                    Magitech.id("wand_spray")))
+                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                            .setFirstPersonConfiguration(
+                                    new FirstPersonConfiguration(true, true, true, true)));
         }
     }
 
@@ -108,33 +120,70 @@ public class Fluvalen extends Spell {
             Vec3 center = livingEntity.getEyePosition().add(forward);
             Vec3 center2 = center.add(forward.scale(2));
             Set<Entity> attackList = new HashSet<>();
-            attackList.addAll(EntityUtil.getEntitiesInBox(level, livingEntity, center, new Vec3(3.0, 3.0, 3.0)));
-            attackList.addAll(EntityUtil.getEntitiesInBox(level, livingEntity, center2, new Vec3(4.0, 4.0, 4.0)));
+            attackList.addAll(
+                    EntityUtil.getEntitiesInBox(
+                            level, livingEntity, center, new Vec3(3.0, 3.0, 3.0)));
+            attackList.addAll(
+                    EntityUtil.getEntitiesInBox(
+                            level, livingEntity, center2, new Vec3(4.0, 4.0, 4.0)));
             for (int i = 0; i < 5; i++) {
-                level.addParticle(new FlameParticleEffect(new Vector3f(1), new Vector3f(1),
-                                5F, 1, 0.3F), offset.x + (livingEntity.getRandom().nextFloat() - 0.5) / 4, offset.y + (livingEntity.getRandom().nextFloat() - 0.5) / 4, offset.z + (livingEntity.getRandom().nextFloat() - 0.5) / 4,
-                        forward.x * 0.75 + (livingEntity.getRandom().nextFloat() - 0.5) / 4, forward.y * 0.75 + (livingEntity.getRandom().nextFloat() - 0.5) / 4, forward.z * 0.75 + (livingEntity.getRandom().nextFloat() - 0.5) / 4);
+                level.addParticle(
+                        new FlameParticleEffect(new Vector3f(1), new Vector3f(1), 5F, 1, 0.3F),
+                        offset.x + (livingEntity.getRandom().nextFloat() - 0.5) / 4,
+                        offset.y + (livingEntity.getRandom().nextFloat() - 0.5) / 4,
+                        offset.z + (livingEntity.getRandom().nextFloat() - 0.5) / 4,
+                        forward.x * 0.75 + (livingEntity.getRandom().nextFloat() - 0.5) / 4,
+                        forward.y * 0.75 + (livingEntity.getRandom().nextFloat() - 0.5) / 4,
+                        forward.z * 0.75 + (livingEntity.getRandom().nextFloat() - 0.5) / 4);
             }
             if (usingTick % 5 == 0) {
-                level.playSound(player, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundInit.FLAME.get(), SoundSource.PLAYERS, 1.0F, 0.7F + (player.getRandom().nextFloat() * 0.6F));
+                level.playSound(
+                        player,
+                        livingEntity.getX(),
+                        livingEntity.getY(),
+                        livingEntity.getZ(),
+                        SoundInit.FLAME.get(),
+                        SoundSource.PLAYERS,
+                        1.0F,
+                        0.7F + (player.getRandom().nextFloat() * 0.6F));
             }
             for (Entity target : attackList) {
                 if (target.isAttackable()) {
                     Vec3 targetBodyPos = target.position().add(0, target.getBbHeight() * 0.7, 0);
-                    if (level.clip(new ClipContext(targetBodyPos, offset, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, livingEntity)).getType() == HitResult.Type.BLOCK) {
+                    if (level.clip(
+                                            new ClipContext(
+                                                    targetBodyPos,
+                                                    offset,
+                                                    ClipContext.Block.COLLIDER,
+                                                    ClipContext.Fluid.NONE,
+                                                    livingEntity))
+                                    .getType()
+                            == HitResult.Type.BLOCK) {
                         continue;
                     }
                     if (livingEntity instanceof Player user) {
-                        this.applyDamage(tickBaseDamage, this.getTickCost(level, user, stack), this.getElement(), stack, user, target);
+                        this.applyDamage(
+                                tickBaseDamage,
+                                this.getTickCost(level, user, stack),
+                                this.getElement(),
+                                stack,
+                                user,
+                                target);
                     }
-                    target.setRemainingFireTicks(Math.min(200, target.getRemainingFireTicks() + 60));
+                    target.setRemainingFireTicks(
+                            Math.min(200, target.getRemainingFireTicks() + 60));
                 }
             }
         }
     }
 
     @Override
-    public void finishUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged, boolean isHost) {
+    public void finishUsing(
+            ItemStack stack,
+            Level level,
+            LivingEntity livingEntity,
+            int timeCharged,
+            boolean isHost) {
         super.finishUsing(stack, level, livingEntity, timeCharged, isHost);
         if (livingEntity instanceof Player user) {
             addCooldown(level, user, stack);

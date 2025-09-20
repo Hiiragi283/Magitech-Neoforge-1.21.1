@@ -31,9 +31,11 @@ import net.stln.magitech.magic.spell.tremor.Sonistorm;
 import net.stln.magitech.magic.spell.tremor.Tremivox;
 import net.stln.magitech.registry.DeferredSpell;
 import net.stln.magitech.registry.DeferredSpellRegister;
+
 import org.jetbrains.annotations.NotNull;
 
 public class SpellInit {
+
     public static final DeferredSpellRegister REGISTER = new DeferredSpellRegister(Magitech.MOD_ID);
 
     public static final DeferredSpell<Spell> IGNISCA = register("ignisca", new Ignisca());
@@ -75,15 +77,17 @@ public class SpellInit {
     public static final DeferredSpell<Spell> NULLIXIS = register("nullixis", new Nullixis());
     public static final DeferredSpell<Spell> VOIDLANCE = register("voidlance", new Voidlance());
     public static final DeferredSpell<Spell> TENEBRISOL = register("tenebrisol", new Tenebrisol());
-    public static final DeferredSpell<Spell> DISPARUNDRA = register("disparundra", new Disparundra());
+    public static final DeferredSpell<Spell> DISPARUNDRA =
+            register("disparundra", new Disparundra());
     public static final DeferredSpell<Spell> TENEBPORT = register("tenebport", new Tenebport());
 
     public static final DeferredSpell<Spell> ENERCRUX = register("enercrux", new Enercrux());
 
-    private static @NotNull DeferredSpell<Spell> register(@NotNull String path, @NotNull Spell spell) {
+    private static @NotNull DeferredSpell<Spell> register(
+            @NotNull String path, @NotNull Spell spell) {
         return REGISTER.register(path, () -> spell);
     }
-    
+
     public static void registerSpells(IEventBus bus) {
         Magitech.LOGGER.info("Registering Spells for" + Magitech.MOD_ID);
         REGISTER.register(bus);

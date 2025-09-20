@@ -8,10 +8,16 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
 
 public class LootFunctionInit {
-    public static final DeferredRegister<LootItemFunctionType<?>> FUNCTIONS = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, Magitech.MOD_ID);
 
-    public static final DeferredHolder<LootItemFunctionType<?>, LootItemFunctionType<RandomThreadPageFunction>> RANDOM_THREAD_PAGE =
-            FUNCTIONS.register("random_thread_page", () -> new LootItemFunctionType<>(RandomThreadPageFunction.CODEC));
+    public static final DeferredRegister<LootItemFunctionType<?>> FUNCTIONS =
+            DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, Magitech.MOD_ID);
+
+    public static final DeferredHolder<
+                    LootItemFunctionType<?>, LootItemFunctionType<RandomThreadPageFunction>>
+            RANDOM_THREAD_PAGE =
+                    FUNCTIONS.register(
+                            "random_thread_page",
+                            () -> new LootItemFunctionType<>(RandomThreadPageFunction.CODEC));
 
     public static void registerFunctions(IEventBus eventBus) {
         Magitech.LOGGER.info("Registering Loot Functions for" + Magitech.MOD_ID);

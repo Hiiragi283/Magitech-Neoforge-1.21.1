@@ -1,5 +1,8 @@
 package net.stln.magitech.entity;
 
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
@@ -33,24 +36,67 @@ import net.stln.magitech.entity.magicentity.voltaris.VoltarisRenderer;
 import net.stln.magitech.entity.mob.WeaverEntity;
 import net.stln.magitech.entity.mob.WeaverRenderer;
 
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
-
 @EventBusSubscriber(modid = Magitech.MOD_ID)
 public class EntityInit {
 
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, Magitech.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
+            DeferredRegister.create(Registries.ENTITY_TYPE, Magitech.MOD_ID);
 
-    public static final Supplier<EntityType<IgniscaEntity>> IGNISCA_ENTITY = registerMobEntity("ignisca", IgniscaEntity::new, MobCategory.MISC, builder -> builder.sized(0.5F, 0.5F));
-    public static final Supplier<EntityType<FrigalaEntity>> FRIGALA_ENTITY = registerMobEntity("frigala", FrigalaEntity::new, MobCategory.MISC, builder -> builder.sized(0.5F, 0.5F));
-    public static final Supplier<EntityType<VoltarisEntity>> VOLTARIS_ENTITY = registerMobEntity("voltaris", VoltarisEntity::new, MobCategory.MISC, builder -> builder.sized(1.0F, 1.0F));
-    public static final Supplier<EntityType<MirazienEntity>> MIRAZIEN_ENTITY = registerMobEntity("mirazien", MirazienEntity::new, MobCategory.MISC, builder -> builder.sized(0.5F, 0.5F));
-    public static final Supplier<EntityType<TremivoxEntity>> TREMIVOX_ENTITY = registerMobEntity("tremivox", TremivoxEntity::new, MobCategory.MISC, builder -> builder.sized(0.75F, 0.75F));
-    public static final Supplier<EntityType<ArcalethEntity>> ARCALETH_ENTITY = registerMobEntity("arcaleth", ArcalethEntity::new, MobCategory.MISC, builder -> builder.sized(0.5F, 0.5F));
-    public static final Supplier<EntityType<AeltherinEntity>> AELTHERIN_ENTITY = registerMobEntity("aeltherin", AeltherinEntity::new, MobCategory.MISC, builder -> builder.sized(0.5F, 0.5F));
-    public static final Supplier<EntityType<NullixisEntity>> NULLIXIS_ENTITY = registerMobEntity("nullixis", NullixisEntity::new, MobCategory.MISC, builder -> builder.sized(0.5F, 0.5F));
+    public static final Supplier<EntityType<IgniscaEntity>> IGNISCA_ENTITY =
+            registerMobEntity(
+                    "ignisca",
+                    IgniscaEntity::new,
+                    MobCategory.MISC,
+                    builder -> builder.sized(0.5F, 0.5F));
+    public static final Supplier<EntityType<FrigalaEntity>> FRIGALA_ENTITY =
+            registerMobEntity(
+                    "frigala",
+                    FrigalaEntity::new,
+                    MobCategory.MISC,
+                    builder -> builder.sized(0.5F, 0.5F));
+    public static final Supplier<EntityType<VoltarisEntity>> VOLTARIS_ENTITY =
+            registerMobEntity(
+                    "voltaris",
+                    VoltarisEntity::new,
+                    MobCategory.MISC,
+                    builder -> builder.sized(1.0F, 1.0F));
+    public static final Supplier<EntityType<MirazienEntity>> MIRAZIEN_ENTITY =
+            registerMobEntity(
+                    "mirazien",
+                    MirazienEntity::new,
+                    MobCategory.MISC,
+                    builder -> builder.sized(0.5F, 0.5F));
+    public static final Supplier<EntityType<TremivoxEntity>> TREMIVOX_ENTITY =
+            registerMobEntity(
+                    "tremivox",
+                    TremivoxEntity::new,
+                    MobCategory.MISC,
+                    builder -> builder.sized(0.75F, 0.75F));
+    public static final Supplier<EntityType<ArcalethEntity>> ARCALETH_ENTITY =
+            registerMobEntity(
+                    "arcaleth",
+                    ArcalethEntity::new,
+                    MobCategory.MISC,
+                    builder -> builder.sized(0.5F, 0.5F));
+    public static final Supplier<EntityType<AeltherinEntity>> AELTHERIN_ENTITY =
+            registerMobEntity(
+                    "aeltherin",
+                    AeltherinEntity::new,
+                    MobCategory.MISC,
+                    builder -> builder.sized(0.5F, 0.5F));
+    public static final Supplier<EntityType<NullixisEntity>> NULLIXIS_ENTITY =
+            registerMobEntity(
+                    "nullixis",
+                    NullixisEntity::new,
+                    MobCategory.MISC,
+                    builder -> builder.sized(0.5F, 0.5F));
 
-    public static final Supplier<EntityType<WeaverEntity>> WEAVER_ENTITY = registerMobEntity("weaver", WeaverEntity::new, MobCategory.MONSTER, (builder) -> builder.sized(0.6F, 2.0F).eyeHeight(1.62F).clientTrackingRange(8));
+    public static final Supplier<EntityType<WeaverEntity>> WEAVER_ENTITY =
+            registerMobEntity(
+                    "weaver",
+                    WeaverEntity::new,
+                    MobCategory.MONSTER,
+                    (builder) -> builder.sized(0.6F, 2.0F).eyeHeight(1.62F).clientTrackingRange(8));
 
     public static void registerModEntities(IEventBus eventBus) {
         Magitech.LOGGER.info("Registering Entity for " + Magitech.MOD_ID);
@@ -71,8 +117,14 @@ public class EntityInit {
         EntityRenderers.register(EntityInit.WEAVER_ENTITY.get(), WeaverRenderer::new);
     }
 
-    private static <T extends Entity> Supplier<EntityType<T>> registerMobEntity(String path, EntityType.EntityFactory<T> factory, MobCategory category, UnaryOperator<EntityType.Builder<T>> operator) {
-        return ENTITY_TYPES.register(path, id -> operator.apply(EntityType.Builder.of(factory, category)).build(id.getPath()));
+    private static <T extends Entity> Supplier<EntityType<T>> registerMobEntity(
+            String path,
+            EntityType.EntityFactory<T> factory,
+            MobCategory category,
+            UnaryOperator<EntityType.Builder<T>> operator) {
+        return ENTITY_TYPES.register(
+                path,
+                id -> operator.apply(EntityType.Builder.of(factory, category)).build(id.getPath()));
     }
 
     @SubscribeEvent
@@ -85,11 +137,9 @@ public class EntityInit {
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(
                 WEAVER_ENTITY.get(),
-                SpawnPlacementTypes.ON_GROUND,              // 湧く場所のタイプ
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,   // 高さ判定
-                ((entityType, serverLevel, spawnType, pos, random) -> true),             // 条件 (ここは独自関数でもOK)
-                RegisterSpawnPlacementsEvent.Operation.REPLACE
-        );
+                SpawnPlacementTypes.ON_GROUND, // 湧く場所のタイプ
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, // 高さ判定
+                ((entityType, serverLevel, spawnType, pos, random) -> true), // 条件 (ここは独自関数でもOK)
+                RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
-
 }

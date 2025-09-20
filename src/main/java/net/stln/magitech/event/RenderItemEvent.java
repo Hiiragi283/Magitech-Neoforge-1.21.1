@@ -9,7 +9,5 @@ import net.stln.magitech.Magitech;
 public class RenderItemEvent {
 
     @SubscribeEvent
-    public static void onPartToolItemRender(RenderItemInFrameEvent event) {
-
-    }
+    public static void onPartToolItemRender(RenderItemInFrameEvent event) {}
 }

@@ -1,8 +1,9 @@
 package net.stln.magitech.recipe;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -24,13 +25,15 @@ import net.stln.magitech.item.tool.register.ToolMaterialRegister;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
 import net.stln.magitech.recipe.input.MultiStackRecipeInput;
 import net.stln.magitech.util.ComponentHelper;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
+
     protected final List<Ingredient> ingredients;
     protected final ItemStack result;
     protected final String group;
@@ -54,10 +57,10 @@ public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
             return false;
         } else if (!ingredients.stream().allMatch(Ingredient::isSimple)) {
             var nonEmptyItems = new java.util.ArrayList<ItemStack>(input.ingredientCount());
-            for (var item : input.stacks())
-                if (!item.isEmpty())
-                    nonEmptyItems.add(item);
-            return net.neoforged.neoforge.common.util.RecipeMatcher.findMatches(nonEmptyItems, this.ingredients) != null;
+            for (var item : input.stacks()) if (!item.isEmpty()) nonEmptyItems.add(item);
+            return net.neoforged.neoforge.common.util.RecipeMatcher.findMatches(
+                            nonEmptyItems, this.ingredients)
+                    != null;
         } else {
             return input.size() == 1 && this.ingredients.size() == 1
                     ? this.ingredients.getFirst().test(input.getItem(0))
@@ -66,17 +69,20 @@ public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull MultiStackRecipeInput input, HolderLookup.@NotNull Provider registries) {
+    public @NotNull ItemStack assemble(
+            @NotNull MultiStackRecipeInput input, HolderLookup.@NotNull Provider registries) {
         if (!(result.getItem() instanceof PartToolItem)) {
             throw new IllegalArgumentException("the result item expected to be a PartToolItem");
         }
         ToolType type = ((PartToolItem) result.getItem()).getToolType();
-            List<ToolMaterial> toolMaterials = isCorrectTypesForTool(input, type);
-            if (!toolMaterials.isEmpty()) {
-                ItemStack stack = result.copy();
-                stack.set(ComponentInit.PART_MATERIAL_COMPONENT, new PartMaterialComponent(toolMaterials));
-                return stack;
-            }
+        List<ToolMaterial> toolMaterials = isCorrectTypesForTool(input, type);
+        if (!toolMaterials.isEmpty()) {
+            ItemStack stack = result.copy();
+            stack.set(
+                    ComponentInit.PART_MATERIAL_COMPONENT,
+                    new PartMaterialComponent(toolMaterials));
+            return stack;
+        }
         return ItemStack.EMPTY;
     }
 
@@ -92,14 +98,17 @@ public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
                 partList.add(ToolMaterialRegister.getToolPartFromIndex(type, i));
             }
             for (int i = 0; i < input.size(); i++) {
-                if (input.getItem(i).getItem() instanceof PartItem partItem && input.getItem(i).has(ComponentInit.MATERIAL_COMPONENT.get())) {
+                if (input.getItem(i).getItem() instanceof PartItem partItem
+                        && input.getItem(i).has(ComponentInit.MATERIAL_COMPONENT.get())) {
                     boolean found = partList.contains(partItem.getPart());
                     int index = partList.indexOf(partItem.getPart());
                     if (found) {
-                        ComponentHelper.getMaterial(input.getItem(i)).ifPresent(material -> {
-                            result.set(index, material);
-                            partList.set(index, null);
-                        });
+                        ComponentHelper.getMaterial(input.getItem(i))
+                                .ifPresent(
+                                        material -> {
+                                            result.set(index, material);
+                                            partList.set(index, null);
+                                        });
                     }
                     flag &= found;
                 }
@@ -137,33 +146,46 @@ public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
     }
 
     public interface Factory<T extends ToolAssemblyRecipe> {
+
         T create(String group, List<Ingredient> ingredients, ItemStack result);
     }
 
     public static class Serializer<T extends ToolAssemblyRecipe> implements RecipeSerializer<T> {
+
         final ToolAssemblyRecipe.Factory<T> factory;
         private final MapCodec<T> codec;
         private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
         protected Serializer(ToolAssemblyRecipe.Factory<T> factory) {
             this.factory = factory;
-            this.codec = RecordCodecBuilder.mapCodec(
-                    p_340781_ -> p_340781_.group(
-                                    Codec.STRING.optionalFieldOf("group", "").forGetter(p_300947_ -> p_300947_.group),
-                                    Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredients").forGetter(p_300947_ -> p_300947_.ingredients),
-                                    ItemStack.STRICT_CODEC.fieldOf("result").forGetter(p_302316_ -> p_302316_.result)
-                            )
-                            .apply(p_340781_, factory::create)
-            );
-            this.streamCodec = StreamCodec.composite(
-                    ByteBufCodecs.STRING_UTF8,
-                    r -> r.group,
-                    Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
-                    r -> r.ingredients,
-                    ItemStack.STREAM_CODEC,
-                    r -> r.result,
-                    factory::create
-            );
+            this.codec =
+                    RecordCodecBuilder.mapCodec(
+                            p_340781_ ->
+                                    p_340781_
+                                            .group(
+                                                    Codec.STRING
+                                                            .optionalFieldOf("group", "")
+                                                            .forGetter(
+                                                                    p_300947_ -> p_300947_.group),
+                                                    Ingredient.LIST_CODEC_NONEMPTY
+                                                            .fieldOf("ingredients")
+                                                            .forGetter(
+                                                                    p_300947_ ->
+                                                                            p_300947_.ingredients),
+                                                    ItemStack.STRICT_CODEC
+                                                            .fieldOf("result")
+                                                            .forGetter(
+                                                                    p_302316_ -> p_302316_.result))
+                                            .apply(p_340781_, factory::create));
+            this.streamCodec =
+                    StreamCodec.composite(
+                            ByteBufCodecs.STRING_UTF8,
+                            r -> r.group,
+                            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()),
+                            r -> r.ingredients,
+                            ItemStack.STREAM_CODEC,
+                            r -> r.result,
+                            factory::create);
         }
 
         @Override

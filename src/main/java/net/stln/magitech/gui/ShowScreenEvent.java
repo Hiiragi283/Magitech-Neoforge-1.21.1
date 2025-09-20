@@ -17,10 +17,15 @@ public class ShowScreenEvent {
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
-        CuriosHelper.getThreadBoundStack(ClientHelper.getPlayer()).ifPresent(stack -> {
-            while (KeyMappingEvent.RADIAL_SPELL_MENU.get().consumeClick() && Minecraft.getInstance().screen == null && !stack.isEmpty()) {
-                Minecraft.getInstance().setScreen(new RadialSpellMenuOverlay(Component.empty()));
-            }
-        });
+        CuriosHelper.getThreadBoundStack(ClientHelper.getPlayer())
+                .ifPresent(
+                        stack -> {
+                            while (KeyMappingEvent.RADIAL_SPELL_MENU.get().consumeClick()
+                                    && Minecraft.getInstance().screen == null
+                                    && !stack.isEmpty()) {
+                                Minecraft.getInstance()
+                                        .setScreen(new RadialSpellMenuOverlay(Component.empty()));
+                            }
+                        });
     }
 }

@@ -19,10 +19,22 @@ public class EntityManaTickEvent {
     @SubscribeEvent
     public static void levelJoin(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof Player player) {
-            ManaData.setCurrentMana(player, ManaUtil.ManaType.MANA, player.getAttributeValue(AttributeInit.MAX_MANA));
-            ManaData.setCurrentMana(player, ManaUtil.ManaType.NOCTIS, player.getAttributeValue(AttributeInit.MAX_NOCTIS));
-            ManaData.setCurrentMana(player, ManaUtil.ManaType.LUMINIS, player.getAttributeValue(AttributeInit.MAX_LUMINIS));
-            ManaData.setCurrentMana(player, ManaUtil.ManaType.FLUXIA, player.getAttributeValue(AttributeInit.MAX_FLUXIA));
+            ManaData.setCurrentMana(
+                    player,
+                    ManaUtil.ManaType.MANA,
+                    player.getAttributeValue(AttributeInit.MAX_MANA));
+            ManaData.setCurrentMana(
+                    player,
+                    ManaUtil.ManaType.NOCTIS,
+                    player.getAttributeValue(AttributeInit.MAX_NOCTIS));
+            ManaData.setCurrentMana(
+                    player,
+                    ManaUtil.ManaType.LUMINIS,
+                    player.getAttributeValue(AttributeInit.MAX_LUMINIS));
+            ManaData.setCurrentMana(
+                    player,
+                    ManaUtil.ManaType.FLUXIA,
+                    player.getAttributeValue(AttributeInit.MAX_FLUXIA));
         }
     }
 }

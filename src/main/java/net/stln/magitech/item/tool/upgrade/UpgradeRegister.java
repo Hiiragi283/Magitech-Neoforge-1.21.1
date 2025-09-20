@@ -1,15 +1,17 @@
 package net.stln.magitech.item.tool.upgrade;
 
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import net.minecraft.resources.ResourceLocation;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public class UpgradeRegister {
+
     private static final Map<ResourceLocation, Upgrade> dictId = new LinkedHashMap<>();
 
     public static void registerId(ResourceLocation id, Upgrade upgrade) {
@@ -69,7 +71,7 @@ public class UpgradeRegister {
         }
         return null;
     }
-    
+
     public static @NotNull Optional<ResourceLocation> getOptionalId(@Nullable Upgrade upgrade) {
         return Optional.ofNullable(getId(upgrade));
     }

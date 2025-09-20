@@ -21,8 +21,10 @@ import net.stln.magitech.entity.SpellProjectileEntity;
 import net.stln.magitech.particle.particle_option.UnstableSquareParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.DataMapHelper;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -43,11 +45,25 @@ public class ArcalethEntity extends SpellProjectileEntity {
         super(EntityInit.ARCALETH_ENTITY.get(), player, world, weapon, damage);
     }
 
-    public ArcalethEntity(EntityType<? extends SpellProjectileEntity> type, double x, double y, double z, Level world, ItemStack stack, @Nullable ItemStack weapon, float damage) {
+    public ArcalethEntity(
+            EntityType<? extends SpellProjectileEntity> type,
+            double x,
+            double y,
+            double z,
+            Level world,
+            ItemStack stack,
+            @Nullable ItemStack weapon,
+            float damage) {
         super(type, x, y, z, world, weapon, damage);
     }
 
-    public ArcalethEntity(EntityType<? extends SpellProjectileEntity> type, LivingEntity owner, Level world, ItemStack stack, @Nullable ItemStack shotFrom, float damage) {
+    public ArcalethEntity(
+            EntityType<? extends SpellProjectileEntity> type,
+            LivingEntity owner,
+            Level world,
+            ItemStack stack,
+            @Nullable ItemStack shotFrom,
+            float damage) {
         super(type, owner, world, shotFrom, damage);
     }
 
@@ -70,7 +86,15 @@ public class ArcalethEntity extends SpellProjectileEntity {
                 double vx = deltaMovement.x / 4;
                 double vy = deltaMovement.y / 4;
                 double vz = deltaMovement.z / 4;
-                world.addParticle(new UnstableSquareParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
+                world.addParticle(
+                        new UnstableSquareParticleEffect(
+                                fromColor, toColor, scale, twinkle, rotSpeed),
+                        x,
+                        y,
+                        z,
+                        vx,
+                        vy,
+                        vz);
             }
         }
     }
@@ -85,7 +109,10 @@ public class ArcalethEntity extends SpellProjectileEntity {
         DamageSource elementalDamageSource;
         if (owner != null) {
             if (this.getWeaponItem() != null) {
-                elementalDamageSource = this.getWeaponItem().has(DataComponents.CUSTOM_NAME) ? owner.damageSources().source(damageType, owner) : owner.damageSources().source(damageType);
+                elementalDamageSource =
+                        this.getWeaponItem().has(DataComponents.CUSTOM_NAME)
+                                ? owner.damageSources().source(damageType, owner)
+                                : owner.damageSources().source(damageType);
             } else {
                 elementalDamageSource = owner.damageSources().source(damageType);
             }
@@ -93,8 +120,8 @@ public class ArcalethEntity extends SpellProjectileEntity {
             elementalDamageSource = this.damageSources().source(damageType);
         }
 
-
-        float finalDamage = this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
+        float finalDamage =
+                this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
         applyDamage(entity, elementalDamageSource, finalDamage);
         hitParticle();
 
@@ -141,13 +168,26 @@ public class ArcalethEntity extends SpellProjectileEntity {
             for (int i = 0; i < particleAmount; i++) {
                 int twinkle = random.nextInt(3, 7);
 
-                double x = this.getX() - this.getDeltaMovement().x + (random.nextFloat() - 0.5) / 10;
-                double y = this.getY(0.5F) - this.getDeltaMovement().y + (random.nextFloat() - 0.5) / 10;
-                double z = this.getZ() - this.getDeltaMovement().z + (random.nextFloat() - 0.5) / 10;
+                double x =
+                        this.getX() - this.getDeltaMovement().x + (random.nextFloat() - 0.5) / 10;
+                double y =
+                        this.getY(0.5F)
+                                - this.getDeltaMovement().y
+                                + (random.nextFloat() - 0.5) / 10;
+                double z =
+                        this.getZ() - this.getDeltaMovement().z + (random.nextFloat() - 0.5) / 10;
                 double vx = (random.nextFloat() - 0.5) / 6;
                 double vy = (random.nextFloat() - 0.5) / 6;
                 double vz = (random.nextFloat() - 0.5) / 6;
-                world.addParticle(new UnstableSquareParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
+                world.addParticle(
+                        new UnstableSquareParticleEffect(
+                                fromColor, toColor, scale, twinkle, rotSpeed),
+                        x,
+                        y,
+                        z,
+                        vx,
+                        vy,
+                        vz);
             }
         }
     }
@@ -158,9 +198,7 @@ public class ArcalethEntity extends SpellProjectileEntity {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-
-    }
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

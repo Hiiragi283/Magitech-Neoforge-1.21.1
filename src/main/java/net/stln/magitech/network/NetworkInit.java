@@ -18,92 +18,70 @@ public class NetworkInit {
                 LeftClickPayload.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         LeftClickPayLoadHandler::handleDataOnMainS2C,
-                        LeftClickPayLoadHandler::handleDataOnMainC2S
-                )
-        );
+                        LeftClickPayLoadHandler::handleDataOnMainC2S));
         registrar.playBidirectional(
                 TraitActionPayload.TYPE,
                 TraitActionPayload.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         TraitActionPayLoadHandler::handleDataOnMainS2C,
-                        TraitActionPayLoadHandler::handleDataOnMainC2S
-                )
-        );
+                        TraitActionPayLoadHandler::handleDataOnMainC2S));
         registrar.playBidirectional(
                 DoubleJumpPayload.TYPE,
                 DoubleJumpPayload.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         DoubleJumpPayLoadHandler::handleDataOnMainS2C,
-                        DoubleJumpPayLoadHandler::handleDataOnMainC2S
-                )
-        );
+                        DoubleJumpPayLoadHandler::handleDataOnMainC2S));
         registrar.playBidirectional(
                 LongJumpPayload.TYPE,
                 LongJumpPayload.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         LongJumpPayLoadHandler::handleDataOnMainS2C,
-                        LongJumpPayLoadHandler::handleDataOnMainC2S
-                )
-        );
+                        LongJumpPayLoadHandler::handleDataOnMainC2S));
         registrar.playBidirectional(
                 TraitTickPayload.TYPE,
                 TraitTickPayload.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         TraitTickPayLoadHandler::handleDataOnMainS2C,
-                        TraitTickPayLoadHandler::handleDataOnMainC2S
-                )
-        );
+                        TraitTickPayLoadHandler::handleDataOnMainC2S));
         registrar.playBidirectional(
                 SyncManaPayload.TYPE,
                 SyncManaPayload.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         SyncManaPayLoadHandler::handleDataOnMainS2C,
-                        SyncManaPayLoadHandler::handleDataOnMainC2S
-                )
-        );
+                        SyncManaPayLoadHandler::handleDataOnMainC2S));
         registrar.playToClient(
                 BreakBlockPayload.TYPE,
                 BreakBlockPayload.STREAM_CODEC,
-                BreakBlockPayLoadHandler::handleDataOnMainS2C
-        );
+                BreakBlockPayLoadHandler::handleDataOnMainS2C);
         registrar.playBidirectional(
                 UseSpellPayload.TYPE,
                 UseSpellPayload.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         UseSpellPayLoadHandler::handleDataOnMainS2C,
-                        UseSpellPayLoadHandler::handleDataOnMainC2S
-                )
-        );
+                        UseSpellPayLoadHandler::handleDataOnMainC2S));
         registrar.playBidirectional(
                 ReleaseUsingSpellPayload.TYPE,
                 ReleaseUsingSpellPayload.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         ReleaseUsingSpellPayLoadHandler::handleDataOnMainS2C,
-                        ReleaseUsingSpellPayLoadHandler::handleDataOnMainC2S
-                )
-        );
+                        ReleaseUsingSpellPayLoadHandler::handleDataOnMainC2S));
         registrar.playBidirectional(
                 ThreadBoundSelectPayload.TYPE,
                 ThreadBoundSelectPayload.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         ThreadboundSelectPayLoadHandler::handleDataOnMainS2C,
-                        ThreadboundSelectPayLoadHandler::handleDataOnMainC2S
-                )
-        );
+                        ThreadboundSelectPayLoadHandler::handleDataOnMainC2S));
         registrar.playToServer(
                 OpenThreadBoundPageScreenPayload.TYPE,
                 OpenThreadBoundPageScreenPayload.STREAM_CODEC,
-                OpenThreadBoundPageScreenPayLoadHandler::handleDataOnMainC2S
-        );
+                OpenThreadBoundPageScreenPayLoadHandler::handleDataOnMainC2S);
         registrar.playToClient(
                 TierUpToastPayload.TYPE,
                 TierUpToastPayload.STREAM_CODEC,
-                TierUpToastPayLoadHandler::handleDataOnMainS2C
-        );
+                TierUpToastPayLoadHandler::handleDataOnMainS2C);
         registrar.playToClient(
                 RangedEntityAttackPayload.TYPE,
                 RangedEntityAttackPayload.STREAM_CODEC,
-                RangedEntityAttackPayLoadHandler::handleDataOnMainS2C
-        );
+                RangedEntityAttackPayLoadHandler::handleDataOnMainS2C);
     }
 }

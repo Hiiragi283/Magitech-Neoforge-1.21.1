@@ -1,5 +1,9 @@
 package net.stln.magitech.compat.patchouli;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -8,16 +12,15 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.stln.magitech.recipe.AthanorPillarInfusionRecipe;
+
 import org.jetbrains.annotations.NotNull;
+
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class AthanorPillarInfusionRecipeProcessor implements IComponentProcessor {
+
     private final List<List<Ingredient>> inputs = new ArrayList<>();
     private ItemStack base = ItemStack.EMPTY;
     private ItemStack output = ItemStack.EMPTY;
@@ -37,7 +40,11 @@ public class AthanorPillarInfusionRecipeProcessor implements IComponentProcessor
         if (vars.has("text")) {
             text = vars.get("text", access).asString();
         }
-        recipe = level.getRecipeManager().byKey(ResourceLocation.parse(recipeId)).orElseThrow(IllegalArgumentException::new).value();
+        recipe =
+                level.getRecipeManager()
+                        .byKey(ResourceLocation.parse(recipeId))
+                        .orElseThrow(IllegalArgumentException::new)
+                        .value();
 
         if (recipe instanceof AthanorPillarInfusionRecipe r) {
             // 入力 ItemStack を取得・セット
@@ -55,13 +62,17 @@ public class AthanorPillarInfusionRecipeProcessor implements IComponentProcessor
         RegistryAccess access = level.registryAccess();
         switch (key) {
             case "title" -> {
-                return IVariable.wrap(title == null ? "block.magitech.zardius_crucible" : title, access);
+                return IVariable.wrap(
+                        title == null ? "block.magitech.zardius_crucible" : title, access);
             }
             case "text" -> {
                 return IVariable.wrap(text, access);
             }
             case "mana" -> {
-                return IVariable.wrap(Component.translatable("book.magitech.athanor_pillar_infusion.mana", mana).getString(), access);
+                return IVariable.wrap(
+                        Component.translatable("book.magitech.athanor_pillar_infusion.mana", mana)
+                                .getString(),
+                        access);
             }
         }
         int size = 0;
@@ -87,7 +98,7 @@ public class AthanorPillarInfusionRecipeProcessor implements IComponentProcessor
         }
         stacks.addAll(List.of(returnStack.getItems()));
         Collections.shuffle(stacks);
-        return IVariable.wrapList(stacks.stream().map((stack) -> IVariable.from(stack, access)).toList(), access);
+        return IVariable.wrapList(
+                stacks.stream().map((stack) -> IVariable.from(stack, access)).toList(), access);
     }
-
 }

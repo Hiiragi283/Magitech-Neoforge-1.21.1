@@ -1,15 +1,8 @@
 package net.stln.magitech.magic.spell.hollow;
 
-import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
-import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
-import dev.kosmx.playerAnim.api.layered.IAnimation;
-import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
-import dev.kosmx.playerAnim.api.layered.ModifierLayer;
-import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
-import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.kosmx.playerAnim.core.util.Ease;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -31,15 +24,23 @@ import net.stln.magitech.particle.particle_option.BeamParticleEffect;
 import net.stln.magitech.particle.particle_option.VoidGlowParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.*;
+
 import org.joml.Vector3f;
 
-import java.util.HashMap;
-import java.util.Map;
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
+import dev.kosmx.playerAnim.api.layered.IAnimation;
+import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
+import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
+import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
+import dev.kosmx.playerAnim.core.util.Ease;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 
 public class Tenebport extends Spell {
 
-    public Tenebport() {
-    }
+    public Tenebport() {}
 
     public Element getElement() {
         return Element.HOLLOW;
@@ -50,12 +51,21 @@ public class Tenebport extends Spell {
     }
 
     protected static void playShootAnimation(Player user) {
-        var playerAnimationData = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user).get(Magitech.id("animation"));
+        var playerAnimationData =
+                (ModifierLayer<IAnimation>)
+                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
+                                .get(Magitech.id("animation"));
         if (playerAnimationData != null) {
 
             user.yBodyRot = user.yHeadRot;
-            playerAnimationData.setAnimation(new KeyframeAnimationPlayer((KeyframeAnimation) PlayerAnimationRegistry.getAnimation(Magitech.id("wand_shoot")))
-                    .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL).setFirstPersonConfiguration(new FirstPersonConfiguration(true, true, true, true)));
+            playerAnimationData.setAnimation(
+                    new KeyframeAnimationPlayer(
+                                    (KeyframeAnimation)
+                                            PlayerAnimationRegistry.getAnimation(
+                                                    Magitech.id("wand_shoot")))
+                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                            .setFirstPersonConfiguration(
+                                    new FirstPersonConfiguration(true, true, true, true)));
         }
     }
 
@@ -74,41 +84,144 @@ public class Tenebport extends Spell {
 
     @Override
     public void use(Level level, Player user, InteractionHand hand, boolean isHost) {
-        level.playSound(user, user.position().x, user.position().y, user.position().z, SoundInit.TENEBPORT_CHARGE.get(), SoundSource.PLAYERS, 1.0F, 0.7F + (user.getRandom().nextFloat() * 0.6F));
+        level.playSound(
+                user,
+                user.position().x,
+                user.position().y,
+                user.position().z,
+                SoundInit.TENEBPORT_CHARGE.get(),
+                SoundSource.PLAYERS,
+                1.0F,
+                0.7F + (user.getRandom().nextFloat() * 0.6F));
         addCharge(user, 100, this.getElement());
         super.use(level, user, hand, isHost);
     }
 
     @Override
-    public void finishUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged, boolean isHost) {
+    public void finishUsing(
+            ItemStack stack,
+            Level level,
+            LivingEntity livingEntity,
+            int timeCharged,
+            boolean isHost) {
         super.finishUsing(stack, level, livingEntity, timeCharged, isHost);
         if (livingEntity instanceof Player user) {
-            if (ChargeData.getCurrentCharge(user) == null && timeCharged > 1 && ManaUtil.useManaServerOnly(user, this.getRequiredMana(level, user, stack))) {
+            if (ChargeData.getCurrentCharge(user) == null
+                    && timeCharged > 1
+                    && ManaUtil.useManaServerOnly(user, this.getRequiredMana(level, user, stack))) {
                 Vec3 userPos = user.position();
                 Vec3 above = userPos.add(0, 10, 0);
 
-
-                EffectUtil.lineEffect(level, new VoidGlowParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 1.0F, 1, 0), userPos, above, 4, false);
-                level.addParticle(new BeamParticleEffect(new Vector3f(0.3F, 0.0F, 1.0F), new Vector3f(0.5F, 0.0F, 1.0F), above.toVector3f(), 5F, 1, 1), userPos.x, userPos.y - 0.5, userPos.z, 0, 0, 0);
+                EffectUtil.lineEffect(
+                        level,
+                        new VoidGlowParticleEffect(
+                                new Vector3f(1.0F, 1.0F, 1.0F),
+                                new Vector3f(1.0F, 1.0F, 1.0F),
+                                1.0F,
+                                1,
+                                0),
+                        userPos,
+                        above,
+                        4,
+                        false);
+                level.addParticle(
+                        new BeamParticleEffect(
+                                new Vector3f(0.3F, 0.0F, 1.0F),
+                                new Vector3f(0.5F, 0.0F, 1.0F),
+                                above.toVector3f(),
+                                5F,
+                                1,
+                                1),
+                        userPos.x,
+                        userPos.y - 0.5,
+                        userPos.z,
+                        0,
+                        0,
+                        0);
                 for (int i = 0; i < 20; i++) {
-                    level.addParticle(new VoidGlowParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 1.0F, 1, 0),
-                            userPos.x, userPos.y, userPos.z, (user.getRandom().nextFloat() - 0.5) / 3, (user.getRandom().nextFloat() - 0.5) / 3, (user.getRandom().nextFloat() - 0.5) / 3);
+                    level.addParticle(
+                            new VoidGlowParticleEffect(
+                                    new Vector3f(1.0F, 1.0F, 1.0F),
+                                    new Vector3f(1.0F, 1.0F, 1.0F),
+                                    1.0F,
+                                    1,
+                                    0),
+                            userPos.x,
+                            userPos.y,
+                            userPos.z,
+                            (user.getRandom().nextFloat() - 0.5) / 3,
+                            (user.getRandom().nextFloat() - 0.5) / 3,
+                            (user.getRandom().nextFloat() - 0.5) / 3);
                 }
 
-                level.playSound(user, userPos.x, userPos.y, userPos.z, SoundInit.TENEBPORT.get(), SoundSource.PLAYERS, 1.0F, 0.7F + (user.getRandom().nextFloat() * 0.6F));
-                TickScheduler.schedule(1, () -> {
-                    Vec3 newPos = user.position();
-                    Vec3 newAbove = newPos.add(0, 10, 0);
-                    EffectUtil.lineEffect(level, new VoidGlowParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 1.0F, 1, 0), newPos, newAbove, 4, false);
-                    level.addParticle(new BeamParticleEffect(new Vector3f(0.3F, 0.0F, 1.0F), new Vector3f(0.5F, 0.0F, 1.0F), newAbove.toVector3f(), 5F, 1, 1), newPos.x, newPos.y - 0.5, newPos.z, 0, 0, 0);
-                    for (int i = 0; i < 20; i++) {
-                        level.addParticle(new VoidGlowParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 1.0F, 1, 0),
-                                newPos.x, newPos.y, newPos.z, (user.getRandom().nextFloat() - 0.5) / 3, (user.getRandom().nextFloat() - 0.5) / 3, (user.getRandom().nextFloat() - 0.5) / 3);
-                    }
+                level.playSound(
+                        user,
+                        userPos.x,
+                        userPos.y,
+                        userPos.z,
+                        SoundInit.TENEBPORT.get(),
+                        SoundSource.PLAYERS,
+                        1.0F,
+                        0.7F + (user.getRandom().nextFloat() * 0.6F));
+                TickScheduler.schedule(
+                        1,
+                        () -> {
+                            Vec3 newPos = user.position();
+                            Vec3 newAbove = newPos.add(0, 10, 0);
+                            EffectUtil.lineEffect(
+                                    level,
+                                    new VoidGlowParticleEffect(
+                                            new Vector3f(1.0F, 1.0F, 1.0F),
+                                            new Vector3f(1.0F, 1.0F, 1.0F),
+                                            1.0F,
+                                            1,
+                                            0),
+                                    newPos,
+                                    newAbove,
+                                    4,
+                                    false);
+                            level.addParticle(
+                                    new BeamParticleEffect(
+                                            new Vector3f(0.3F, 0.0F, 1.0F),
+                                            new Vector3f(0.5F, 0.0F, 1.0F),
+                                            newAbove.toVector3f(),
+                                            5F,
+                                            1,
+                                            1),
+                                    newPos.x,
+                                    newPos.y - 0.5,
+                                    newPos.z,
+                                    0,
+                                    0,
+                                    0);
+                            for (int i = 0; i < 20; i++) {
+                                level.addParticle(
+                                        new VoidGlowParticleEffect(
+                                                new Vector3f(1.0F, 1.0F, 1.0F),
+                                                new Vector3f(1.0F, 1.0F, 1.0F),
+                                                1.0F,
+                                                1,
+                                                0),
+                                        newPos.x,
+                                        newPos.y,
+                                        newPos.z,
+                                        (user.getRandom().nextFloat() - 0.5) / 3,
+                                        (user.getRandom().nextFloat() - 0.5) / 3,
+                                        (user.getRandom().nextFloat() - 0.5) / 3);
+                            }
 
-                    level.playSound(user, newPos.x, newPos.y, newPos.z, SoundInit.TENEBPORT.get(), SoundSource.PLAYERS, 1.0F, 0.7F + (user.getRandom().nextFloat() * 0.6F));
-                    livingEntity.fallDistance = 0;
-                }, level.isClientSide);
+                            level.playSound(
+                                    user,
+                                    newPos.x,
+                                    newPos.y,
+                                    newPos.z,
+                                    SoundInit.TENEBPORT.get(),
+                                    SoundSource.PLAYERS,
+                                    1.0F,
+                                    0.7F + (user.getRandom().nextFloat() * 0.6F));
+                            livingEntity.fallDistance = 0;
+                        },
+                        level.isClientSide);
 
                 if (level.isClientSide) {
                     playShootAnimation(user);
@@ -117,11 +230,23 @@ public class Tenebport extends Spell {
                 if (!level.isClientSide) {
                     ServerPlayer serverPlayer = (ServerPlayer) user;
                     boolean missingRespawnBlock = serverPlayer.getRespawnPosition() == null;
-                    Vec3 respawnPos = Vec3.atCenterOf(missingRespawnBlock ? level.getSharedSpawnPos() : serverPlayer.getRespawnPosition());
+                    Vec3 respawnPos =
+                            Vec3.atCenterOf(
+                                    missingRespawnBlock
+                                            ? level.getSharedSpawnPos()
+                                            : serverPlayer.getRespawnPosition());
                     MinecraftServer server = serverPlayer.server;
                     ServerLevel newLevel = server.getLevel(serverPlayer.getRespawnDimension());
                     float respawnAngle = serverPlayer.getRespawnAngle();
-                    serverPlayer.changeDimension(new DimensionTransition(newLevel, respawnPos, Vec3.ZERO, 0, respawnAngle, missingRespawnBlock, DimensionTransition.DO_NOTHING));
+                    serverPlayer.changeDimension(
+                            new DimensionTransition(
+                                    newLevel,
+                                    respawnPos,
+                                    Vec3.ZERO,
+                                    0,
+                                    respawnAngle,
+                                    missingRespawnBlock,
+                                    DimensionTransition.DO_NOTHING));
                 }
 
                 addCooldown(level, user, stack);
@@ -139,12 +264,22 @@ public class Tenebport extends Spell {
 
     @Override
     protected void playAnimation(Player user) {
-        var playerAnimationData = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user).get(Magitech.id("animation"));
+        var playerAnimationData =
+                (ModifierLayer<IAnimation>)
+                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
+                                .get(Magitech.id("animation"));
         if (playerAnimationData != null) {
 
             user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, Ease.OUTSINE), new KeyframeAnimationPlayer((KeyframeAnimation) PlayerAnimationRegistry.getAnimation(Magitech.id("wand_chant")))
-                    .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL).setFirstPersonConfiguration(new FirstPersonConfiguration(true, true, true, true)));
+            playerAnimationData.replaceAnimationWithFade(
+                    AbstractFadeModifier.standardFadeIn(3, Ease.OUTSINE),
+                    new KeyframeAnimationPlayer(
+                                    (KeyframeAnimation)
+                                            PlayerAnimationRegistry.getAnimation(
+                                                    Magitech.id("wand_chant")))
+                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                            .setFirstPersonConfiguration(
+                                    new FirstPersonConfiguration(true, true, true, true)));
         }
     }
 }

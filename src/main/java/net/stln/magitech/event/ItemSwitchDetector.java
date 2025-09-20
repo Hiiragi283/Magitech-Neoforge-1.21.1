@@ -1,9 +1,9 @@
 package net.stln.magitech.event;
 
-import dev.kosmx.playerAnim.api.layered.IAnimation;
-import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
-import dev.kosmx.playerAnim.api.layered.ModifierLayer;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -15,9 +15,10 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.item.tool.toolitem.SpellCasterItem;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import dev.kosmx.playerAnim.api.layered.IAnimation;
+import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
+import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID)
 public class ItemSwitchDetector {
@@ -35,19 +36,25 @@ public class ItemSwitchDetector {
         if (lastSlot != currentSlot) {
             // ここでアイテム切り替えを検知！
             ItemStack newItem = player.getMainHandItem();
-            if (lastSlot >= 0 && player.getInventory().getItem(lastSlot).getItem() instanceof SpellCasterItem) {
+            if (lastSlot >= 0
+                    && player.getInventory().getItem(lastSlot).getItem()
+                            instanceof SpellCasterItem) {
                 if (player.level().isClientSide) {
                     stopAnim(player);
                 }
             }
-
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     private static void stopAnim(Player player) {
-        var playerAnimationData = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) player).get(Magitech.id("animation"));
-        if (playerAnimationData != null && playerAnimationData.getAnimation() instanceof KeyframeAnimationPlayer keyframeAnimationPlayer) {
+        var playerAnimationData =
+                (ModifierLayer<IAnimation>)
+                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) player)
+                                .get(Magitech.id("animation"));
+        if (playerAnimationData != null
+                && playerAnimationData.getAnimation()
+                        instanceof KeyframeAnimationPlayer keyframeAnimationPlayer) {
 
             keyframeAnimationPlayer.stop();
         }

@@ -1,5 +1,8 @@
 package net.stln.magitech.worldgen;
 
+import java.util.List;
+import java.util.function.Supplier;
+
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -44,247 +47,446 @@ import net.stln.magitech.worldgen.terrain.ScorchedLavaLakeFeature;
 import net.stln.magitech.worldgen.tree.RandomBranchingTrunkPlacer;
 import net.stln.magitech.worldgen.tree.RandomShortBranchingTrunkPlacer;
 
-import java.util.List;
-import java.util.function.Supplier;
-
 public class WorldGenInit {
-    public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, Magitech.MOD_ID);
 
-    public static final Supplier<Feature<NoneFeatureConfiguration>> REDSTONE_CRYSTAL_SURFACE_FEATURE =
-            FEATURES.register("redstone_crystal_surface", () -> new OreSurfaceFeature(BlockInit.REDSTONE_CRYSTAL_CLUSTER.get().defaultBlockState(), List.of(Blocks.REDSTONE_ORE, Blocks.DEEPSLATE_REDSTONE_ORE), 0.25));
+    public static final DeferredRegister<Feature<?>> FEATURES =
+            DeferredRegister.create(Registries.FEATURE, Magitech.MOD_ID);
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> REDSTONE_CRYSTAL_SURFACE_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("redstone_crystal_surface"));
-    public static final ResourceKey<PlacedFeature> REDSTONE_CRYSTAL_SURFACE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("redstone_crystal_surface"));
-    public static final ResourceKey<BiomeModifier> REDSTONE_CRYSTAL_SURFACE_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("redstone_crystal_surface"));
+    public static final Supplier<Feature<NoneFeatureConfiguration>>
+            REDSTONE_CRYSTAL_SURFACE_FEATURE =
+                    FEATURES.register(
+                            "redstone_crystal_surface",
+                            () ->
+                                    new OreSurfaceFeature(
+                                            BlockInit.REDSTONE_CRYSTAL_CLUSTER
+                                                    .get()
+                                                    .defaultBlockState(),
+                                            List.of(
+                                                    Blocks.REDSTONE_ORE,
+                                                    Blocks.DEEPSLATE_REDSTONE_ORE),
+                                            0.25));
 
-    public static final Supplier<Feature<NoneFeatureConfiguration>> FLUORITE_CRYSTAL_SURFACE_FEATURE = FEATURES.register("fluorite_crystal_surface", () -> new OreSurfaceFeature(BlockInit.FLUORITE_CRYSTAL_CLUSTER.get().defaultBlockState(), List.of(BlockInit.FLUORITE_ORE.get(), BlockInit.DEEPSLATE_FLUORITE_ORE.get()), 0.25));
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FLUORITE_CRYSTAL_SURFACE_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("fluorite_crystal_surface"));
-    public static final ResourceKey<PlacedFeature> FLUORITE_CRYSTAL_SURFACE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("fluorite_crystal_surface"));
-    public static final ResourceKey<BiomeModifier> FLUORITE_CRYSTAL_SURFACE_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("fluorite_crystal_surface"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>>
+            REDSTONE_CRYSTAL_SURFACE_CONFIGURED_KEY =
+                    ResourceKey.create(
+                            Registries.CONFIGURED_FEATURE, Magitech.id("redstone_crystal_surface"));
+    public static final ResourceKey<PlacedFeature> REDSTONE_CRYSTAL_SURFACE_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("redstone_crystal_surface"));
+    public static final ResourceKey<BiomeModifier> REDSTONE_CRYSTAL_SURFACE_BIOME_MODIFIER_KEY =
+            ResourceKey.create(
+                    NeoForgeRegistries.Keys.BIOME_MODIFIERS,
+                    Magitech.id("redstone_crystal_surface"));
 
-    public static final Supplier<Feature<OreConfiguration>> FLUORITE_ORE_FEATURE = FEATURES.register("fluorite_ore", () -> new OreFeature(OreConfiguration.CODEC));
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FLUORITE_ORE_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("fluorite_ore"));
-    public static final ResourceKey<PlacedFeature> FLUORITE_ORE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("fluorite_ore"));
-    public static final ResourceKey<BiomeModifier> FLUORITE_ORE_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("fluorite_ore"));
+    public static final Supplier<Feature<NoneFeatureConfiguration>>
+            FLUORITE_CRYSTAL_SURFACE_FEATURE =
+                    FEATURES.register(
+                            "fluorite_crystal_surface",
+                            () ->
+                                    new OreSurfaceFeature(
+                                            BlockInit.FLUORITE_CRYSTAL_CLUSTER
+                                                    .get()
+                                                    .defaultBlockState(),
+                                            List.of(
+                                                    BlockInit.FLUORITE_ORE.get(),
+                                                    BlockInit.DEEPSLATE_FLUORITE_ORE.get()),
+                                            0.25));
+    public static final ResourceKey<ConfiguredFeature<?, ?>>
+            FLUORITE_CRYSTAL_SURFACE_CONFIGURED_KEY =
+                    ResourceKey.create(
+                            Registries.CONFIGURED_FEATURE, Magitech.id("fluorite_crystal_surface"));
+    public static final ResourceKey<PlacedFeature> FLUORITE_CRYSTAL_SURFACE_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("fluorite_crystal_surface"));
+    public static final ResourceKey<BiomeModifier> FLUORITE_CRYSTAL_SURFACE_BIOME_MODIFIER_KEY =
+            ResourceKey.create(
+                    NeoForgeRegistries.Keys.BIOME_MODIFIERS,
+                    Magitech.id("fluorite_crystal_surface"));
 
-    public static final Supplier<Feature<OreConfiguration>> TOURMALINE_ORE_FEATURE = FEATURES.register("tourmaline_ore", () -> new OreFeature(OreConfiguration.CODEC));
-    public static final ResourceKey<ConfiguredFeature<?, ?>> TOURMALINE_ORE_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("tourmaline_ore"));
-    public static final ResourceKey<PlacedFeature> TOURMALINE_ORE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("tourmaline_ore"));
-    public static final ResourceKey<BiomeModifier> TOURMALINE_ORE_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("tourmaline_ore"));
+    public static final Supplier<Feature<OreConfiguration>> FLUORITE_ORE_FEATURE =
+            FEATURES.register("fluorite_ore", () -> new OreFeature(OreConfiguration.CODEC));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FLUORITE_ORE_CONFIGURED_KEY =
+            ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("fluorite_ore"));
+    public static final ResourceKey<PlacedFeature> FLUORITE_ORE_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("fluorite_ore"));
+    public static final ResourceKey<BiomeModifier> FLUORITE_ORE_BIOME_MODIFIER_KEY =
+            ResourceKey.create(
+                    NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("fluorite_ore"));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> CELIFERN_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("celifern"));
-    public static final ResourceKey<PlacedFeature> CELIFERN_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("celifern"));
-    public static final ResourceKey<BiomeModifier> CELIFERN_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("celifern"));
+    public static final Supplier<Feature<OreConfiguration>> TOURMALINE_ORE_FEATURE =
+            FEATURES.register("tourmaline_ore", () -> new OreFeature(OreConfiguration.CODEC));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TOURMALINE_ORE_CONFIGURED_KEY =
+            ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("tourmaline_ore"));
+    public static final ResourceKey<PlacedFeature> TOURMALINE_ORE_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("tourmaline_ore"));
+    public static final ResourceKey<BiomeModifier> TOURMALINE_ORE_BIOME_MODIFIER_KEY =
+            ResourceKey.create(
+                    NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("tourmaline_ore"));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> CHARCOAL_BIRCH_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("charcoal_birch"));
-    public static final ResourceKey<PlacedFeature> CHARCOAL_BIRCH_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("charcoal_birch"));
-    public static final ResourceKey<BiomeModifier> CHARCOAL_BIRCH_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("charcoal_birch"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CELIFERN_CONFIGURED_KEY =
+            ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("celifern"));
+    public static final ResourceKey<PlacedFeature> CELIFERN_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("celifern"));
+    public static final ResourceKey<BiomeModifier> CELIFERN_BIOME_MODIFIER_KEY =
+            ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("celifern"));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> MANA_BERRY_BUSH_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("mana_berry_bush"));
-    public static final ResourceKey<PlacedFeature> MANA_BERRY_BUSH_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("mana_berry_bush"));
-    public static final ResourceKey<BiomeModifier> MANA_BERRY_BUSH_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("mana_berry_bush"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CHARCOAL_BIRCH_CONFIGURED_KEY =
+            ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("charcoal_birch"));
+    public static final ResourceKey<PlacedFeature> CHARCOAL_BIRCH_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("charcoal_birch"));
+    public static final ResourceKey<BiomeModifier> CHARCOAL_BIRCH_BIOME_MODIFIER_KEY =
+            ResourceKey.create(
+                    NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("charcoal_birch"));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> MISTALIA_PETALS_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("mistalia_petals"));
-    public static final ResourceKey<PlacedFeature> MISTALIA_PETALS_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("mistalia_petals"));
-    public static final ResourceKey<BiomeModifier> MISTALIA_PETALS_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("mistalia_petals"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MANA_BERRY_BUSH_CONFIGURED_KEY =
+            ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("mana_berry_bush"));
+    public static final ResourceKey<PlacedFeature> MANA_BERRY_BUSH_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("mana_berry_bush"));
+    public static final ResourceKey<BiomeModifier> MANA_BERRY_BUSH_BIOME_MODIFIER_KEY =
+            ResourceKey.create(
+                    NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("mana_berry_bush"));
 
-    public static final Supplier<Feature<NoneFeatureConfiguration>> SCORCHED_GEYSER_FEATURE = FEATURES.register("scorched_geyser", () -> new ScorchedGeyserFeature());
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SCORCHED_GEYSER_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("scorched_geyser"));
-    public static final ResourceKey<PlacedFeature> SCORCHED_GEYSER_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("scorched_geyser"));
-    public static final ResourceKey<BiomeModifier> SCORCHED_GEYSER_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("scorched_geyser"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MISTALIA_PETALS_CONFIGURED_KEY =
+            ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("mistalia_petals"));
+    public static final ResourceKey<PlacedFeature> MISTALIA_PETALS_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("mistalia_petals"));
+    public static final ResourceKey<BiomeModifier> MISTALIA_PETALS_BIOME_MODIFIER_KEY =
+            ResourceKey.create(
+                    NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("mistalia_petals"));
 
-    public static final Supplier<Feature<NoneFeatureConfiguration>> SCORCHED_LAVA_LAKE_FEATURE = FEATURES.register("scorched_lava_lake", () -> new ScorchedLavaLakeFeature());
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SCORCHED_LAVA_LAKE_CONFIGURED_KEY = ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("scorched_lava_lake"));
-    public static final ResourceKey<PlacedFeature> SCORCHED_LAVA_LAKE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("scorched_lava_lake"));
-    public static final ResourceKey<BiomeModifier> SCORCHED_LAVA_LAKE_BIOME_MODIFIER_KEY = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("scorched_lava_lake"));
+    public static final Supplier<Feature<NoneFeatureConfiguration>> SCORCHED_GEYSER_FEATURE =
+            FEATURES.register("scorched_geyser", () -> new ScorchedGeyserFeature());
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SCORCHED_GEYSER_CONFIGURED_KEY =
+            ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("scorched_geyser"));
+    public static final ResourceKey<PlacedFeature> SCORCHED_GEYSER_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("scorched_geyser"));
+    public static final ResourceKey<BiomeModifier> SCORCHED_GEYSER_BIOME_MODIFIER_KEY =
+            ResourceKey.create(
+                    NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("scorched_geyser"));
+
+    public static final Supplier<Feature<NoneFeatureConfiguration>> SCORCHED_LAVA_LAKE_FEATURE =
+            FEATURES.register("scorched_lava_lake", () -> new ScorchedLavaLakeFeature());
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SCORCHED_LAVA_LAKE_CONFIGURED_KEY =
+            ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("scorched_lava_lake"));
+    public static final ResourceKey<PlacedFeature> SCORCHED_LAVA_LAKE_PLACED_KEY =
+            ResourceKey.create(Registries.PLACED_FEATURE, Magitech.id("scorched_lava_lake"));
+    public static final ResourceKey<BiomeModifier> SCORCHED_LAVA_LAKE_BIOME_MODIFIER_KEY =
+            ResourceKey.create(
+                    NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("scorched_lava_lake"));
 
     public static void Configured(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         RuleTest ruletestStone = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
         RuleTest ruletestDeepslate = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
 
-        context.register(REDSTONE_CRYSTAL_SURFACE_CONFIGURED_KEY,
-                new ConfiguredFeature<>(REDSTONE_CRYSTAL_SURFACE_FEATURE.get(), NoneFeatureConfiguration.INSTANCE)
-        );
+        context.register(
+                REDSTONE_CRYSTAL_SURFACE_CONFIGURED_KEY,
+                new ConfiguredFeature<>(
+                        REDSTONE_CRYSTAL_SURFACE_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
 
-        context.register(FLUORITE_CRYSTAL_SURFACE_CONFIGURED_KEY,
-                new ConfiguredFeature<>(FLUORITE_CRYSTAL_SURFACE_FEATURE.get(), NoneFeatureConfiguration.INSTANCE)
-        );
+        context.register(
+                FLUORITE_CRYSTAL_SURFACE_CONFIGURED_KEY,
+                new ConfiguredFeature<>(
+                        FLUORITE_CRYSTAL_SURFACE_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
 
-        List<OreConfiguration.TargetBlockState> fluoriteList = List.of(
-                OreConfiguration.target(ruletestStone, BlockInit.FLUORITE_ORE.get().defaultBlockState()),
-                OreConfiguration.target(ruletestDeepslate, BlockInit.DEEPSLATE_FLUORITE_ORE.get().defaultBlockState())
-        );
-        context.register(FLUORITE_ORE_CONFIGURED_KEY, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(fluoriteList, 8)));
-        List<OreConfiguration.TargetBlockState> tourmalineList = List.of(
-                OreConfiguration.target(ruletestStone, BlockInit.TOURMALINE_ORE.get().defaultBlockState()),
-                OreConfiguration.target(ruletestDeepslate, BlockInit.DEEPSLATE_TOURMALINE_ORE.get().defaultBlockState())
-        );
-        context.register(TOURMALINE_ORE_CONFIGURED_KEY, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(tourmalineList, 8)));
+        List<OreConfiguration.TargetBlockState> fluoriteList =
+                List.of(
+                        OreConfiguration.target(
+                                ruletestStone, BlockInit.FLUORITE_ORE.get().defaultBlockState()),
+                        OreConfiguration.target(
+                                ruletestDeepslate,
+                                BlockInit.DEEPSLATE_FLUORITE_ORE.get().defaultBlockState()));
+        context.register(
+                FLUORITE_ORE_CONFIGURED_KEY,
+                new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(fluoriteList, 8)));
+        List<OreConfiguration.TargetBlockState> tourmalineList =
+                List.of(
+                        OreConfiguration.target(
+                                ruletestStone, BlockInit.TOURMALINE_ORE.get().defaultBlockState()),
+                        OreConfiguration.target(
+                                ruletestDeepslate,
+                                BlockInit.DEEPSLATE_TOURMALINE_ORE.get().defaultBlockState()));
+        context.register(
+                TOURMALINE_ORE_CONFIGURED_KEY,
+                new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(tourmalineList, 8)));
 
         HolderGetter<Block> holdergetter = context.lookup(Registries.BLOCK);
 
-        context.register(CELIFERN_CONFIGURED_KEY, new ConfiguredFeature<>(Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(BlockInit.CELIFERN_LOG.get()),
-                new RandomBranchingTrunkPlacer(8, 1, 3),
+        context.register(
+                CELIFERN_CONFIGURED_KEY,
+                new ConfiguredFeature<>(
+                        Feature.TREE,
+                        new TreeConfiguration.TreeConfigurationBuilder(
+                                        BlockStateProvider.simple(BlockInit.CELIFERN_LOG.get()),
+                                        new RandomBranchingTrunkPlacer(8, 1, 3),
+                                        BlockStateProvider.simple(BlockInit.CELIFERN_LEAVES.get()),
+                                        new RandomSpreadFoliagePlacer(
+                                                ConstantInt.of(3),
+                                                ConstantInt.of(0),
+                                                ConstantInt.of(2),
+                                                70),
+                                        new TwoLayersFeatureSize(1, 0, 2))
+                                .build()));
 
-                BlockStateProvider.simple(BlockInit.CELIFERN_LEAVES.get()),
-                new RandomSpreadFoliagePlacer(ConstantInt.of(3), ConstantInt.of(0), ConstantInt.of(2), 70),
+        context.register(
+                CHARCOAL_BIRCH_CONFIGURED_KEY,
+                new ConfiguredFeature<>(
+                        Feature.TREE,
+                        new TreeConfiguration.TreeConfigurationBuilder(
+                                        BlockStateProvider.simple(
+                                                BlockInit.CHARCOAL_BIRCH_LOG.get()),
+                                        new RandomShortBranchingTrunkPlacer(8, 1, 7),
+                                        BlockStateProvider.simple(
+                                                BlockInit.CHARCOAL_BIRCH_LEAVES.get()),
+                                        new RandomSpreadFoliagePlacer(
+                                                ConstantInt.of(3),
+                                                ConstantInt.of(0),
+                                                ConstantInt.of(2),
+                                                50),
+                                        new TwoLayersFeatureSize(1, 0, 2))
+                                .build()));
 
-                new TwoLayersFeatureSize(1, 0, 2)).build()));
-
-        context.register(CHARCOAL_BIRCH_CONFIGURED_KEY, new ConfiguredFeature<>(Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(BlockInit.CHARCOAL_BIRCH_LOG.get()),
-                new RandomShortBranchingTrunkPlacer(8, 1, 7),
-
-                BlockStateProvider.simple(BlockInit.CHARCOAL_BIRCH_LEAVES.get()),
-                new RandomSpreadFoliagePlacer(ConstantInt.of(3), ConstantInt.of(0), ConstantInt.of(2), 50),
-
-                new TwoLayersFeatureSize(1, 0, 2)).build()));
-
-        context.register(MANA_BERRY_BUSH_CONFIGURED_KEY, new ConfiguredFeature<>(Feature.RANDOM_PATCH,
-                FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK,
-                        new SimpleBlockConfiguration(BlockStateProvider.simple(BlockInit.MANA_BERRY_BUSH.get()
-                                .defaultBlockState().setValue(SweetBerryBushBlock.AGE, 3))
-                        ), List.of(Blocks.GRASS_BLOCK))));
+        context.register(
+                MANA_BERRY_BUSH_CONFIGURED_KEY,
+                new ConfiguredFeature<>(
+                        Feature.RANDOM_PATCH,
+                        FeatureUtils.simplePatchConfiguration(
+                                Feature.SIMPLE_BLOCK,
+                                new SimpleBlockConfiguration(
+                                        BlockStateProvider.simple(
+                                                BlockInit.MANA_BERRY_BUSH
+                                                        .get()
+                                                        .defaultBlockState()
+                                                        .setValue(SweetBerryBushBlock.AGE, 3))),
+                                List.of(Blocks.GRASS_BLOCK))));
 
         SimpleWeightedRandomList.Builder<BlockState> builder = SimpleWeightedRandomList.builder();
 
         for (int i = 1; i <= 4; i++) {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 builder.add(
-                        BlockInit.MISTALIA_PETALS.get().defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, i).setValue(PinkPetalsBlock.FACING, direction), 1
-                );
+                        BlockInit.MISTALIA_PETALS
+                                .get()
+                                .defaultBlockState()
+                                .setValue(PinkPetalsBlock.AMOUNT, i)
+                                .setValue(PinkPetalsBlock.FACING, direction),
+                        1);
             }
         }
 
         context.register(
-                MISTALIA_PETALS_CONFIGURED_KEY, new ConfiguredFeature<>(Feature.FLOWER,
-                new RandomPatchConfiguration(96, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new WeightedStateProvider(builder))))));
+                MISTALIA_PETALS_CONFIGURED_KEY,
+                new ConfiguredFeature<>(
+                        Feature.FLOWER,
+                        new RandomPatchConfiguration(
+                                96,
+                                6,
+                                2,
+                                PlacementUtils.onlyWhenEmpty(
+                                        Feature.SIMPLE_BLOCK,
+                                        new SimpleBlockConfiguration(
+                                                new WeightedStateProvider(builder))))));
 
+        context.register(
+                SCORCHED_GEYSER_CONFIGURED_KEY,
+                new ConfiguredFeature<>(
+                        SCORCHED_GEYSER_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
 
-        context.register(SCORCHED_GEYSER_CONFIGURED_KEY,
-                new ConfiguredFeature<>(SCORCHED_GEYSER_FEATURE.get(), NoneFeatureConfiguration.INSTANCE)
-        );
-
-        context.register(SCORCHED_LAVA_LAKE_CONFIGURED_KEY,
-                new ConfiguredFeature<>(SCORCHED_LAVA_LAKE_FEATURE.get(), NoneFeatureConfiguration.INSTANCE)
-        );
+        context.register(
+                SCORCHED_LAVA_LAKE_CONFIGURED_KEY,
+                new ConfiguredFeature<>(
+                        SCORCHED_LAVA_LAKE_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
     }
 
-
     public static void bootstrapPlaced(BootstrapContext<PlacedFeature> context) {
-        HolderGetter<ConfiguredFeature<?, ?>> configured = context.lookup(Registries.CONFIGURED_FEATURE);
+        HolderGetter<ConfiguredFeature<?, ?>> configured =
+                context.lookup(Registries.CONFIGURED_FEATURE);
 
-        context.register(REDSTONE_CRYSTAL_SURFACE_PLACED_KEY, new PlacedFeature(
-                configured.getOrThrow(REDSTONE_CRYSTAL_SURFACE_CONFIGURED_KEY),
-                List.of(CountPlacement.of(1), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.top()))
-        ));
-        context.register(FLUORITE_CRYSTAL_SURFACE_PLACED_KEY, new PlacedFeature(
-                configured.getOrThrow(FLUORITE_CRYSTAL_SURFACE_CONFIGURED_KEY),
-                List.of(CountPlacement.of(1), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.top()))
-        ));
-        context.register(FLUORITE_ORE_PLACED_KEY, new PlacedFeature(
-                configured.getOrThrow(FLUORITE_ORE_CONFIGURED_KEY),
-                List.of(CountPlacement.of(12), InSquarePlacement.spread(), HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(0), VerticalAnchor.aboveBottom(128))))
-        );
-        context.register(TOURMALINE_ORE_PLACED_KEY, new PlacedFeature(
-                configured.getOrThrow(TOURMALINE_ORE_CONFIGURED_KEY),
-                List.of(CountPlacement.of(8), InSquarePlacement.spread(), HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(0), VerticalAnchor.aboveBottom(128))))
-        );
-        context.register(CELIFERN_PLACED_KEY, new PlacedFeature(configured.getOrThrow(CELIFERN_CONFIGURED_KEY),
-               VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.5f, 7),
-                        BlockInit.CELIFERN_SAPLING.get())));
-        context.register(CHARCOAL_BIRCH_PLACED_KEY, new PlacedFeature(configured.getOrThrow(CHARCOAL_BIRCH_CONFIGURED_KEY),
-               VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.2f, 3),
-                        BlockInit.CHARCOAL_BIRCH_SAPLING.get())));
+        context.register(
+                REDSTONE_CRYSTAL_SURFACE_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(REDSTONE_CRYSTAL_SURFACE_CONFIGURED_KEY),
+                        List.of(
+                                CountPlacement.of(1),
+                                InSquarePlacement.spread(),
+                                HeightRangePlacement.uniform(
+                                        VerticalAnchor.bottom(), VerticalAnchor.top()))));
+        context.register(
+                FLUORITE_CRYSTAL_SURFACE_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(FLUORITE_CRYSTAL_SURFACE_CONFIGURED_KEY),
+                        List.of(
+                                CountPlacement.of(1),
+                                InSquarePlacement.spread(),
+                                HeightRangePlacement.uniform(
+                                        VerticalAnchor.bottom(), VerticalAnchor.top()))));
+        context.register(
+                FLUORITE_ORE_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(FLUORITE_ORE_CONFIGURED_KEY),
+                        List.of(
+                                CountPlacement.of(12),
+                                InSquarePlacement.spread(),
+                                HeightRangePlacement.triangle(
+                                        VerticalAnchor.aboveBottom(0),
+                                        VerticalAnchor.aboveBottom(128)))));
+        context.register(
+                TOURMALINE_ORE_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(TOURMALINE_ORE_CONFIGURED_KEY),
+                        List.of(
+                                CountPlacement.of(8),
+                                InSquarePlacement.spread(),
+                                HeightRangePlacement.triangle(
+                                        VerticalAnchor.aboveBottom(0),
+                                        VerticalAnchor.aboveBottom(128)))));
+        context.register(
+                CELIFERN_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(CELIFERN_CONFIGURED_KEY),
+                        VegetationPlacements.treePlacement(
+                                PlacementUtils.countExtra(3, 0.5f, 7),
+                                BlockInit.CELIFERN_SAPLING.get())));
+        context.register(
+                CHARCOAL_BIRCH_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(CHARCOAL_BIRCH_CONFIGURED_KEY),
+                        VegetationPlacements.treePlacement(
+                                PlacementUtils.countExtra(0, 0.2f, 3),
+                                BlockInit.CHARCOAL_BIRCH_SAPLING.get())));
 
-        context.register(MANA_BERRY_BUSH_PLACED_KEY, new PlacedFeature(configured.getOrThrow(MANA_BERRY_BUSH_CONFIGURED_KEY),
-                List.of(RarityFilter.onAverageOnceEvery(32), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+        context.register(
+                MANA_BERRY_BUSH_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(MANA_BERRY_BUSH_CONFIGURED_KEY),
+                        List.of(
+                                RarityFilter.onAverageOnceEvery(32),
+                                InSquarePlacement.spread(),
+                                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                                BiomeFilter.biome())));
 
-        context.register(MISTALIA_PETALS_PLACED_KEY, new PlacedFeature(configured.getOrThrow(MISTALIA_PETALS_CONFIGURED_KEY),
-                List.of(RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+        context.register(
+                MISTALIA_PETALS_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(MISTALIA_PETALS_CONFIGURED_KEY),
+                        List.of(
+                                RarityFilter.onAverageOnceEvery(4),
+                                InSquarePlacement.spread(),
+                                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                                BiomeFilter.biome())));
 
-        context.register(SCORCHED_GEYSER_PLACED_KEY, new PlacedFeature(
-                configured.getOrThrow(SCORCHED_GEYSER_CONFIGURED_KEY),
-                List.of(RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+        context.register(
+                SCORCHED_GEYSER_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(SCORCHED_GEYSER_CONFIGURED_KEY),
+                        List.of(
+                                RarityFilter.onAverageOnceEvery(4),
+                                InSquarePlacement.spread(),
+                                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                                BiomeFilter.biome())));
 
-        context.register(SCORCHED_LAVA_LAKE_PLACED_KEY, new PlacedFeature(
-                configured.getOrThrow(SCORCHED_LAVA_LAKE_CONFIGURED_KEY),
-                List.of(RarityFilter.onAverageOnceEvery(4), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+        context.register(
+                SCORCHED_LAVA_LAKE_PLACED_KEY,
+                new PlacedFeature(
+                        configured.getOrThrow(SCORCHED_LAVA_LAKE_CONFIGURED_KEY),
+                        List.of(
+                                RarityFilter.onAverageOnceEvery(4),
+                                InSquarePlacement.spread(),
+                                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                                BiomeFilter.biome())));
     }
 
     public static void bootstrapBiomeModifier(BootstrapContext<BiomeModifier> context) {
         var biomes = context.lookup(Registries.BIOME);
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
 
-        context.register(REDSTONE_CRYSTAL_SURFACE_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(placedFeatures.getOrThrow(REDSTONE_CRYSTAL_SURFACE_PLACED_KEY)),
-                GenerationStep.Decoration.UNDERGROUND_DECORATION));
+        context.register(
+                REDSTONE_CRYSTAL_SURFACE_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+                        HolderSet.direct(
+                                placedFeatures.getOrThrow(REDSTONE_CRYSTAL_SURFACE_PLACED_KEY)),
+                        GenerationStep.Decoration.UNDERGROUND_DECORATION));
 
-        context.register(FLUORITE_CRYSTAL_SURFACE_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(placedFeatures.getOrThrow(FLUORITE_CRYSTAL_SURFACE_PLACED_KEY)),
-                GenerationStep.Decoration.UNDERGROUND_DECORATION));
+        context.register(
+                FLUORITE_CRYSTAL_SURFACE_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+                        HolderSet.direct(
+                                placedFeatures.getOrThrow(FLUORITE_CRYSTAL_SURFACE_PLACED_KEY)),
+                        GenerationStep.Decoration.UNDERGROUND_DECORATION));
 
-        context.register(FLUORITE_ORE_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(placedFeatures.getOrThrow(FLUORITE_ORE_PLACED_KEY)),
-                GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(
+                FLUORITE_ORE_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+                        HolderSet.direct(placedFeatures.getOrThrow(FLUORITE_ORE_PLACED_KEY)),
+                        GenerationStep.Decoration.UNDERGROUND_ORES));
 
-        context.register(TOURMALINE_ORE_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(placedFeatures.getOrThrow(TOURMALINE_ORE_PLACED_KEY)),
-                GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(
+                TOURMALINE_ORE_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+                        HolderSet.direct(placedFeatures.getOrThrow(TOURMALINE_ORE_PLACED_KEY)),
+                        GenerationStep.Decoration.UNDERGROUND_ORES));
 
-        context.register(CELIFERN_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeInit.HAS_CELIFERN_FOREST),
-                HolderSet.direct(placedFeatures.getOrThrow(CELIFERN_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION));
+        context.register(
+                CELIFERN_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeInit.HAS_CELIFERN_FOREST),
+                        HolderSet.direct(placedFeatures.getOrThrow(CELIFERN_PLACED_KEY)),
+                        GenerationStep.Decoration.VEGETAL_DECORATION));
 
-        context.register(CHARCOAL_BIRCH_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeInit.HAS_CHARCOAL_BIRCH_FOREST),
-                HolderSet.direct(placedFeatures.getOrThrow(CHARCOAL_BIRCH_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION));
+        context.register(
+                CHARCOAL_BIRCH_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeInit.HAS_CHARCOAL_BIRCH_FOREST),
+                        HolderSet.direct(placedFeatures.getOrThrow(CHARCOAL_BIRCH_PLACED_KEY)),
+                        GenerationStep.Decoration.VEGETAL_DECORATION));
 
-        context.register(MANA_BERRY_BUSH_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeInit.HAS_MANA_BERRY_BUSH),
-                HolderSet.direct(placedFeatures.getOrThrow(MANA_BERRY_BUSH_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION));
+        context.register(
+                MANA_BERRY_BUSH_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeInit.HAS_MANA_BERRY_BUSH),
+                        HolderSet.direct(placedFeatures.getOrThrow(MANA_BERRY_BUSH_PLACED_KEY)),
+                        GenerationStep.Decoration.VEGETAL_DECORATION));
 
-        context.register(MISTALIA_PETALS_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeInit.HAS_MISTALIA_PETALS),
-                HolderSet.direct(placedFeatures.getOrThrow(MISTALIA_PETALS_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION));
+        context.register(
+                MISTALIA_PETALS_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeInit.HAS_MISTALIA_PETALS),
+                        HolderSet.direct(placedFeatures.getOrThrow(MISTALIA_PETALS_PLACED_KEY)),
+                        GenerationStep.Decoration.VEGETAL_DECORATION));
 
-        context.register(SCORCHED_GEYSER_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeInit.IS_SCORCHED),
-                HolderSet.direct(placedFeatures.getOrThrow(SCORCHED_GEYSER_PLACED_KEY)),
-                GenerationStep.Decoration.SURFACE_STRUCTURES));
+        context.register(
+                SCORCHED_GEYSER_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeInit.IS_SCORCHED),
+                        HolderSet.direct(placedFeatures.getOrThrow(SCORCHED_GEYSER_PLACED_KEY)),
+                        GenerationStep.Decoration.SURFACE_STRUCTURES));
 
-        context.register(SCORCHED_LAVA_LAKE_BIOME_MODIFIER_KEY, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeInit.IS_SCORCHED),
-                HolderSet.direct(placedFeatures.getOrThrow(SCORCHED_LAVA_LAKE_PLACED_KEY)),
-                GenerationStep.Decoration.SURFACE_STRUCTURES));
+        context.register(
+                SCORCHED_LAVA_LAKE_BIOME_MODIFIER_KEY,
+                new BiomeModifiers.AddFeaturesBiomeModifier(
+                        biomes.getOrThrow(BiomeInit.IS_SCORCHED),
+                        HolderSet.direct(placedFeatures.getOrThrow(SCORCHED_LAVA_LAKE_PLACED_KEY)),
+                        GenerationStep.Decoration.SURFACE_STRUCTURES));
     }
 
-//    public static void registerBiomeModifiers() {
-//        BiomeModifications.addFeature(
-//                BiomeSelectors.foundInOverworld(),
-//                GenerationStep.Decoration.UNDERGROUND_DECORATION,
-//                WorldGenInit.REDSTONE_CRYSTAL_SURFACE_PLACED_KEY
-//        );
-//        BiomeModifications.addFeature(
-//                BiomeSelectors.foundInOverworld(),
-//                GenerationStep.Decoration.UNDERGROUND_DECORATION,
-//                WorldGenInit.FLUORITE_CRYSTAL_SURFACE_PLACED_KEY
-//        );
-//        BiomeModifications.addFeature(
-//                BiomeSelectors.foundInOverworld(),
-//                GenerationStep.Decoration.UNDERGROUND_ORES,
-//                WorldGenInit.FLUORITE_ORE_PLACED_KEY
-//        );
-//    }
+    // public static void registerBiomeModifiers() {
+    // BiomeModifications.addFeature(
+    // BiomeSelectors.foundInOverworld(),
+    // GenerationStep.Decoration.UNDERGROUND_DECORATION,
+    // WorldGenInit.REDSTONE_CRYSTAL_SURFACE_PLACED_KEY
+    // );
+    // BiomeModifications.addFeature(
+    // BiomeSelectors.foundInOverworld(),
+    // GenerationStep.Decoration.UNDERGROUND_DECORATION,
+    // WorldGenInit.FLUORITE_CRYSTAL_SURFACE_PLACED_KEY
+    // );
+    // BiomeModifications.addFeature(
+    // BiomeSelectors.foundInOverworld(),
+    // GenerationStep.Decoration.UNDERGROUND_ORES,
+    // WorldGenInit.FLUORITE_ORE_PLACED_KEY
+    // );
+    // }
 
     public static void registerFeatures(IEventBus eventBus) {
         Magitech.LOGGER.info("Registering Features for" + Magitech.MOD_ID);

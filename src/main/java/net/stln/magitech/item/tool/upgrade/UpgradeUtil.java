@@ -1,11 +1,11 @@
 package net.stln.magitech.item.tool.upgrade;
 
+import java.util.*;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.item.tool.toolitem.SpellCasterItem;
-
-import java.util.*;
 
 public class UpgradeUtil {
 

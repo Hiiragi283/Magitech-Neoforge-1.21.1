@@ -1,12 +1,14 @@
 package net.stln.magitech.particle.particle_type;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.stln.magitech.particle.particle_option.PowerupParticleEffect;
 
+import com.mojang.serialization.MapCodec;
+
 public class PowerupParticleType extends ParticleType<PowerupParticleEffect> {
+
     public PowerupParticleType(boolean overrideLimitter) {
         super(overrideLimitter);
     }

@@ -11,21 +11,31 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.item.tool.toolitem.PartToolItem;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class HardmineTrait extends Trait {
 
     @Override
-    public float modifyMiningSpeed(Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats, BlockState blockState, BlockPos pos) {
+    public float modifyMiningSpeed(
+            Player player,
+            Level level,
+            ItemStack stack,
+            int traitLevel,
+            ToolStats stats,
+            BlockState blockState,
+            BlockPos pos) {
         return blockState.getBlock().getExplosionResistance() * traitLevel / 5;
     }
 
     @Override
-    public void onAttackEntity(Player player, Level level, ItemStack stack, int traitLevel, ToolStats stats, Entity target) {
-        if (target instanceof LivingEntity livingEntity && player.getRandom().nextFloat() < traitLevel * 0.4F) {
+    public void onAttackEntity(
+            Player player,
+            Level level,
+            ItemStack stack,
+            int traitLevel,
+            ToolStats stats,
+            Entity target) {
+        if (target instanceof LivingEntity livingEntity
+                && player.getRandom().nextFloat() < traitLevel * 0.4F) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
         }
     }

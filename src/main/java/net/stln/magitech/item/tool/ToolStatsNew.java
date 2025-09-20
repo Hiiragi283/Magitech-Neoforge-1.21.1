@@ -1,18 +1,22 @@
 package net.stln.magitech.item.tool;
 
-import com.google.common.collect.ImmutableList;
-import net.minecraft.util.StringRepresentable;
-import net.stln.magitech.item.tool.material.MiningLevel;
-import net.stln.magitech.element.Element;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import net.minecraft.util.StringRepresentable;
+import net.stln.magitech.element.Element;
+import net.stln.magitech.item.tool.material.MiningLevel;
+
+import org.jetbrains.annotations.NotNull;
+
+import com.google.common.collect.ImmutableList;
+
 public class ToolStatsNew {
-    public static final ToolStatsNew DEFAULT = new ToolStatsNew(Map.of(), Element.NONE, MiningLevel.NONE, 0);
+
+    public static final ToolStatsNew DEFAULT =
+            new ToolStatsNew(Map.of(), Element.NONE, MiningLevel.NONE, 0);
 
     public static Builder builder() {
         return new Builder();
@@ -26,7 +30,8 @@ public class ToolStatsNew {
         return combineBuilder(others, false).build();
     }
 
-    private static @NotNull ToolStatsNew.Builder combineBuilder(@NotNull List<ToolStatsNew> others, boolean includeElement) {
+    private static @NotNull ToolStatsNew.Builder combineBuilder(
+            @NotNull List<ToolStatsNew> others, boolean includeElement) {
         var builder = builder();
         HashMap<Element, Float> elementMap = new HashMap<>();
 
@@ -36,7 +41,10 @@ public class ToolStatsNew {
             // Elementによる補正
             Element element = other.getElement();
             float elementAttack = builder.getStats(StatsType.ELEMENT_ATTACK);
-            elementMap.compute(element, ((element1, aFloat) -> aFloat == null ? elementAttack : aFloat + elementAttack));
+            elementMap.compute(
+                    element,
+                    ((element1, aFloat) ->
+                            aFloat == null ? elementAttack : aFloat + elementAttack));
             // 採掘レベルの上書き
             MiningLevel miningLevel = other.getMiningLevel();
             if (miningLevel.getTier() > builder.miningLevel.getTier()) {
@@ -47,7 +55,16 @@ public class ToolStatsNew {
         if (!includeElement) return builder;
 
         var elementAttack = builder.getStats(StatsType.ELEMENT_ATTACK);
-        List<Element> elements = List.of(Element.EMBER, Element.GLACE, Element.SURGE, Element.PHANTOM, Element.TREMOR, Element.MAGIC, Element.FLOW, Element.HOLLOW);
+        List<Element> elements =
+                List.of(
+                        Element.EMBER,
+                        Element.GLACE,
+                        Element.SURGE,
+                        Element.PHANTOM,
+                        Element.TREMOR,
+                        Element.MAGIC,
+                        Element.FLOW,
+                        Element.HOLLOW);
         for (Element element : elements) {
 
             if (elementMap.getOrDefault(element, 0f) > elementAttack) {
@@ -66,13 +83,13 @@ public class ToolStatsNew {
             }
         }
 
-        List<Element> elements1 = ImmutableList.<Element>builder()
-                .addAll(elements)
-                .add(Element.NONE)
-                .build();
+        List<Element> elements1 =
+                ImmutableList.<Element>builder().addAll(elements).add(Element.NONE).build();
         for (Element element : elements1) {
             if (element != currentElement) {
-                elementAttack += elementMap.getOrDefault(element, 0f) * (element == Element.NONE ? 1f : 0.5f);
+                elementAttack +=
+                        elementMap.getOrDefault(element, 0f)
+                                * (element == Element.NONE ? 1f : 0.5f);
             }
         }
 
@@ -85,7 +102,11 @@ public class ToolStatsNew {
     private final MiningLevel miningLevel;
     private final int tier;
 
-    private ToolStatsNew(@NotNull Map<StatsType, Float> statsMap, @NotNull Element element, @NotNull MiningLevel miningLevel, int tier) {
+    private ToolStatsNew(
+            @NotNull Map<StatsType, Float> statsMap,
+            @NotNull Element element,
+            @NotNull MiningLevel miningLevel,
+            int tier) {
         this.statsMap = statsMap;
         this.element = element;
         this.miningLevel = miningLevel;
@@ -109,13 +130,13 @@ public class ToolStatsNew {
     }
 
     public static class Builder {
+
         private final Map<StatsType, Float> builder = new HashMap<>();
         private Element element = Element.NONE;
         private MiningLevel miningLevel = MiningLevel.NONE;
         private int tier = 0;
 
-        Builder() {
-        }
+        Builder() {}
 
         public float getStats(StatsType statsType) {
             return builder.getOrDefault(statsType, 0f);

@@ -1,6 +1,5 @@
 package net.stln.magitech.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Camera;
@@ -10,8 +9,11 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.Mth;
 import net.stln.magitech.particle.particle_option.SquareParticleEffect;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 public class SquareParticle extends GlowingParticle {
 
@@ -20,8 +22,16 @@ public class SquareParticle extends GlowingParticle {
     private final Vector3f endColor;
     private final float initialScale;
 
-    public SquareParticle(ClientLevel clientWorld, double x, double y, double z, double vx, double vy, double vz,
-                          SquareParticleEffect parameters, SpriteSet spriteProvider) {
+    public SquareParticle(
+            ClientLevel clientWorld,
+            double x,
+            double y,
+            double z,
+            double vx,
+            double vy,
+            double vz,
+            SquareParticleEffect parameters,
+            SpriteSet spriteProvider) {
         super(clientWorld, x, y, z, vx, vy, vz);
         this.xd = vx;
         this.yd = vy;
@@ -47,7 +57,8 @@ public class SquareParticle extends GlowingParticle {
             this.alpha = (this.lifetime - this.age) / (this.lifetime * 0.2F) * 0.6F + 0.2F;
         }
         if (this.twinkle > 1) {
-            float multiplier = Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
+            float multiplier =
+                    Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
             this.rCol *= multiplier;
             this.gCol *= multiplier;
             this.bCol *= multiplier;
@@ -90,6 +101,7 @@ public class SquareParticle extends GlowingParticle {
 
     @Environment(EnvType.CLIENT)
     public static class Provider implements ParticleProvider<SquareParticleEffect> {
+
         private final SpriteSet spriteProvider;
 
         public Provider(SpriteSet spriteProvider) {
@@ -97,7 +109,15 @@ public class SquareParticle extends GlowingParticle {
         }
 
         @Override
-        public @Nullable Particle createParticle(SquareParticleEffect parameters, ClientLevel world, double x, double y, double z, double xd, double yd, double zd) {
+        public @Nullable Particle createParticle(
+                SquareParticleEffect parameters,
+                ClientLevel world,
+                double x,
+                double y,
+                double z,
+                double xd,
+                double yd,
+                double zd) {
             return new SquareParticle(world, x, y, z, xd, yd, zd, parameters, this.spriteProvider);
         }
     }

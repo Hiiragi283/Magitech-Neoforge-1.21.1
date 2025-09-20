@@ -1,6 +1,5 @@
 package net.stln.magitech.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Camera;
@@ -9,8 +8,11 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.stln.magitech.particle.particle_option.PowerupParticleEffect;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 public class PowerupParticle extends GlowingParticle {
 
@@ -18,8 +20,16 @@ public class PowerupParticle extends GlowingParticle {
     private final Vector3f startColor;
     private final Vector3f endColor;
 
-    public PowerupParticle(ClientLevel clientWorld, double x, double y, double z, double vx, double vy, double vz,
-                           PowerupParticleEffect parameters, SpriteSet spriteProvider) {
+    public PowerupParticle(
+            ClientLevel clientWorld,
+            double x,
+            double y,
+            double z,
+            double vx,
+            double vy,
+            double vz,
+            PowerupParticleEffect parameters,
+            SpriteSet spriteProvider) {
         super(clientWorld, x, y, z, vx, vy, vz);
         this.xd = vx;
         this.yd = vy;
@@ -45,7 +55,8 @@ public class PowerupParticle extends GlowingParticle {
             this.alpha = (this.lifetime - this.age) / (this.lifetime * 0.2F) * 0.6F + 0.2F;
         }
         if (this.twinkle > 1) {
-            float multiplier = Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
+            float multiplier =
+                    Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
             this.rCol *= multiplier;
             this.gCol *= multiplier;
             this.bCol *= multiplier;
@@ -90,6 +101,7 @@ public class PowerupParticle extends GlowingParticle {
 
     @Environment(EnvType.CLIENT)
     public static class Provider implements ParticleProvider<PowerupParticleEffect> {
+
         private final SpriteSet spriteProvider;
 
         public Provider(SpriteSet spriteProvider) {
@@ -97,7 +109,15 @@ public class PowerupParticle extends GlowingParticle {
         }
 
         @Override
-        public @Nullable Particle createParticle(PowerupParticleEffect parameters, ClientLevel world, double x, double y, double z, double xd, double yd, double zd) {
+        public @Nullable Particle createParticle(
+                PowerupParticleEffect parameters,
+                ClientLevel world,
+                double x,
+                double y,
+                double z,
+                double xd,
+                double yd,
+                double zd) {
             return new PowerupParticle(world, x, y, z, xd, yd, zd, parameters, this.spriteProvider);
         }
     }

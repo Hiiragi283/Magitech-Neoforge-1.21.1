@@ -1,9 +1,11 @@
 package net.stln.magitech.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+
 import org.joml.Quaternionf;
+
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 public class HorizontalParticle extends AbstractCustomizableParticle {
 
@@ -11,7 +13,8 @@ public class HorizontalParticle extends AbstractCustomizableParticle {
         super(world, x, y, z);
     }
 
-    protected HorizontalParticle(ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
+    protected HorizontalParticle(
+            ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
         super(clientWorld, d, e, f, g, h, i);
     }
 

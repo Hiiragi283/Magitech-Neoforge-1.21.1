@@ -1,6 +1,5 @@
 package net.stln.magitech.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Camera;
@@ -10,8 +9,11 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.stln.magitech.particle.particle_option.PowerupNoCullParticleEffect;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 public class PowerupNoCullParticle extends GlowingParticle {
 
@@ -19,8 +21,16 @@ public class PowerupNoCullParticle extends GlowingParticle {
     private final Vector3f startColor;
     private final Vector3f endColor;
 
-    public PowerupNoCullParticle(ClientLevel clientWorld, double x, double y, double z, double vx, double vy, double vz,
-                                 PowerupNoCullParticleEffect parameters, SpriteSet spriteProvider) {
+    public PowerupNoCullParticle(
+            ClientLevel clientWorld,
+            double x,
+            double y,
+            double z,
+            double vx,
+            double vy,
+            double vz,
+            PowerupNoCullParticleEffect parameters,
+            SpriteSet spriteProvider) {
         super(clientWorld, x, y, z, vx, vy, vz);
         this.xd = vx;
         this.yd = vy;
@@ -46,7 +56,8 @@ public class PowerupNoCullParticle extends GlowingParticle {
             this.alpha = (this.lifetime - this.age) / (this.lifetime * 0.2F) * 0.6F + 0.2F;
         }
         if (this.twinkle > 1) {
-            float multiplier = Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
+            float multiplier =
+                    Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
             this.rCol *= multiplier;
             this.gCol *= multiplier;
             this.bCol *= multiplier;
@@ -96,6 +107,7 @@ public class PowerupNoCullParticle extends GlowingParticle {
 
     @Environment(EnvType.CLIENT)
     public static class Provider implements ParticleProvider<PowerupNoCullParticleEffect> {
+
         private final SpriteSet spriteProvider;
 
         public Provider(SpriteSet spriteProvider) {
@@ -103,8 +115,17 @@ public class PowerupNoCullParticle extends GlowingParticle {
         }
 
         @Override
-        public @Nullable Particle createParticle(PowerupNoCullParticleEffect parameters, ClientLevel world, double x, double y, double z, double xd, double yd, double zd) {
-            return new PowerupNoCullParticle(world, x, y, z, xd, yd, zd, parameters, this.spriteProvider);
+        public @Nullable Particle createParticle(
+                PowerupNoCullParticleEffect parameters,
+                ClientLevel world,
+                double x,
+                double y,
+                double z,
+                double xd,
+                double yd,
+                double zd) {
+            return new PowerupNoCullParticle(
+                    world, x, y, z, xd, yd, zd, parameters, this.spriteProvider);
         }
     }
 }

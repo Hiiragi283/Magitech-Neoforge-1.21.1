@@ -1,6 +1,5 @@
 package net.stln.magitech.biome;
 
-import com.mojang.blaze3d.shaders.FogShape;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -9,6 +8,8 @@ import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.util.ClientHelper;
+
+import com.mojang.blaze3d.shaders.FogShape;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID)
 public class RenderFogEvent {
@@ -21,30 +22,35 @@ public class RenderFogEvent {
 
     @SubscribeEvent
     public static void onRenderFog(ViewportEvent.RenderFog event) {
-        ClientHelper.getOptionalPlayer().ifPresent(player -> {
-            Level level = player.level();
-            BlockPos pos = player.blockPosition();
+        ClientHelper.getOptionalPlayer()
+                .ifPresent(
+                        player -> {
+                            Level level = player.level();
+                            BlockPos pos = player.blockPosition();
 
-            if (level.getBiome(pos).is(BiomeInit.MISTJADE_FOREST)) {
-                targetNearPlane = 10;
-                targetFarPlane = 100;
-            } else if (level.getBiome(pos).is(BiomeInit.SCORCHED_PLAINS)) {
-                targetNearPlane = 0;
-                targetFarPlane = 125;
-            } else {
-                targetNearPlane = event.getNearPlaneDistance();
-                targetFarPlane = event.getFarPlaneDistance();
-            }
-            // 線形補間 (Lerp)
-            currentFarPlane += (targetFarPlane - currentFarPlane) * LERP_SPEED;
-            currentNearPlane += (targetNearPlane - currentNearPlane) * LERP_SPEED;
+                            if (level.getBiome(pos).is(BiomeInit.MISTJADE_FOREST)) {
+                                targetNearPlane = 10;
+                                targetFarPlane = 100;
+                            } else if (level.getBiome(pos).is(BiomeInit.SCORCHED_PLAINS)) {
+                                targetNearPlane = 0;
+                                targetFarPlane = 125;
+                            } else {
+                                targetNearPlane = event.getNearPlaneDistance();
+                                targetFarPlane = event.getFarPlaneDistance();
+                            }
+                            // 線形補間 (Lerp)
+                            currentFarPlane += (targetFarPlane - currentFarPlane) * LERP_SPEED;
+                            currentNearPlane += (targetNearPlane - currentNearPlane) * LERP_SPEED;
 
-            if ((currentNearPlane != event.getNearPlaneDistance() || currentFarPlane != event.getFarPlaneDistance()) && player.getEyeInFluidType() == NeoForgeMod.EMPTY_TYPE.value()) {
-                event.setCanceled(true);
-                event.setNearPlaneDistance(currentNearPlane);
-                event.setFarPlaneDistance(currentFarPlane);
-                event.setFogShape(FogShape.SPHERE);
-            }
-        });
+                            if ((currentNearPlane != event.getNearPlaneDistance()
+                                            || currentFarPlane != event.getFarPlaneDistance())
+                                    && player.getEyeInFluidType()
+                                            == NeoForgeMod.EMPTY_TYPE.value()) {
+                                event.setCanceled(true);
+                                event.setNearPlaneDistance(currentNearPlane);
+                                event.setFarPlaneDistance(currentFarPlane);
+                                event.setFogShape(FogShape.SPHERE);
+                            }
+                        });
     }
 }

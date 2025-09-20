@@ -1,11 +1,12 @@
 package net.stln.magitech.magic.charge;
 
-import net.minecraft.world.entity.player.Player;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.world.entity.player.Player;
+
 public class ChargeData {
+
     private static Map<Player, Charge> chargeMapClient = new HashMap<>();
     private static Map<Player, Charge> chargeMapServer = new HashMap<>();
 

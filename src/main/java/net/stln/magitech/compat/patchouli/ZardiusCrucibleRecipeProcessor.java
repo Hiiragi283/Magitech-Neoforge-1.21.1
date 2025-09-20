@@ -1,5 +1,8 @@
 package net.stln.magitech.compat.patchouli;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
@@ -10,15 +13,15 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.stln.magitech.recipe.ZardiusCrucibleRecipe;
+
 import org.jetbrains.annotations.NotNull;
+
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ZardiusCrucibleRecipeProcessor implements IComponentProcessor {
+
     private final List<Ingredient> inputs = new ArrayList<>();
     private ItemStack output = ItemStack.EMPTY;
     Recipe<?> recipe;
@@ -38,13 +41,20 @@ public class ZardiusCrucibleRecipeProcessor implements IComponentProcessor {
         if (vars.has("text")) {
             text = vars.get("text", access).asString();
         }
-        recipe = level.getRecipeManager().byKey(ResourceLocation.parse(recipeId)).orElseThrow(IllegalArgumentException::new).value();
+        recipe =
+                level.getRecipeManager()
+                        .byKey(ResourceLocation.parse(recipeId))
+                        .orElseThrow(IllegalArgumentException::new)
+                        .value();
 
         if (recipe instanceof ZardiusCrucibleRecipe crucibleRecipe) {
             // 入力 ItemStack を取得・セット
-            crucibleRecipe.ingredients().forEach(ing -> {
-                if (ing.getItems().length > 0) inputs.add(ing);
-            });
+            crucibleRecipe
+                    .ingredients()
+                    .forEach(
+                            ing -> {
+                                if (ing.getItems().length > 0) inputs.add(ing);
+                            });
             var fluidIngredient = crucibleRecipe.fluidIngredient();
             if (fluidIngredient.amount() > 0) {
                 fluidInputs.addAll(List.of(fluidIngredient.getFluids()));
@@ -59,16 +69,33 @@ public class ZardiusCrucibleRecipeProcessor implements IComponentProcessor {
         RegistryAccess access = level.registryAccess();
         switch (key) {
             case "title" -> {
-                return IVariable.wrap(title == null ? "block.magitech.zardius_crucible" : title, access);
+                return IVariable.wrap(
+                        title == null ? "block.magitech.zardius_crucible" : title, access);
             }
             case "text" -> {
                 return IVariable.wrap(text, access);
             }
             case "input_fluid" -> {
-                return IVariable.wrap(ComponentUtils.formatList(fluidInputs, stack -> Component.translatable("book.magitech.zardius_crucible.input_fluid", Component.translatable(stack.getDescriptionId()), stack.getAmount())).getString(), access);
+                return IVariable.wrap(
+                        ComponentUtils.formatList(
+                                        fluidInputs,
+                                        stack ->
+                                                Component.translatable(
+                                                        "book.magitech.zardius_crucible.input_fluid",
+                                                        Component.translatable(
+                                                                stack.getDescriptionId()),
+                                                        stack.getAmount()))
+                                .getString(),
+                        access);
             }
             case "output_fluid" -> {
-                return IVariable.wrap(Component.translatable("book.magitech.zardius_crucible.output_fluid", Component.translatable(outputFluid.getDescriptionId()), outputFluid.getAmount()).getString(), access);
+                return IVariable.wrap(
+                        Component.translatable(
+                                        "book.magitech.zardius_crucible.output_fluid",
+                                        Component.translatable(outputFluid.getDescriptionId()),
+                                        outputFluid.getAmount())
+                                .getString(),
+                        access);
             }
         }
         int size = inputs.size();
@@ -81,6 +108,8 @@ public class ZardiusCrucibleRecipeProcessor implements IComponentProcessor {
         if (key.equals("result")) {
             returnStack.add(output.copy());
         }
-        return IVariable.wrapList(returnStack.stream().map((stack) -> IVariable.from(stack, access)).toList(), access);
+        return IVariable.wrapList(
+                returnStack.stream().map((stack) -> IVariable.from(stack, access)).toList(),
+                access);
     }
 }

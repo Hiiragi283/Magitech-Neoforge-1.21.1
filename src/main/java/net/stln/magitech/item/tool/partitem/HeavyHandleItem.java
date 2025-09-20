@@ -1,10 +1,10 @@
 package net.stln.magitech.item.tool.partitem;
 
-
 import net.stln.magitech.item.tool.ToolPart;
 import net.stln.magitech.item.tool.material.ToolMaterial;
 
 public class HeavyHandleItem extends PartItem {
+
     protected ToolMaterial material;
 
     public HeavyHandleItem(Properties settings) {

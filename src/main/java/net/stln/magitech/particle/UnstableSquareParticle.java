@@ -1,6 +1,5 @@
 package net.stln.magitech.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Camera;
@@ -10,8 +9,11 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.Mth;
 import net.stln.magitech.particle.particle_option.UnstableSquareParticleEffect;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 public class UnstableSquareParticle extends GlowingParticle {
 
@@ -20,8 +22,16 @@ public class UnstableSquareParticle extends GlowingParticle {
     private final Vector3f endColor;
     private final float initialScale;
 
-    public UnstableSquareParticle(ClientLevel clientWorld, double x, double y, double z, double vx, double vy, double vz,
-                                  UnstableSquareParticleEffect parameters, SpriteSet spriteProvider) {
+    public UnstableSquareParticle(
+            ClientLevel clientWorld,
+            double x,
+            double y,
+            double z,
+            double vx,
+            double vy,
+            double vz,
+            UnstableSquareParticleEffect parameters,
+            SpriteSet spriteProvider) {
         super(clientWorld, x, y, z, vx, vy, vz);
         this.xd = vx;
         this.yd = vy;
@@ -47,7 +57,8 @@ public class UnstableSquareParticle extends GlowingParticle {
             this.alpha = (this.lifetime - this.age) / (this.lifetime * 0.2F) * 0.6F + 0.2F;
         }
         if (this.twinkle > 1) {
-            float multiplier = Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
+            float multiplier =
+                    Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
             this.rCol *= multiplier;
             this.gCol *= multiplier;
             this.bCol *= multiplier;
@@ -73,7 +84,10 @@ public class UnstableSquareParticle extends GlowingParticle {
         this.yo = this.y;
         this.zo = this.z;
         this.move(this.xd, this.yd, this.zd);
-        this.move(+(random.nextFloat() - 0.5F) * 0.1F, +(random.nextFloat() - 0.5F) * 0.1F, +(random.nextFloat() - 0.5F) * 0.1F);
+        this.move(
+                +(random.nextFloat() - 0.5F) * 0.1F,
+                +(random.nextFloat() - 0.5F) * 0.1F,
+                +(random.nextFloat() - 0.5F) * 0.1F);
         if (this.age++ >= this.lifetime) {
             this.remove();
         } else {
@@ -91,6 +105,7 @@ public class UnstableSquareParticle extends GlowingParticle {
 
     @Environment(EnvType.CLIENT)
     public static class Provider implements ParticleProvider<UnstableSquareParticleEffect> {
+
         private final SpriteSet spriteProvider;
 
         public Provider(SpriteSet spriteProvider) {
@@ -98,8 +113,17 @@ public class UnstableSquareParticle extends GlowingParticle {
         }
 
         @Override
-        public @Nullable Particle createParticle(UnstableSquareParticleEffect parameters, ClientLevel world, double x, double y, double z, double xd, double yd, double zd) {
-            return new UnstableSquareParticle(world, x, y, z, xd, yd, zd, parameters, this.spriteProvider);
+        public @Nullable Particle createParticle(
+                UnstableSquareParticleEffect parameters,
+                ClientLevel world,
+                double x,
+                double y,
+                double z,
+                double xd,
+                double yd,
+                double zd) {
+            return new UnstableSquareParticle(
+                    world, x, y, z, xd, yd, zd, parameters, this.spriteProvider);
         }
     }
 }

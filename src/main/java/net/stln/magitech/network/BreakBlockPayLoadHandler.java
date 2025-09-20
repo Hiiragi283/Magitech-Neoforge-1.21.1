@@ -9,11 +9,10 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
 
-import java.util.UUID;
-
 public class BreakBlockPayLoadHandler {
 
-    public static void handleDataOnMainS2C(final BreakBlockPayload payload, final IPayloadContext context) {
+    public static void handleDataOnMainS2C(
+            final BreakBlockPayload payload, final IPayloadContext context) {
         Player player = null;
         Level level = context.player().level();
         for (Player search : level.players()) {
@@ -29,14 +28,38 @@ public class BreakBlockPayLoadHandler {
             BlockPos pos = payload.pos();
             BlockPos initialPos = payload.initialPos();
             if (item instanceof PartToolItem) {
-                PartToolItem.getTraitLevel(PartToolItem.getTraits(stack)).forEach((trait, integer) -> {
-                    if (payload.callBreakBlock()) {
-                        trait.onBreakBlock(player1, player1.level(), stack, integer, ((PartToolItem) stack.getItem()).getSumStats(player1, player1.level(), stack), player1.level().getBlockState(pos), pos, 1, pos.equals(initialPos));
-                    }
-                    if (payload.effect()) {
-                        trait.addEffect(player1, player1.level(), stack, integer, ((PartToolItem) stack.getItem()).getSumStats(player1, player1.level(), stack), player1.level().getBlockState(pos), pos, 1, pos.equals(initialPos));
-                    }
-                });
+                PartToolItem.getTraitLevel(PartToolItem.getTraits(stack))
+                        .forEach(
+                                (trait, integer) -> {
+                                    if (payload.callBreakBlock()) {
+                                        trait.onBreakBlock(
+                                                player1,
+                                                player1.level(),
+                                                stack,
+                                                integer,
+                                                ((PartToolItem) stack.getItem())
+                                                        .getSumStats(
+                                                                player1, player1.level(), stack),
+                                                player1.level().getBlockState(pos),
+                                                pos,
+                                                1,
+                                                pos.equals(initialPos));
+                                    }
+                                    if (payload.effect()) {
+                                        trait.addEffect(
+                                                player1,
+                                                player1.level(),
+                                                stack,
+                                                integer,
+                                                ((PartToolItem) stack.getItem())
+                                                        .getSumStats(
+                                                                player1, player1.level(), stack),
+                                                player1.level().getBlockState(pos),
+                                                pos,
+                                                1,
+                                                pos.equals(initialPos));
+                                    }
+                                });
             }
         }
     }

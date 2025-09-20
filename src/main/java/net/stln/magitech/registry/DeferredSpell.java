@@ -6,9 +6,11 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.stln.magitech.MagitechRegistries;
 import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.magic.spell.SpellLike;
+
 import org.jetbrains.annotations.NotNull;
 
 public class DeferredSpell<T extends Spell> extends DeferredHolder<Spell, T> implements SpellLike {
+
     public DeferredSpell(ResourceKey<Spell> key) {
         super(key);
     }

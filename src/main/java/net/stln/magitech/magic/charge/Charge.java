@@ -4,6 +4,7 @@ import net.stln.magitech.element.Element;
 import net.stln.magitech.magic.spell.Spell;
 
 public class Charge {
+
     private double charge;
     private double maxCharge;
     private Spell spell;

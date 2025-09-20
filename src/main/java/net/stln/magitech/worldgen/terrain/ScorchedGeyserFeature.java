@@ -1,5 +1,9 @@
 package net.stln.magitech.worldgen.terrain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -13,11 +17,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.stln.magitech.block.BlockInit;
 import net.stln.magitech.block.CrystalClusterBlock;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
+
     public ScorchedGeyserFeature() {
         super(NoneFeatureConfiguration.CODEC);
     }
@@ -57,7 +58,7 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
         // --- 歪み用パラメータ ---
         float scaleX = 0.6f + random.nextFloat() * 0.8f; // 楕円率X
         float scaleZ = 0.6f + random.nextFloat() * 0.8f; // 楕円率Z
-        int offsetX = random.nextInt(3) - 1;             // -1～1
+        int offsetX = random.nextInt(3) - 1; // -1～1
         int offsetZ = random.nextInt(3) - 1;
         float offsetMul = random.nextFloat();
         double angle = Math.toRadians(random.nextInt(360));
@@ -71,19 +72,33 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
             for (int dx = -l; dx <= l; dx++) {
 
                 for (int dz = -l; dz <= l; dz++) {
-                    float f1 = (float) Mth.abs((float) (Math.cos(hillRot) * dx - Math.sin(hillRot) * dz)) - 0.25F;
-                    float f2 = (float) Mth.abs((float) (Math.sin(hillRot) * dx + Math.cos(hillRot) * dz)) - 0.25F;
+                    float f1 =
+                            Mth.abs((float) (Math.cos(hillRot) * dx - Math.sin(hillRot) * dz))
+                                    - 0.25F;
+                    float f2 =
+                            Mth.abs((float) (Math.sin(hillRot) * dx + Math.cos(hillRot) * dz))
+                                    - 0.25F;
 
                     // --- 楕円形の判定 + 中心のずらし ---
                     float dist = (f1 * f1) / (scaleX * scaleX) + (f2 * f2) / (scaleZ * scaleZ);
                     if (dist <= f * f) {
-                        BlockPos target = blockpos.offset((int) (dx + offsetX * f * offsetMul), k, (int) (dz + offsetZ * f * offsetMul));
+                        BlockPos target =
+                                blockpos.offset(
+                                        (int) (dx + offsetX * f * offsetMul),
+                                        k,
+                                        (int) (dz + offsetZ * f * offsetMul));
                         BlockState below = level.getBlockState(target.below());
 
                         if (below.is(BlockInit.SCORCHED_GRASS_SOIL.get())) {
-                            this.setBlock(level, target.below(), BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                            this.setBlock(
+                                    level,
+                                    target.below(),
+                                    BlockInit.SCORCHED_SOIL.get().defaultBlockState());
                         }
-                        this.setBlock(level, target, BlockInit.SCORCHED_GRASS_SOIL.get().defaultBlockState());
+                        this.setBlock(
+                                level,
+                                target,
+                                BlockInit.SCORCHED_GRASS_SOIL.get().defaultBlockState());
                     }
                 }
             }
@@ -94,8 +109,21 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
             int l = Mth.ceil(f);
 
             if (l > 2 && k % 2 == 1) {
-                BlockPos pos = blockpos.offset((int) (offsetX * f * offsetMul), k, (int) (offsetZ * f * offsetMul))
-                        .offset((int) (Math.cos(angle) * f * Mth.randomBetween(random, 0.8F, 1.3F)), 0, (int) (Math.sin(angle) * f * Mth.randomBetween(random, 0.8F, 1.3F)));
+                BlockPos pos =
+                        blockpos.offset(
+                                        (int) (offsetX * f * offsetMul),
+                                        k,
+                                        (int) (offsetZ * f * offsetMul))
+                                .offset(
+                                        (int)
+                                                (Math.cos(angle)
+                                                        * f
+                                                        * Mth.randomBetween(random, 0.8F, 1.3F)),
+                                        0,
+                                        (int)
+                                                (Math.sin(angle)
+                                                        * f
+                                                        * Mth.randomBetween(random, 0.8F, 1.3F)));
                 addPool(level, pos, random, l * 2 / 3);
                 angle += Math.toRadians(random.nextInt(60, 120));
             }
@@ -107,7 +135,11 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
 
         for (int dx = -k1; dx <= k1; dx++) {
             for (int dz = -k1; dz <= k1; dz++) {
-                BlockPos blockpos1 = blockpos.offset((int) (dx + offsetX * k1 * offsetMul), -1, (int) (dz + offsetZ * k1 * offsetMul));
+                BlockPos blockpos1 =
+                        blockpos.offset(
+                                (int) (dx + offsetX * k1 * offsetMul),
+                                -1,
+                                (int) (dz + offsetZ * k1 * offsetMul));
                 int depthCounter = 10;
 
                 while (blockpos1.getY() > 50) {
@@ -121,9 +153,16 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                     if (dist <= k1 * k1) {
                         BlockState above = level.getBlockState(blockpos1.above());
                         if (above.isAir()) {
-                            this.setBlock(level, blockpos1, BlockInit.SCORCHED_GRASS_SOIL.get().defaultBlockState());
-                        } else if (level.getBlockState(blockpos1.above(2)).isAir() || level.getBlockState(blockpos1.above(3)).isAir()) {
-                            this.setBlock(level, blockpos1, BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                            this.setBlock(
+                                    level,
+                                    blockpos1,
+                                    BlockInit.SCORCHED_GRASS_SOIL.get().defaultBlockState());
+                        } else if (level.getBlockState(blockpos1.above(2)).isAir()
+                                || level.getBlockState(blockpos1.above(3)).isAir()) {
+                            this.setBlock(
+                                    level,
+                                    blockpos1,
+                                    BlockInit.SCORCHED_SOIL.get().defaultBlockState());
                         }
                     }
 
@@ -147,8 +186,12 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
         for (int dx = -radiusX - 5; dx <= radiusX + 5; dx++) {
             for (int dz = -radiusZ - 5; dz <= radiusZ + 5; dz++) {
                 for (int dy = -radiusY - 5; dy <= 2; dy++) {
-                    double nx = (float) (Math.cos(poolRot) * dx - Math.sin(poolRot) * dz) / (double) radiusX;
-                    double nz = (float) (Math.sin(poolRot) * dx + Math.cos(poolRot) * dz) / (double) radiusZ;
+                    double nx =
+                            (float) (Math.cos(poolRot) * dx - Math.sin(poolRot) * dz)
+                                    / (double) radiusX;
+                    double nz =
+                            (float) (Math.sin(poolRot) * dx + Math.cos(poolRot) * dz)
+                                    / (double) radiusZ;
                     double ny = dy / (double) radiusY;
 
                     // --- 楕円形の判定 + 中心のずらし ---
@@ -161,39 +204,81 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                         if (dy <= 0) {
                             // 内部 → 液体
                             setBlock(level, pos, Blocks.LAVA.defaultBlockState());
-                            if (level.getBlockState(pos.offset(0, -1, 0)).is(BlockInit.SCORCHED_GRASS_SOIL.get())) {
-                                setBlock(level, pos.offset(0, -1, 0), BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                            if (level.getBlockState(pos.offset(0, -1, 0))
+                                    .is(BlockInit.SCORCHED_GRASS_SOIL.get())) {
+                                setBlock(
+                                        level,
+                                        pos.offset(0, -1, 0),
+                                        BlockInit.SCORCHED_SOIL.get().defaultBlockState());
                             }
                         } else {
                             setBlock(level, pos, Blocks.AIR.defaultBlockState());
                         }
-                        List<Direction> directions = new ArrayList<>(Arrays.stream(Direction.values().clone()).toList());
+                        List<Direction> directions =
+                                new ArrayList<>(Arrays.stream(Direction.values().clone()).toList());
                         directions.remove(Direction.UP);
                         for (Direction direction : directions) {
                             BlockPos pos1 = pos.relative(direction);
                             BlockState blockState = level.getBlockState(pos1);
-                            if (!blockState.isCollisionShapeFullBlock(level, pos1) && !blockState.is(Blocks.LAVA)) {
+                            if (!blockState.isCollisionShapeFullBlock(level, pos1)
+                                    && !blockState.is(Blocks.LAVA)) {
                                 if (dy + direction.getStepY() < 0) {
-                                    setBlock(level, pos1, BlockInit.SCORCHED_SOIL.get().defaultBlockState());
-                                    if (level.getBlockState(pos1.offset(0, -1, 0)).is(BlockInit.SCORCHED_GRASS_SOIL.get())) {
-                                        setBlock(level, pos1.offset(0, -1, 0), BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                                    setBlock(
+                                            level,
+                                            pos1,
+                                            BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                                    if (level.getBlockState(pos1.offset(0, -1, 0))
+                                            .is(BlockInit.SCORCHED_GRASS_SOIL.get())) {
+                                        setBlock(
+                                                level,
+                                                pos1.offset(0, -1, 0),
+                                                BlockInit.SCORCHED_SOIL.get().defaultBlockState());
                                     }
-                                } else if (dy + direction.getStepY() == 0 && level.getBlockState(pos1.above()).isAir()) {
+                                } else if (dy + direction.getStepY() == 0
+                                        && level.getBlockState(pos1.above()).isAir()) {
                                     if (random.nextFloat() < 0.75F) {
-                                        setBlock(level, pos1, BlockInit.SCORCHED_GRASS_SOIL.get().defaultBlockState());
+                                        setBlock(
+                                                level,
+                                                pos1,
+                                                BlockInit.SCORCHED_GRASS_SOIL
+                                                        .get()
+                                                        .defaultBlockState());
                                     } else {
                                         int i;
                                         for (i = 0; i < random.nextInt(1, 3); i++) {
-                                            setBlock(level, pos1.offset(0, -i, 0), BlockInit.SULFUR_BLOCK.get().defaultBlockState());
+                                            setBlock(
+                                                    level,
+                                                    pos1.offset(0, -i, 0),
+                                                    BlockInit.SULFUR_BLOCK
+                                                            .get()
+                                                            .defaultBlockState());
                                             for (Direction direction1 : Direction.values()) {
                                                 BlockPos pos2 = pos1.relative(direction1);
-                                                if (level.getBlockState(pos2).isAir() && random.nextFloat() < 0.15F) {
-                                                    setBlock(level, pos2, BlockInit.SULFUR_CRYSTAL_CLUSTER.get().defaultBlockState().setValue(CrystalClusterBlock.FACING, direction1));
+                                                if (level.getBlockState(pos2).isAir()
+                                                        && random.nextFloat() < 0.15F) {
+                                                    setBlock(
+                                                            level,
+                                                            pos2,
+                                                            BlockInit.SULFUR_CRYSTAL_CLUSTER
+                                                                    .get()
+                                                                    .defaultBlockState()
+                                                                    .setValue(
+                                                                            CrystalClusterBlock
+                                                                                    .FACING,
+                                                                            direction1));
                                                 }
                                             }
                                         }
                                         if (level.getBlockState(pos1.offset(0, -i, 0)).isAir()) {
-                                            setBlock(level, pos1.offset(0, -i, 0), BlockInit.SULFUR_CRYSTAL_CLUSTER.get().defaultBlockState().setValue(CrystalClusterBlock.FACING, Direction.DOWN));
+                                            setBlock(
+                                                    level,
+                                                    pos1.offset(0, -i, 0),
+                                                    BlockInit.SULFUR_CRYSTAL_CLUSTER
+                                                            .get()
+                                                            .defaultBlockState()
+                                                            .setValue(
+                                                                    CrystalClusterBlock.FACING,
+                                                                    Direction.DOWN));
                                         }
                                     }
                                 }

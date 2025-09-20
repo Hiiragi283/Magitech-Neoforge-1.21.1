@@ -1,12 +1,13 @@
 package net.stln.magitech.recipe.input;
 
-import com.ibm.icu.impl.Pair;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.ibm.icu.impl.Pair;
 
 public record GroupedMultiStackRecipeInput(List<List<ItemStack>> stacks) implements RecipeInput {
 
@@ -22,7 +23,8 @@ public record GroupedMultiStackRecipeInput(List<List<ItemStack>> stacks) impleme
                 count++;
             }
         }
-        throw new IndexOutOfBoundsException("Index out of bounds for GroupedMultiStackRecipeInput: " + index);
+        throw new IndexOutOfBoundsException(
+                "Index out of bounds for GroupedMultiStackRecipeInput: " + index);
     }
 
     public List<ItemStack> getItems() {
@@ -39,7 +41,11 @@ public record GroupedMultiStackRecipeInput(List<List<ItemStack>> stacks) impleme
         try {
             return stacks.get(index).get(innerIndex);
         } catch (IndexOutOfBoundsException e) {
-            throw new IndexOutOfBoundsException("Index out of bounds for GroupedMultiStackRecipeInput: " + index + ", " + innerIndex);
+            throw new IndexOutOfBoundsException(
+                    "Index out of bounds for GroupedMultiStackRecipeInput: "
+                            + index
+                            + ", "
+                            + innerIndex);
         }
     }
 

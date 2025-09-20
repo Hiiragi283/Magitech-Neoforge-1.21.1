@@ -23,8 +23,10 @@ import net.stln.magitech.entity.SpellProjectileEntity;
 import net.stln.magitech.particle.particle_option.VoidGlowParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.DataMapHelper;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -49,11 +51,25 @@ public class NullixisEntity extends SpellProjectileEntity {
         super(EntityInit.NULLIXIS_ENTITY.get(), player, world, weapon, damage);
     }
 
-    public NullixisEntity(EntityType<? extends SpellProjectileEntity> type, double x, double y, double z, Level world, ItemStack stack, @Nullable ItemStack weapon, float damage) {
+    public NullixisEntity(
+            EntityType<? extends SpellProjectileEntity> type,
+            double x,
+            double y,
+            double z,
+            Level world,
+            ItemStack stack,
+            @Nullable ItemStack weapon,
+            float damage) {
         super(type, x, y, z, world, weapon, damage);
     }
 
-    public NullixisEntity(EntityType<? extends SpellProjectileEntity> type, LivingEntity owner, Level world, ItemStack stack, @Nullable ItemStack shotFrom, float damage) {
+    public NullixisEntity(
+            EntityType<? extends SpellProjectileEntity> type,
+            LivingEntity owner,
+            Level world,
+            ItemStack stack,
+            @Nullable ItemStack shotFrom,
+            float damage) {
         super(type, owner, world, shotFrom, damage);
     }
 
@@ -62,7 +78,15 @@ public class NullixisEntity extends SpellProjectileEntity {
         super.tick();
         Vec3 vec32 = this.position();
         Vec3 vec33 = vec32.add(this.getDeltaMovement().scale(3));
-        HitResult hitresult = this.level().clip(new ClipContext(vec32, vec33, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+        HitResult hitresult =
+                this.level()
+                        .clip(
+                                new ClipContext(
+                                        vec32,
+                                        vec33,
+                                        ClipContext.Block.COLLIDER,
+                                        ClipContext.Fluid.NONE,
+                                        this));
         if (hitresult.getType() != HitResult.Type.MISS) {
             vec33 = hitresult.getLocation();
         }
@@ -76,7 +100,9 @@ public class NullixisEntity extends SpellProjectileEntity {
             if (hitresult != null && hitresult.getType() == HitResult.Type.ENTITY) {
                 Entity entity = ((EntityHitResult) hitresult).getEntity();
                 Entity entity1 = this.getOwner();
-                if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity)) {
+                if (entity instanceof Player
+                        && entity1 instanceof Player
+                        && !((Player) entity1).canHarmPlayer((Player) entity)) {
                     hitresult = null;
                     entityhitresult = null;
                 }
@@ -114,13 +140,23 @@ public class NullixisEntity extends SpellProjectileEntity {
                 double vx = deltaMovement.x / 4;
                 double vy = deltaMovement.y / 4;
                 double vz = deltaMovement.z / 4;
-                world.addParticle(new VoidGlowParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
+                world.addParticle(
+                        new VoidGlowParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed),
+                        x,
+                        y,
+                        z,
+                        vx,
+                        vy,
+                        vz);
             }
         }
         int axisX = this.tickCount % 3 != 0 ? -1 : 2;
         int axisY = this.tickCount % 3 != 1 ? -1 : 2;
         int axisZ = this.tickCount % 3 != 2 ? -1 : 2;
-        this.setPos(deltaMovement.x * axisX + this.position().x, deltaMovement.y * axisY + this.position().y, deltaMovement.z * axisZ + this.position().z);
+        this.setPos(
+                deltaMovement.x * axisX + this.position().x,
+                deltaMovement.y * axisY + this.position().y,
+                deltaMovement.z * axisZ + this.position().z);
     }
 
     @Override
@@ -132,8 +168,8 @@ public class NullixisEntity extends SpellProjectileEntity {
         ResourceKey<DamageType> damageType = this.getElement().getDamageType();
         DamageSource elementalDamageSource = getElementalDamageSource(owner, damageType);
 
-
-        float finalDamage = this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
+        float finalDamage =
+                this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
         applyDamage(entity, elementalDamageSource, finalDamage);
         hitParticle();
 
@@ -148,8 +184,7 @@ public class NullixisEntity extends SpellProjectileEntity {
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult) {
-    }
+    protected void onHitBlock(BlockHitResult blockHitResult) {}
 
     @Override
     public void handleEntityEvent(byte status) {
@@ -174,15 +209,34 @@ public class NullixisEntity extends SpellProjectileEntity {
             for (int i = 0; i < particleAmount; i++) {
                 int twinkle = 1;
 
-                double x = this.getX() - this.getDeltaMovement().x + (random.nextFloat() - 0.5) / 10;
-                double y = this.getY(0.5F) - this.getDeltaMovement().y + (random.nextFloat() - 0.5) / 10;
-                double z = this.getZ() - this.getDeltaMovement().z + (random.nextFloat() - 0.5) / 10;
+                double x =
+                        this.getX() - this.getDeltaMovement().x + (random.nextFloat() - 0.5) / 10;
+                double y =
+                        this.getY(0.5F)
+                                - this.getDeltaMovement().y
+                                + (random.nextFloat() - 0.5) / 10;
+                double z =
+                        this.getZ() - this.getDeltaMovement().z + (random.nextFloat() - 0.5) / 10;
                 double vx = (random.nextFloat() - 0.5) / 6;
                 double vy = (random.nextFloat() - 0.5) / 6;
                 double vz = (random.nextFloat() - 0.5) / 6;
-                Vector3f endPos = this.position().add(new Vec3(this.random.nextFloat() * 4 - 2, this.random.nextFloat() * 4 - 2, this.random.nextFloat() * 4 - 2)).toVector3f();
+                Vector3f endPos =
+                        this.position()
+                                .add(
+                                        new Vec3(
+                                                this.random.nextFloat() * 4 - 2,
+                                                this.random.nextFloat() * 4 - 2,
+                                                this.random.nextFloat() * 4 - 2))
+                                .toVector3f();
 
-                world.addParticle(new VoidGlowParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed), x, y, z, vx, vy, vz);
+                world.addParticle(
+                        new VoidGlowParticleEffect(fromColor, toColor, scale, twinkle, rotSpeed),
+                        x,
+                        y,
+                        z,
+                        vx,
+                        vy,
+                        vz);
             }
         }
     }
@@ -194,7 +248,8 @@ public class NullixisEntity extends SpellProjectileEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "idle", (event) -> event.setAndContinue(IDLE)));
+        controllers.add(
+                new AnimationController<>(this, "idle", (event) -> event.setAndContinue(IDLE)));
     }
 
     @Override

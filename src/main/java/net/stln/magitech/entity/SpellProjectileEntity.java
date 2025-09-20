@@ -1,5 +1,7 @@
 package net.stln.magitech.entity;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -37,28 +39,35 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
+
 import org.jetbrains.annotations.NotNull;
+
 import software.bernie.geckolib.animatable.GeoEntity;
 
-import javax.annotation.Nullable;
-
 public abstract class SpellProjectileEntity extends Projectile implements GeoEntity {
+
     public AbstractArrow.Pickup pickup = AbstractArrow.Pickup.DISALLOWED;
     protected boolean inGround;
     protected int inGroundTime;
     protected float damage;
-    @javax.annotation.Nullable
-    private BlockState lastState;
+    @javax.annotation.Nullable private BlockState lastState;
     private int life;
     private SoundEvent soundEvent = this.getDefaultHitGroundSoundEvent();
     private ItemStack firedFromWeapon = null;
 
-
-    protected SpellProjectileEntity(EntityType<? extends SpellProjectileEntity> entityType, Level level) {
+    protected SpellProjectileEntity(
+            EntityType<? extends SpellProjectileEntity> entityType, Level level) {
         super(entityType, level);
     }
 
-    protected SpellProjectileEntity(EntityType<? extends SpellProjectileEntity> entityType, double x, double y, double z, Level level, @javax.annotation.Nullable ItemStack firedFromWeapon, float damage) {
+    protected SpellProjectileEntity(
+            EntityType<? extends SpellProjectileEntity> entityType,
+            double x,
+            double y,
+            double z,
+            Level level,
+            @javax.annotation.Nullable ItemStack firedFromWeapon,
+            float damage) {
         this(entityType, level);
         this.setPos(x, y, z);
         this.damage = damage;
@@ -71,8 +80,20 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         }
     }
 
-    protected SpellProjectileEntity(EntityType<? extends SpellProjectileEntity> entityType, LivingEntity owner, Level level, @Nullable ItemStack firedFromWeapon, float damage) {
-        this(entityType, owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), level, firedFromWeapon, damage);
+    protected SpellProjectileEntity(
+            EntityType<? extends SpellProjectileEntity> entityType,
+            LivingEntity owner,
+            Level level,
+            @Nullable ItemStack firedFromWeapon,
+            float damage) {
+        this(
+                entityType,
+                owner.getX(),
+                owner.getEyeY() - 0.1F,
+                owner.getZ(),
+                level,
+                firedFromWeapon,
+                damage);
         this.setOwner(owner);
     }
 
@@ -93,13 +114,23 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         BlockState blockstate = this.level().getBlockState(blockpos);
         blockstate.isAir();
 
-        if (this.isInWaterOrRain() || blockstate.is(Blocks.POWDER_SNOW) || this.isInFluidType((fluidType, height) -> this.canFluidExtinguish(fluidType))) {
+        if (this.isInWaterOrRain()
+                || blockstate.is(Blocks.POWDER_SNOW)
+                || this.isInFluidType((fluidType, height) -> this.canFluidExtinguish(fluidType))) {
             this.clearFire();
         }
         this.inGroundTime = 0;
         Vec3 vec32 = this.position();
         Vec3 vec33 = vec32.add(vec3);
-        HitResult hitresult = this.level().clip(new ClipContext(vec32, vec33, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+        HitResult hitresult =
+                this.level()
+                        .clip(
+                                new ClipContext(
+                                        vec32,
+                                        vec33,
+                                        ClipContext.Block.COLLIDER,
+                                        ClipContext.Fluid.NONE,
+                                        this));
         if (hitresult.getType() != HitResult.Type.MISS) {
             vec33 = hitresult.getLocation();
         }
@@ -113,7 +144,9 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
             if (hitresult != null && hitresult.getType() == HitResult.Type.ENTITY) {
                 Entity entity = ((EntityHitResult) hitresult).getEntity();
                 Entity entity1 = this.getOwner();
-                if (entity instanceof Player && entity1 instanceof Player && !((Player) entity1).canHarmPlayer((Player) entity)) {
+                if (entity instanceof Player
+                        && entity1 instanceof Player
+                        && !((Player) entity1).canHarmPlayer((Player) entity)) {
                     hitresult = null;
                     entityhitresult = null;
                 }
@@ -157,7 +190,15 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         if (this.isInWater()) {
             for (int j = 0; j < 4; j++) {
                 float f1 = 0.25F;
-                this.level().addParticle(ParticleTypes.BUBBLE, d7 - d5 * 0.25, d2 - d6 * 0.25, d3 - d1 * 0.25, d5, d6, d1);
+                this.level()
+                        .addParticle(
+                                ParticleTypes.BUBBLE,
+                                d7 - d5 * 0.25,
+                                d2 - d6 * 0.25,
+                                d3 - d1 * 0.25,
+                                d5,
+                                d6,
+                                d1);
             }
         }
         if (!flag) {
@@ -189,7 +230,8 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         }
     }
 
-    protected @NotNull DamageSource getElementalDamageSource(Entity owner, ResourceKey<DamageType> damageType) {
+    protected @NotNull DamageSource getElementalDamageSource(
+            Entity owner, ResourceKey<DamageType> damageType) {
         DamageSource elementalDamageSource;
         if (owner != null) {
             elementalDamageSource = owner.damageSources().source(damageType, owner);
@@ -211,23 +253,27 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         }
 
         if (entity.hurt(damageSource, amount)) {
-            if (firedFromWeapon != null && firedFromWeapon.getItem() instanceof PartToolItem toolItem) {
+            if (firedFromWeapon != null
+                    && firedFromWeapon.getItem() instanceof PartToolItem toolItem) {
                 toolItem.callTraitSpellHitEntity(
                         this.level(), (Player) owner, entity, this.firedFromWeapon);
             }
 
             if (entity instanceof LivingEntity livingentity) {
 
-//                this.doKnockback(livingentity, damageSource);
+                // this.doKnockback(livingentity, damageSource);
                 if (this.level() instanceof ServerLevel serverlevel1) {
-                    EnchantmentHelper.doPostAttackEffectsWithItemSource(serverlevel1, livingentity, damageSource, this.getWeaponItem());
+                    EnchantmentHelper.doPostAttackEffectsWithItemSource(
+                            serverlevel1, livingentity, damageSource, this.getWeaponItem());
                 }
 
-                if (!this.level().isClientSide && owner instanceof ServerPlayer serverplayer) {
-                }
+                if (!this.level().isClientSide && owner instanceof ServerPlayer serverplayer) {}
             }
 
-            this.playSound(this.getHitGroundSoundEvent(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+            this.playSound(
+                    this.getHitGroundSoundEvent(),
+                    1.0F,
+                    1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         } else {
             entity.setRemainingFireTicks(i);
             this.deflect(ProjectileDeflection.REVERSE, entity, this.getOwner(), false);
@@ -246,7 +292,10 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
-        this.playSound(this.getHitGroundSoundEvent(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+        this.playSound(
+                this.getHitGroundSoundEvent(),
+                1.0F,
+                1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
 
         if (!this.level().isClientSide) {
             this.level().broadcastEntityEvent(this, EntityEvent.DEATH);
@@ -259,7 +308,6 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         return this.firedFromWeapon;
     }
 
-
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return SoundEvents.ARROW_HIT;
     }
@@ -268,21 +316,21 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         return this.soundEvent;
     }
 
-    protected void doPostHurtEffects(LivingEntity target) {
-    }
+    protected void doPostHurtEffects(LivingEntity target) {}
 
     public void setDamage(float value) {
         this.damage = value;
     }
 
-    /**
-     * Gets the EntityRayTraceResult representing the entity hit
-     */
-    @Nullable
-    protected EntityHitResult findHitEntity(Vec3 startVec, Vec3 endVec) {
+    /** Gets the EntityRayTraceResult representing the entity hit */
+    @Nullable protected EntityHitResult findHitEntity(Vec3 startVec, Vec3 endVec) {
         return ProjectileUtil.getEntityHitResult(
-                this.level(), this, startVec, endVec, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0), this::canHitEntity
-        );
+                this.level(),
+                this,
+                startVec,
+                endVec,
+                this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0),
+                this::canHitEntity);
     }
 
     @Override
@@ -294,41 +342,45 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         }
         compound.putBoolean("inGround", this.inGround);
         compound.putFloat("damage", this.damage);
-        compound.putString("SoundEvent", BuiltInRegistries.SOUND_EVENT.getKey(this.soundEvent).toString());
+        compound.putString(
+                "SoundEvent", BuiltInRegistries.SOUND_EVENT.getKey(this.soundEvent).toString());
         if (this.firedFromWeapon != null) {
-            compound.put("weapon", this.firedFromWeapon.save(this.registryAccess(), new CompoundTag()));
+            compound.put(
+                    "weapon", this.firedFromWeapon.save(this.registryAccess(), new CompoundTag()));
         }
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
+    /** (abstract) Protected helper method to read subclass entity data from NBT. */
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.life = compound.getShort("life");
         if (compound.contains("inBlockState", 10)) {
-            this.lastState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), compound.getCompound("inBlockState"));
+            this.lastState =
+                    NbtUtils.readBlockState(
+                            this.level().holderLookup(Registries.BLOCK),
+                            compound.getCompound("inBlockState"));
         }
         this.inGround = compound.getBoolean("inGround");
         if (compound.contains("damage", 99)) {
             this.damage = compound.getFloat("damage");
         }
         if (compound.contains("SoundEvent", 8)) {
-            this.soundEvent = BuiltInRegistries.SOUND_EVENT
-                    .getOptional(ResourceLocation.parse(compound.getString("SoundEvent")))
-                    .orElse(this.getDefaultHitGroundSoundEvent());
+            this.soundEvent =
+                    BuiltInRegistries.SOUND_EVENT
+                            .getOptional(ResourceLocation.parse(compound.getString("SoundEvent")))
+                            .orElse(this.getDefaultHitGroundSoundEvent());
         }
 
         if (compound.contains("weapon", 10)) {
-            this.firedFromWeapon = ItemStack.parse(this.registryAccess(), compound.getCompound("weapon")).orElse(null);
+            this.firedFromWeapon =
+                    ItemStack.parse(this.registryAccess(), compound.getCompound("weapon"))
+                            .orElse(null);
         } else {
             this.firedFromWeapon = null;
         }
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-
-    }
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {}
 }

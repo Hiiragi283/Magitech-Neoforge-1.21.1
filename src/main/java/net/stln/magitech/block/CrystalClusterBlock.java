@@ -23,26 +23,36 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.stln.magitech.util.VoxelShapeUtil;
 
 public class CrystalClusterBlock extends DropExperienceBlock implements SimpleWaterloggedBlock {
+
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final VoxelShape SHAPE_UP = Shapes.or(
-            Block.box(1, 0, 1, 15, 13, 15)
-    );
-    public static final VoxelShape SHAPE_DOWN = VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.DOWN);
-    public static final VoxelShape SHAPE_NORTH = VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.NORTH);
-    public static final VoxelShape SHAPE_SOUTH = VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.SOUTH);
-    public static final VoxelShape SHAPE_EAST = VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.EAST);
-    public static final VoxelShape SHAPE_WEST = VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.WEST);
+    public static final VoxelShape SHAPE_UP = Shapes.or(Block.box(1, 0, 1, 15, 13, 15));
+    public static final VoxelShape SHAPE_DOWN =
+            VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.DOWN);
+    public static final VoxelShape SHAPE_NORTH =
+            VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.NORTH);
+    public static final VoxelShape SHAPE_SOUTH =
+            VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.SOUTH);
+    public static final VoxelShape SHAPE_EAST =
+            VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.EAST);
+    public static final VoxelShape SHAPE_WEST =
+            VoxelShapeUtil.rotateShape(SHAPE_UP, Direction.UP, Direction.WEST);
 
     public CrystalClusterBlock(IntProvider xpRange, BlockBehaviour.Properties properties) {
         super(xpRange, properties);
         this.registerDefaultState(
-                this.stateDefinition.any().setValue(FACING, Direction.UP).setValue(WATERLOGGED, Boolean.valueOf(false))
-        );
+                this.stateDefinition
+                        .any()
+                        .setValue(FACING, Direction.UP)
+                        .setValue(WATERLOGGED, Boolean.valueOf(false)));
     }
 
     @Override
-    protected VoxelShape getShape(BlockState p_154346_, BlockGetter p_154347_, BlockPos p_154348_, CollisionContext p_154349_) {
+    protected VoxelShape getShape(
+            BlockState p_154346_,
+            BlockGetter p_154347_,
+            BlockPos p_154348_,
+            CollisionContext p_154349_) {
         return switch (p_154346_.getValue(FACING)) {
             case UP -> SHAPE_UP;
             case DOWN -> SHAPE_DOWN;
@@ -72,13 +82,19 @@ public class CrystalClusterBlock extends DropExperienceBlock implements SimpleWa
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
         boolean flag = fluidstate.getType() == Fluids.WATER;
-        return this.defaultBlockState().setValue(FACING, context.getClickedFace()).setValue(WATERLOGGED, Boolean.valueOf(flag));
+        return this.defaultBlockState()
+                .setValue(FACING, context.getClickedFace())
+                .setValue(WATERLOGGED, Boolean.valueOf(flag));
     }
 
     @Override
     protected BlockState updateShape(
-            BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos
-    ) {
+            BlockState state,
+            Direction direction,
+            BlockState neighborState,
+            LevelAccessor level,
+            BlockPos pos,
+            BlockPos neighborPos) {
         if (state.getValue(WATERLOGGED)) {
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
@@ -90,7 +106,9 @@ public class CrystalClusterBlock extends DropExperienceBlock implements SimpleWa
 
     @Override
     protected FluidState getFluidState(BlockState state) {
-        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+        return state.getValue(WATERLOGGED)
+                ? Fluids.WATER.getSource(false)
+                : super.getFluidState(state);
     }
 
     @Override

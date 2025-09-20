@@ -1,5 +1,7 @@
 package net.stln.magitech.event;
 
+import java.util.List;
+
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,8 +16,6 @@ import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.component.SpellComponent;
 import net.stln.magitech.magic.spell.SpellInit;
 import net.stln.magitech.util.ComponentHelper;
-
-import java.util.List;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID)
 public class PlayerFirstSpawnEvent {
@@ -37,16 +37,22 @@ public class PlayerFirstSpawnEvent {
         if (!persisted.getBoolean("hasReceivedInitialItems")) {
             ItemStack stack = new ItemStack(ItemInit.GLISTENING_LEXICON.get());
             var enercrux = SpellInit.ENERCRUX;
-            MagitechRegistries.SPELL.holders()
+            MagitechRegistries.SPELL
+                    .holders()
                     .filter(holder -> !holder.is(enercrux))
                     .findAny()
                     .map(Holder::value)
-                    .ifPresent(spell -> {
-                        ComponentHelper.updateSpells(stack, spellComponent -> new SpellComponent(List.of(SpellInit.ENERCRUX, spell)));
-                player.getInventory().add(stack);
+                    .ifPresent(
+                            spell -> {
+                                ComponentHelper.updateSpells(
+                                        stack,
+                                        spellComponent ->
+                                                new SpellComponent(
+                                                        List.of(SpellInit.ENERCRUX, spell)));
+                                player.getInventory().add(stack);
 
-                persisted.putBoolean("hasReceivedInitialItems", true);
-            });
+                                persisted.putBoolean("hasReceivedInitialItems", true);
+                            });
         }
     }
 }

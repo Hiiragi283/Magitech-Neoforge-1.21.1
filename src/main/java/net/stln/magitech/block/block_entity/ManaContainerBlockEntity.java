@@ -1,5 +1,8 @@
 package net.stln.magitech.block.block_entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -11,10 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.stln.magitech.element.Element;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class ManaContainerBlockEntity extends BlockEntity {
 
@@ -39,8 +40,7 @@ public abstract class ManaContainerBlockEntity extends BlockEntity {
         tag.putInt("Mana", this.mana);
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
@@ -76,9 +76,23 @@ public abstract class ManaContainerBlockEntity extends BlockEntity {
         list.add(Component.empty());
         double chargedRatio = (double) this.mana / this.maxMana;
         int litBarGaugeLength = (int) (chargedRatio * barGaugeLength);
-        list.add(Component.translatable("tooltip.magitech.block.mana_capacity").append(": ").withColor(0x808080));
-        list.add(Component.literal("|".repeat(litBarGaugeLength)).withColor(Element.NONE.getSpellColor()).append(Component.literal("|".repeat(barGaugeLength - litBarGaugeLength)).withColor(Element.NONE.getSpellDark())));
-        list.add(Component.literal(String.valueOf(this.mana)).withColor(Element.NONE.getSpellColor()).append(Component.literal(" / ").withColor(0x808080)).append(Component.literal(String.valueOf(this.maxMana)).withColor(Element.NONE.getSpellDark())));
+        list.add(
+                Component.translatable("tooltip.magitech.block.mana_capacity")
+                        .append(": ")
+                        .withColor(0x808080));
+        list.add(
+                Component.literal("|".repeat(litBarGaugeLength))
+                        .withColor(Element.NONE.getSpellColor())
+                        .append(
+                                Component.literal("|".repeat(barGaugeLength - litBarGaugeLength))
+                                        .withColor(Element.NONE.getSpellDark())));
+        list.add(
+                Component.literal(String.valueOf(this.mana))
+                        .withColor(Element.NONE.getSpellColor())
+                        .append(Component.literal(" / ").withColor(0x808080))
+                        .append(
+                                Component.literal(String.valueOf(this.maxMana))
+                                        .withColor(Element.NONE.getSpellDark())));
         return list;
     }
 
@@ -86,9 +100,23 @@ public abstract class ManaContainerBlockEntity extends BlockEntity {
         List<Component> list = new ArrayList<>();
         double chargedRatio = (double) this.mana / this.maxMana;
         int litBarGaugeLength = (int) (chargedRatio * barGaugeLength);
-        list.add(Component.translatable("tooltip.magitech.block.mana_capacity").append(": ").withColor(0x808080));
-        list.add(Component.literal("|".repeat(litBarGaugeLength)).withColor(Element.NONE.getSpellColor()).append(Component.literal("|".repeat(barGaugeLength - litBarGaugeLength)).withColor(Element.NONE.getSpellDark())));
-        list.add(Component.literal(String.valueOf(this.mana)).withColor(Element.NONE.getSpellColor()).append(Component.literal(" / ").withColor(0x808080)).append(Component.literal(String.valueOf(this.maxMana)).withColor(Element.NONE.getSpellDark())));
+        list.add(
+                Component.translatable("tooltip.magitech.block.mana_capacity")
+                        .append(": ")
+                        .withColor(0x808080));
+        list.add(
+                Component.literal("|".repeat(litBarGaugeLength))
+                        .withColor(Element.NONE.getSpellColor())
+                        .append(
+                                Component.literal("|".repeat(barGaugeLength - litBarGaugeLength))
+                                        .withColor(Element.NONE.getSpellDark())));
+        list.add(
+                Component.literal(String.valueOf(this.mana))
+                        .withColor(Element.NONE.getSpellColor())
+                        .append(Component.literal(" / ").withColor(0x808080))
+                        .append(
+                                Component.literal(String.valueOf(this.maxMana))
+                                        .withColor(Element.NONE.getSpellDark())));
         return list;
     }
 

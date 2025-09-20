@@ -1,5 +1,7 @@
 package net.stln.magitech.item;
 
+import java.util.List;
+
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.item.component.ComponentInit;
@@ -7,9 +9,8 @@ import net.stln.magitech.item.component.SpellComponent;
 import net.stln.magitech.item.component.ThreadPageComponent;
 import net.stln.magitech.magic.spell.SpellLike;
 
-import java.util.List;
-
 public class ThreadboundGenerator {
+
     public static ItemStack generateThreadbound(Item item, List<SpellLike> holderSet) {
         ItemStack stack = new ItemStack(item);
         stack.set(ComponentInit.SPELL_COMPONENT, new SpellComponent(holderSet));

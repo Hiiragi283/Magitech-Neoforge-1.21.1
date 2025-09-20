@@ -1,30 +1,20 @@
 package net.stln.magitech.particle;
 
-
-import com.mojang.blaze3d.platform.GlConst;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.world.phys.AABB;
-import org.lwjgl.opengl.GL11;
 
 public class AbstractCustomizableParticle extends TextureSheetParticle {
+
     protected float scale;
     protected float rotSpeed;
     protected int twinkle;
     protected boolean cull = true;
     protected float defaultAlpha;
 
-    protected AbstractCustomizableParticle(ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
+    protected AbstractCustomizableParticle(
+            ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
         super(clientWorld, d, e, f, g, h, i);
     }
 

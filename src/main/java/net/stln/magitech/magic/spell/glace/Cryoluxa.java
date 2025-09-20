@@ -1,5 +1,8 @@
 package net.stln.magitech.magic.spell.glace;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,10 +18,8 @@ import net.stln.magitech.particle.particle_option.FrostParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.SpellShape;
-import org.joml.Vector3f;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.joml.Vector3f;
 
 public class Cryoluxa extends BeamSpell {
 
@@ -57,7 +58,12 @@ public class Cryoluxa extends BeamSpell {
     }
 
     @Override
-    public void finishUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged, boolean isHost) {
+    public void finishUsing(
+            ItemStack stack,
+            Level level,
+            LivingEntity livingEntity,
+            int timeCharged,
+            boolean isHost) {
         super.finishUsing(stack, level, livingEntity, timeCharged, isHost);
     }
 
@@ -69,16 +75,55 @@ public class Cryoluxa extends BeamSpell {
 
     @Override
     protected void playBeamSound(Level level, Player user) {
-        level.playSound(user, user.getX(), user.getY(), user.getZ(), SoundInit.FROST_BREAK.get(), SoundSource.PLAYERS, 1.0F, 0.6F + (user.getRandom().nextFloat() * 0.6F));
+        level.playSound(
+                user,
+                user.getX(),
+                user.getY(),
+                user.getZ(),
+                SoundInit.FROST_BREAK.get(),
+                SoundSource.PLAYERS,
+                1.0F,
+                0.6F + (user.getRandom().nextFloat() * 0.6F));
     }
 
     @Override
     protected void addVisualEffect(Level level, Player user, Vec3 start, Vec3 hitPos) {
-        EffectUtil.lineEffect(level, new FrostParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 1.0F, 1, 0), start, hitPos, 2, false);
-        level.addParticle(new BeamParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(0.6F, 1.0F, 1.0F), hitPos.toVector3f(), 0.7F, 1, 1), start.x, start.y, start.z, 0, 0, 0);
+        EffectUtil.lineEffect(
+                level,
+                new FrostParticleEffect(
+                        new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 1.0F, 1, 0),
+                start,
+                hitPos,
+                2,
+                false);
+        level.addParticle(
+                new BeamParticleEffect(
+                        new Vector3f(1.0F, 1.0F, 1.0F),
+                        new Vector3f(0.6F, 1.0F, 1.0F),
+                        hitPos.toVector3f(),
+                        0.7F,
+                        1,
+                        1),
+                start.x,
+                start.y,
+                start.z,
+                0,
+                0,
+                0);
         for (int i = 0; i < 20; i++) {
-            level.addParticle(new FrostParticleEffect(new Vector3f(1.0F, 1.0F, 1.0F), new Vector3f(1.0F, 1.0F, 1.0F), 1.0F, 1, 0),
-                    hitPos.x, hitPos.y, hitPos.z, (user.getRandom().nextFloat() - 0.5) / 3, (user.getRandom().nextFloat() - 0.5) / 3, (user.getRandom().nextFloat() - 0.5) / 3);
+            level.addParticle(
+                    new FrostParticleEffect(
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            new Vector3f(1.0F, 1.0F, 1.0F),
+                            1.0F,
+                            1,
+                            0),
+                    hitPos.x,
+                    hitPos.y,
+                    hitPos.z,
+                    (user.getRandom().nextFloat() - 0.5) / 3,
+                    (user.getRandom().nextFloat() - 0.5) / 3,
+                    (user.getRandom().nextFloat() - 0.5) / 3);
         }
     }
 }

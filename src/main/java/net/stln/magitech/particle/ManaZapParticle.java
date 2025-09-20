@@ -1,6 +1,8 @@
 package net.stln.magitech.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Camera;
@@ -12,11 +14,11 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.particle.particle_option.ManaZapParticleEffect;
+
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 public class ManaZapParticle extends GlowingParticle {
 
@@ -26,8 +28,16 @@ public class ManaZapParticle extends GlowingParticle {
     private final Vector3f endPos;
     private List<Vec3> segmentList = new ArrayList<>();
 
-    public ManaZapParticle(ClientLevel clientWorld, double x, double y, double z, double vx, double vy, double vz,
-                           ManaZapParticleEffect parameters, SpriteSet spriteProvider) {
+    public ManaZapParticle(
+            ClientLevel clientWorld,
+            double x,
+            double y,
+            double z,
+            double vx,
+            double vy,
+            double vz,
+            ManaZapParticleEffect parameters,
+            SpriteSet spriteProvider) {
         super(clientWorld, x, y, z, vx, vy, vz);
         this.xd = vx;
         this.yd = vy;
@@ -56,7 +66,8 @@ public class ManaZapParticle extends GlowingParticle {
             this.alpha = (this.lifetime - this.age) / (this.lifetime * 0.2F) * 0.6F + 0.2F;
         }
         if (this.twinkle > 1) {
-            float multiplier = Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
+            float multiplier =
+                    Math.max(((float) this.age % this.twinkle) / (this.twinkle - 1), 0.1F);
             this.rCol *= multiplier;
             this.gCol *= multiplier;
             this.bCol *= multiplier;
@@ -68,8 +79,16 @@ public class ManaZapParticle extends GlowingParticle {
         }
     }
 
-    public void drawBeam(VertexConsumer vc, Camera camera, Vec3 start, Vec3 end, float width,
-                         int r, int g, int b, int a) {
+    public void drawBeam(
+            VertexConsumer vc,
+            Camera camera,
+            Vec3 start,
+            Vec3 end,
+            float width,
+            int r,
+            int g,
+            int b,
+            int a) {
         Vec3 cameraPos = camera.getPosition();
         Vec3 from = start.subtract(cameraPos);
         Vec3 to = end.subtract(cameraPos);
@@ -78,12 +97,18 @@ public class ManaZapParticle extends GlowingParticle {
         Vector3f dir = to.subtract(from).normalize().toVector3f();
 
         // カメラの向きベクトル（ビュー方向）
-        Vector3f view = start.subtract(camera.getPosition()).toVector3f(); // Forge/NeoForge 1.20+ の標準API
+        Vector3f view =
+                start.subtract(camera.getPosition()).toVector3f(); // Forge/NeoForge 1.20+ の標準API
         // ↑もし getLookVector が無い場合は：
-        // Vec3 view = new Vec3(camera.getLookVector().x, camera.getLookVector().y, camera.getLookVector().z);
+        // Vec3 view = new Vec3(camera.getLookVector().x, camera.getLookVector().y,
+        // camera.getLookVector().z);
 
         // dir × view = 「線に垂直でカメラに対して水平な方向（横方向）」
-        Vec3 right = new Vec3(dir.x, dir.y, dir.z).cross(new Vec3(view.x, view.y, view.z)).normalize().scale((float) (width / 2.0));
+        Vec3 right =
+                new Vec3(dir.x, dir.y, dir.z)
+                        .cross(new Vec3(view.x, view.y, view.z))
+                        .normalize()
+                        .scale((float) (width / 2.0));
 
         // 四角形の4点（左右）
         Vector3f v1 = from.add(right).toVector3f();
@@ -115,8 +140,7 @@ public class ManaZapParticle extends GlowingParticle {
             float quadSize,
             float u,
             float v,
-            int packedLight
-    ) {
+            int packedLight) {
         Vector3f vector3f = new Vector3f(0.0F, 0.0F, 0.0F).mul(quadSize).add(x, y, z);
         buffer.addVertex(vector3f.x(), vector3f.y(), vector3f.z())
                 .setUv(u, v)
@@ -162,7 +186,11 @@ public class ManaZapParticle extends GlowingParticle {
             Vec3 nextTo = this.getPos().scale((double) (segment - (i + 1)) / segment);
             nextTo = nextTo.add(toPos.scale((double) (i + 1) / segment));
             if (i + 1 < segment) {
-                nextTo = nextTo.add((random.nextFloat() - 0.5) / 6 * distance, (random.nextFloat() - 0.5) / 6 * distance, (random.nextFloat() - 0.5) / 6 * distance);
+                nextTo =
+                        nextTo.add(
+                                (random.nextFloat() - 0.5) / 6 * distance,
+                                (random.nextFloat() - 0.5) / 6 * distance,
+                                (random.nextFloat() - 0.5) / 6 * distance);
             }
             segmentList.add(nextTo);
         }
@@ -179,6 +207,7 @@ public class ManaZapParticle extends GlowingParticle {
 
     @Environment(EnvType.CLIENT)
     public static class Provider implements ParticleProvider<ManaZapParticleEffect> {
+
         private final SpriteSet spriteProvider;
 
         public Provider(SpriteSet spriteProvider) {
@@ -186,7 +215,15 @@ public class ManaZapParticle extends GlowingParticle {
         }
 
         @Override
-        public @Nullable Particle createParticle(ManaZapParticleEffect parameters, ClientLevel world, double x, double y, double z, double xd, double yd, double zd) {
+        public @Nullable Particle createParticle(
+                ManaZapParticleEffect parameters,
+                ClientLevel world,
+                double x,
+                double y,
+                double z,
+                double xd,
+                double yd,
+                double zd) {
             return new ManaZapParticle(world, x, y, z, xd, yd, zd, parameters, this.spriteProvider);
         }
     }

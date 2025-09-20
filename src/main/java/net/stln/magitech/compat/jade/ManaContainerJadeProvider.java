@@ -6,6 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.block.block_entity.ManaContainerBlockEntity;
+
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.ITooltip;
@@ -16,7 +17,8 @@ public class ManaContainerJadeProvider implements IBlockComponentProvider {
     public static final ResourceLocation UID = Magitech.id("mana_container");
 
     @Override
-    public void appendTooltip(ITooltip iTooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
+    public void appendTooltip(
+            ITooltip iTooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
         BlockPos pos = blockAccessor.getPosition();
         BlockState state = blockAccessor.getBlockState();
         Level level = blockAccessor.getLevel();

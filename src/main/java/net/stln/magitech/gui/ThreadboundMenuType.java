@@ -1,5 +1,8 @@
 package net.stln.magitech.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,22 +20,29 @@ import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.magic.spell.SpellLike;
 import net.stln.magitech.util.ComponentHelper;
 import net.stln.magitech.util.CuriosHelper;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ThreadboundMenuType extends AbstractContainerMenu {
+
     private final ItemStack threadbound;
     private final SimpleContainer container = new SimpleContainer(15);
     private final int containerRows = 3;
     private final int containerColumns = 5;
 
     public ThreadboundMenuType(int containerId, Inventory playerInv) {
-        this(containerId, playerInv, playerInv.player, playerInv.player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ThreadBoundItem ? playerInv.player.getItemInHand(InteractionHand.MAIN_HAND) : playerInv.player.getItemInHand(InteractionHand.OFF_HAND));
+        this(
+                containerId,
+                playerInv,
+                playerInv.player,
+                playerInv.player.getItemInHand(InteractionHand.MAIN_HAND).getItem()
+                                instanceof ThreadBoundItem
+                        ? playerInv.player.getItemInHand(InteractionHand.MAIN_HAND)
+                        : playerInv.player.getItemInHand(InteractionHand.OFF_HAND));
     }
 
-    public ThreadboundMenuType(int containerId, Inventory playerInv, Player player, ItemStack threadbound) {
+    public ThreadboundMenuType(
+            int containerId, Inventory playerInv, Player player, ItemStack threadbound) {
         super(GuiInit.THREADBOUND_MENU.get(), containerId);
 
         if (!(threadbound.getItem() instanceof ThreadBoundItem)) {
@@ -41,18 +51,20 @@ public class ThreadboundMenuType extends AbstractContainerMenu {
         this.threadbound = threadbound;
 
         for (int i = 0; i < 15; i++) {
-            this.addSlot(new Slot(container, i, 44 + 18 * (i % 5), 27 + 18 * (i / 5)) {
-                @Override
-                public boolean mayPlace(@NotNull ItemStack stack) {
-                    return stack.getItem() instanceof ThreadPageItem;
-                }
+            this.addSlot(
+                    new Slot(container, i, 44 + 18 * (i % 5), 27 + 18 * (i / 5)) {
 
-                @Override
-                public void set(@NotNull ItemStack stack) {
-                    this.setChanged();
-                    super.set(stack);
-                }
-            });
+                        @Override
+                        public boolean mayPlace(@NotNull ItemStack stack) {
+                            return stack.getItem() instanceof ThreadPageItem;
+                        }
+
+                        @Override
+                        public void set(@NotNull ItemStack stack) {
+                            this.setChanged();
+                            super.set(stack);
+                        }
+                    });
         }
 
         addInventory(playerInv);
@@ -74,10 +86,15 @@ public class ThreadboundMenuType extends AbstractContainerMenu {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
             if (index < this.containerRows * containerColumns) {
-                if (!this.moveItemStackTo(itemstack1, this.containerRows * containerColumns, this.slots.size(), true)) {
+                if (!this.moveItemStackTo(
+                        itemstack1,
+                        this.containerRows * containerColumns,
+                        this.slots.size(),
+                        true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, this.containerRows * containerColumns, false)) {
+            } else if (!this.moveItemStackTo(
+                    itemstack1, 0, this.containerRows * containerColumns, false)) {
                 return ItemStack.EMPTY;
             }
 
