@@ -21,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.stln.magitech.particle.particle_option.SquareParticleEffect;
+import net.stln.magitech.particle.option.SquareParticleEffect;
 import net.stln.magitech.util.VoxelShapeUtil;
 
 import org.joml.Vector3f;

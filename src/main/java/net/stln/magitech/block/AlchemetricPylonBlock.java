@@ -22,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.stln.magitech.block.block_entity.AlchemetricPylonBlockEntity;
+import net.stln.magitech.block.entity.AlchemetricPylonBlockEntity;
 
 import com.mojang.serialization.MapCodec;
 

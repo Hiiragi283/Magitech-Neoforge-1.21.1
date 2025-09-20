@@ -20,8 +20,8 @@ import net.stln.magitech.element.Element;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.particle.particle_option.BeamParticleEffect;
-import net.stln.magitech.particle.particle_option.VoidGlowParticleEffect;
+import net.stln.magitech.particle.option.BeamParticleEffect;
+import net.stln.magitech.particle.option.VoidGlowParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.*;
 

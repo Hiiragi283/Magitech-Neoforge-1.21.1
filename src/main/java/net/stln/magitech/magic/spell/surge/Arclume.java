@@ -17,10 +17,10 @@ import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.particle.particle_option.SparkParticleEffect;
-import net.stln.magitech.particle.particle_option.SquareParticleEffect;
-import net.stln.magitech.particle.particle_option.UnstableSquareParticleEffect;
-import net.stln.magitech.particle.particle_option.ZapParticleEffect;
+import net.stln.magitech.particle.option.SparkParticleEffect;
+import net.stln.magitech.particle.option.SquareParticleEffect;
+import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
+import net.stln.magitech.particle.option.ZapParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.*;
 

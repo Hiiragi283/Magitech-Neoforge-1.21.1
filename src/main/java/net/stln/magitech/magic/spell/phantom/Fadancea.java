@@ -22,9 +22,9 @@ import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.cooldown.CooldownData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.particle.particle_option.BeamParticleEffect;
-import net.stln.magitech.particle.particle_option.MembraneParticleEffect;
-import net.stln.magitech.particle.particle_option.SquareParticleEffect;
+import net.stln.magitech.particle.option.BeamParticleEffect;
+import net.stln.magitech.particle.option.MembraneParticleEffect;
+import net.stln.magitech.particle.option.SquareParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.*;
 

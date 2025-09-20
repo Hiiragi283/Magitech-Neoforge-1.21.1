@@ -10,7 +10,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.particle.particle_type.*;
+import net.stln.magitech.particle.type.*;
 
 public class ParticleInit {
 

@@ -12,7 +12,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.stln.magitech.magic.mana.ManaData;
 import net.stln.magitech.magic.mana.ManaUtil;
-import net.stln.magitech.particle.particle_option.PowerupParticleEffect;
+import net.stln.magitech.particle.option.PowerupParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 

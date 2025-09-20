@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.block.block_entity.ManaContainerBlockEntity;
+import net.stln.magitech.block.entity.ManaContainerBlockEntity;
 
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;

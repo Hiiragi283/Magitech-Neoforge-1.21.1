@@ -64,7 +64,7 @@ import net.stln.magitech.item.tool.trait.Trait;
 import net.stln.magitech.item.tool.upgrade.UpgradeInstance;
 import net.stln.magitech.network.TierUpToastPayload;
 import net.stln.magitech.network.TraitTickPayload;
-import net.stln.magitech.particle.particle_option.*;
+import net.stln.magitech.particle.option.*;
 import net.stln.magitech.util.*;
 
 import org.jetbrains.annotations.NotNull;

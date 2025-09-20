@@ -9,7 +9,7 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.Mth;
-import net.stln.magitech.particle.particle_option.SquareNoCullParticleEffect;
+import net.stln.magitech.particle.option.SquareNoCullParticleEffect;
 
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;

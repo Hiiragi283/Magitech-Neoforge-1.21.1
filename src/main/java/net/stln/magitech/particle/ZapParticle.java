@@ -11,7 +11,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.world.phys.Vec3;
-import net.stln.magitech.particle.particle_option.ZapParticleEffect;
+import net.stln.magitech.particle.option.ZapParticleEffect;
 
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;

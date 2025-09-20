@@ -8,7 +8,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.Mth;
-import net.stln.magitech.particle.particle_option.UnstableSquareParticleEffect;
+import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
 
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;

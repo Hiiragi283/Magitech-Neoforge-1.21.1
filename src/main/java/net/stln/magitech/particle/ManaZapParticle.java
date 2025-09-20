@@ -13,7 +13,7 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-import net.stln.magitech.particle.particle_option.ManaZapParticleEffect;
+import net.stln.magitech.particle.option.ManaZapParticleEffect;
 
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;

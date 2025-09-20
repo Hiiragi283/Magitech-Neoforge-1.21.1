@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.block.block_entity.ManaContainerBlockEntity;
+import net.stln.magitech.block.entity.ManaContainerBlockEntity;
 import net.stln.magitech.util.ClientHelper;
 
 import org.jetbrains.annotations.NotNull;

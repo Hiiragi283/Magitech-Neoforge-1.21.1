@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.particle.particle_option.PowerupParticleEffect;
+import net.stln.magitech.particle.option.PowerupParticleEffect;
 
 import org.joml.Vector3f;
 

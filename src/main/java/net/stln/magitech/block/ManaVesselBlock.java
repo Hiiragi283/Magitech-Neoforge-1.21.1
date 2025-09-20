@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.stln.magitech.block.block_entity.ManaVesselBlockEntity;
-import net.stln.magitech.particle.particle_option.SquareParticleEffect;
+import net.stln.magitech.block.entity.ManaVesselBlockEntity;
+import net.stln.magitech.particle.option.SquareParticleEffect;
 
 import org.joml.Vector3f;
 

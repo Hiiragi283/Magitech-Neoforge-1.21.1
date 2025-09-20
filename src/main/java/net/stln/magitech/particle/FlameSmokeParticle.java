@@ -8,7 +8,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
-import net.stln.magitech.particle.particle_option.FlameSmokeParticleEffect;
+import net.stln.magitech.particle.option.FlameSmokeParticleEffect;
 
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;

@@ -14,12 +14,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.mobeffect.MobEffectInit;
+import net.stln.magitech.entity.effect.MobEffectInit;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.particle.particle_option.BeamParticleEffect;
-import net.stln.magitech.particle.particle_option.VoidGlowParticleEffect;
+import net.stln.magitech.particle.option.BeamParticleEffect;
+import net.stln.magitech.particle.option.VoidGlowParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.*;
 

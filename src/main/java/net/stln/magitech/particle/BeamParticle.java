@@ -8,7 +8,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.world.phys.Vec3;
-import net.stln.magitech.particle.particle_option.BeamParticleEffect;
+import net.stln.magitech.particle.option.BeamParticleEffect;
 
 import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;

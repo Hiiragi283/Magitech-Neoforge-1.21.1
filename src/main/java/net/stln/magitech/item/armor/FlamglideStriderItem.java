@@ -17,9 +17,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.particle.particle_option.SquareFieldParticleEffect;
-import net.stln.magitech.particle.particle_option.SquareParticleEffect;
-import net.stln.magitech.particle.particle_option.UnstableSquareParticleEffect;
+import net.stln.magitech.particle.option.SquareFieldParticleEffect;
+import net.stln.magitech.particle.option.SquareParticleEffect;
+import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.TickScheduler;
 

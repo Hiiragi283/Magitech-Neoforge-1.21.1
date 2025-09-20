@@ -15,10 +15,10 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.stln.magitech.block.block_entity.ManaContainerBlockEntity;
+import net.stln.magitech.block.entity.ManaContainerBlockEntity;
 import net.stln.magitech.magic.mana.ManaData;
 import net.stln.magitech.magic.mana.ManaUtil;
-import net.stln.magitech.particle.particle_option.PowerupParticleEffect;
+import net.stln.magitech.particle.option.PowerupParticleEffect;
 import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 

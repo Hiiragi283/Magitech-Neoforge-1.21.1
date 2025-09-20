@@ -2,16 +2,12 @@ package net.stln.magitech;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -22,12 +18,10 @@ import net.stln.magitech.compat.curios.ValidatorInit;
 import net.stln.magitech.data.DataMapTypeInit;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.entity.EntityInit;
-import net.stln.magitech.entity.mobeffect.MobEffectInit;
+import net.stln.magitech.entity.effect.MobEffectInit;
 import net.stln.magitech.entity.status.AttributeInit;
-import net.stln.magitech.event.EventInit;
 import net.stln.magitech.gui.GuiInit;
 import net.stln.magitech.item.ItemInit;
-import net.stln.magitech.item.ItemPropertyInit;
 import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.creative_tab.CreativeTabInit;
 import net.stln.magitech.item.tool.material.MaterialInit;
@@ -128,24 +122,5 @@ public class Magitech {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
-    }
-
-    // You can use EventBusSubscriber to automatically register all static methods
-    // in the class
-    // annotated with @SubscribeEvent
-    @EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT)
-    public static class ClientModEvents {
-
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            EntityInit.registerModEntitiesRenderer();
-            EventInit.registerClientEvent();
-            ItemPropertyInit.registerItemProperties();
-        }
-
-        @SubscribeEvent
-        public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-            ParticleInit.registerParticleFactories(event);
-        }
     }
 }
