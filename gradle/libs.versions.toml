@@ -1,0 +1,95 @@
+[versions]
+minecraft = "1.21.1"
+
+mod_id = "magitech"
+mod_name = "Magitech"
+mod_version = "0.12.1"
+
+parchment-mc = "1.21.1"
+parchment-map = "2024.11.17"
+
+neo-moddev = "2.0.96"
+neo-version = "21.1.206"
+
+spotless = "7.2.1"
+
+curios = "9.5.1+1.21.1"
+ffapi = "0.115.6+2.1.0+1.21.1"
+geckolib = "4.7.5.1"
+jade = "15.10.3+neoforge"
+jei = "19.21.0.247"
+owo = "0.12.15.1-beta.6+1.21"
+patchouli = "1.21-88-NEOFORGE"
+player-animator = "2.0.1+1.21.1"
+terra-blender = "1.21.1-4.1.0.8"
+
+advancements-reloaded = "5835520"
+apple-skin = "3.0.7+mc1.21"
+auth-me = "NinhKHNO"
+xaeros-minimap = "25.2.10_NeoForge_1.21"
+xaeros-world-map = "1.39.12_NeoForge_1.21"
+
+mf24ku = "royW33Zn"
+arch = "13.0.8"
+cloth-config = "15.0.140+neoforge"
+kff = "5.9.0"
+
+[libraries]
+
+curios = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curios" }
+ffapi = { group = "org.sinytra.forgified-fabric-api", name = "forgified-fabric-api", version.ref = "ffapi" }
+geckolib = { group = "software.bernie.geckolib", name = "geckolib-neoforge-1.21.1", version.ref = "geckolib" }
+jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
+jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
+owo = { group = "io.wispforest", name = "owo-lib-neoforge", version.ref = "owo" }
+patchouli = { group = "vazkii.patchouli", name = "Patchouli", version.ref = "patchouli" }
+player-animator = { group = "dev.kosmx.player-anim", name = "player-animation-lib-forge", version.ref = "player-animator" }
+terra-blender = { group = "com.github.glitchfiend", name = "TerraBlender-neoforge", version.ref = "terra-blender" }
+
+advancements-reloaded = { group = "curse.maven", name = "advancements-reloaded-1113876", version.ref = "advancements-reloaded" }
+apple-skin = { group = "maven.modrinth", name = "appleskin", version.ref = "apple-skin" }
+auth-me = { group = "maven.modrinth", name = "auth-me", version.ref = "auth-me" }
+xaeros-minimap = { group = "maven.modrinth", name = "xaeros-minimap", version.ref = "xaeros-minimap" }
+xaeros-world-map = { group = "maven.modrinth", name = "xaeros-world-map", version.ref = "xaeros-world-map" }
+
+mf24ku = { group = "maven.modrinth", name = "miragefairy2024-kakera-unofficial", version.ref = "mf24ku" }
+arch = { group = "dev.architectury", name = "architectury-neoforge", version.ref = "arch" }
+cloth-config = { group = "maven.modrinth", name = "cloth-config", version.ref = "cloth-config" }
+kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff" }
+
+[bundles]
+
+mods-impl = [
+    "curios",
+    "ffapi",
+    "geckolib",
+    "jade",
+    "player-animator",
+    "owo",
+    "terra-blender",
+]
+
+mods-compile = [
+    "jei-api",
+    "patchouli",
+]
+
+mods-runtime = [
+    "advancements-reloaded",
+    "apple-skin",
+    "auth-me",
+    "jei",
+    "xaeros-minimap",
+    "xaeros-world-map",
+    # MF24KU
+    "mf24ku",
+    "arch",
+    "cloth-config",
+    "kff",
+]
+
+[plugins]
+
+neo-moddev = { id = "net.neoforged.moddev", version.ref = "neo-moddev" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
