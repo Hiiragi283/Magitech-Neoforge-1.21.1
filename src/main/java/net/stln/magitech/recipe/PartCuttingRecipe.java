@@ -1,7 +1,5 @@
 package net.stln.magitech.recipe;
 
-import java.util.Optional;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -11,12 +9,12 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.stln.magitech.init.MagitechBlocks;
 import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.component.MaterialComponent;
 import net.stln.magitech.util.ClientHelper;
+import net.stln.magitech.util.ServerHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -61,7 +59,7 @@ public record PartCuttingRecipe(String group, int inputCount, ItemStack result)
             @NotNull SingleRecipeInput input, HolderLookup.@NotNull Provider registries) {
         ItemStack itemStack = this.result.copy();
         var level =
-                Optional.ofNullable(ServerLifecycleHooks.getCurrentServer())
+                ServerHelper.getOptionalServer()
                         .map(MinecraftServer::overworld)
                         .map(serverLevel -> (Level) serverLevel)
                         .orElseGet(ClientHelper::getLevel);

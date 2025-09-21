@@ -19,7 +19,6 @@ import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.cooldown.CooldownData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.util.SpellShape;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,10 +41,6 @@ public class Tremivox extends Spell {
 
     public Element getElement() {
         return Element.TREMOR;
-    }
-
-    public SpellShape getSpellShape() {
-        return SpellShape.SHOT;
     }
 
     private static void playShootAnimation(Player player) {
@@ -87,11 +82,6 @@ public class Tremivox extends Spell {
     @Override
     public boolean canHoldUsing() {
         return true;
-    }
-
-    @Override
-    public int getCooldown(Level level, Player user, ItemStack stack) {
-        return 60;
     }
 
     @Override

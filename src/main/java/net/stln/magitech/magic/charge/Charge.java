@@ -25,6 +25,14 @@ public class Charge {
         this.charge = charge;
     }
 
+    public void growCharge(double charge) {
+        setCharge(getCharge() + charge);
+    }
+
+    public void shrinkCharge(double charge) {
+        setCharge(getCharge() - charge);
+    }
+
     public double getMaxCharge() {
         return maxCharge;
     }

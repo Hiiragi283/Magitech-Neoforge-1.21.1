@@ -102,7 +102,7 @@ public class ToolUpgradeScreen extends AbstractContainerScreen<ToolUpgradeMenu> 
                         && !ToolMaterialUtil.isCorrectMaterialForUpgrade(
                                 ComponentHelper.getTier(itemStack),
                                 ComponentHelper.getUpgradePoint(itemStack),
-                                menu.container.getItem(1).getItem())) {
+                                menu.container.getItem(1))) {
                     MutableComponent text =
                             Component.translatable(
                                     "recipe.magitech.tool_upgrade.incorrect_material");
@@ -219,7 +219,7 @@ public class ToolUpgradeScreen extends AbstractContainerScreen<ToolUpgradeMenu> 
                 && !ToolMaterialUtil.isCorrectMaterialForUpgrade(
                         ComponentHelper.getTier(itemStack),
                         ComponentHelper.getUpgradePoint(itemStack),
-                        menu.container.getItem(1).getItem())) {
+                        menu.container.getItem(1))) {
             if (x >= i + 50 && x < i + 66 && y >= j + 31 && y < j + 47) {
                 guiGraphics.renderTooltip(font, new ItemStack(tagItems.get(currentIndex)), x, y);
             }

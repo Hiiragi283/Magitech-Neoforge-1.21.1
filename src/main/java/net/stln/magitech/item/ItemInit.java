@@ -362,60 +362,60 @@ public class ItemInit {
                                                                     .ADD_MULTIPLIED_BASE))),
                     new Item.Properties().stacksTo(1));
 
-    public static final DeferredItem<Item> LIGHT_BLADE =
+    public static final DeferredItem<PartItem> LIGHT_BLADE =
             ITEMS.registerItem("light_blade", LightBladeItem::new);
 
-    public static final DeferredItem<Item> HEAVY_BLADE =
+    public static final DeferredItem<PartItem> HEAVY_BLADE =
             ITEMS.registerItem("heavy_blade", HeavyBladeItem::new);
 
-    public static final DeferredItem<Item> LIGHT_HANDLE =
+    public static final DeferredItem<PartItem> LIGHT_HANDLE =
             ITEMS.registerItem("light_handle", LightHandleItem::new);
 
-    public static final DeferredItem<Item> HEAVY_HANDLE =
+    public static final DeferredItem<PartItem> HEAVY_HANDLE =
             ITEMS.registerItem("heavy_handle", HeavyHandleItem::new);
 
-    public static final DeferredItem<Item> TOOL_BINDING =
+    public static final DeferredItem<PartItem> TOOL_BINDING =
             ITEMS.registerItem("tool_binding", ToolBindingItem::new);
 
-    public static final DeferredItem<Item> HANDGUARD =
+    public static final DeferredItem<PartItem> HANDGUARD =
             ITEMS.registerItem("handguard", HandguardItem::new);
 
-    public static final DeferredItem<Item> STRIKE_HEAD =
+    public static final DeferredItem<PartItem> STRIKE_HEAD =
             ITEMS.registerItem("strike_head", StrikeHeadItem::new);
 
-    public static final DeferredItem<Item> SPIKE_HEAD =
+    public static final DeferredItem<PartItem> SPIKE_HEAD =
             ITEMS.registerItem("spike_head", SpikeHeadItem::new);
 
-    public static final DeferredItem<Item> REINFORCED_STICK =
+    public static final DeferredItem<PartItem> REINFORCED_STICK =
             ITEMS.registerItem("reinforced_stick", ReinforcedStickItem::new);
 
-    public static final DeferredItem<Item> PLATE = ITEMS.registerItem("plate", PlateItem::new);
+    public static final DeferredItem<PartItem> PLATE = ITEMS.registerItem("plate", PlateItem::new);
 
-    public static final DeferredItem<Item> CATALYST =
+    public static final DeferredItem<PartItem> CATALYST =
             ITEMS.registerItem("catalyst", CatalystItem::new);
 
-    public static final DeferredItem<Item> CONDUCTOR =
+    public static final DeferredItem<PartItem> CONDUCTOR =
             ITEMS.registerItem("conductor", ConductorItem::new);
 
     private static final Item.Properties TOOL_PROPERTIES =
             new Item.Properties().setNoRepair().stacksTo(1);
-    public static final DeferredItem<Item> DAGGER =
+    public static final DeferredItem<PartToolItem> DAGGER =
             ITEMS.registerItem("dagger", DaggerItem::new, TOOL_PROPERTIES);
-    public static final DeferredItem<Item> LIGHT_SWORD =
+    public static final DeferredItem<PartToolItem> LIGHT_SWORD =
             ITEMS.registerItem("light_sword", LightSwordItem::new, TOOL_PROPERTIES);
-    public static final DeferredItem<Item> HEAVY_SWORD =
+    public static final DeferredItem<PartToolItem> HEAVY_SWORD =
             ITEMS.registerItem("heavy_sword", HeavySwordItem::new, TOOL_PROPERTIES);
-    public static final DeferredItem<Item> PICKAXE =
+    public static final DeferredItem<PartToolItem> PICKAXE =
             ITEMS.registerItem("pickaxe", PickaxeItem::new, TOOL_PROPERTIES);
-    public static final DeferredItem<Item> HAMMER =
+    public static final DeferredItem<PartToolItem> HAMMER =
             ITEMS.registerItem("hammer", HammerItem::new, TOOL_PROPERTIES);
-    public static final DeferredItem<Item> AXE =
+    public static final DeferredItem<PartToolItem> AXE =
             ITEMS.registerItem("axe", AxeItem::new, TOOL_PROPERTIES);
-    public static final DeferredItem<Item> SHOVEL =
+    public static final DeferredItem<PartToolItem> SHOVEL =
             ITEMS.registerItem("shovel", ShovelItem::new, TOOL_PROPERTIES);
-    public static final DeferredItem<Item> SCYTHE =
+    public static final DeferredItem<PartToolItem> SCYTHE =
             ITEMS.registerItem("scythe", ScytheItem::new, TOOL_PROPERTIES);
-    public static final DeferredItem<Item> WAND =
+    public static final DeferredItem<PartToolItem> WAND =
             ITEMS.registerItem("wand", WandItem::new, TOOL_PROPERTIES);
 
     public static final DeferredItem<Item> AETHER_LIFTER =

@@ -1,30 +1,18 @@
 package net.stln.magitech.network;
 
-import java.util.Objects;
-
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
+import net.stln.magitech.util.ServerHelper;
 
 public class TraitTickPayLoadHandler {
 
     public static void handleDataOnMainS2C(
             final TraitTickPayload payload, final IPayloadContext context) {
-        Player player = null;
-        Level level = context.player().level();
-        for (Player search : level.players()) {
-            if (Objects.equals(search.getUUID(), payload.uuid())) {
-                player = search;
-                break;
-            }
-        }
-        Player player1 = player;
+        Player player = context.player().level().getPlayerByUUID(payload.uuid());
         if (player == null) {
             return;
         }
@@ -34,24 +22,24 @@ public class TraitTickPayLoadHandler {
                     .forEach(
                             (trait, integer) ->
                                     trait.inventoryTick(
-                                            player1,
-                                            player1.level(),
+                                            player,
+                                            player.level(),
                                             stack,
                                             integer,
                                             ((PartToolItem) stack.getItem())
-                                                    .getSumStats(player1, player1.level(), stack),
+                                                    .getSumStats(player, player.level(), stack),
                                             false));
         } else if (stack.getItem() instanceof PartToolItem partToolItem) {
             PartToolItem.getTraitLevel(PartToolItem.getTraits(stack))
                     .forEach(
                             (trait, integer) ->
                                     trait.tick(
-                                            player1,
-                                            player1.level(),
+                                            player,
+                                            player.level(),
                                             stack,
                                             integer,
                                             ((PartToolItem) stack.getItem())
-                                                    .getSumStats(player1, player1.level(), stack),
+                                                    .getSumStats(player, player.level(), stack),
                                             false));
         }
     }
@@ -88,13 +76,13 @@ public class TraitTickPayLoadHandler {
                                                     .getSumStats(player, player.level(), stack),
                                             false));
         }
-        MinecraftServer server =
-                Objects.requireNonNull(
-                        ServerLifecycleHooks.getCurrentServer(),
-                        "Cannot send clientbound payloads on the client");
-        for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers())
-            if (player.getUUID() != serverPlayer.getUUID()) {
-                PacketDistributor.sendToPlayer(serverPlayer, payload);
-            }
+        ServerHelper.getOptionalServer()
+                .ifPresent(
+                        server -> {
+                            for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers())
+                                if (player.getUUID() != serverPlayer.getUUID()) {
+                                    PacketDistributor.sendToPlayer(serverPlayer, payload);
+                                }
+                        });
     }
 }

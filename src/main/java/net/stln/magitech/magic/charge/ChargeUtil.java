@@ -9,7 +9,7 @@ public class ChargeUtil {
         if (entity instanceof Player player) {
             Charge charge = ChargeData.getCurrentCharge(player);
             if (charge != null) {
-                charge.setCharge(charge.getCharge() + 1);
+                charge.growCharge(1);
                 if (charge.getCharge() > charge.getMaxCharge()) {
                     if (charge.getSpell().releaseOnCharged()) {
                         player.releaseUsingItem();

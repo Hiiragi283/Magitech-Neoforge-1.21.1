@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.item.tool.material.ToolMaterial;
 import net.stln.magitech.tag.MagitechTags;
 
@@ -26,8 +27,9 @@ public class ToolMaterialUtil {
         return result;
     }
 
-    public static boolean isCorrectMaterialForUpgrade(int tier, int point, @NotNull Item item) {
-        return item.getDefaultInstance().is(getUpgradeMaterialTag(tier, point));
+    public static boolean isCorrectMaterialForUpgrade(
+            int tier, int point, @NotNull ItemStack stack) {
+        return stack.is(getUpgradeMaterialTag(tier, point));
     }
 
     public static TagKey<Item> getUpgradeMaterialTag(int tier, int point) {

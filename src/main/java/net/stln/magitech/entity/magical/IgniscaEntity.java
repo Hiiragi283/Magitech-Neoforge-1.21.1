@@ -18,12 +18,11 @@ import net.stln.magitech.particle.FlameParticleEffect;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
-import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
+public class IgniscaEntity extends SpellProjectileEntity {
 
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 

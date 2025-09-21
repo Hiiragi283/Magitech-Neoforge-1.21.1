@@ -127,11 +127,8 @@ public enum Element implements StringRepresentable {
     }
 
     public MutableComponent getSpellElementName() {
-        if (this == Element.NONE) {
-            return Component.translatable("element.magitech.mana");
-        } else {
-            return Component.translatable("element.magitech." + this.id);
-        }
+        return Component.translatable(
+                this == Element.NONE ? "element.magitech.mana" : "element.magitech." + this.id);
     }
 
     public int getColor() {

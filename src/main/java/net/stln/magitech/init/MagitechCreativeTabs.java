@@ -6,7 +6,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -29,11 +29,7 @@ public class MagitechCreativeTabs {
                     () ->
                             CreativeModeTab.builder()
                                     .title(Component.translatable("itemGroup.magitech.magitech"))
-                                    .icon(
-                                            () ->
-                                                    ItemInit.GLISTENING_LEXICON
-                                                            .get()
-                                                            .getDefaultInstance())
+                                    .icon(() -> ItemInit.GLISTENING_LEXICON.toStack())
                                     .displayItems(
                                             (parameters, output) -> {
                                                 var registries = parameters.holders();
@@ -49,67 +45,64 @@ public class MagitechCreativeTabs {
 
                                                 output.accept(
                                                         ThreadboundGenerator.generateThreadbound(
-                                                                ItemInit.GLISTENING_LEXICON.get(),
+                                                                ItemInit.GLISTENING_LEXICON,
                                                                 allSpells));
                                                 output.accept(
                                                         ThreadboundGenerator.generateThreadbound(
-                                                                ItemInit.THE_FIRE_THAT_THINKS.get(),
+                                                                ItemInit.THE_FIRE_THAT_THINKS,
                                                                 allSpells));
                                                 output.accept(
                                                         ThreadboundGenerator.generateThreadbound(
                                                                 ItemInit
-                                                                        .ARCANE_ENGINEERING_COMPENDIUM
-                                                                        .get(),
+                                                                        .ARCANE_ENGINEERING_COMPENDIUM,
                                                                 allSpells));
-                                                output.accept(ItemInit.AETHER_LIFTER.get());
-                                                output.accept(ItemInit.FLAMGLIDE_STRIDER.get());
-                                                output.accept(ItemInit.MANA_RING.get());
-                                                output.accept(ItemInit.GALEVENT_RING.get());
-                                                output.accept(ItemInit.CHARGEBIND_RING.get());
-                                                output.accept(ItemInit.TORSION_RING.get());
-                                                output.accept(ItemInit.UMBRAL_RING.get());
-                                                output.accept(ItemInit.DAWN_RING.get());
-                                                output.accept(ItemInit.FLUXBOUND_RING.get());
-                                                output.accept(ItemInit.ALCHAEFABRIC.get());
-                                                output.accept(ItemInit.AEGIS_WEAVE.get());
-                                                output.accept(ItemInit.FLUORITE.get());
-                                                output.accept(ItemInit.MANA_CHARGED_FLUORITE.get());
-                                                output.accept(ItemInit.TOURMALINE.get());
-                                                output.accept(ItemInit.EMBER_CRYSTAL.get());
-                                                output.accept(ItemInit.GLACE_CRYSTAL.get());
-                                                output.accept(ItemInit.SURGE_CRYSTAL.get());
-                                                output.accept(ItemInit.PHANTOM_CRYSTAL.get());
-                                                output.accept(ItemInit.TREMOR_CRYSTAL.get());
-                                                output.accept(ItemInit.MAGIC_CRYSTAL.get());
-                                                output.accept(ItemInit.FLOW_CRYSTAL.get());
-                                                output.accept(ItemInit.HOLLOW_CRYSTAL.get());
-                                                output.accept(ItemInit.AGGREGATED_NOCTIS.get());
-                                                output.accept(ItemInit.AGGREGATED_LUMINIS.get());
-                                                output.accept(ItemInit.AGGREGATED_FLUXIA.get());
-                                                output.accept(ItemInit.CITRINE.get());
-                                                output.accept(ItemInit.CHROMIUM_INGOT.get());
-                                                output.accept(ItemInit.REDSTONE_CRYSTAL.get());
-                                                output.accept(
-                                                        ItemInit.POLISHED_REDSTONE_CRYSTAL.get());
-                                                output.accept(ItemInit.SULFUR.get());
-                                                output.accept(ItemInit.ENDER_METAL_INGOT.get());
-                                                output.accept(
-                                                        ItemInit.NETHER_STAR_BRILLIANCE.get());
-                                                output.accept(ItemInit.RADIANT_STEEL_INGOT.get());
-                                                output.accept(ItemInit.FRIGIDITE.get());
-                                                output.accept(ItemInit.POLISHED_FRIGIDITE.get());
-                                                output.accept(ItemInit.TRANSLUCIUM.get());
-                                                output.accept(ItemInit.POLISHED_TRANSLUCIUM.get());
-                                                output.accept(ItemInit.RESONITE.get());
-                                                output.accept(ItemInit.POLISHED_RESONITE.get());
-                                                output.accept(ItemInit.ABYSSITE.get());
-                                                output.accept(ItemInit.POLISHED_ABYSSITE.get());
-                                                output.accept(ItemInit.MANA_DEEXCITER_CORE.get());
-                                                output.accept(ItemInit.ASPECT_COLLECTOR.get());
-                                                output.accept(ItemInit.BOOTS_FRAME.get());
-                                                output.accept(ItemInit.MANA_BERRIES.get());
-                                                output.accept(ItemInit.MANA_PIE.get());
-                                                output.accept(ItemInit.WEAVER_SPAWN_EGG.get());
+                                                output.accept(ItemInit.AETHER_LIFTER);
+                                                output.accept(ItemInit.FLAMGLIDE_STRIDER);
+                                                output.accept(ItemInit.MANA_RING);
+                                                output.accept(ItemInit.GALEVENT_RING);
+                                                output.accept(ItemInit.CHARGEBIND_RING);
+                                                output.accept(ItemInit.TORSION_RING);
+                                                output.accept(ItemInit.UMBRAL_RING);
+                                                output.accept(ItemInit.DAWN_RING);
+                                                output.accept(ItemInit.FLUXBOUND_RING);
+                                                output.accept(ItemInit.ALCHAEFABRIC);
+                                                output.accept(ItemInit.AEGIS_WEAVE);
+                                                output.accept(ItemInit.FLUORITE);
+                                                output.accept(ItemInit.MANA_CHARGED_FLUORITE);
+                                                output.accept(ItemInit.TOURMALINE);
+                                                output.accept(ItemInit.EMBER_CRYSTAL);
+                                                output.accept(ItemInit.GLACE_CRYSTAL);
+                                                output.accept(ItemInit.SURGE_CRYSTAL);
+                                                output.accept(ItemInit.PHANTOM_CRYSTAL);
+                                                output.accept(ItemInit.TREMOR_CRYSTAL);
+                                                output.accept(ItemInit.MAGIC_CRYSTAL);
+                                                output.accept(ItemInit.FLOW_CRYSTAL);
+                                                output.accept(ItemInit.HOLLOW_CRYSTAL);
+                                                output.accept(ItemInit.AGGREGATED_NOCTIS);
+                                                output.accept(ItemInit.AGGREGATED_LUMINIS);
+                                                output.accept(ItemInit.AGGREGATED_FLUXIA);
+                                                output.accept(ItemInit.CITRINE);
+                                                output.accept(ItemInit.CHROMIUM_INGOT);
+                                                output.accept(ItemInit.REDSTONE_CRYSTAL);
+                                                output.accept(ItemInit.POLISHED_REDSTONE_CRYSTAL);
+                                                output.accept(ItemInit.SULFUR);
+                                                output.accept(ItemInit.ENDER_METAL_INGOT);
+                                                output.accept(ItemInit.NETHER_STAR_BRILLIANCE);
+                                                output.accept(ItemInit.RADIANT_STEEL_INGOT);
+                                                output.accept(ItemInit.FRIGIDITE);
+                                                output.accept(ItemInit.POLISHED_FRIGIDITE);
+                                                output.accept(ItemInit.TRANSLUCIUM);
+                                                output.accept(ItemInit.POLISHED_TRANSLUCIUM);
+                                                output.accept(ItemInit.RESONITE);
+                                                output.accept(ItemInit.POLISHED_RESONITE);
+                                                output.accept(ItemInit.ABYSSITE);
+                                                output.accept(ItemInit.POLISHED_ABYSSITE);
+                                                output.accept(ItemInit.MANA_DEEXCITER_CORE);
+                                                output.accept(ItemInit.ASPECT_COLLECTOR);
+                                                output.accept(ItemInit.BOOTS_FRAME);
+                                                output.accept(ItemInit.MANA_BERRIES);
+                                                output.accept(ItemInit.MANA_PIE);
+                                                output.accept(ItemInit.WEAVER_SPAWN_EGG);
                                             })
                                     .build());
 
@@ -121,215 +114,147 @@ public class MagitechCreativeTabs {
                                     .title(
                                             Component.translatable(
                                                     "itemGroup.magitech.magitech_block"))
-                                    .icon(
-                                            () ->
-                                                    MagitechBlocks.ALCHECRYSITE_ITEM
-                                                            .get()
-                                                            .getDefaultInstance())
+                                    .icon(() -> MagitechBlocks.ALCHECRYSITE_ITEM.toStack())
                                     .withTabsBefore(MAGITECH_TAB.getKey())
                                     .displayItems(
                                             (parameters, output) -> {
                                                 output.accept(
-                                                        MagitechBlocks.ENGINEERING_WORKBENCH_ITEM
-                                                                .get());
+                                                        MagitechBlocks.ENGINEERING_WORKBENCH_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.ASSEMBLY_WORKBENCH_ITEM
-                                                                .get());
+                                                        MagitechBlocks.ASSEMBLY_WORKBENCH_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.REPAIRING_WORKBENCH_ITEM
-                                                                .get());
+                                                        MagitechBlocks.REPAIRING_WORKBENCH_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.UPGRADE_WORKBENCH_ITEM
-                                                                .get());
+                                                        MagitechBlocks.UPGRADE_WORKBENCH_ITEM);
+                                                output.accept(MagitechBlocks.ZARDIUS_CRUCIBLE_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.ZARDIUS_CRUCIBLE_ITEM.get());
+                                                        MagitechBlocks.ALCHEMETRIC_PYLON_ITEM);
+                                                output.accept(MagitechBlocks.ATHANOR_PILLAR_ITEM);
+                                                output.accept(MagitechBlocks.MANA_NODE_ITEM);
+                                                output.accept(MagitechBlocks.MANA_VESSEL_ITEM);
+                                                output.accept(MagitechBlocks.FLUORITE_ORE_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.ALCHEMETRIC_PYLON_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.ATHANOR_PILLAR_ITEM.get());
-                                                output.accept(MagitechBlocks.MANA_NODE_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.MANA_VESSEL_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.FLUORITE_ORE_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.DEEPSLATE_FLUORITE_ORE_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.TOURMALINE_ORE_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.DEEPSLATE_TOURMALINE_ORE_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.FLUORITE_CRYSTAL_CLUSTER_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.REDSTONE_CRYSTAL_CLUSTER_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.SULFUR_CRYSTAL_CLUSTER_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.SULFUR_BLOCK_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.MISTALIA_PETALS_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.ALCHECRYSITE_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.ALCHECRYSITE_STAIRS_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.ALCHECRYSITE_SLAB_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.ALCHECRYSITE_WALL_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.POLISHED_ALCHECRYSITE_ITEM
-                                                                .get());
+                                                        MagitechBlocks.DEEPSLATE_FLUORITE_ORE_ITEM);
+                                                output.accept(MagitechBlocks.TOURMALINE_ORE_ITEM);
                                                 output.accept(
                                                         MagitechBlocks
-                                                                .POLISHED_ALCHECRYSITE_STAIRS_ITEM
-                                                                .get());
+                                                                .DEEPSLATE_TOURMALINE_ORE_ITEM);
                                                 output.accept(
                                                         MagitechBlocks
-                                                                .POLISHED_ALCHECRYSITE_SLAB_ITEM
-                                                                .get());
+                                                                .FLUORITE_CRYSTAL_CLUSTER_ITEM);
                                                 output.accept(
                                                         MagitechBlocks
-                                                                .POLISHED_ALCHECRYSITE_WALL_ITEM
-                                                                .get());
+                                                                .REDSTONE_CRYSTAL_CLUSTER_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.ALCHECRYSITE_BRICKS_ITEM
-                                                                .get());
+                                                        MagitechBlocks.SULFUR_CRYSTAL_CLUSTER_ITEM);
+                                                output.accept(MagitechBlocks.SULFUR_BLOCK_ITEM);
+                                                output.accept(MagitechBlocks.MISTALIA_PETALS_ITEM);
+                                                output.accept(MagitechBlocks.ALCHECRYSITE_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks
-                                                                .ALCHECRYSITE_BRICK_STAIRS_ITEM
-                                                                .get());
+                                                        MagitechBlocks.ALCHECRYSITE_STAIRS_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.ALCHECRYSITE_BRICK_SLAB_ITEM
-                                                                .get());
+                                                        MagitechBlocks.ALCHECRYSITE_SLAB_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.ALCHECRYSITE_BRICK_WALL_ITEM
-                                                                .get());
+                                                        MagitechBlocks.ALCHECRYSITE_WALL_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.ALCHECRYSITE_TILES_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.FLUORITE_BLOCK_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.FLUORITE_BRICKS_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.FLUORITE_BRICK_STAIRS_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.FLUORITE_BRICK_SLAB_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.FLUORITE_BRICK_WALL_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_LOG_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_WOOD_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.STRIPPED_CELIFERN_LOG_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.STRIPPED_CELIFERN_WOOD_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_PLANKS_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_STAIRS_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_SLAB_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_FENCE_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_FENCE_GATE_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_DOOR_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_TRAPDOOR_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_PRESSURE_PLATE_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_BUTTON_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_LEAVES_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_SAPLING_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_SIGN_ITEM.get());
-                                                output.accept(
-                                                        MagitechBlocks.CELIFERN_HANGING_SIGN_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_LOG_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_WOOD_ITEM
-                                                                .get());
+                                                        MagitechBlocks.POLISHED_ALCHECRYSITE_ITEM);
                                                 output.accept(
                                                         MagitechBlocks
-                                                                .STRIPPED_CHARCOAL_BIRCH_LOG_ITEM
-                                                                .get());
+                                                                .POLISHED_ALCHECRYSITE_STAIRS_ITEM);
                                                 output.accept(
                                                         MagitechBlocks
-                                                                .STRIPPED_CHARCOAL_BIRCH_WOOD_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_PLANKS_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_STAIRS_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_SLAB_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_FENCE_ITEM
-                                                                .get());
+                                                                .POLISHED_ALCHECRYSITE_SLAB_ITEM);
                                                 output.accept(
                                                         MagitechBlocks
-                                                                .CHARCOAL_BIRCH_FENCE_GATE_ITEM
-                                                                .get());
+                                                                .POLISHED_ALCHECRYSITE_WALL_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_DOOR_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_TRAPDOOR_ITEM
-                                                                .get());
+                                                        MagitechBlocks.ALCHECRYSITE_BRICKS_ITEM);
                                                 output.accept(
                                                         MagitechBlocks
-                                                                .CHARCOAL_BIRCH_PRESSURE_PLATE_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_BUTTON_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_LEAVES_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_SAPLING_ITEM
-                                                                .get());
-                                                output.accept(
-                                                        MagitechBlocks.CHARCOAL_BIRCH_SIGN_ITEM
-                                                                .get());
+                                                                .ALCHECRYSITE_BRICK_STAIRS_ITEM);
                                                 output.accept(
                                                         MagitechBlocks
-                                                                .CHARCOAL_BIRCH_HANGING_SIGN_ITEM
-                                                                .get());
+                                                                .ALCHECRYSITE_BRICK_SLAB_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.SCORCHED_GRASS_SOIL_ITEM
-                                                                .get());
+                                                        MagitechBlocks
+                                                                .ALCHECRYSITE_BRICK_WALL_ITEM);
                                                 output.accept(
-                                                        MagitechBlocks.SCORCHED_SOIL_ITEM.get());
+                                                        MagitechBlocks.ALCHECRYSITE_TILES_ITEM);
+                                                output.accept(MagitechBlocks.FLUORITE_BLOCK_ITEM);
+                                                output.accept(MagitechBlocks.FLUORITE_BRICKS_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.FLUORITE_BRICK_STAIRS_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.FLUORITE_BRICK_SLAB_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.FLUORITE_BRICK_WALL_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_LOG_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_WOOD_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.STRIPPED_CELIFERN_LOG_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.STRIPPED_CELIFERN_WOOD_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_PLANKS_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_STAIRS_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_SLAB_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_FENCE_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CELIFERN_FENCE_GATE_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_DOOR_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CELIFERN_TRAPDOOR_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks
+                                                                .CELIFERN_PRESSURE_PLATE_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_BUTTON_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_LEAVES_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_SAPLING_ITEM);
+                                                output.accept(MagitechBlocks.CELIFERN_SIGN_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CELIFERN_HANGING_SIGN_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_LOG_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_WOOD_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks
+                                                                .STRIPPED_CHARCOAL_BIRCH_LOG_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks
+                                                                .STRIPPED_CHARCOAL_BIRCH_WOOD_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_PLANKS_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_STAIRS_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_SLAB_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_FENCE_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks
+                                                                .CHARCOAL_BIRCH_FENCE_GATE_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_DOOR_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks
+                                                                .CHARCOAL_BIRCH_TRAPDOOR_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks
+                                                                .CHARCOAL_BIRCH_PRESSURE_PLATE_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_BUTTON_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_LEAVES_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_SAPLING_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.CHARCOAL_BIRCH_SIGN_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks
+                                                                .CHARCOAL_BIRCH_HANGING_SIGN_ITEM);
+                                                output.accept(
+                                                        MagitechBlocks.SCORCHED_GRASS_SOIL_ITEM);
+                                                output.accept(MagitechBlocks.SCORCHED_SOIL_ITEM);
                                             })
                                     .build());
 
@@ -1093,26 +1018,26 @@ public class MagitechCreativeTabs {
                                     .icon(
                                             () ->
                                                     PartToolGenerator.generatePart(
-                                                            (PartItem) ItemInit.LIGHT_BLADE.get(),
+                                                            ItemInit.LIGHT_BLADE.get(),
                                                             MagitechToolMaterials.FLUORITE))
                                     .withTabsBefore(MAGITECH_TOOL_TAB.getKey())
                                     .displayItems(
                                             (parameters, output) -> {
-                                                List<Item> partList =
+                                                List<ItemLike> partList =
                                                         List.of(
-                                                                ItemInit.LIGHT_BLADE.get(),
-                                                                ItemInit.HEAVY_BLADE.get(),
-                                                                ItemInit.LIGHT_HANDLE.get(),
-                                                                ItemInit.HEAVY_HANDLE.get(),
-                                                                ItemInit.TOOL_BINDING.get(),
-                                                                ItemInit.HANDGUARD.get(),
-                                                                ItemInit.STRIKE_HEAD.get(),
-                                                                ItemInit.SPIKE_HEAD.get(),
-                                                                ItemInit.REINFORCED_STICK.get(),
-                                                                ItemInit.PLATE.get(),
-                                                                ItemInit.CATALYST.get(),
-                                                                ItemInit.CONDUCTOR.get());
-                                                for (Item item : partList) {
+                                                                ItemInit.LIGHT_BLADE,
+                                                                ItemInit.HEAVY_BLADE,
+                                                                ItemInit.LIGHT_HANDLE,
+                                                                ItemInit.HEAVY_HANDLE,
+                                                                ItemInit.TOOL_BINDING,
+                                                                ItemInit.HANDGUARD,
+                                                                ItemInit.STRIKE_HEAD,
+                                                                ItemInit.SPIKE_HEAD,
+                                                                ItemInit.REINFORCED_STICK,
+                                                                ItemInit.PLATE,
+                                                                ItemInit.CATALYST,
+                                                                ItemInit.CONDUCTOR);
+                                                for (ItemLike item : partList) {
                                                     output.accept(
                                                             PartToolGenerator.generatePart(
                                                                     (PartItem) item,

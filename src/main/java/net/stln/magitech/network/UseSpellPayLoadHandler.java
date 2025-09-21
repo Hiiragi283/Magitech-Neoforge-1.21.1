@@ -1,18 +1,15 @@
 package net.stln.magitech.network;
 
-import java.util.Objects;
-
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.stln.magitech.item.component.SpellComponent;
 import net.stln.magitech.util.ComponentHelper;
 import net.stln.magitech.util.CuriosHelper;
+import net.stln.magitech.util.ServerHelper;
 
 public class UseSpellPayLoadHandler {
 
@@ -42,15 +39,17 @@ public class UseSpellPayLoadHandler {
                         stack -> {
                             SpellComponent spellComponent = ComponentHelper.getSpells(stack);
                             spellComponent.getSelectedSpell().use(level, player, hand, false);
-                            MinecraftServer server =
-                                    Objects.requireNonNull(
-                                            ServerLifecycleHooks.getCurrentServer(),
-                                            "Cannot send clientbound payloads on the client");
-                            for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers()) {
-                                if (player.getUUID() != serverPlayer.getUUID()) {
-                                    PacketDistributor.sendToPlayer(serverPlayer, payload);
-                                }
-                            }
+                            ServerHelper.getOptionalServer()
+                                    .ifPresent(
+                                            server -> {
+                                                for (ServerPlayer serverPlayer :
+                                                        server.getPlayerList().getPlayers())
+                                                    if (player.getUUID()
+                                                            != serverPlayer.getUUID()) {
+                                                        PacketDistributor.sendToPlayer(
+                                                                serverPlayer, payload);
+                                                    }
+                                            });
                         });
     }
 }

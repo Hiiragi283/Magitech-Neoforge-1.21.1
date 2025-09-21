@@ -2,54 +2,36 @@ package net.stln.magitech.magic.charge;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import net.minecraft.world.entity.player.Player;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public class ChargeData {
 
-    private static Map<Player, Charge> chargeMapClient = new HashMap<>();
-    private static Map<Player, Charge> chargeMapServer = new HashMap<>();
+    private static final Map<UUID, Charge> chargeMapClient = new HashMap<>();
+    private static final Map<UUID, Charge> chargeMapServer = new HashMap<>();
 
-    public static Map<Player, Charge> getChargeMapClient() {
-        return chargeMapClient;
+    private static @NotNull Map<UUID, Charge> getChargeMap(boolean isClient) {
+        return isClient ? chargeMapClient : chargeMapServer;
     }
 
-    public static Map<Player, Charge> getChargeMapServer() {
-        return chargeMapServer;
+    public static void cleanUp(@NotNull Player player) {
+        chargeMapClient.remove(player.getUUID());
+        chargeMapServer.remove(player.getUUID());
     }
 
-    public static Map<Player, Charge> getChargeMap(boolean isClient) {
-        if (isClient) {
-            return chargeMapClient;
-        }
-        return chargeMapServer;
+    public static void setCurrentCharge(@NotNull Player player, @NotNull Charge charge) {
+        getChargeMap(player.level().isClientSide).put(player.getUUID(), charge);
     }
 
-    public static void cleanUp(Player player) {
-        chargeMapClient.remove(player);
-        chargeMapServer.remove(player);
+    public static void removeCharge(@NotNull Player player) {
+        getChargeMap(player.level().isClientSide).remove(player.getUUID());
     }
 
-    public static void setCurrentCharge(Player player, Charge charge) {
-        if (player.level().isClientSide) {
-            ChargeData.chargeMapClient.put(player, charge);
-        } else {
-            ChargeData.chargeMapServer.put(player, charge);
-        }
-    }
-
-    public static void removeCharge(Player player) {
-        if (player.level().isClientSide) {
-            ChargeData.chargeMapClient.remove(player);
-        } else {
-            ChargeData.chargeMapServer.remove(player);
-        }
-    }
-
-    public static Charge getCurrentCharge(Player player) {
-        if (player.level().isClientSide) {
-            return ChargeData.chargeMapClient.getOrDefault(player, null);
-        }
-        return ChargeData.chargeMapServer.getOrDefault(player, null);
+    public static @Nullable Charge getCurrentCharge(@NotNull Player player) {
+        return getChargeMap(player.level().isClientSide).getOrDefault(player.getUUID(), null);
     }
 }

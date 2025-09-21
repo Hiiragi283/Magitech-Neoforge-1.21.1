@@ -1,6 +1,7 @@
 package net.stln.magitech.recipe.input;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
@@ -26,13 +27,7 @@ public record MultiStackRecipeInput(List<ItemStack> stacks) implements RecipeInp
     }
 
     public int ingredientCount() {
-        int i = 0;
-        for (ItemStack stack : stacks) {
-            if (!stack.isEmpty()) {
-                i++;
-            }
-        }
-        return i;
+        return (int) stacks.stream().filter(Predicate.not(ItemStack::isEmpty)).count();
     }
 
     public StackedContents stackedContents() {

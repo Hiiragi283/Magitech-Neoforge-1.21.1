@@ -180,7 +180,7 @@ public class ToolUpgradeMenu extends AbstractContainerMenu {
         return ToolMaterialUtil.isCorrectMaterialForUpgrade(
                 ComponentHelper.getTier(itemStack),
                 ComponentHelper.getUpgradePoint(itemStack),
-                container.getItem(1).getItem());
+                container.getItem(1));
     }
 
     public boolean hasUpgradePoint(ItemStack itemStack) {
@@ -261,7 +261,7 @@ public class ToolUpgradeMenu extends AbstractContainerMenu {
                         && ToolMaterialUtil.isCorrectMaterialForUpgrade(
                                 ComponentHelper.getTier(itemStack),
                                 ComponentHelper.getUpgradePoint(itemStack),
-                                itemstack1.getItem())) {
+                                itemstack1)) {
                     if (!this.moveItemStackTo(itemstack1, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }

@@ -21,14 +21,13 @@ import net.stln.magitech.particle.WaveParticleEffect;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
-import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class TremivoxEntity extends SpellProjectileEntity implements GeoEntity {
+public class TremivoxEntity extends SpellProjectileEntity {
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
 
