@@ -1,4 +1,4 @@
-package net.stln.magitech.gui;
+package net.stln.magitech.inventory;
 
 import java.util.List;
 
@@ -14,9 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechMenuTypes;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.recipe.PartCuttingRecipe;
-import net.stln.magitech.recipe.RecipeInit;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,13 +32,13 @@ public class PartCuttingMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_END = 29;
     private static final int USE_ROW_SLOT_START = 29;
     private static final int USE_ROW_SLOT_END = 38;
-    final Slot inputSlot;
+    public final Slot inputSlot;
 
     /** The inventory slot that stores the output of the crafting recipe. */
-    final Slot resultSlot;
+    public final Slot resultSlot;
 
     /** The inventory that stores the output of the crafting recipe. */
-    final ResultContainer resultContainer = new ResultContainer();
+    private final ResultContainer resultContainer = new ResultContainer();
 
     private final ContainerLevelAccess access;
 
@@ -75,7 +76,7 @@ public class PartCuttingMenu extends AbstractContainerMenu {
 
     public PartCuttingMenu(
             int containerId, Inventory playerInventory, final ContainerLevelAccess access) {
-        super(GuiInit.PART_CUTTING_MENU.get(), containerId);
+        super(MagitechMenuTypes.PART_CUTTING.get(), containerId);
         this.access = access;
         this.level = playerInventory.player.level();
         this.inputSlot = this.addSlot(new Slot(this.container, 0, 20, 49));
@@ -161,7 +162,7 @@ public class PartCuttingMenu extends AbstractContainerMenu {
     /** Determines whether supplied player can use this container */
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(this.access, player, BlockInit.ENGINEERING_WORKBENCH.get());
+        return stillValid(this.access, player, MagitechBlocks.ENGINEERING_WORKBENCH.get());
     }
 
     /**
@@ -202,7 +203,7 @@ public class PartCuttingMenu extends AbstractContainerMenu {
                     this.level
                             .getRecipeManager()
                             .getRecipesFor(
-                                    RecipeInit.PART_CUTTING_TYPE.get(),
+                                    MagitechRecipes.PART_CUTTING_TYPE.get(),
                                     createRecipeInput(container),
                                     this.level);
         }
@@ -232,7 +233,7 @@ public class PartCuttingMenu extends AbstractContainerMenu {
 
     @Override
     public MenuType<?> getType() {
-        return GuiInit.PART_CUTTING_MENU.get();
+        return MagitechMenuTypes.PART_CUTTING.get();
     }
 
     public void registerUpdateListener(Runnable listener) {
@@ -274,7 +275,7 @@ public class PartCuttingMenu extends AbstractContainerMenu {
             } else if (this.level
                     .getRecipeManager()
                     .getRecipeFor(
-                            RecipeInit.PART_CUTTING_TYPE.get(),
+                            MagitechRecipes.PART_CUTTING_TYPE.get(),
                             new SingleRecipeInput(itemstack1),
                             this.level)
                     .isPresent()) {

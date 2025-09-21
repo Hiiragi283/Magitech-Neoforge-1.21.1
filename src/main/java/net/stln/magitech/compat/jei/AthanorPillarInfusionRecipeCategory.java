@@ -11,11 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.block.BlockInit;
 import net.stln.magitech.element.Element;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.tool.material.ToolMaterial;
 import net.stln.magitech.recipe.AthanorPillarInfusionRecipe;
-import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.ToolMaterialRecipe;
 import net.stln.magitech.util.ClientHelper;
 import net.stln.magitech.util.RenderHelper;
@@ -49,7 +49,7 @@ public class AthanorPillarInfusionRecipeCategory
     public AthanorPillarInfusionRecipeCategory(IGuiHelper helper) {
         this(
                 helper.createDrawableIngredient(
-                        VanillaTypes.ITEM_STACK, new ItemStack(BlockInit.ATHANOR_PILLAR)));
+                        VanillaTypes.ITEM_STACK, new ItemStack(MagitechBlocks.ATHANOR_PILLAR)));
     }
 
     @Override
@@ -118,7 +118,7 @@ public class AthanorPillarInfusionRecipeCategory
             @NotNull RecipeManager recipeManager,
             @NotNull RegistryAccess access) {
         List<ToolMaterialRecipe> materialRecipes =
-                ClientHelper.getAllRecipes(RecipeInit.TOOL_MATERIAL_TYPE);
+                ClientHelper.getAllRecipes(MagitechRecipes.TOOL_MATERIAL_TYPE);
         List<ToolMaterial> materials =
                 materialRecipes.stream().map(ToolMaterialRecipe::getToolMaterial).toList();
 

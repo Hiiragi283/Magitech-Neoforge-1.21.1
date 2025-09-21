@@ -1,7 +1,5 @@
 package net.stln.magitech.block;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -31,7 +29,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.stln.magitech.block.entity.ZardiusCrucibleBlockEntity;
+import net.stln.magitech.init.MagitechBlockEntityTypes;
 import net.stln.magitech.util.TickScheduler;
+
+import org.jetbrains.annotations.Nullable;
 
 import com.mojang.serialization.MapCodec;
 
@@ -209,7 +210,7 @@ public class ZardiusCrucibleBlock extends BaseEntityBlock {
             Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         return createTickerHelper(
                 pBlockEntityType,
-                BlockInit.ZARDIUS_CRUCIBLE_ENTITY.get(),
+                MagitechBlockEntityTypes.ZARDIUS_CRUCIBLE.get(),
                 (pLevel1, pPos, pState1, pBlockEntity) -> {
                     if (pLevel1.isClientSide) {
                         pBlockEntity.clientTick(pLevel1, pPos, pState1);

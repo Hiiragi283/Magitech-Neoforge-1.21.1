@@ -13,12 +13,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.effect.MobEffectInit;
+import net.stln.magitech.init.MagitechMobEffects;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.BeamSpell;
 import net.stln.magitech.particle.option.BeamParticleEffect;
 import net.stln.magitech.particle.option.MembraneParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.SpellShape;
 
@@ -73,7 +73,7 @@ public class Phantastra extends BeamSpell {
     @Override
     protected void applyEffectToLivingTarget(Level level, Player user, LivingEntity target) {
         super.applyEffectToLivingTarget(level, user, target);
-        target.addEffect(new MobEffectInstance(MobEffectInit.SEIZE, 50, 0));
+        target.addEffect(new MobEffectInstance(MagitechMobEffects.SEIZE, 50, 0));
         target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100, 0));
     }
 
@@ -84,7 +84,7 @@ public class Phantastra extends BeamSpell {
                 user.getX(),
                 user.getY(),
                 user.getZ(),
-                SoundInit.PHANTASTRA.get(),
+                MagitechSounds.PHANTASTRA.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 0.6F + (user.getRandom().nextFloat() * 0.6F));

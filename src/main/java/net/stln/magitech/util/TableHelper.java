@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.Table;
 
@@ -26,6 +27,15 @@ public class TableHelper {
             @NotNull BiFunction<R, C, V> function) {
         var value = table.get(row, column);
         return value == null ? function.apply(row, column) : value;
+    }
+
+    public static <R, C, V> @Nullable V putOrRemove(
+            @NotNull Table<R, C, V> table, @NotNull R row, @NotNull C column, @Nullable V value) {
+        if (value == null) {
+            return table.remove(row, column);
+        } else {
+            return table.put(row, column, value);
+        }
     }
 
     public static <R, C, V> @NotNull V computeIfAbsent(

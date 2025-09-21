@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.stln.magitech.entity.status.AttributeInit;
+import net.stln.magitech.init.MagitechAttributes;
 import net.stln.magitech.network.SyncManaPayload;
 
 public class ManaUtil {
@@ -157,10 +157,10 @@ public class ManaUtil {
     public static double getManaRegen(Player player, ManaType type) {
         var attributeHolder =
                 switch (type) {
-                    case MANA -> AttributeInit.MANA_REGEN;
-                    case NOCTIS -> AttributeInit.NOCTIS_REGEN;
-                    case LUMINIS -> AttributeInit.LUMINIS_REGEN;
-                    case FLUXIA -> AttributeInit.FLUXIA_REGEN;
+                    case MANA -> MagitechAttributes.MANA_REGEN;
+                    case NOCTIS -> MagitechAttributes.NOCTIS_REGEN;
+                    case LUMINIS -> MagitechAttributes.LUMINIS_REGEN;
+                    case FLUXIA -> MagitechAttributes.FLUXIA_REGEN;
                 };
         var attribute = player.getAttribute(attributeHolder);
         return attribute == null ? 0 : attribute.getValue();
@@ -169,21 +169,21 @@ public class ManaUtil {
     public static double getMaxMana(Player player, ManaType type) {
         return switch (type) {
             case MANA ->
-                    player.getAttribute(AttributeInit.MAX_MANA) == null
+                    player.getAttribute(MagitechAttributes.MAX_MANA) == null
                             ? 0
-                            : player.getAttribute(AttributeInit.MAX_MANA).getValue();
+                            : player.getAttribute(MagitechAttributes.MAX_MANA).getValue();
             case NOCTIS ->
-                    player.getAttribute(AttributeInit.MAX_NOCTIS) == null
+                    player.getAttribute(MagitechAttributes.MAX_NOCTIS) == null
                             ? 0
-                            : player.getAttribute(AttributeInit.MAX_NOCTIS).getValue();
+                            : player.getAttribute(MagitechAttributes.MAX_NOCTIS).getValue();
             case LUMINIS ->
-                    player.getAttribute(AttributeInit.MAX_LUMINIS) == null
+                    player.getAttribute(MagitechAttributes.MAX_LUMINIS) == null
                             ? 0
-                            : player.getAttribute(AttributeInit.MAX_LUMINIS).getValue();
+                            : player.getAttribute(MagitechAttributes.MAX_LUMINIS).getValue();
             case FLUXIA ->
-                    player.getAttribute(AttributeInit.MAX_FLUXIA) == null
+                    player.getAttribute(MagitechAttributes.MAX_FLUXIA) == null
                             ? 0
-                            : player.getAttribute(AttributeInit.MAX_FLUXIA).getValue();
+                            : player.getAttribute(MagitechAttributes.MAX_FLUXIA).getValue();
         };
     }
 

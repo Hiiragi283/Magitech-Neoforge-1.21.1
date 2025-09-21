@@ -2,7 +2,6 @@ package net.stln.magitech.item.tool.trait;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -12,9 +11,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.particle.option.PowerupParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 
 import org.joml.Vector3f;
 
@@ -34,7 +33,7 @@ public class GeoMendingTrait extends Trait {
     @Override
     public Boolean isCorrectTool(
             ItemStack stack, int traitLevel, ToolStats stats, BlockState blockState) {
-        if (blockState.getTags().anyMatch(Predicate.isEqual(BlockTags.BASE_STONE_OVERWORLD))) {
+        if (blockState.is(BlockTags.BASE_STONE_OVERWORLD)) {
             return true;
         }
         return super.isCorrectTool(stack, traitLevel, stats, blockState);
@@ -53,7 +52,7 @@ public class GeoMendingTrait extends Trait {
             boolean isInitial) {
         super.onBreakBlock(
                 player, level, stack, traitLevel, stats, blockState, pos, damageAmount, isInitial);
-        if (blockState.getTags().anyMatch(Predicate.isEqual(BlockTags.BASE_STONE_OVERWORLD))
+        if (blockState.is(BlockTags.BASE_STONE_OVERWORLD)
                 && damageAmount > 0
                 && stack.getDamageValue() < stack.getMaxDamage()) {
             if (player.getRandom().nextFloat() < traitLevel * 0.22F) {
@@ -63,7 +62,7 @@ public class GeoMendingTrait extends Trait {
                         pos.getX(),
                         pos.getY(),
                         pos.getZ(),
-                        SoundInit.GEOMENDING_BREAK.get(),
+                        MagitechSounds.GEOMENDING_BREAK.get(),
                         SoundSource.PLAYERS,
                         1.0F,
                         0.7F + (player.getRandom().nextFloat() * 0.6F));
@@ -82,7 +81,7 @@ public class GeoMendingTrait extends Trait {
             BlockPos pos,
             int damageAmount,
             boolean isInitial) {
-        return blockState.getTags().anyMatch(Predicate.isEqual(BlockTags.BASE_STONE_OVERWORLD))
+        return blockState.is(BlockTags.BASE_STONE_OVERWORLD)
                 && damageAmount > 0
                 && stack.getDamageValue() < stack.getMaxDamage();
     }
@@ -120,7 +119,7 @@ public class GeoMendingTrait extends Trait {
                 pos.getX(),
                 pos.getY(),
                 pos.getZ(),
-                SoundInit.GEOMENDING_BREAK.get(),
+                MagitechSounds.GEOMENDING_BREAK.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 0.7F + (player.getRandom().nextFloat() * 0.6F));

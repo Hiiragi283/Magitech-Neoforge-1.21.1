@@ -1,15 +1,11 @@
-package net.stln.magitech.block;
-
-import java.util.function.Supplier;
+package net.stln.magitech.init;
 
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -22,43 +18,35 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.block.entity.AlchemetricPylonBlockEntity;
-import net.stln.magitech.block.entity.AthanorPillarBlockEntity;
-import net.stln.magitech.block.entity.ManaVesselBlockEntity;
-import net.stln.magitech.block.entity.ZardiusCrucibleBlockEntity;
+import net.stln.magitech.block.*;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.TooltipTextBlockItem;
 import net.stln.magitech.item.TooltipTextSignItem;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.worldgen.tree.TreeGrowerInit;
 
-public class BlockInit {
-
+public final class MagitechBlocks {
     public static final SoundType CRYSTAL_SOUND =
             new DeferredSoundType(
                     1.0F,
                     1.0F,
-                    SoundInit.CRYSTAL_BREAK,
-                    SoundInit.CRYSTAL_STEP,
-                    SoundInit.CRYSTAL_PLACE,
-                    SoundInit.CRYSTAL_HIT,
-                    SoundInit.CRYSTAL_FALL);
+                    MagitechSounds.CRYSTAL_BREAK,
+                    MagitechSounds.CRYSTAL_STEP,
+                    MagitechSounds.CRYSTAL_PLACE,
+                    MagitechSounds.CRYSTAL_HIT,
+                    MagitechSounds.CRYSTAL_FALL);
 
     public static final SoundType ALCHECRYSITE_SOUND =
             new DeferredSoundType(
                     0.5F,
                     1.0F,
-                    SoundInit.ALCHECRYSITE_BREAK,
-                    SoundInit.ALCHECRYSITE_STEP,
-                    SoundInit.ALCHECRYSITE_PLACE,
-                    SoundInit.ALCHECRYSITE_HIT,
-                    SoundInit.ALCHECRYSITE_FALL);
+                    MagitechSounds.ALCHECRYSITE_BREAK,
+                    MagitechSounds.ALCHECRYSITE_STEP,
+                    MagitechSounds.ALCHECRYSITE_PLACE,
+                    MagitechSounds.ALCHECRYSITE_HIT,
+                    MagitechSounds.ALCHECRYSITE_FALL);
 
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(Magitech.MOD_ID);
-
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENITIES =
-            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Magitech.MOD_ID);
 
     public static final DeferredBlock<EnginneringWorkbenchBlock> ENGINEERING_WORKBENCH =
             BLOCKS.registerBlock(
@@ -121,16 +109,6 @@ public class BlockInit {
                             .lightLevel((blockState) -> 5)
                             .noOcclusion());
 
-    public static final Supplier<BlockEntityType<ZardiusCrucibleBlockEntity>>
-            ZARDIUS_CRUCIBLE_ENTITY =
-                    BLOCK_ENITIES.register(
-                            "zardius_crucible",
-                            () ->
-                                    BlockEntityType.Builder.of(
-                                                    ZardiusCrucibleBlockEntity::new,
-                                                    BlockInit.ZARDIUS_CRUCIBLE.get())
-                                            .build(null));
-
     public static final DeferredItem<BlockItem> ZARDIUS_CRUCIBLE_ITEM =
             ItemInit.ITEMS.register(
                     "zardius_crucible",
@@ -142,16 +120,6 @@ public class BlockInit {
                     AlchemetricPylonBlock::new,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE)
                             .sound(ALCHECRYSITE_SOUND));
-
-    public static final Supplier<BlockEntityType<AlchemetricPylonBlockEntity>>
-            ALCHEMETRIC_PYLON_ENTITY =
-                    BLOCK_ENITIES.register(
-                            "alchemetric_pylon",
-                            () ->
-                                    BlockEntityType.Builder.of(
-                                                    AlchemetricPylonBlockEntity::new,
-                                                    BlockInit.ALCHEMETRIC_PYLON.get())
-                                            .build(null));
 
     public static final DeferredItem<BlockItem> ALCHEMETRIC_PYLON_ITEM =
             ItemInit.ITEMS.register(
@@ -166,15 +134,6 @@ public class BlockInit {
                     AthanorPillarBlock::new,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE)
                             .sound(ALCHECRYSITE_SOUND));
-
-    public static final Supplier<BlockEntityType<AthanorPillarBlockEntity>> ATHANOR_PILLAR_ENTITY =
-            BLOCK_ENITIES.register(
-                    "athanor_pillar",
-                    () ->
-                            BlockEntityType.Builder.of(
-                                            AthanorPillarBlockEntity::new,
-                                            BlockInit.ATHANOR_PILLAR.get())
-                                    .build(null));
 
     public static final DeferredItem<BlockItem> ATHANOR_PILLAR_ITEM =
             ItemInit.ITEMS.register(
@@ -202,14 +161,6 @@ public class BlockInit {
                             .sound(SoundType.NETHERITE_BLOCK)
                             .lightLevel((blockState) -> 5)
                             .noOcclusion());
-
-    public static final Supplier<BlockEntityType<ManaVesselBlockEntity>> MANA_VESSEL_ENTITY =
-            BLOCK_ENITIES.register(
-                    "mana_vessel",
-                    () ->
-                            BlockEntityType.Builder.of(
-                                            ManaVesselBlockEntity::new, BlockInit.MANA_VESSEL.get())
-                                    .build(null));
 
     public static final DeferredItem<BlockItem> MANA_VESSEL_ITEM =
             ItemInit.ITEMS.register(
@@ -593,7 +544,7 @@ public class BlockInit {
                     (properties) ->
                             new Block(
                                     BlockBehaviour.Properties.ofFullCopy(
-                                            BlockInit.FLUORITE_BLOCK.get())));
+                                            MagitechBlocks.FLUORITE_BLOCK.get())));
 
     public static final BlockSetType FLUORITE_BRICK_SET_TYPE =
             BlockSetType.register(new BlockSetType("magitech:fluorite_brick"));
@@ -1242,7 +1193,6 @@ public class BlockInit {
     public static void registerBlocks(IEventBus eventBus) {
         Magitech.LOGGER.info("Registering Blocks for" + Magitech.MOD_ID);
         BLOCKS.register(eventBus);
-        BLOCK_ENITIES.register(eventBus);
     }
 
     public static void registerStrippableBlocks() {

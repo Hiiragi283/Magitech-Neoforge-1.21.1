@@ -11,11 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.MaterialComponent;
 import net.stln.magitech.recipe.PartCuttingRecipe;
-import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.ToolMaterialRecipe;
 import net.stln.magitech.util.ClientHelper;
 
@@ -45,7 +45,8 @@ public class PartCuttingRecipeCategory extends AbstractMagitechRecipeCategory<Pa
     public PartCuttingRecipeCategory(IGuiHelper helper) {
         this(
                 helper.createDrawableIngredient(
-                        VanillaTypes.ITEM_STACK, new ItemStack(BlockInit.ENGINEERING_WORKBENCH)));
+                        VanillaTypes.ITEM_STACK,
+                        new ItemStack(MagitechBlocks.ENGINEERING_WORKBENCH)));
     }
 
     @Override
@@ -89,7 +90,7 @@ public class PartCuttingRecipeCategory extends AbstractMagitechRecipeCategory<Pa
             @NotNull RecipeManager recipeManager,
             @NotNull RegistryAccess access) {
         List<ToolMaterialRecipe> materialRecipes =
-                ClientHelper.getAllRecipes(RecipeInit.TOOL_MATERIAL_TYPE);
+                ClientHelper.getAllRecipes(MagitechRecipes.TOOL_MATERIAL_TYPE);
         List<ItemStack> inputs = new ArrayList<>();
         List<ItemStack> results = new ArrayList<>();
         for (ToolMaterialRecipe materialRecipe : materialRecipes) {

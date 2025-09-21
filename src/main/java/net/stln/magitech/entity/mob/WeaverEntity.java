@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -33,16 +31,18 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.stln.magitech.damage.DamageTypeInit;
 import net.stln.magitech.entity.magical.IgniscaEntity;
 import net.stln.magitech.entity.mob.ai.RangedSpellAttackGoal;
+import net.stln.magitech.init.MagitechDamageTypes;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.network.RangedEntityAttackPayload;
 import net.stln.magitech.particle.option.*;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.EntityUtil;
 import net.stln.magitech.util.TickScheduler;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -152,7 +152,7 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
     }
 
     @Override
-    public void performRangedAttack(LivingEntity target, float distanceFactor) {
+    public void performRangedAttack(@NotNull LivingEntity target, float distanceFactor) {
         int index = random.nextInt(3);
         performSpell(level(), target, index);
 
@@ -247,14 +247,15 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
                         level.playSound(
                                 this,
                                 BlockPos.containing(surface[0]),
-                                SoundInit.ARCLUME.get(),
+                                MagitechSounds.ARCLUME.get(),
                                 SoundSource.HOSTILE,
                                 1.0F,
                                 0.8F + (this.getRandom().nextFloat() * 0.6F));
 
                         if (!level.isClientSide) {
                             DamageSource elementalDamageSource =
-                                    this.damageSources().source(DamageTypeInit.SURGE_DAMAGE, this);
+                                    this.damageSources()
+                                            .source(MagitechDamageTypes.SURGE_DAMAGE, this);
                             for (Entity entity : entities) {
                                 if (!entity.isInvulnerableTo(elementalDamageSource)) {
                                     this.setLastHurtMob(entity);
@@ -400,14 +401,14 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
                     level.playSound(
                             this,
                             this.blockPosition(),
-                            SoundInit.FROST_BREAK.get(),
+                            MagitechSounds.FROST_BREAK.get(),
                             SoundSource.HOSTILE,
                             1.0F,
                             0.6F + (this.getRandom().nextFloat() * 0.6F));
 
                     if (!level.isClientSide) {
                         DamageSource elementalDamageSource =
-                                this.damageSources().source(DamageTypeInit.GLACE_DAMAGE, this);
+                                this.damageSources().source(MagitechDamageTypes.GLACE_DAMAGE, this);
                         if (beamTarget != null) {
                             beamTarget.hurt(elementalDamageSource, 4);
                             if (beamTarget instanceof LivingEntity livingTarget) {
@@ -434,7 +435,7 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
         level.playSound(
                 this,
                 this.blockPosition(),
-                SoundInit.FIREBALL.get(),
+                MagitechSounds.FIREBALL.get(),
                 SoundSource.HOSTILE,
                 1.0F,
                 0.6F + (this.getRandom().nextFloat() * 0.6F));
@@ -455,13 +456,13 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return SoundInit.WEAVER_HURT.get();
+    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
+        return MagitechSounds.WEAVER_HURT.get();
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
-        return SoundInit.WEAVER_DEATH.get();
+    protected @NotNull SoundEvent getDeathSound() {
+        return MagitechSounds.WEAVER_DEATH.get();
     }
 
     @Override
@@ -489,7 +490,7 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
     }
 
     protected SoundEvent getStepSound() {
-        return SoundInit.ALCHECRYSITE_STEP.get();
+        return MagitechSounds.ALCHECRYSITE_STEP.get();
     }
 
     public boolean isShaking() {

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -15,15 +14,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.particle.option.SparkParticleEffect;
 import net.stln.magitech.particle.option.SquareParticleEffect;
 import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
 import net.stln.magitech.particle.option.ZapParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
@@ -34,7 +34,6 @@ import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 
 public class Arclume extends Spell {
@@ -111,7 +110,7 @@ public class Arclume extends Spell {
                 hitPos.x,
                 hitPos.y,
                 hitPos.z,
-                SoundInit.ARCLUME.get(),
+                MagitechSounds.ARCLUME.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 1.0F + (user.getRandom().nextFloat() * 0.6F));
@@ -147,7 +146,7 @@ public class Arclume extends Spell {
                 surface.x,
                 surface.y,
                 surface.z,
-                SoundInit.ARCLUME.get(),
+                MagitechSounds.ARCLUME.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 0.8F + (user.getRandom().nextFloat() * 0.6F));
@@ -222,28 +221,17 @@ public class Arclume extends Spell {
     }
 
     @Override
-    public boolean canHoldUsing() {
-        return false;
-    }
-
-    @Override
-    protected void playAnimation(Player user) {
-        var playerAnimationData =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
-                                .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
-
-            user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(
-                    AbstractFadeModifier.standardFadeIn(1, Ease.OUTSINE),
-                    new KeyframeAnimationPlayer(
-                                    (KeyframeAnimation)
-                                            PlayerAnimationRegistry.getAnimation(
-                                                    Magitech.id("wand_blink")))
-                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
-                            .setFirstPersonConfiguration(
-                                    new FirstPersonConfiguration(true, true, true, true)));
-        }
+    protected void playAnimation(
+            @NotNull Player player, @NotNull ModifierLayer<IAnimation> modifierLayer) {
+        player.yBodyRot = player.yHeadRot;
+        modifierLayer.replaceAnimationWithFade(
+                AbstractFadeModifier.standardFadeIn(1, Ease.OUTSINE),
+                new KeyframeAnimationPlayer(
+                                (KeyframeAnimation)
+                                        PlayerAnimationRegistry.getAnimation(
+                                                Magitech.id("wand_blink")))
+                        .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                        .setFirstPersonConfiguration(
+                                new FirstPersonConfiguration(true, true, true, true)));
     }
 }

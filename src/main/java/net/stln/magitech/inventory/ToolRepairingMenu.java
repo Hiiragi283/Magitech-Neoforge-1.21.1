@@ -1,10 +1,9 @@
-package net.stln.magitech.gui;
+package net.stln.magitech.inventory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Predicate;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,13 +19,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
-import net.stln.magitech.block.BlockInit;
-import net.stln.magitech.item.ItemTagKeys;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechMenuTypes;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.tool.material.ToolMaterial;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
-import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.ToolMaterialRecipe;
 import net.stln.magitech.recipe.input.MultiStackRecipeInput;
+import net.stln.magitech.tag.MagitechTags;
 import net.stln.magitech.util.ComponentHelper;
 
 import org.jetbrains.annotations.NotNull;
@@ -61,7 +61,7 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
 
     public ToolRepairingMenu(
             int containerId, Inventory playerInventory, ContainerLevelAccess access) {
-        super(GuiInit.TOOL_REPAIRING_MENU.get(), containerId);
+        super(MagitechMenuTypes.TOOL_REPAIRING.get(), containerId);
         this.level = playerInventory.player.level();
         this.access = access;
         this.player = playerInventory.player;
@@ -134,10 +134,12 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
             AtomicBoolean isRepairable = new AtomicBoolean(false);
             ItemStack stack1 = stack;
             level.getRecipeManager()
-                    .getRecipeFor(RecipeInit.TOOL_MATERIAL_TYPE.get(), input, level)
+                    .getRecipeFor(MagitechRecipes.TOOL_MATERIAL_TYPE.get(), input, level)
                     .ifPresent(
                             holder -> {
-                                if (!recipeInput.getItem(2).is(ItemTagKeys.REPAIR_COMPONENT)) {
+                                if (!recipeInput
+                                        .getItem(2)
+                                        .is(MagitechTags.Items.REPAIR_COMPONENT)) {
                                     var recipe = holder.value();
                                     if (resultSlots.setRecipeUsed(level, serverPlayer, holder)) {
                                         ToolMaterial toolMaterial = recipe.getToolMaterial();
@@ -218,7 +220,7 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
     /** Determines whether supplied player can use this container */
     @Override
     public boolean stillValid(@NotNull Player player) {
-        return stillValid(this.access, player, BlockInit.REPAIRING_WORKBENCH.get());
+        return stillValid(this.access, player, MagitechBlocks.REPAIRING_WORKBENCH.get());
     }
 
     /**
@@ -277,7 +279,7 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
     private boolean moveToSlots(ItemStack itemStack) {
         SingleRecipeInput recipeInput = new SingleRecipeInput(inputSlots.getItem(1));
         List<RecipeHolder<ToolMaterialRecipe>> optional =
-                level.getRecipeManager().getAllRecipesFor(RecipeInit.TOOL_MATERIAL_TYPE.get());
+                level.getRecipeManager().getAllRecipesFor(MagitechRecipes.TOOL_MATERIAL_TYPE.get());
 
         if (itemStack.getItem() instanceof PartToolItem) {
             return this.moveItemStackTo(itemStack, 1, 2, false);
@@ -287,7 +289,7 @@ public class ToolRepairingMenu extends AbstractContainerMenu {
                                 Arrays.stream(recipe.value().getIngredients().get(0).getItems())
                                         .anyMatch(stack -> stack.is(itemStack.getItem())))) {
             return this.moveItemStackTo(itemStack, 2, 3, false);
-        } else if (itemStack.getTags().anyMatch(Predicate.isEqual(ItemTagKeys.REPAIR_COMPONENT))) {
+        } else if (itemStack.is(MagitechTags.Items.REPAIR_COMPONENT)) {
             return this.moveItemStackTo(itemStack, 3, 4, false);
         }
         return false;

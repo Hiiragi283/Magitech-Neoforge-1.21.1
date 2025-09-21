@@ -15,12 +15,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.block.entity.ManaContainerBlockEntity;
 import net.stln.magitech.element.Element;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.BeamSpell;
 import net.stln.magitech.particle.option.BeamParticleEffect;
 import net.stln.magitech.particle.option.ManaZapParticleEffect;
 import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.SpellShape;
 
@@ -96,7 +96,7 @@ public class Enercrux extends BeamSpell {
                 user.getX(),
                 user.getY(),
                 user.getZ(),
-                SoundInit.ENERCRUX.get(),
+                MagitechSounds.ENERCRUX.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 0.75F + (user.getRandom().nextFloat() * 0.5F));

@@ -17,14 +17,15 @@ import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.particle.option.BeamParticleEffect;
 import net.stln.magitech.particle.option.VoidGlowParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.*;
 
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
@@ -51,14 +52,14 @@ public class Tenebport extends Spell {
     }
 
     protected static void playShootAnimation(Player user) {
-        var playerAnimationData =
+        var modifierLayer =
                 (ModifierLayer<IAnimation>)
                         PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
                                 .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
+        if (modifierLayer != null) {
 
             user.yBodyRot = user.yHeadRot;
-            playerAnimationData.setAnimation(
+            modifierLayer.setAnimation(
                     new KeyframeAnimationPlayer(
                                     (KeyframeAnimation)
                                             PlayerAnimationRegistry.getAnimation(
@@ -89,7 +90,7 @@ public class Tenebport extends Spell {
                 user.position().x,
                 user.position().y,
                 user.position().z,
-                SoundInit.TENEBPORT_CHARGE.get(),
+                MagitechSounds.TENEBPORT_CHARGE.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 0.7F + (user.getRandom().nextFloat() * 0.6F));
@@ -159,7 +160,7 @@ public class Tenebport extends Spell {
                         userPos.x,
                         userPos.y,
                         userPos.z,
-                        SoundInit.TENEBPORT.get(),
+                        MagitechSounds.TENEBPORT.get(),
                         SoundSource.PLAYERS,
                         1.0F,
                         0.7F + (user.getRandom().nextFloat() * 0.6F));
@@ -215,7 +216,7 @@ public class Tenebport extends Spell {
                                     newPos.x,
                                     newPos.y,
                                     newPos.z,
-                                    SoundInit.TENEBPORT.get(),
+                                    MagitechSounds.TENEBPORT.get(),
                                     SoundSource.PLAYERS,
                                     1.0F,
                                     0.7F + (user.getRandom().nextFloat() * 0.6F));
@@ -263,23 +264,17 @@ public class Tenebport extends Spell {
     }
 
     @Override
-    protected void playAnimation(Player user) {
-        var playerAnimationData =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
-                                .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
-
-            user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(
-                    AbstractFadeModifier.standardFadeIn(3, Ease.OUTSINE),
-                    new KeyframeAnimationPlayer(
-                                    (KeyframeAnimation)
-                                            PlayerAnimationRegistry.getAnimation(
-                                                    Magitech.id("wand_chant")))
-                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
-                            .setFirstPersonConfiguration(
-                                    new FirstPersonConfiguration(true, true, true, true)));
-        }
+    protected void playAnimation(
+            @NotNull Player player, @NotNull ModifierLayer<IAnimation> modifierLayer) {
+        player.yBodyRot = player.yHeadRot;
+        modifierLayer.replaceAnimationWithFade(
+                AbstractFadeModifier.standardFadeIn(3, Ease.OUTSINE),
+                new KeyframeAnimationPlayer(
+                                (KeyframeAnimation)
+                                        PlayerAnimationRegistry.getAnimation(
+                                                Magitech.id("wand_chant")))
+                        .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                        .setFirstPersonConfiguration(
+                                new FirstPersonConfiguration(true, true, true, true)));
     }
 }

@@ -8,7 +8,7 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
 
 public class ModBlockStateProvider extends BlockStateProvider {
 
@@ -18,102 +18,122 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        sideBottomTopBlockWithItem(BlockInit.ENGINEERING_WORKBENCH.get());
-        sideBottomTopBlockWithItem(BlockInit.ASSEMBLY_WORKBENCH.get());
-        sideBottomTopBlockWithItem(BlockInit.REPAIRING_WORKBENCH.get());
-        sideBottomTopBlockWithItem(BlockInit.UPGRADE_WORKBENCH.get());
-        handModeledBlockWithItem(BlockInit.ALCHEMETRIC_PYLON.get());
-        handModeledBlockWithItem(BlockInit.ATHANOR_PILLAR.get());
-        handModeledBlockWithItem(BlockInit.ZARDIUS_CRUCIBLE.get());
-        directionalHandModeledBlockWithItem(BlockInit.MANA_NODE.get());
-        handModeledBlockWithInventoryModelItem(BlockInit.MANA_VESSEL.get());
-        blockWithItem(BlockInit.FLUORITE_ORE.get());
-        blockWithItem(BlockInit.DEEPSLATE_FLUORITE_ORE.get());
-        blockWithItem(BlockInit.TOURMALINE_ORE.get());
-        blockWithItem(BlockInit.DEEPSLATE_TOURMALINE_ORE.get());
-        blockWithItem(BlockInit.SULFUR_BLOCK.get());
-        blockWithItem(BlockInit.ALCHECRYSITE.get());
-        stairsBlockWithItem(BlockInit.ALCHECRYSITE_STAIRS.get(), BlockInit.ALCHECRYSITE.get());
-        slabBlockWithItem(BlockInit.ALCHECRYSITE_SLAB.get(), BlockInit.ALCHECRYSITE.get());
-        wallBlockWithItem(BlockInit.ALCHECRYSITE_WALL.get(), BlockInit.ALCHECRYSITE.get());
-        blockWithItem(BlockInit.POLISHED_ALCHECRYSITE.get());
+        sideBottomTopBlockWithItem(MagitechBlocks.ENGINEERING_WORKBENCH.get());
+        sideBottomTopBlockWithItem(MagitechBlocks.ASSEMBLY_WORKBENCH.get());
+        sideBottomTopBlockWithItem(MagitechBlocks.REPAIRING_WORKBENCH.get());
+        sideBottomTopBlockWithItem(MagitechBlocks.UPGRADE_WORKBENCH.get());
+        handModeledBlockWithItem(MagitechBlocks.ALCHEMETRIC_PYLON.get());
+        handModeledBlockWithItem(MagitechBlocks.ATHANOR_PILLAR.get());
+        handModeledBlockWithItem(MagitechBlocks.ZARDIUS_CRUCIBLE.get());
+        directionalHandModeledBlockWithItem(MagitechBlocks.MANA_NODE.get());
+        handModeledBlockWithInventoryModelItem(MagitechBlocks.MANA_VESSEL.get());
+        blockWithItem(MagitechBlocks.FLUORITE_ORE.get());
+        blockWithItem(MagitechBlocks.DEEPSLATE_FLUORITE_ORE.get());
+        blockWithItem(MagitechBlocks.TOURMALINE_ORE.get());
+        blockWithItem(MagitechBlocks.DEEPSLATE_TOURMALINE_ORE.get());
+        blockWithItem(MagitechBlocks.SULFUR_BLOCK.get());
+        blockWithItem(MagitechBlocks.ALCHECRYSITE.get());
         stairsBlockWithItem(
-                BlockInit.POLISHED_ALCHECRYSITE_STAIRS.get(),
-                BlockInit.POLISHED_ALCHECRYSITE.get());
+                MagitechBlocks.ALCHECRYSITE_STAIRS.get(), MagitechBlocks.ALCHECRYSITE.get());
         slabBlockWithItem(
-                BlockInit.POLISHED_ALCHECRYSITE_SLAB.get(), BlockInit.POLISHED_ALCHECRYSITE.get());
+                MagitechBlocks.ALCHECRYSITE_SLAB.get(), MagitechBlocks.ALCHECRYSITE.get());
         wallBlockWithItem(
-                BlockInit.POLISHED_ALCHECRYSITE_WALL.get(), BlockInit.POLISHED_ALCHECRYSITE.get());
-        blockWithItem(BlockInit.ALCHECRYSITE_BRICKS.get());
+                MagitechBlocks.ALCHECRYSITE_WALL.get(), MagitechBlocks.ALCHECRYSITE.get());
+        blockWithItem(MagitechBlocks.POLISHED_ALCHECRYSITE.get());
         stairsBlockWithItem(
-                BlockInit.ALCHECRYSITE_BRICK_STAIRS.get(), BlockInit.ALCHECRYSITE_BRICKS.get());
+                MagitechBlocks.POLISHED_ALCHECRYSITE_STAIRS.get(),
+                MagitechBlocks.POLISHED_ALCHECRYSITE.get());
         slabBlockWithItem(
-                BlockInit.ALCHECRYSITE_BRICK_SLAB.get(), BlockInit.ALCHECRYSITE_BRICKS.get());
+                MagitechBlocks.POLISHED_ALCHECRYSITE_SLAB.get(),
+                MagitechBlocks.POLISHED_ALCHECRYSITE.get());
         wallBlockWithItem(
-                BlockInit.ALCHECRYSITE_BRICK_WALL.get(), BlockInit.ALCHECRYSITE_BRICKS.get());
-        blockWithItem(BlockInit.ALCHECRYSITE_TILES.get());
-        blockWithItem(BlockInit.FLUORITE_BLOCK.get());
-        blockWithItem(BlockInit.FLUORITE_BRICKS.get());
-        stairsBlockWithItem(BlockInit.FLUORITE_BRICK_STAIRS.get(), BlockInit.FLUORITE_BRICKS.get());
-        slabBlockWithItem(BlockInit.FLUORITE_BRICK_SLAB.get(), BlockInit.FLUORITE_BRICKS.get());
-        wallBlockWithItem(BlockInit.FLUORITE_BRICK_WALL.get(), BlockInit.FLUORITE_BRICKS.get());
-        logBlockWithItem(BlockInit.CELIFERN_LOG.get());
-        woodBlockWithItem(BlockInit.CELIFERN_WOOD.get());
-        logBlockWithItem(BlockInit.STRIPPED_CELIFERN_LOG.get());
-        woodBlockWithItem(BlockInit.STRIPPED_CELIFERN_WOOD.get());
-        blockWithItem(BlockInit.CELIFERN_PLANKS.get());
-        stairsBlockWithItem(BlockInit.CELIFERN_STAIRS.get(), BlockInit.CELIFERN_PLANKS.get());
-        slabBlockWithItem(BlockInit.CELIFERN_SLAB.get(), BlockInit.CELIFERN_PLANKS.get());
-        fenceBlockWithItem(BlockInit.CELIFERN_FENCE.get(), BlockInit.CELIFERN_PLANKS.get());
-        fenceGateBlockWithItem(
-                BlockInit.CELIFERN_FENCE_GATE.get(), BlockInit.CELIFERN_PLANKS.get());
-        doorBlock(BlockInit.CELIFERN_DOOR.get());
-        trapdoorBlockWithItem(BlockInit.CELIFERN_TRAPDOOR.get(), true);
-        pressurePlateBlockWithItem(
-                BlockInit.CELIFERN_PRESSURE_PLATE.get(), BlockInit.CELIFERN_PLANKS.get());
-        buttonBlockWithItem(BlockInit.CELIFERN_BUTTON.get(), BlockInit.CELIFERN_PLANKS.get());
-        leavesBlockWithItem(BlockInit.CELIFERN_LEAVES.get());
-        saplingBlock(BlockInit.CELIFERN_SAPLING.get());
-        signBlock(
-                BlockInit.CELIFERN_SIGN.get(),
-                BlockInit.CELIFERN_WALL_SIGN.get(),
-                BlockInit.CELIFERN_PLANKS.get());
-        hangingSignBlock(
-                BlockInit.CELIFERN_HANGING_SIGN.get(),
-                BlockInit.CELIFERN_WALL_HANGING_SIGN.get(),
-                BlockInit.STRIPPED_CELIFERN_LOG.get());
-        logBlockWithItem(BlockInit.CHARCOAL_BIRCH_LOG.get());
-        woodBlockWithItem(BlockInit.CHARCOAL_BIRCH_WOOD.get());
-        logBlockWithItem(BlockInit.STRIPPED_CHARCOAL_BIRCH_LOG.get());
-        woodBlockWithItem(BlockInit.STRIPPED_CHARCOAL_BIRCH_WOOD.get());
-        blockWithItem(BlockInit.CHARCOAL_BIRCH_PLANKS.get());
+                MagitechBlocks.POLISHED_ALCHECRYSITE_WALL.get(),
+                MagitechBlocks.POLISHED_ALCHECRYSITE.get());
+        blockWithItem(MagitechBlocks.ALCHECRYSITE_BRICKS.get());
         stairsBlockWithItem(
-                BlockInit.CHARCOAL_BIRCH_STAIRS.get(), BlockInit.CHARCOAL_BIRCH_PLANKS.get());
+                MagitechBlocks.ALCHECRYSITE_BRICK_STAIRS.get(),
+                MagitechBlocks.ALCHECRYSITE_BRICKS.get());
         slabBlockWithItem(
-                BlockInit.CHARCOAL_BIRCH_SLAB.get(), BlockInit.CHARCOAL_BIRCH_PLANKS.get());
+                MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get(),
+                MagitechBlocks.ALCHECRYSITE_BRICKS.get());
+        wallBlockWithItem(
+                MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get(),
+                MagitechBlocks.ALCHECRYSITE_BRICKS.get());
+        blockWithItem(MagitechBlocks.ALCHECRYSITE_TILES.get());
+        blockWithItem(MagitechBlocks.FLUORITE_BLOCK.get());
+        blockWithItem(MagitechBlocks.FLUORITE_BRICKS.get());
+        stairsBlockWithItem(
+                MagitechBlocks.FLUORITE_BRICK_STAIRS.get(), MagitechBlocks.FLUORITE_BRICKS.get());
+        slabBlockWithItem(
+                MagitechBlocks.FLUORITE_BRICK_SLAB.get(), MagitechBlocks.FLUORITE_BRICKS.get());
+        wallBlockWithItem(
+                MagitechBlocks.FLUORITE_BRICK_WALL.get(), MagitechBlocks.FLUORITE_BRICKS.get());
+        logBlockWithItem(MagitechBlocks.CELIFERN_LOG.get());
+        woodBlockWithItem(MagitechBlocks.CELIFERN_WOOD.get());
+        logBlockWithItem(MagitechBlocks.STRIPPED_CELIFERN_LOG.get());
+        woodBlockWithItem(MagitechBlocks.STRIPPED_CELIFERN_WOOD.get());
+        blockWithItem(MagitechBlocks.CELIFERN_PLANKS.get());
+        stairsBlockWithItem(
+                MagitechBlocks.CELIFERN_STAIRS.get(), MagitechBlocks.CELIFERN_PLANKS.get());
+        slabBlockWithItem(MagitechBlocks.CELIFERN_SLAB.get(), MagitechBlocks.CELIFERN_PLANKS.get());
         fenceBlockWithItem(
-                BlockInit.CHARCOAL_BIRCH_FENCE.get(), BlockInit.CHARCOAL_BIRCH_PLANKS.get());
+                MagitechBlocks.CELIFERN_FENCE.get(), MagitechBlocks.CELIFERN_PLANKS.get());
         fenceGateBlockWithItem(
-                BlockInit.CHARCOAL_BIRCH_FENCE_GATE.get(), BlockInit.CHARCOAL_BIRCH_PLANKS.get());
-        doorBlock(BlockInit.CHARCOAL_BIRCH_DOOR.get());
-        trapdoorBlockWithItem(BlockInit.CHARCOAL_BIRCH_TRAPDOOR.get(), true);
+                MagitechBlocks.CELIFERN_FENCE_GATE.get(), MagitechBlocks.CELIFERN_PLANKS.get());
+        doorBlock(MagitechBlocks.CELIFERN_DOOR.get());
+        trapdoorBlockWithItem(MagitechBlocks.CELIFERN_TRAPDOOR.get(), true);
         pressurePlateBlockWithItem(
-                BlockInit.CHARCOAL_BIRCH_PRESSURE_PLATE.get(),
-                BlockInit.CHARCOAL_BIRCH_PLANKS.get());
+                MagitechBlocks.CELIFERN_PRESSURE_PLATE.get(), MagitechBlocks.CELIFERN_PLANKS.get());
         buttonBlockWithItem(
-                BlockInit.CHARCOAL_BIRCH_BUTTON.get(), BlockInit.CHARCOAL_BIRCH_PLANKS.get());
-        leavesBlockWithItem(BlockInit.CHARCOAL_BIRCH_LEAVES.get());
-        saplingBlock(BlockInit.CHARCOAL_BIRCH_SAPLING.get());
+                MagitechBlocks.CELIFERN_BUTTON.get(), MagitechBlocks.CELIFERN_PLANKS.get());
+        leavesBlockWithItem(MagitechBlocks.CELIFERN_LEAVES.get());
+        saplingBlock(MagitechBlocks.CELIFERN_SAPLING.get());
         signBlock(
-                BlockInit.CHARCOAL_BIRCH_SIGN.get(),
-                BlockInit.CHARCOAL_BIRCH_WALL_SIGN.get(),
-                BlockInit.CHARCOAL_BIRCH_PLANKS.get());
+                MagitechBlocks.CELIFERN_SIGN.get(),
+                MagitechBlocks.CELIFERN_WALL_SIGN.get(),
+                MagitechBlocks.CELIFERN_PLANKS.get());
         hangingSignBlock(
-                BlockInit.CHARCOAL_BIRCH_HANGING_SIGN.get(),
-                BlockInit.CHARCOAL_BIRCH_WALL_HANGING_SIGN.get(),
-                BlockInit.STRIPPED_CHARCOAL_BIRCH_LOG.get());
-        grassBlockWithItem(BlockInit.SCORCHED_GRASS_SOIL.get(), BlockInit.SCORCHED_SOIL.get());
-        blockWithItem(BlockInit.SCORCHED_SOIL.get());
+                MagitechBlocks.CELIFERN_HANGING_SIGN.get(),
+                MagitechBlocks.CELIFERN_WALL_HANGING_SIGN.get(),
+                MagitechBlocks.STRIPPED_CELIFERN_LOG.get());
+        logBlockWithItem(MagitechBlocks.CHARCOAL_BIRCH_LOG.get());
+        woodBlockWithItem(MagitechBlocks.CHARCOAL_BIRCH_WOOD.get());
+        logBlockWithItem(MagitechBlocks.STRIPPED_CHARCOAL_BIRCH_LOG.get());
+        woodBlockWithItem(MagitechBlocks.STRIPPED_CHARCOAL_BIRCH_WOOD.get());
+        blockWithItem(MagitechBlocks.CHARCOAL_BIRCH_PLANKS.get());
+        stairsBlockWithItem(
+                MagitechBlocks.CHARCOAL_BIRCH_STAIRS.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_PLANKS.get());
+        slabBlockWithItem(
+                MagitechBlocks.CHARCOAL_BIRCH_SLAB.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_PLANKS.get());
+        fenceBlockWithItem(
+                MagitechBlocks.CHARCOAL_BIRCH_FENCE.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_PLANKS.get());
+        fenceGateBlockWithItem(
+                MagitechBlocks.CHARCOAL_BIRCH_FENCE_GATE.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_PLANKS.get());
+        doorBlock(MagitechBlocks.CHARCOAL_BIRCH_DOOR.get());
+        trapdoorBlockWithItem(MagitechBlocks.CHARCOAL_BIRCH_TRAPDOOR.get(), true);
+        pressurePlateBlockWithItem(
+                MagitechBlocks.CHARCOAL_BIRCH_PRESSURE_PLATE.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_PLANKS.get());
+        buttonBlockWithItem(
+                MagitechBlocks.CHARCOAL_BIRCH_BUTTON.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_PLANKS.get());
+        leavesBlockWithItem(MagitechBlocks.CHARCOAL_BIRCH_LEAVES.get());
+        saplingBlock(MagitechBlocks.CHARCOAL_BIRCH_SAPLING.get());
+        signBlock(
+                MagitechBlocks.CHARCOAL_BIRCH_SIGN.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_WALL_SIGN.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_PLANKS.get());
+        hangingSignBlock(
+                MagitechBlocks.CHARCOAL_BIRCH_HANGING_SIGN.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_WALL_HANGING_SIGN.get(),
+                MagitechBlocks.STRIPPED_CHARCOAL_BIRCH_LOG.get());
+        grassBlockWithItem(
+                MagitechBlocks.SCORCHED_GRASS_SOIL.get(), MagitechBlocks.SCORCHED_SOIL.get());
+        blockWithItem(MagitechBlocks.SCORCHED_SOIL.get());
     }
 
     private String getName(Block block) {

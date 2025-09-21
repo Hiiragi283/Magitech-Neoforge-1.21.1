@@ -16,7 +16,8 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.recipe.input.CrucibleRecipeInput;
 
 import org.jetbrains.annotations.NotNull;
@@ -102,16 +103,16 @@ public record ZardiusCrucibleRecipe(
 
     @Override
     public @NotNull ItemStack getToastSymbol() {
-        return BlockInit.ZARDIUS_CRUCIBLE.toStack();
+        return MagitechBlocks.ZARDIUS_CRUCIBLE.toStack();
     }
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return RecipeInit.ZARDIUS_CRUCIBLE_SERIALIZER.get();
+        return MagitechRecipes.ZARDIUS_CRUCIBLE_SERIALIZER.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return RecipeInit.ZARDIUS_CRUCIBLE_TYPE.get();
+        return MagitechRecipes.ZARDIUS_CRUCIBLE_TYPE.get();
     }
 }

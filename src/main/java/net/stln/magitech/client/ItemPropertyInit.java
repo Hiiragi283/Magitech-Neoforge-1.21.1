@@ -1,8 +1,9 @@
-package net.stln.magitech.item;
+package net.stln.magitech.client;
 
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
+import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.util.ComponentHelper;
 

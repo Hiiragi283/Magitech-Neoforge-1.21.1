@@ -9,7 +9,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.tool.material.ToolMaterial;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,8 +25,8 @@ public class ToolMaterialRecipe extends SingleItemRecipe {
 
     public ToolMaterialRecipe(String group, Ingredient ingredient, ToolMaterial toolMaterial) {
         super(
-                RecipeInit.TOOL_MATERIAL_TYPE.get(),
-                RecipeInit.TOOL_MATERIAL_SERIALIZER.get(),
+                MagitechRecipes.TOOL_MATERIAL_TYPE.get(),
+                MagitechRecipes.TOOL_MATERIAL_SERIALIZER.get(),
                 group,
                 ingredient,
                 ItemStack.EMPTY);
@@ -42,7 +43,7 @@ public class ToolMaterialRecipe extends SingleItemRecipe {
 
     @Override
     public @NotNull ItemStack getToastSymbol() {
-        return BlockInit.ENGINEERING_WORKBENCH.toStack();
+        return MagitechBlocks.ENGINEERING_WORKBENCH.toStack();
     }
 
     public interface Factory<T extends SingleItemRecipe> {
@@ -56,7 +57,7 @@ public class ToolMaterialRecipe extends SingleItemRecipe {
         private final MapCodec<T> codec;
         private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
-        protected Serializer(Factory<T> factory) {
+        public Serializer(Factory<T> factory) {
             this.factory = factory;
             this.codec =
                     RecordCodecBuilder.mapCodec(

@@ -2,8 +2,6 @@ package net.stln.magitech.item.tool.toolitem;
 
 import java.util.Optional;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,6 +19,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.stln.magitech.item.tool.ToolPart;
 import net.stln.magitech.item.tool.ToolType;
+
+import org.jetbrains.annotations.Nullable;
 
 public class AxeItem extends PartToolItem {
 

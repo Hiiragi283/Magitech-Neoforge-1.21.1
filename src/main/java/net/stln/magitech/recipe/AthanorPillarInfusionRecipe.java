@@ -16,6 +16,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.recipe.input.GroupedMultiStackRecipeInput;
 
 import org.jetbrains.annotations.NotNull;
@@ -109,12 +110,12 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return RecipeInit.ATHANOR_PILLAR_INFUSION_TYPE.get();
+        return MagitechRecipes.ATHANOR_PILLAR_INFUSION_TYPE.get();
     }
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return RecipeInit.ATHANOR_PILLAR_INFUSION_SERIALIZER.get();
+        return MagitechRecipes.ATHANOR_PILLAR_INFUSION_SERIALIZER.get();
     }
 
     public ItemStack getBase() {
@@ -142,7 +143,7 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
         private final MapCodec<T> codec;
         private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
-        protected Serializer(AthanorPillarInfusionRecipe.Factory<T> factory) {
+        public Serializer(AthanorPillarInfusionRecipe.Factory<T> factory) {
             this.factory = factory;
             this.codec =
                     RecordCodecBuilder.mapCodec(

@@ -34,10 +34,10 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.stln.magitech.block.BlockInit;
 import net.stln.magitech.block.ZardiusCrucibleBlock;
+import net.stln.magitech.init.MagitechBlockEntityTypes;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.particle.option.SquareParticleEffect;
-import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.ZardiusCrucibleRecipe;
 import net.stln.magitech.recipe.input.CrucibleRecipeInput;
 
@@ -78,7 +78,7 @@ public class ZardiusCrucibleBlockEntity extends BlockEntity {
     private double lastRenderValue = 0;
 
     public ZardiusCrucibleBlockEntity(BlockPos pos, BlockState blockState) {
-        super(BlockInit.ZARDIUS_CRUCIBLE_ENTITY.get(), pos, blockState);
+        super(MagitechBlockEntityTypes.ZARDIUS_CRUCIBLE.get(), pos, blockState);
     }
 
     public NonNullList<ItemStack> getRenderStack() {
@@ -102,7 +102,7 @@ public class ZardiusCrucibleBlockEntity extends BlockEntity {
                         .toList();
         CrucibleRecipeInput input = new CrucibleRecipeInput(stacks, fluidTank.getFluid());
         level.getRecipeManager()
-                .getRecipeFor(RecipeInit.ZARDIUS_CRUCIBLE_TYPE.get(), input, level)
+                .getRecipeFor(MagitechRecipes.ZARDIUS_CRUCIBLE_TYPE.get(), input, level)
                 .map(RecipeHolder::value)
                 .ifPresent(recipe -> processRecipe(level, pos, state, recipe, input));
     }

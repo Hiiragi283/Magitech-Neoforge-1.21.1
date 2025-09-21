@@ -1,4 +1,4 @@
-package net.stln.magitech.gui;
+package net.stln.magitech.init;
 
 import java.util.function.Supplier;
 
@@ -15,25 +15,27 @@ import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
+import net.stln.magitech.gui.*;
 import net.stln.magitech.gui.overlay.ManaContainerInfoOverlay;
 import net.stln.magitech.gui.overlay.ManaGaugeOverlay;
 import net.stln.magitech.gui.overlay.SpellGaugeOverlay;
+import net.stln.magitech.inventory.*;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID, value = Dist.CLIENT)
-public class GuiInit {
+public final class MagitechMenuTypes {
 
     public static final DeferredRegister<MenuType<?>> REGISTER =
             DeferredRegister.create(Registries.MENU, Magitech.MOD_ID);
-    public static final Supplier<MenuType<PartCuttingMenu>> PART_CUTTING_MENU =
+    public static final Supplier<MenuType<PartCuttingMenu>> PART_CUTTING =
             register("part_cutting_menu", PartCuttingMenu::new);
-    public static final Supplier<MenuType<ToolAssemblyMenu>> TOOL_ASSEMBLY_MENU =
+    public static final Supplier<MenuType<ToolAssemblyMenu>> TOOL_ASSEMBLY =
             register("tool_assembly_menu", ToolAssemblyMenu::new);
-    public static final Supplier<MenuType<ToolRepairingMenu>> TOOL_REPAIRING_MENU =
+    public static final Supplier<MenuType<ToolRepairingMenu>> TOOL_REPAIRING =
             register("tool_repairing_menu", ToolRepairingMenu::new);
-    public static final Supplier<MenuType<ToolUpgradeMenu>> TOOL_UPGRADE_MENU =
+    public static final Supplier<MenuType<ToolUpgradeMenu>> TOOL_UPGRADE =
             register("tool_upgrade_menu", ToolUpgradeMenu::new);
-    public static final Supplier<MenuType<ThreadboundMenuType>> THREADBOUND_MENU =
-            register("threadbound_menu", ThreadboundMenuType::new);
+    public static final Supplier<MenuType<ThreadboundMenu>> THREADBOUND =
+            register("threadbound_menu", ThreadboundMenu::new);
 
     private static <T extends AbstractContainerMenu> Supplier<MenuType<T>> register(
             String name, MenuType.MenuSupplier<T> supplier) {
@@ -51,11 +53,11 @@ public class GuiInit {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(PART_CUTTING_MENU.get(), PartCuttingScreen::new);
-        event.register(TOOL_ASSEMBLY_MENU.get(), ToolAssemblyScreen::new);
-        event.register(TOOL_REPAIRING_MENU.get(), ToolRepairingScreen::new);
-        event.register(TOOL_UPGRADE_MENU.get(), ToolUpgradeScreen::new);
-        event.register(THREADBOUND_MENU.get(), ThreadboundScreen::new);
+        event.register(PART_CUTTING.get(), PartCuttingScreen::new);
+        event.register(TOOL_ASSEMBLY.get(), ToolAssemblyScreen::new);
+        event.register(TOOL_REPAIRING.get(), ToolRepairingScreen::new);
+        event.register(TOOL_UPGRADE.get(), ToolUpgradeScreen::new);
+        event.register(THREADBOUND.get(), ThreadboundScreen::new);
     }
 
     public static void registerMenus(IEventBus eventBus) {

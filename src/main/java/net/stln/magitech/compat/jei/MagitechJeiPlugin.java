@@ -2,11 +2,11 @@ package net.stln.magitech.compat.jei;
 
 import net.minecraft.resources.ResourceLocation;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.block.BlockInit;
 import net.stln.magitech.gui.PartCuttingScreen;
 import net.stln.magitech.gui.ToolAssemblyScreen;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.ItemInit;
-import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.util.ClientHelper;
 
 import org.jetbrains.annotations.NotNull;
@@ -43,19 +43,19 @@ public class MagitechJeiPlugin implements IModPlugin {
     public void registerRecipes(@NotNull IRecipeRegistration registration) {
         registration.addRecipes(
                 PartCuttingRecipeCategory.PART_CUTTING_RECIPE_TYPE,
-                ClientHelper.getAllRecipes(RecipeInit.PART_CUTTING_TYPE));
+                ClientHelper.getAllRecipes(MagitechRecipes.PART_CUTTING_TYPE));
         registration.addRecipes(
                 ToolAssemblyRecipeCategory.TOOL_ASSEMBLY_RECIPE_TYPE,
-                ClientHelper.getAllRecipes(RecipeInit.TOOL_ASSEMBLY_TYPE));
+                ClientHelper.getAllRecipes(MagitechRecipes.TOOL_ASSEMBLY_TYPE));
         registration.addRecipes(
                 SpellConversionRecipeCategory.SPELL_CONVERSION_RECIPE_TYPE,
-                ClientHelper.getAllRecipes(RecipeInit.SPELL_CONVERSION_TYPE));
+                ClientHelper.getAllRecipes(MagitechRecipes.SPELL_CONVERSION_TYPE));
         registration.addRecipes(
                 ZardiusCrucibleRecipeCategory.ZARDIUS_CRUCIBLE_RECIPE_TYPE,
-                ClientHelper.getAllRecipes(RecipeInit.ZARDIUS_CRUCIBLE_TYPE));
+                ClientHelper.getAllRecipes(MagitechRecipes.ZARDIUS_CRUCIBLE_TYPE));
         registration.addRecipes(
                 AthanorPillarInfusionRecipeCategory.ATHANOR_PILLAR_INFUSION_RECIPE_TYPE,
-                ClientHelper.getAllRecipes(RecipeInit.ATHANOR_PILLAR_INFUSION_TYPE));
+                ClientHelper.getAllRecipes(MagitechRecipes.ATHANOR_PILLAR_INFUSION_TYPE));
     }
 
     @Override
@@ -86,19 +86,19 @@ public class MagitechJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(
-                BlockInit.ENGINEERING_WORKBENCH.toStack(),
+                MagitechBlocks.ENGINEERING_WORKBENCH.toStack(),
                 PartCuttingRecipeCategory.PART_CUTTING_RECIPE_TYPE);
         registration.addRecipeCatalyst(
-                BlockInit.ASSEMBLY_WORKBENCH.toStack(),
+                MagitechBlocks.ASSEMBLY_WORKBENCH.toStack(),
                 ToolAssemblyRecipeCategory.TOOL_ASSEMBLY_RECIPE_TYPE);
         registration.addRecipeCatalyst(
                 ItemInit.WAND.toStack(),
                 SpellConversionRecipeCategory.SPELL_CONVERSION_RECIPE_TYPE);
         registration.addRecipeCatalyst(
-                BlockInit.ZARDIUS_CRUCIBLE_ITEM.toStack(),
+                MagitechBlocks.ZARDIUS_CRUCIBLE_ITEM.toStack(),
                 ZardiusCrucibleRecipeCategory.ZARDIUS_CRUCIBLE_RECIPE_TYPE);
         registration.addRecipeCatalyst(
-                BlockInit.ATHANOR_PILLAR_ITEM.toStack(),
+                MagitechBlocks.ATHANOR_PILLAR_ITEM.toStack(),
                 AthanorPillarInfusionRecipeCategory.ATHANOR_PILLAR_INFUSION_RECIPE_TYPE);
     }
 }

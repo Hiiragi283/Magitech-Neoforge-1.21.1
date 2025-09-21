@@ -20,6 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
 import net.stln.magitech.item.tool.toolitem.SpellCasterItem;
@@ -27,7 +28,6 @@ import net.stln.magitech.particle.option.MembraneParticleEffect;
 import net.stln.magitech.particle.option.PowerupParticleEffect;
 import net.stln.magitech.particle.option.SquareFieldParticleEffect;
 import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.EntityUtil;
 
@@ -75,7 +75,7 @@ public class PhantomSlayerTrait extends Trait {
                         player.getX(),
                         player.getY(),
                         player.getZ(),
-                        SoundInit.PHANTOM_SLAYER_DASH.get(),
+                        MagitechSounds.PHANTOM_SLAYER_DASH.get(),
                         SoundSource.PLAYERS,
                         1.0F,
                         0.7F + (player.getRandom().nextFloat() * 0.6F));
@@ -160,7 +160,7 @@ public class PhantomSlayerTrait extends Trait {
                             player.getX(),
                             player.getY(),
                             player.getZ(),
-                            SoundInit.PHANTOM_SLAYER_DASH.get(),
+                            MagitechSounds.PHANTOM_SLAYER_DASH.get(),
                             SoundSource.PLAYERS,
                             1.0F,
                             0.7F + (player.getRandom().nextFloat() * 0.6F));
@@ -270,7 +270,7 @@ public class PhantomSlayerTrait extends Trait {
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                SoundInit.PHANTOM_BUFF.get(),
+                MagitechSounds.PHANTOM_BUFF.get(),
                 SoundSource.PLAYERS,
                 0.5F,
                 0.7F + (player.getRandom().nextFloat() * 0.6F));
@@ -304,7 +304,7 @@ public class PhantomSlayerTrait extends Trait {
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                SoundInit.PHANTOM_BUFF.get(),
+                MagitechSounds.PHANTOM_BUFF.get(),
                 SoundSource.PLAYERS,
                 0.5F,
                 0.7F + (player.getRandom().nextFloat() * 0.6F));

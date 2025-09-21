@@ -1,10 +1,8 @@
-package net.stln.magitech.gui;
+package net.stln.magitech.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.annotation.Nullable;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,10 +14,13 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.stln.magitech.block.BlockInit;
-import net.stln.magitech.recipe.RecipeInit;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechMenuTypes;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.recipe.ToolAssemblyRecipe;
 import net.stln.magitech.recipe.input.MultiStackRecipeInput;
+
+import org.jetbrains.annotations.Nullable;
 
 public class ToolAssemblyMenu extends AbstractContainerMenu {
 
@@ -55,7 +56,7 @@ public class ToolAssemblyMenu extends AbstractContainerMenu {
 
     public ToolAssemblyMenu(
             int containerId, Inventory playerInventory, ContainerLevelAccess access) {
-        super(GuiInit.TOOL_ASSEMBLY_MENU.get(), containerId);
+        super(MagitechMenuTypes.TOOL_ASSEMBLY.get(), containerId);
         this.access = access;
         this.player = playerInventory.player;
         this.addSlot(
@@ -120,7 +121,7 @@ public class ToolAssemblyMenu extends AbstractContainerMenu {
                     level.getServer()
                             .getRecipeManager()
                             .getRecipeFor(
-                                    RecipeInit.TOOL_ASSEMBLY_TYPE.get(), craftinginput, level);
+                                    MagitechRecipes.TOOL_ASSEMBLY_TYPE.get(), craftinginput, level);
             if (optional.isPresent()) {
                 RecipeHolder<ToolAssemblyRecipe> recipeholder = optional.get();
                 ToolAssemblyRecipe craftingrecipe = recipeholder.value();
@@ -177,7 +178,7 @@ public class ToolAssemblyMenu extends AbstractContainerMenu {
     /** Determines whether supplied player can use this container */
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(this.access, player, BlockInit.ASSEMBLY_WORKBENCH.get());
+        return stillValid(this.access, player, MagitechBlocks.ASSEMBLY_WORKBENCH.get());
     }
 
     /**
@@ -235,7 +236,7 @@ public class ToolAssemblyMenu extends AbstractContainerMenu {
 
     @Override
     public MenuType<?> getType() {
-        return GuiInit.TOOL_ASSEMBLY_MENU.get();
+        return MagitechMenuTypes.TOOL_ASSEMBLY.get();
     }
 
     /**

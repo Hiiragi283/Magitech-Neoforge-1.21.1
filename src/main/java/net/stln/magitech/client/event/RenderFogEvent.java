@@ -8,7 +8,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.biome.BiomeInit;
+import net.stln.magitech.init.MagitechBiomes;
 import net.stln.magitech.util.ClientHelper;
 
 import com.mojang.blaze3d.shaders.FogShape;
@@ -30,10 +30,10 @@ public class RenderFogEvent {
                             Level level = player.level();
                             BlockPos pos = player.blockPosition();
 
-                            if (level.getBiome(pos).is(BiomeInit.MISTJADE_FOREST)) {
+                            if (level.getBiome(pos).is(MagitechBiomes.MISTJADE_FOREST)) {
                                 targetNearPlane = 10;
                                 targetFarPlane = 100;
-                            } else if (level.getBiome(pos).is(BiomeInit.SCORCHED_PLAINS)) {
+                            } else if (level.getBiome(pos).is(MagitechBiomes.SCORCHED_PLAINS)) {
                                 targetNearPlane = 0;
                                 targetFarPlane = 125;
                             } else {

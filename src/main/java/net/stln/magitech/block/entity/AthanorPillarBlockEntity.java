@@ -31,15 +31,16 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.stln.magitech.block.AthanorPillarBlock;
-import net.stln.magitech.block.BlockInit;
 import net.stln.magitech.block.ManaNodeBlock;
+import net.stln.magitech.init.MagitechBlockEntityTypes;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechRecipes;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.particle.option.ManaZapParticleEffect;
 import net.stln.magitech.particle.option.SquareParticleEffect;
 import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
 import net.stln.magitech.recipe.AthanorPillarInfusionRecipe;
-import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.input.GroupedMultiStackRecipeInput;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.StructureHelper;
 
@@ -72,7 +73,7 @@ public class AthanorPillarBlockEntity extends BlockEntity {
     public int tickCounter = 0;
 
     public AthanorPillarBlockEntity(BlockPos pos, BlockState blockState) {
-        super(BlockInit.ATHANOR_PILLAR_ENTITY.get(), pos, blockState);
+        super(MagitechBlockEntityTypes.ATHANOR_PILLAR.get(), pos, blockState);
     }
 
     public void serverTick(
@@ -95,7 +96,7 @@ public class AthanorPillarBlockEntity extends BlockEntity {
             RecipeManager manager = level.getRecipeManager();
             Optional<RecipeHolder<AthanorPillarInfusionRecipe>> recipeHolder =
                     manager.getRecipeFor(
-                            RecipeInit.ATHANOR_PILLAR_INFUSION_TYPE.get(), input, level);
+                            MagitechRecipes.ATHANOR_PILLAR_INFUSION_TYPE.get(), input, level);
 
             if (recipeHolder.isPresent()
                     && blockEntity
@@ -140,7 +141,7 @@ public class AthanorPillarBlockEntity extends BlockEntity {
                         level.playSound(
                                 null,
                                 pos,
-                                SoundInit.ATHANOR_PILLAR_INFUSION.get(),
+                                MagitechSounds.ATHANOR_PILLAR_INFUSION.get(),
                                 SoundSource.BLOCKS,
                                 1.0F,
                                 Mth.nextFloat(level.random, 0.9F, 1.1F));
@@ -149,7 +150,7 @@ public class AthanorPillarBlockEntity extends BlockEntity {
                         level.playSound(
                                 null,
                                 pos,
-                                SoundInit.ATHANOR_PILLAR_ZAP.get(),
+                                MagitechSounds.ATHANOR_PILLAR_ZAP.get(),
                                 SoundSource.BLOCKS,
                                 1.0F,
                                 Mth.nextFloat(level.random, 0.9F, 1.1F));
@@ -986,400 +987,400 @@ public class AthanorPillarBlockEntity extends BlockEntity {
     // private static final Map<BlockPos, BlockState> STRUCTURE = Map.<BlockPos,
     // BlockState>ofEntries(
     // Map.entry(new BlockPos(0, 0, 0),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(1, 0, 0),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(2, 0, 0),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.SOUTH)),
     // Map.entry(new BlockPos(3, 0, 0),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.SOUTH)),
     // Map.entry(new BlockPos(4, 0, 0),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 0, 0),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.SOUTH)),
     // Map.entry(new BlockPos(6, 0, 0),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.SOUTH)),
     // Map.entry(new BlockPos(7, 0, 0),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 0, 0),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 0, 1),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(1, 0, 1),
-    // BlockInit.FLUORITE_BLOCK.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BLOCK.get().defaultBlockState()),
     // Map.entry(new BlockPos(2, 0, 1),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(3, 0, 1),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 0, 1),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 0, 1),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(6, 0, 1),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 0, 1),
-    // BlockInit.FLUORITE_BLOCK.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BLOCK.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 0, 1),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 0, 2),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.EAST)),
     // Map.entry(new BlockPos(1, 0, 2),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(2, 0, 2),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(3, 0, 2),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 0, 2),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 0, 2),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(6, 0, 2),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 0, 2),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 0, 2),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.WEST)),
     //
     // Map.entry(new BlockPos(0, 0, 3),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.EAST)),
     // Map.entry(new BlockPos(1, 0, 3),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(2, 0, 3),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(3, 0, 3),
-    // BlockInit.ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 0, 3),
-    // BlockInit.ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 0, 3),
-    // BlockInit.ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(6, 0, 3),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 0, 3),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 0, 3),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.WEST)),
     //
     // Map.entry(new BlockPos(0, 0, 4),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(1, 0, 4),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(2, 0, 4),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(3, 0, 4),
-    // BlockInit.ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 0, 4),
-    // BlockInit.ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 0, 4),
-    // BlockInit.ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(6, 0, 4),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 0, 4),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 0, 4),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 0, 5),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.EAST)),
     // Map.entry(new BlockPos(1, 0, 5),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(2, 0, 5),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(3, 0, 5),
-    // BlockInit.ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 0, 5),
-    // BlockInit.ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 0, 5),
-    // BlockInit.ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(6, 0, 5),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 0, 5),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 0, 5),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.WEST)),
     //
     // Map.entry(new BlockPos(0, 0, 6),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.EAST)),
     // Map.entry(new BlockPos(1, 0, 6),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(2, 0, 6),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(3, 0, 6),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 0, 6),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 0, 6),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(6, 0, 6),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 0, 6),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 0, 6),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.WEST)),
     //
     // Map.entry(new BlockPos(0, 0, 7),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(1, 0, 7),
-    // BlockInit.FLUORITE_BLOCK.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BLOCK.get().defaultBlockState()),
     // Map.entry(new BlockPos(2, 0, 7),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(3, 0, 7),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 0, 7),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 0, 7),
-    // BlockInit.FLUORITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(6, 0, 7),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 0, 7),
-    // BlockInit.FLUORITE_BLOCK.get().defaultBlockState()),
+    // MagitechBlocks.FLUORITE_BLOCK.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 0, 7),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 0, 8),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(1, 0, 8),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(2, 0, 8),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.NORTH)),
     // Map.entry(new BlockPos(3, 0, 8),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.NORTH)),
     // Map.entry(new BlockPos(4, 0, 8),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 0, 8),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.NORTH)),
     // Map.entry(new BlockPos(6, 0, 8),
-    // BlockInit.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
+    // MagitechBlocks.ALCHECRYSITE_STAIRS.get().defaultBlockState().setValue(StairBlock.FACING,
     // Direction.NORTH)),
     // Map.entry(new BlockPos(7, 0, 8),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 0, 8),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     //
     //
     // Map.entry(new BlockPos(0, 1, 0),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 1, 0),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 1, 0),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(1, 1, 1),
-    // BlockInit.MANA_VESSEL.get().defaultBlockState()),
+    // MagitechBlocks.MANA_VESSEL.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 1, 1),
-    // BlockInit.MANA_VESSEL.get().defaultBlockState()),
+    // MagitechBlocks.MANA_VESSEL.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(2, 1, 2),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     // Map.entry(new BlockPos(6, 1, 2),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 1, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 1, 4),
-    // BlockInit.ATHANOR_PILLAR.get().defaultBlockState()),
+    // MagitechBlocks.ATHANOR_PILLAR.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 1, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(2, 1, 6),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     // Map.entry(new BlockPos(6, 1, 6),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(1, 1, 7),
-    // BlockInit.MANA_VESSEL.get().defaultBlockState()),
+    // MagitechBlocks.MANA_VESSEL.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 1, 7),
-    // BlockInit.MANA_VESSEL.get().defaultBlockState()),
+    // MagitechBlocks.MANA_VESSEL.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 1, 8),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 1, 8),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 1, 8),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     //
     // Map.entry(new BlockPos(0, 2, 0),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 2, 0),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 2, 0),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(1, 2, 1),
-    // BlockInit.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
+    // MagitechBlocks.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
     // Direction.UP)),
     // Map.entry(new BlockPos(4, 2, 1),
-    // BlockInit.POLISHED_ALCHECRYSITE_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.POLISHED_ALCHECRYSITE_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(7, 2, 1),
-    // BlockInit.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
+    // MagitechBlocks.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
     // Direction.UP)),
     //
     // Map.entry(new BlockPos(0, 2, 4),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(1, 2, 4),
-    // BlockInit.POLISHED_ALCHECRYSITE_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.POLISHED_ALCHECRYSITE_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(7, 2, 4),
-    // BlockInit.POLISHED_ALCHECRYSITE_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.POLISHED_ALCHECRYSITE_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(8, 2, 4),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(1, 2, 7),
-    // BlockInit.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
+    // MagitechBlocks.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
     // Direction.UP)),
     // Map.entry(new BlockPos(4, 2, 7),
-    // BlockInit.POLISHED_ALCHECRYSITE_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.POLISHED_ALCHECRYSITE_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(7, 2, 7),
-    // BlockInit.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
+    // MagitechBlocks.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
     // Direction.UP)),
     //
     // Map.entry(new BlockPos(0, 2, 8),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 2, 8),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 2, 8),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     //
     // Map.entry(new BlockPos(0, 3, 0),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 3, 0),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 3, 0),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(4, 3, 1),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 3, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(1, 3, 4),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     // Map.entry(new BlockPos(7, 3, 4),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 3, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(4, 3, 7),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 3, 8),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 3, 8),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 3, 8),
-    // BlockInit.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
+    // MagitechBlocks.POLISHED_ALCHECRYSITE.get().defaultBlockState()),
     //
     //
     // Map.entry(new BlockPos(0, 4, 0),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 4, 0),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 4, 0),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 4, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 4, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 4, 8),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 4, 8),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(8, 4, 8),
-    // BlockInit.ALCHEMETRIC_PYLON.get().defaultBlockState()),
+    // MagitechBlocks.ALCHEMETRIC_PYLON.get().defaultBlockState()),
     //
     //
     // Map.entry(new BlockPos(4, 5, 0),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(0, 5, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     // Map.entry(new BlockPos(4, 5, 4),
-    // BlockInit.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
+    // MagitechBlocks.MANA_NODE.get().defaultBlockState().setValue(ManaNodeBlock.FACING,
     // Direction.DOWN)),
     // Map.entry(new BlockPos(8, 5, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(4, 5, 8),
-    // BlockInit.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get().defaultBlockState()),
     //
     //
     // Map.entry(new BlockPos(4, 6, 0),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(4, 6, 1),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     //
     // Map.entry(new BlockPos(4, 6, 2),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     //
     // Map.entry(new BlockPos(4, 6, 3),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     //
     // Map.entry(new BlockPos(0, 6, 4),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     // Map.entry(new BlockPos(1, 6, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(2, 6, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(3, 6, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(4, 6, 4),
-    // BlockInit.MANA_VESSEL.get().defaultBlockState()),
+    // MagitechBlocks.MANA_VESSEL.get().defaultBlockState()),
     // Map.entry(new BlockPos(5, 6, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(6, 6, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(7, 6, 4),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     // Map.entry(new BlockPos(8, 6, 4),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState()),
     //
     // Map.entry(new BlockPos(4, 6, 5),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     //
     // Map.entry(new BlockPos(4, 6, 6),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     //
     // Map.entry(new BlockPos(4, 6, 7),
-    // BlockInit.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
+    // MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get().defaultBlockState().setValue(SlabBlock.TYPE,
     // SlabType.TOP)),
     //
     // Map.entry(new BlockPos(4, 6, 8),
-    // BlockInit.ALCHECRYSITE_BRICKS.get().defaultBlockState())
+    // MagitechBlocks.ALCHECRYSITE_BRICKS.get().defaultBlockState())
     // );
     // }
 
@@ -1466,83 +1467,83 @@ public class AthanorPillarBlockEntity extends BlockEntity {
                                 }
                             },
                             '0',
-                            BlockInit.ALCHECRYSITE.get(),
+                            MagitechBlocks.ALCHECRYSITE.get(),
                             'C',
-                            BlockInit.ALCHECRYSITE.get(),
+                            MagitechBlocks.ALCHECRYSITE.get(),
                             'W',
                             PatchouliAPI.get()
                                     .stateMatcher(
-                                            BlockInit.ALCHECRYSITE_STAIRS
+                                            MagitechBlocks.ALCHECRYSITE_STAIRS
                                                     .get()
                                                     .defaultBlockState()
                                                     .setValue(StairBlock.FACING, Direction.WEST)),
                             'N',
                             PatchouliAPI.get()
                                     .stateMatcher(
-                                            BlockInit.ALCHECRYSITE_STAIRS
+                                            MagitechBlocks.ALCHECRYSITE_STAIRS
                                                     .get()
                                                     .defaultBlockState()
                                                     .setValue(StairBlock.FACING, Direction.NORTH)),
                             'S',
                             PatchouliAPI.get()
                                     .stateMatcher(
-                                            BlockInit.ALCHECRYSITE_STAIRS
+                                            MagitechBlocks.ALCHECRYSITE_STAIRS
                                                     .get()
                                                     .defaultBlockState()
                                                     .setValue(StairBlock.FACING, Direction.SOUTH)),
                             'E',
                             PatchouliAPI.get()
                                     .stateMatcher(
-                                            BlockInit.ALCHECRYSITE_STAIRS
+                                            MagitechBlocks.ALCHECRYSITE_STAIRS
                                                     .get()
                                                     .defaultBlockState()
                                                     .setValue(StairBlock.FACING, Direction.EAST)),
                             'P',
-                            BlockInit.POLISHED_ALCHECRYSITE.get(),
+                            MagitechBlocks.POLISHED_ALCHECRYSITE.get(),
                             'T',
                             PatchouliAPI.get()
                                     .stateMatcher(
-                                            BlockInit.POLISHED_ALCHECRYSITE_SLAB
+                                            MagitechBlocks.POLISHED_ALCHECRYSITE_SLAB
                                                     .get()
                                                     .defaultBlockState()
                                                     .setValue(SlabBlock.TYPE, SlabType.TOP)),
                             'B',
-                            BlockInit.ALCHECRYSITE_BRICKS.get(),
+                            MagitechBlocks.ALCHECRYSITE_BRICKS.get(),
                             'L',
-                            BlockInit.ALCHECRYSITE_BRICK_WALL.get(),
+                            MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get(),
                             'A',
                             PatchouliAPI.get()
                                     .stateMatcher(
-                                            BlockInit.ALCHECRYSITE_BRICK_SLAB
+                                            MagitechBlocks.ALCHECRYSITE_BRICK_SLAB
                                                     .get()
                                                     .defaultBlockState()
                                                     .setValue(SlabBlock.TYPE, SlabType.TOP)),
                             'F',
-                            BlockInit.FLUORITE_BLOCK.get(),
+                            MagitechBlocks.FLUORITE_BLOCK.get(),
                             'O',
-                            BlockInit.FLUORITE_BRICKS.get(),
+                            MagitechBlocks.FLUORITE_BRICKS.get(),
                             'M',
-                            BlockInit.ALCHEMETRIC_PYLON.get(),
+                            MagitechBlocks.ALCHEMETRIC_PYLON.get(),
                             'V',
-                            BlockInit.MANA_VESSEL.get(),
+                            MagitechBlocks.MANA_VESSEL.get(),
                             'U',
                             PatchouliAPI.get()
                                     .stateMatcher(
-                                            BlockInit.MANA_NODE
+                                            MagitechBlocks.MANA_NODE
                                                     .get()
                                                     .defaultBlockState()
                                                     .setValue(ManaNodeBlock.FACING, Direction.UP)),
                             'D',
                             PatchouliAPI.get()
                                     .stateMatcher(
-                                            BlockInit.MANA_NODE
+                                            MagitechBlocks.MANA_NODE
                                                     .get()
                                                     .defaultBlockState()
                                                     .setValue(
                                                             BlockStateProperties.FACING,
                                                             Direction.DOWN)),
                             'I',
-                            BlockInit.ATHANOR_PILLAR.get());
+                            MagitechBlocks.ATHANOR_PILLAR.get());
 
     // private static Map<BlockPos, BlockState> getStructure() {
     // return StructureHolder.STRUCTURE;

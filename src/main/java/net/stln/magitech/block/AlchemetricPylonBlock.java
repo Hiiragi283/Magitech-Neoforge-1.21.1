@@ -1,7 +1,5 @@
 package net.stln.magitech.block;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,6 +21,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.stln.magitech.block.entity.AlchemetricPylonBlockEntity;
+import net.stln.magitech.init.MagitechBlockEntityTypes;
+
+import org.jetbrains.annotations.Nullable;
 
 import com.mojang.serialization.MapCodec;
 
@@ -68,7 +69,8 @@ public class AlchemetricPylonBlock extends BaseEntityBlock {
     @Nullable @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTicker(level, blockEntityType, BlockInit.ALCHEMETRIC_PYLON_ENTITY.get());
+        return createTicker(
+                level, blockEntityType, MagitechBlockEntityTypes.ALCHEMETRIC_PYLON.get());
     }
 
     @Override

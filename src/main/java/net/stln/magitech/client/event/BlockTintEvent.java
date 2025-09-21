@@ -7,7 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID, value = Dist.CLIENT)
 public class BlockTintEvent {
@@ -24,6 +24,6 @@ public class BlockTintEvent {
                         return -1;
                     }
                 },
-                BlockInit.MISTALIA_PETALS.get());
+                MagitechBlocks.MISTALIA_PETALS.get());
     }
 }

@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.NyliumBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LightEngine;
+import net.stln.magitech.init.MagitechBlocks;
 
 import com.mojang.serialization.MapCodec;
 
@@ -49,7 +50,7 @@ public class ScorchedGrassSoilBlock extends Block {
     protected void randomTick(
             BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!canBeGrass(state, level, pos)) {
-            level.setBlockAndUpdate(pos, BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+            level.setBlockAndUpdate(pos, MagitechBlocks.SCORCHED_SOIL.get().defaultBlockState());
         }
     }
 }

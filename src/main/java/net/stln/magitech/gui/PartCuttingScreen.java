@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.stln.magitech.Magitech;
+import net.stln.magitech.inventory.PartCuttingMenu;
 import net.stln.magitech.recipe.PartCuttingRecipe;
 import net.stln.magitech.util.ClientHelper;
 

@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.recipe.input.SpellRecipeInput;
@@ -88,11 +89,11 @@ public record SpellConversionRecipe(
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return RecipeInit.SPELL_CONVERSION_SERIALIZER.get();
+        return MagitechRecipes.SPELL_CONVERSION_SERIALIZER.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return RecipeInit.SPELL_CONVERSION_TYPE.get();
+        return MagitechRecipes.SPELL_CONVERSION_TYPE.get();
     }
 }

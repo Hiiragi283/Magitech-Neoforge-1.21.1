@@ -29,7 +29,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.status.AttributeInit;
+import net.stln.magitech.init.MagitechAttributes;
 import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.SpellComponent;
 import net.stln.magitech.item.tool.ToolStats;
@@ -246,7 +246,7 @@ public abstract class SpellCasterItem extends PartToolItem {
         if (!ComponentHelper.isBroken(stack)) {
             entries.add(
                     new ItemAttributeModifiers.Entry(
-                            AttributeInit.SPELL_POWER,
+                            MagitechAttributes.SPELL_POWER,
                             new AttributeModifier(
                                     atkId,
                                     map.get(ToolStats.ATK_STAT) - mod.get(ToolStats.ATK_STAT),
@@ -256,14 +256,14 @@ public abstract class SpellCasterItem extends PartToolItem {
                 DeferredHolder<Attribute, Attribute> elementAttribute =
                         switch (finalStats.getElement()) {
                             case NONE -> null;
-                            case EMBER -> AttributeInit.EMBER_SPELL_POWER;
-                            case GLACE -> AttributeInit.GLACE_SPELL_POWER;
-                            case SURGE -> AttributeInit.SURGE_SPELL_POWER;
-                            case PHANTOM -> AttributeInit.PHANTOM_SPELL_POWER;
-                            case TREMOR -> AttributeInit.TREMOR_SPELL_POWER;
-                            case MAGIC -> AttributeInit.MAGIC_SPELL_POWER;
-                            case FLOW -> AttributeInit.FLOW_SPELL_POWER;
-                            case HOLLOW -> AttributeInit.HOLLOW_SPELL_POWER;
+                            case EMBER -> MagitechAttributes.EMBER_SPELL_POWER;
+                            case GLACE -> MagitechAttributes.GLACE_SPELL_POWER;
+                            case SURGE -> MagitechAttributes.SURGE_SPELL_POWER;
+                            case PHANTOM -> MagitechAttributes.PHANTOM_SPELL_POWER;
+                            case TREMOR -> MagitechAttributes.TREMOR_SPELL_POWER;
+                            case MAGIC -> MagitechAttributes.MAGIC_SPELL_POWER;
+                            case FLOW -> MagitechAttributes.FLOW_SPELL_POWER;
+                            case HOLLOW -> MagitechAttributes.HOLLOW_SPELL_POWER;
                         };
                 entries.add(
                         new ItemAttributeModifiers.Entry(
@@ -276,7 +276,7 @@ public abstract class SpellCasterItem extends PartToolItem {
             }
             entries.add(
                     new ItemAttributeModifiers.Entry(
-                            AttributeInit.CASTING_SPEED,
+                            MagitechAttributes.CASTING_SPEED,
                             new AttributeModifier(
                                     spdId,
                                     map.get(ToolStats.SPD_STAT) - mod.get(ToolStats.SPD_STAT),
@@ -284,7 +284,7 @@ public abstract class SpellCasterItem extends PartToolItem {
                             hand));
             entries.add(
                     new ItemAttributeModifiers.Entry(
-                            AttributeInit.COOLDOWN_SPEED,
+                            MagitechAttributes.COOLDOWN_SPEED,
                             new AttributeModifier(
                                     minId,
                                     map.get(ToolStats.MIN_STAT) - mod.get(ToolStats.MIN_STAT),
@@ -300,7 +300,7 @@ public abstract class SpellCasterItem extends PartToolItem {
                             hand));
             entries.add(
                     new ItemAttributeModifiers.Entry(
-                            AttributeInit.PROJECTILE_SPEED,
+                            MagitechAttributes.PROJECTILE_SPEED,
                             new AttributeModifier(
                                     rngId,
                                     map.get(ToolStats.RNG_STAT) - mod.get(ToolStats.RNG_STAT),
@@ -308,7 +308,7 @@ public abstract class SpellCasterItem extends PartToolItem {
                             hand));
             entries.add(
                     new ItemAttributeModifiers.Entry(
-                            AttributeInit.MANA_EFFICIENCY,
+                            MagitechAttributes.MANA_EFFICIENCY,
                             new AttributeModifier(
                                     rngId,
                                     map.get(ToolStats.SWP_STAT) - mod.get(ToolStats.SWP_STAT),

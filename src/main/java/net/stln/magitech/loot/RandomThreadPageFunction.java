@@ -11,6 +11,7 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.stln.magitech.MagitechRegistries;
+import net.stln.magitech.init.MagitechLootFunctions;
 import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.util.ComponentHelper;
 
@@ -76,6 +77,6 @@ public class RandomThreadPageFunction extends LootItemConditionalFunction {
 
     @Override
     public @NotNull LootItemFunctionType<? extends LootItemConditionalFunction> getType() {
-        return LootFunctionInit.RANDOM_THREAD_PAGE.get(); // 登録済みである必要あり
+        return MagitechLootFunctions.RANDOM_THREAD_PAGE.get(); // 登録済みである必要あり
     }
 }

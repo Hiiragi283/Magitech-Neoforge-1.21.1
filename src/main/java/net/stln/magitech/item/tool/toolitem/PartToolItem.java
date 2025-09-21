@@ -2,7 +2,6 @@ package net.stln.magitech.item.tool.toolitem;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 import net.minecraft.client.Minecraft;
@@ -152,27 +151,27 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         if (ComponentHelper.isBroken(stack)) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_NETHERITE_TOOL))
+        if (state.is(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)
                 && stats.getMiningLevel().getTier() <= MiningLevel.NETHERITE.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_DIAMOND_TOOL))
+        if (state.is(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)
                 && stats.getMiningLevel().getTier() <= MiningLevel.DIAMOND.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_IRON_TOOL))
+        if (state.is(BlockTags.INCORRECT_FOR_IRON_TOOL)
                 && stats.getMiningLevel().getTier() <= MiningLevel.IRON.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_STONE_TOOL))
+        if (state.is(BlockTags.INCORRECT_FOR_STONE_TOOL)
                 && stats.getMiningLevel().getTier() <= MiningLevel.STONE.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_GOLD_TOOL))
+        if (state.is(BlockTags.INCORRECT_FOR_GOLD_TOOL)
                 && stats.getMiningLevel().getTier() <= MiningLevel.NONE.getTier()) {
             return false;
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.INCORRECT_FOR_WOODEN_TOOL))
+        if (state.is(BlockTags.INCORRECT_FOR_WOODEN_TOOL)
                 && stats.getMiningLevel().getTier() <= MiningLevel.NONE.getTier()) {
             return false;
         }
@@ -300,24 +299,23 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
         if (flag[0] != null) {
             return flag[0];
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_AXE))
-                && partToolItem.getToolType() == ToolType.AXE) {
+        if (state.is(BlockTags.MINEABLE_WITH_AXE) && partToolItem.getToolType() == ToolType.AXE) {
             return hasCorrectTier(stack, state, stats);
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_PICKAXE))
+        if (state.is(BlockTags.MINEABLE_WITH_PICKAXE)
                 && (partToolItem.getToolType() == ToolType.PICKAXE
                         || partToolItem.getToolType() == ToolType.HAMMER)) {
             return hasCorrectTier(stack, state, stats);
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_SHOVEL))
+        if (state.is(BlockTags.MINEABLE_WITH_SHOVEL)
                 && partToolItem.getToolType() == ToolType.SHOVEL) {
             return hasCorrectTier(stack, state, stats);
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.MINEABLE_WITH_HOE))
+        if (state.is(BlockTags.MINEABLE_WITH_HOE)
                 && partToolItem.getToolType() == ToolType.SCYTHE) {
             return hasCorrectTier(stack, state, stats);
         }
-        if (state.getTags().anyMatch(Predicate.isEqual(BlockTags.SWORD_EFFICIENT))
+        if (state.is(BlockTags.SWORD_EFFICIENT)
                 && (partToolItem.getToolType() == ToolType.DAGGER
                         || partToolItem.getToolType() == ToolType.LIGHT_SWORD
                         || partToolItem.getToolType() == ToolType.HEAVY_SWORD
@@ -1201,8 +1199,8 @@ public abstract class PartToolItem extends Item implements LeftClickOverrideItem
             DamageSource elementalDamageSource =
                     attacker.damageSources().source(damageType, attacker);
             float damage =
-                    baseAttackDamage
-                            * DataMapHelper.getElementMultiplier(target, stats.getElement());
+                    ElementHelper.getElementalDamageValue(
+                            baseAttackDamage, target, stats.getElement());
             if (target instanceof LivingEntity livingEntity) {
                 float targetHealth = livingEntity.getHealth();
                 if (!target.isInvulnerableTo(elementalDamageSource)) {

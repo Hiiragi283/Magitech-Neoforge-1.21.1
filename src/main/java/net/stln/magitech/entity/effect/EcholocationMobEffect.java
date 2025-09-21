@@ -1,7 +1,5 @@
 package net.stln.magitech.entity.effect;
 
-import java.util.function.Predicate;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,9 +11,9 @@ import net.stln.magitech.particle.option.WaveNoCullParticleEffect;
 
 import org.joml.Vector3f;
 
-class EcholocationMobEffect extends CustomMobEffect {
+public class EcholocationMobEffect extends CustomMobEffect {
 
-    protected EcholocationMobEffect(MobEffectCategory mobEffectCategory, int i) {
+    public EcholocationMobEffect(MobEffectCategory mobEffectCategory, int i) {
         super(mobEffectCategory, i);
     }
 
@@ -27,7 +25,7 @@ class EcholocationMobEffect extends CustomMobEffect {
                     for (int k = -5; k < 6; k++) {
                         BlockPos blockPos = livingEntity.blockPosition().above(i).east(j).south(k);
                         BlockState blockState = livingEntity.level().getBlockState(blockPos);
-                        if (blockState.getTags().anyMatch(Predicate.isEqual(Tags.Blocks.ORES))) {
+                        if (blockState.is(Tags.Blocks.ORES)) {
                             Vec3 center = blockPos.getCenter();
                             Vec3 corner = Vec3.atLowerCornerOf(blockPos);
                             livingEntity

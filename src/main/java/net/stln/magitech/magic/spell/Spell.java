@@ -30,8 +30,10 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.MagitechRegistries;
+import net.stln.magitech.client.render.PlayerAnimatorInit;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.status.AttributeInit;
+import net.stln.magitech.init.MagitechAttributes;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.tool.toolitem.SpellCasterItem;
 import net.stln.magitech.magic.charge.Charge;
 import net.stln.magitech.magic.charge.ChargeData;
@@ -41,9 +43,8 @@ import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.mana.UsedHandData;
 import net.stln.magitech.network.ReleaseUsingSpellPayload;
 import net.stln.magitech.network.UseSpellPayload;
-import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.input.SpellRecipeInput;
-import net.stln.magitech.util.DataMapHelper;
+import net.stln.magitech.util.ElementHelper;
 import net.stln.magitech.util.MathUtil;
 import net.stln.magitech.util.SpellShape;
 
@@ -75,12 +76,12 @@ public abstract class Spell implements SpellLike {
 
     @OnlyIn(Dist.CLIENT)
     private static void stopAnim(Player player) {
-        var playerAnimationData =
+        var modifierLayer =
                 (ModifierLayer<IAnimation>)
                         PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) player)
-                                .get(Magitech.id("animation"));
-        if (playerAnimationData != null
-                && playerAnimationData.getAnimation()
+                                .get(PlayerAnimatorInit.AMINATION_ID);
+        if (modifierLayer != null
+                && modifierLayer.getAnimation()
                         instanceof KeyframeAnimationPlayer keyframeAnimationPlayer) {
 
             keyframeAnimationPlayer.stop();
@@ -114,7 +115,7 @@ public abstract class Spell implements SpellLike {
             map.put(
                     ManaUtil.ManaType.MANA,
                     map.get(ManaUtil.ManaType.MANA)
-                            / user.getAttributeValue(AttributeInit.MANA_EFFICIENCY));
+                            / user.getAttributeValue(MagitechAttributes.MANA_EFFICIENCY));
         }
         return map;
     }
@@ -125,7 +126,7 @@ public abstract class Spell implements SpellLike {
             map.put(
                     ManaUtil.ManaType.MANA,
                     map.get(ManaUtil.ManaType.MANA)
-                            / user.getAttributeValue(AttributeInit.MANA_EFFICIENCY));
+                            / user.getAttributeValue(MagitechAttributes.MANA_EFFICIENCY));
         }
         return map;
     }
@@ -136,7 +137,7 @@ public abstract class Spell implements SpellLike {
             map.put(
                     ManaUtil.ManaType.MANA,
                     map.get(ManaUtil.ManaType.MANA)
-                            / user.getAttributeValue(AttributeInit.MANA_EFFICIENCY));
+                            / user.getAttributeValue(MagitechAttributes.MANA_EFFICIENCY));
         }
         return map;
     }
@@ -157,7 +158,7 @@ public abstract class Spell implements SpellLike {
         return (int)
                 Math.round(
                         this.getCooldown(level, user, stack)
-                                / user.getAttributeValue(AttributeInit.COOLDOWN_SPEED));
+                                / user.getAttributeValue(MagitechAttributes.COOLDOWN_SPEED));
     }
 
     public Element getElement(Level level, Player user, ItemStack stack) {
@@ -189,23 +190,23 @@ public abstract class Spell implements SpellLike {
     }
 
     @OnlyIn(Dist.CLIENT)
-    protected void playAnimation(Player user) {
-        var playerAnimationData =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
-                                .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
+    protected final void playAnimation(@NotNull Player player) {
+        PlayerAnimatorInit.usePlayerAnimation(
+                player, modifierLayer -> playAnimation(player, modifierLayer));
+    }
 
-            user.yBodyRot = user.yHeadRot;
-            playerAnimationData.setAnimation(
-                    new KeyframeAnimationPlayer(
-                                    (KeyframeAnimation)
-                                            PlayerAnimationRegistry.getAnimation(
-                                                    Magitech.id("swing_wand")))
-                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
-                            .setFirstPersonConfiguration(
-                                    new FirstPersonConfiguration(true, true, true, true)));
-        }
+    @OnlyIn(Dist.CLIENT)
+    protected void playAnimation(
+            @NotNull Player player, @NotNull ModifierLayer<IAnimation> modifierLayer) {
+        player.yBodyRot = player.yHeadRot;
+        modifierLayer.setAnimation(
+                new KeyframeAnimationPlayer(
+                                (KeyframeAnimation)
+                                        PlayerAnimationRegistry.getAnimation(
+                                                Magitech.id("swing_wand")))
+                        .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                        .setFirstPersonConfiguration(
+                                new FirstPersonConfiguration(true, true, true, true)));
     }
 
     public boolean canHoldUsing() {
@@ -278,7 +279,7 @@ public abstract class Spell implements SpellLike {
                                 Math.round(
                                         ticks
                                                 / user.getAttributeValue(
-                                                        AttributeInit.CASTING_SPEED)),
+                                                        MagitechAttributes.CASTING_SPEED)),
                                 2),
                         this,
                         element));
@@ -290,26 +291,26 @@ public abstract class Spell implements SpellLike {
                 this,
                 new Cooldown(
                         this.getCooldown(level, user, stack)
-                                / user.getAttributeValue(AttributeInit.COOLDOWN_SPEED),
+                                / user.getAttributeValue(MagitechAttributes.COOLDOWN_SPEED),
                         this.getElement()));
     }
 
     public float getDamage(
             Player user, Map<ManaUtil.ManaType, Double> cost, float baseDamage, Element element) {
         baseDamage = ManaUtil.checkStrandDamageMul(user, cost, baseDamage);
-        double power = user.getAttributeValue(AttributeInit.SPELL_POWER);
+        double power = user.getAttributeValue(MagitechAttributes.SPELL_POWER);
         double elementPower;
         if (element != Element.NONE) {
             DeferredHolder<Attribute, Attribute> elementAttribute =
                     switch (element) {
-                        case EMBER -> AttributeInit.EMBER_SPELL_POWER;
-                        case GLACE -> AttributeInit.GLACE_SPELL_POWER;
-                        case SURGE -> AttributeInit.SURGE_SPELL_POWER;
-                        case PHANTOM -> AttributeInit.PHANTOM_SPELL_POWER;
-                        case TREMOR -> AttributeInit.TREMOR_SPELL_POWER;
-                        case MAGIC -> AttributeInit.MAGIC_SPELL_POWER;
-                        case FLOW -> AttributeInit.FLOW_SPELL_POWER;
-                        case HOLLOW -> AttributeInit.HOLLOW_SPELL_POWER;
+                        case EMBER -> MagitechAttributes.EMBER_SPELL_POWER;
+                        case GLACE -> MagitechAttributes.GLACE_SPELL_POWER;
+                        case SURGE -> MagitechAttributes.SURGE_SPELL_POWER;
+                        case PHANTOM -> MagitechAttributes.PHANTOM_SPELL_POWER;
+                        case TREMOR -> MagitechAttributes.TREMOR_SPELL_POWER;
+                        case MAGIC -> MagitechAttributes.MAGIC_SPELL_POWER;
+                        case FLOW -> MagitechAttributes.FLOW_SPELL_POWER;
+                        case HOLLOW -> MagitechAttributes.HOLLOW_SPELL_POWER;
                         default -> throw new IllegalStateException("Unexpected value: " + element);
                     };
             elementPower = user.getAttributeValue(elementAttribute);
@@ -320,7 +321,7 @@ public abstract class Spell implements SpellLike {
     }
 
     public double getProjectileSpeed(Player user, double baseSpeed) {
-        double power = user.getAttributeValue(AttributeInit.PROJECTILE_SPEED);
+        double power = user.getAttributeValue(MagitechAttributes.PROJECTILE_SPEED);
         return baseSpeed * power;
     }
 
@@ -336,7 +337,7 @@ public abstract class Spell implements SpellLike {
 
         DamageSource elementalDamageSource = user.damageSources().source(damageType, user);
         if (target.isAttackable()) {
-            damage *= DataMapHelper.getElementMultiplier(target, element);
+            damage = ElementHelper.getElementalDamageValue(damage, target, element);
 
             if (target instanceof LivingEntity livingTarget && livingTarget.invulnerableTime < 10) {
                 if (stack.getItem() instanceof SpellCasterItem spellCasterItem) {
@@ -500,7 +501,7 @@ public abstract class Spell implements SpellLike {
         if (target instanceof ItemEntity item) {
             var recipeInput = new SpellRecipeInput(item.getItem(), this);
             level.getRecipeManager()
-                    .getRecipeFor(RecipeInit.SPELL_CONVERSION_TYPE.get(), recipeInput, level)
+                    .getRecipeFor(MagitechRecipes.SPELL_CONVERSION_TYPE.get(), recipeInput, level)
                     .map(RecipeHolder::value)
                     .ifPresent(
                             recipe -> {

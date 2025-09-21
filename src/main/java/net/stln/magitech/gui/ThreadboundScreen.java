@@ -6,12 +6,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.stln.magitech.Magitech;
+import net.stln.magitech.inventory.ThreadboundMenu;
 
-public class ThreadboundScreen extends AbstractContainerScreen<ThreadboundMenuType> {
+public class ThreadboundScreen extends AbstractContainerScreen<ThreadboundMenu> {
 
     private static final ResourceLocation GUI_TEXTURE = Magitech.id("textures/gui/threadbound.png");
 
-    public ThreadboundScreen(ThreadboundMenuType menu, Inventory playerInventory, Component title) {
+    public ThreadboundScreen(ThreadboundMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         imageWidth = 176;
         imageHeight = 194;

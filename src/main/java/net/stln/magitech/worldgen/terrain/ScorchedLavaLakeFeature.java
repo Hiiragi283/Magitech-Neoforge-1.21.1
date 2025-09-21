@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
 
 public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -33,8 +33,8 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos blockpos = context.origin();
         Predicate<BlockState> predicate =
                 p_204782_ ->
-                        p_204782_.is(BlockInit.SCORCHED_GRASS_SOIL.get())
-                                || p_204782_.is(BlockInit.SCORCHED_SOIL.get())
+                        p_204782_.is(MagitechBlocks.SCORCHED_GRASS_SOIL.get())
+                                || p_204782_.is(MagitechBlocks.SCORCHED_SOIL.get())
                                 || p_204782_.is(Blocks.STONE);
         int i = randomsource.nextInt(4, 7) + 1;
         int j = randomsource.nextInt(4, 7) + 1;
@@ -66,8 +66,8 @@ public class ScorchedLavaLakeFeature extends Feature<NoneFeatureConfiguration> {
 
             Predicate<BlockState> predicate =
                     p_204782_ ->
-                            p_204782_.is(BlockInit.SCORCHED_GRASS_SOIL.get())
-                                    || p_204782_.is(BlockInit.SCORCHED_SOIL.get())
+                            p_204782_.is(MagitechBlocks.SCORCHED_GRASS_SOIL.get())
+                                    || p_204782_.is(MagitechBlocks.SCORCHED_SOIL.get())
                                     || p_204782_.is(Blocks.STONE);
             List<Direction> directions = Arrays.asList(Direction.values().clone());
             directions.remove(Direction.UP);

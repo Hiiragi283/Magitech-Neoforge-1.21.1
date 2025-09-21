@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
-import net.stln.magitech.damage.ElementAffinity;
-import net.stln.magitech.damage.ElementAffinityRegister;
 import net.stln.magitech.data.DataMapTypeInit;
 import net.stln.magitech.data.EntityElementData;
 import net.stln.magitech.element.Element;
+import net.stln.magitech.element.ElementAffinity;
+import net.stln.magitech.element.ElementAffinityRegister;
 
 import org.jetbrains.annotations.NotNull;
 

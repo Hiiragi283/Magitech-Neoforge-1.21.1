@@ -7,7 +7,7 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.stln.magitech.gui.ThreadboundMenuType;
+import net.stln.magitech.inventory.ThreadboundMenu;
 import net.stln.magitech.item.ThreadBoundItem;
 import net.stln.magitech.util.CuriosHelper;
 
@@ -29,7 +29,7 @@ public class OpenThreadBoundPageScreenPayLoadHandler {
             player.openMenu(
                     new SimpleMenuProvider(
                             (containerId, playerInventory, player2) ->
-                                    new ThreadboundMenuType(containerId, playerInventory),
+                                    new ThreadboundMenu(containerId, playerInventory),
                             player.getItemInHand(InteractionHand.MAIN_HAND).getDisplayName()));
         } else {
             CuriosHelper.getThreadBoundStack(player)
@@ -38,7 +38,7 @@ public class OpenThreadBoundPageScreenPayLoadHandler {
                                     player.openMenu(
                                             new SimpleMenuProvider(
                                                     (containerId, playerInventory, player2) ->
-                                                            new ThreadboundMenuType(
+                                                            new ThreadboundMenu(
                                                                     containerId, playerInventory),
                                                     stack.getDisplayName())));
         }

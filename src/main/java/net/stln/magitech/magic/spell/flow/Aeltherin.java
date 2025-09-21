@@ -3,7 +3,6 @@ package net.stln.magitech.magic.spell.flow;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -13,10 +12,12 @@ import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.entity.magical.AeltherinEntity;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.SpellShape;
+
+import org.jetbrains.annotations.NotNull;
 
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
@@ -24,7 +25,6 @@ import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 
 public class Aeltherin extends Spell {
@@ -63,7 +63,7 @@ public class Aeltherin extends Spell {
                 user.getX(),
                 user.getY(),
                 user.getZ(),
-                SoundInit.AELTHERIN.get(),
+                MagitechSounds.AELTHERIN.get(),
                 SoundSource.PLAYERS);
         if (!level.isClientSide && !isHost) {
             AeltherinEntity bullet =
@@ -86,22 +86,16 @@ public class Aeltherin extends Spell {
     }
 
     @Override
-    protected void playAnimation(Player user) {
-        var playerAnimationData =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
-                                .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
-
-            user.yBodyRot = user.yHeadRot;
-            playerAnimationData.setAnimation(
-                    new KeyframeAnimationPlayer(
-                                    (KeyframeAnimation)
-                                            PlayerAnimationRegistry.getAnimation(
-                                                    Magitech.id("swing_wand")))
-                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
-                            .setFirstPersonConfiguration(
-                                    new FirstPersonConfiguration(true, true, true, true)));
-        }
+    protected void playAnimation(
+            @NotNull Player player, @NotNull ModifierLayer<IAnimation> modifierLayer) {
+        player.yBodyRot = player.yHeadRot;
+        modifierLayer.setAnimation(
+                new KeyframeAnimationPlayer(
+                                (KeyframeAnimation)
+                                        PlayerAnimationRegistry.getAnimation(
+                                                Magitech.id("swing_wand")))
+                        .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                        .setFirstPersonConfiguration(
+                                new FirstPersonConfiguration(true, true, true, true)));
     }
 }

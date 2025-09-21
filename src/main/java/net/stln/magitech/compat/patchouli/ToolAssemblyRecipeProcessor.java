@@ -11,11 +11,11 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.MaterialComponent;
 import net.stln.magitech.item.component.PartMaterialComponent;
 import net.stln.magitech.item.tool.material.ToolMaterial;
-import net.stln.magitech.recipe.RecipeInit;
 import net.stln.magitech.recipe.ToolAssemblyRecipe;
 import net.stln.magitech.recipe.ToolMaterialRecipe;
 import net.stln.magitech.util.ToolMaterialUtil;
@@ -74,7 +74,7 @@ public class ToolAssemblyRecipeProcessor implements IComponentProcessor {
         }
         RecipeManager recipeManager = level.getRecipeManager();
         List<ToolMaterialRecipe> materialRecipes =
-                recipeManager.getAllRecipesFor(RecipeInit.TOOL_MATERIAL_TYPE.get()).stream()
+                recipeManager.getAllRecipesFor(MagitechRecipes.TOOL_MATERIAL_TYPE.get()).stream()
                         .map(RecipeHolder::value)
                         .toList();
         List<ToolMaterial> materials =

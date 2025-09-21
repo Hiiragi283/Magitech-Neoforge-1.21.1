@@ -12,7 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.MaterialComponent;
 import net.stln.magitech.util.ClientHelper;
@@ -67,7 +68,7 @@ public record PartCuttingRecipe(String group, int inputCount, ItemStack result)
         if (level != null) {
             level
                     .getRecipeManager()
-                    .getRecipesFor(RecipeInit.TOOL_MATERIAL_TYPE.get(), input, level)
+                    .getRecipesFor(MagitechRecipes.TOOL_MATERIAL_TYPE.get(), input, level)
                     .stream()
                     .findFirst()
                     .map(RecipeHolder::value)
@@ -98,16 +99,16 @@ public record PartCuttingRecipe(String group, int inputCount, ItemStack result)
 
     @Override
     public @NotNull ItemStack getToastSymbol() {
-        return BlockInit.ENGINEERING_WORKBENCH.toStack();
+        return MagitechBlocks.ENGINEERING_WORKBENCH.toStack();
     }
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return RecipeInit.PART_CUTTING_SERIALIZER.get();
+        return MagitechRecipes.PART_CUTTING_SERIALIZER.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return RecipeInit.PART_CUTTING_TYPE.get();
+        return MagitechRecipes.PART_CUTTING_TYPE.get();
     }
 }

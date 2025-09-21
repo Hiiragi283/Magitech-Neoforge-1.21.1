@@ -1,9 +1,6 @@
 package net.stln.magitech.entity.magical;
 
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -17,13 +14,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.EntityInit;
-import net.stln.magitech.entity.effect.MobEffectInit;
+import net.stln.magitech.init.MagitechEntities;
+import net.stln.magitech.init.MagitechMobEffects;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
-import net.stln.magitech.sound.SoundInit;
-import net.stln.magitech.util.DataMapHelper;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -39,11 +35,11 @@ public class MirazienEntity extends SpellProjectileEntity {
     }
 
     public MirazienEntity(Level world, Player player, float damage) {
-        super(EntityInit.MIRAZIEN_ENTITY.get(), player, world, null, damage);
+        super(MagitechEntities.MIRAZIEN_ENTITY.get(), player, world, ItemStack.EMPTY, damage);
     }
 
     public MirazienEntity(Level world, Player player, ItemStack weapon, float damage) {
-        super(EntityInit.MIRAZIEN_ENTITY.get(), player, world, weapon, damage);
+        super(MagitechEntities.MIRAZIEN_ENTITY.get(), player, world, weapon, damage);
     }
 
     public MirazienEntity(
@@ -53,7 +49,7 @@ public class MirazienEntity extends SpellProjectileEntity {
             double z,
             Level world,
             ItemStack stack,
-            @Nullable ItemStack weapon,
+            @NotNull ItemStack weapon,
             float damage) {
         super(type, x, y, z, world, weapon, damage);
     }
@@ -63,7 +59,7 @@ public class MirazienEntity extends SpellProjectileEntity {
             LivingEntity owner,
             Level world,
             ItemStack stack,
-            @Nullable ItemStack shotFrom,
+            @NotNull ItemStack shotFrom,
             float damage) {
         super(type, owner, world, shotFrom, damage);
     }
@@ -101,20 +97,13 @@ public class MirazienEntity extends SpellProjectileEntity {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        Entity owner = this.getOwner();
-
-        ResourceKey<DamageType> damageType = this.getElement().getDamageType();
-        DamageSource elementalDamageSource = getElementalDamageSource(owner, damageType);
-
-        float finalDamage =
-                this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
-        applyDamage(entity, elementalDamageSource, finalDamage);
+        applyDamage(entity, getElementalDamageSource(), getElementalDamageValue(entity));
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 0));
-            livingEntity.addEffect(new MobEffectInstance(MobEffectInit.SEIZE, 80, 0));
+            livingEntity.addEffect(new MobEffectInstance(MagitechMobEffects.SEIZE, 80, 0));
         }
         hitParticle();
 
@@ -124,12 +113,12 @@ public class MirazienEntity extends SpellProjectileEntity {
     }
 
     @Override
-    protected Element getElement() {
+    @NotNull public Element getElement() {
         return Element.PHANTOM;
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult) {
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
         hitParticle();
 
@@ -186,8 +175,8 @@ public class MirazienEntity extends SpellProjectileEntity {
     }
 
     @Override
-    protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return SoundInit.MYSTICAL.get();
+    protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
+        return MagitechSounds.MYSTICAL.get();
     }
 
     @Override

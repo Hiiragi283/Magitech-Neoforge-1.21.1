@@ -12,7 +12,7 @@ import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFu
 import net.minecraft.world.level.storage.loot.predicates.TimeCheck;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.stln.magitech.entity.EntityInit;
+import net.stln.magitech.init.MagitechEntities;
 import net.stln.magitech.item.ItemInit;
 
 public class ModEntityLootTableProvider extends EntityLootSubProvider {
@@ -24,7 +24,7 @@ public class ModEntityLootTableProvider extends EntityLootSubProvider {
     @Override
     public void generate() {
         this.add(
-                EntityInit.WEAVER_ENTITY.get(),
+                MagitechEntities.WEAVER_ENTITY.get(),
                 LootTable.lootTable()
                         .withPool(
                                 LootPool.lootPool()

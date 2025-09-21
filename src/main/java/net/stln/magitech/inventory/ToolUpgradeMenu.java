@@ -1,4 +1,4 @@
-package net.stln.magitech.gui;
+package net.stln.magitech.inventory;
 
 import java.util.List;
 import java.util.Random;
@@ -17,8 +17,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.stln.magitech.advancement.CriterionInit;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechCriteria;
+import net.stln.magitech.init.MagitechMenuTypes;
 import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.UpgradeComponent;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
@@ -71,7 +72,7 @@ public class ToolUpgradeMenu extends AbstractContainerMenu {
 
     public ToolUpgradeMenu(
             int containerId, Inventory playerInventory, final ContainerLevelAccess access) {
-        super(GuiInit.TOOL_UPGRADE_MENU.get(), containerId);
+        super(MagitechMenuTypes.TOOL_UPGRADE.get(), containerId);
         this.access = access;
         this.level = playerInventory.player.level();
         this.addSlot(new Slot(this.container, 0, 20, 69));
@@ -120,7 +121,7 @@ public class ToolUpgradeMenu extends AbstractContainerMenu {
     /** Determines whether supplied player can use this container */
     @Override
     public boolean stillValid(@NotNull Player player) {
-        return stillValid(this.access, player, BlockInit.UPGRADE_WORKBENCH.get());
+        return stillValid(this.access, player, MagitechBlocks.UPGRADE_WORKBENCH.get());
     }
 
     /**
@@ -153,7 +154,7 @@ public class ToolUpgradeMenu extends AbstractContainerMenu {
                             1.0F,
                             1.0F);
             if (!player.level().isClientSide && player instanceof ServerPlayer serverPlayer) {
-                CriterionInit.TOOL_UPGRADE
+                MagitechCriteria.TOOL_UPGRADE
                         .get()
                         .trigger(
                                 serverPlayer,
@@ -212,7 +213,7 @@ public class ToolUpgradeMenu extends AbstractContainerMenu {
 
     @Override
     public MenuType<?> getType() {
-        return GuiInit.TOOL_UPGRADE_MENU.get();
+        return MagitechMenuTypes.TOOL_UPGRADE.get();
     }
 
     /**

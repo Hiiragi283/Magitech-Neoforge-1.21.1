@@ -16,14 +16,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.status.AttributeInit;
+import net.stln.magitech.init.MagitechAttributes;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.BeamSpell;
 import net.stln.magitech.particle.option.BeamParticleEffect;
 import net.stln.magitech.particle.option.SparkParticleEffect;
 import net.stln.magitech.particle.option.ZapParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.*;
 
 import org.joml.Vector3f;
@@ -61,7 +61,9 @@ public class Fulgenza extends BeamSpell {
     @Override
     public void use(Level level, Player user, InteractionHand hand, boolean isHost) {
         addCharge(user, 80, this.getElement());
-        int delay = (int) Math.round(80 / user.getAttributeValue(AttributeInit.CASTING_SPEED)) - 80;
+        int delay =
+                (int) Math.round(80 / user.getAttributeValue(MagitechAttributes.CASTING_SPEED))
+                        - 80;
         TickScheduler.schedule(
                 Math.max(delay, 0),
                 () -> {
@@ -70,14 +72,15 @@ public class Fulgenza extends BeamSpell {
                             user.getX(),
                             user.getY(),
                             user.getZ(),
-                            SoundInit.FULGENZA_CHARGE.get(),
+                            MagitechSounds.FULGENZA_CHARGE.get(),
                             SoundSource.PLAYERS,
                             1.0F,
                             (float) 80
                                     / (Math.round(
                                                     80
                                                             / user.getAttributeValue(
-                                                                    AttributeInit.CASTING_SPEED))
+                                                                    MagitechAttributes
+                                                                            .CASTING_SPEED))
                                             - Math.max(delay, 0)));
                 },
                 level.isClientSide);
@@ -223,7 +226,7 @@ public class Fulgenza extends BeamSpell {
                 user.getX(),
                 user.getY(),
                 user.getZ(),
-                SoundInit.FULGENZA.get(),
+                MagitechSounds.FULGENZA.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 0.6F + (user.getRandom().nextFloat() * 0.6F));

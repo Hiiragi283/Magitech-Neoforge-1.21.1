@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.stln.magitech.block.BlockInit;
 import net.stln.magitech.block.CrystalClusterBlock;
+import net.stln.magitech.init.MagitechBlocks;
 
 public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -89,16 +89,16 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                                         (int) (dz + offsetZ * f * offsetMul));
                         BlockState below = level.getBlockState(target.below());
 
-                        if (below.is(BlockInit.SCORCHED_GRASS_SOIL.get())) {
+                        if (below.is(MagitechBlocks.SCORCHED_GRASS_SOIL.get())) {
                             this.setBlock(
                                     level,
                                     target.below(),
-                                    BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                                    MagitechBlocks.SCORCHED_SOIL.get().defaultBlockState());
                         }
                         this.setBlock(
                                 level,
                                 target,
-                                BlockInit.SCORCHED_GRASS_SOIL.get().defaultBlockState());
+                                MagitechBlocks.SCORCHED_GRASS_SOIL.get().defaultBlockState());
                     }
                 }
             }
@@ -156,13 +156,13 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                             this.setBlock(
                                     level,
                                     blockpos1,
-                                    BlockInit.SCORCHED_GRASS_SOIL.get().defaultBlockState());
+                                    MagitechBlocks.SCORCHED_GRASS_SOIL.get().defaultBlockState());
                         } else if (level.getBlockState(blockpos1.above(2)).isAir()
                                 || level.getBlockState(blockpos1.above(3)).isAir()) {
                             this.setBlock(
                                     level,
                                     blockpos1,
-                                    BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                                    MagitechBlocks.SCORCHED_SOIL.get().defaultBlockState());
                         }
                     }
 
@@ -205,11 +205,11 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                             // 内部 → 液体
                             setBlock(level, pos, Blocks.LAVA.defaultBlockState());
                             if (level.getBlockState(pos.offset(0, -1, 0))
-                                    .is(BlockInit.SCORCHED_GRASS_SOIL.get())) {
+                                    .is(MagitechBlocks.SCORCHED_GRASS_SOIL.get())) {
                                 setBlock(
                                         level,
                                         pos.offset(0, -1, 0),
-                                        BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                                        MagitechBlocks.SCORCHED_SOIL.get().defaultBlockState());
                             }
                         } else {
                             setBlock(level, pos, Blocks.AIR.defaultBlockState());
@@ -226,13 +226,15 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                                     setBlock(
                                             level,
                                             pos1,
-                                            BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                                            MagitechBlocks.SCORCHED_SOIL.get().defaultBlockState());
                                     if (level.getBlockState(pos1.offset(0, -1, 0))
-                                            .is(BlockInit.SCORCHED_GRASS_SOIL.get())) {
+                                            .is(MagitechBlocks.SCORCHED_GRASS_SOIL.get())) {
                                         setBlock(
                                                 level,
                                                 pos1.offset(0, -1, 0),
-                                                BlockInit.SCORCHED_SOIL.get().defaultBlockState());
+                                                MagitechBlocks.SCORCHED_SOIL
+                                                        .get()
+                                                        .defaultBlockState());
                                     }
                                 } else if (dy + direction.getStepY() == 0
                                         && level.getBlockState(pos1.above()).isAir()) {
@@ -240,7 +242,7 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                                         setBlock(
                                                 level,
                                                 pos1,
-                                                BlockInit.SCORCHED_GRASS_SOIL
+                                                MagitechBlocks.SCORCHED_GRASS_SOIL
                                                         .get()
                                                         .defaultBlockState());
                                     } else {
@@ -249,7 +251,7 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                                             setBlock(
                                                     level,
                                                     pos1.offset(0, -i, 0),
-                                                    BlockInit.SULFUR_BLOCK
+                                                    MagitechBlocks.SULFUR_BLOCK
                                                             .get()
                                                             .defaultBlockState());
                                             for (Direction direction1 : Direction.values()) {
@@ -259,7 +261,7 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                                                     setBlock(
                                                             level,
                                                             pos2,
-                                                            BlockInit.SULFUR_CRYSTAL_CLUSTER
+                                                            MagitechBlocks.SULFUR_CRYSTAL_CLUSTER
                                                                     .get()
                                                                     .defaultBlockState()
                                                                     .setValue(
@@ -273,7 +275,7 @@ public class ScorchedGeyserFeature extends Feature<NoneFeatureConfiguration> {
                                             setBlock(
                                                     level,
                                                     pos1.offset(0, -i, 0),
-                                                    BlockInit.SULFUR_CRYSTAL_CLUSTER
+                                                    MagitechBlocks.SULFUR_CRYSTAL_CLUSTER
                                                             .get()
                                                             .defaultBlockState()
                                                             .setValue(

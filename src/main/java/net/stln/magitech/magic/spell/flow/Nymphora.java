@@ -13,14 +13,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.particle.option.*;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.SpellShape;
 
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
@@ -49,14 +50,14 @@ public class Nymphora extends Spell {
     }
 
     protected static void playShootAnimation(Player user) {
-        var playerAnimationData =
+        var modifierLayer =
                 (ModifierLayer<IAnimation>)
                         PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
                                 .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
+        if (modifierLayer != null) {
 
             user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(
+            modifierLayer.replaceAnimationWithFade(
                     AbstractFadeModifier.standardFadeIn(1, Ease.OUTSINE),
                     new KeyframeAnimationPlayer(
                                     (KeyframeAnimation)
@@ -171,7 +172,7 @@ public class Nymphora extends Spell {
                         userPos.x,
                         userPos.y,
                         userPos.z,
-                        SoundInit.NYMPHORA.get(),
+                        MagitechSounds.NYMPHORA.get(),
                         SoundSource.PLAYERS,
                         1.0F,
                         0.7F + (user.getRandom().nextFloat() * 0.6F));
@@ -203,23 +204,17 @@ public class Nymphora extends Spell {
     }
 
     @Override
-    protected void playAnimation(Player user) {
-        var playerAnimationData =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
-                                .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
-
-            user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(
-                    AbstractFadeModifier.standardFadeIn(3, Ease.OUTSINE),
-                    new KeyframeAnimationPlayer(
-                                    (KeyframeAnimation)
-                                            PlayerAnimationRegistry.getAnimation(
-                                                    Magitech.id("wand_chant")))
-                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
-                            .setFirstPersonConfiguration(
-                                    new FirstPersonConfiguration(true, true, true, true)));
-        }
+    protected void playAnimation(
+            @NotNull Player player, @NotNull ModifierLayer<IAnimation> modifierLayer) {
+        player.yBodyRot = player.yHeadRot;
+        modifierLayer.replaceAnimationWithFade(
+                AbstractFadeModifier.standardFadeIn(3, Ease.OUTSINE),
+                new KeyframeAnimationPlayer(
+                                (KeyframeAnimation)
+                                        PlayerAnimationRegistry.getAnimation(
+                                                Magitech.id("wand_chant")))
+                        .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                        .setFirstPersonConfiguration(
+                                new FirstPersonConfiguration(true, true, true, true)));
     }
 }

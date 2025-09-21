@@ -6,7 +6,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.entity.status.AttributeInit;
+import net.stln.magitech.init.MagitechAttributes;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID)
 public class EntityManaTickEvent {
@@ -22,19 +22,19 @@ public class EntityManaTickEvent {
             ManaData.setCurrentMana(
                     player,
                     ManaUtil.ManaType.MANA,
-                    player.getAttributeValue(AttributeInit.MAX_MANA));
+                    player.getAttributeValue(MagitechAttributes.MAX_MANA));
             ManaData.setCurrentMana(
                     player,
                     ManaUtil.ManaType.NOCTIS,
-                    player.getAttributeValue(AttributeInit.MAX_NOCTIS));
+                    player.getAttributeValue(MagitechAttributes.MAX_NOCTIS));
             ManaData.setCurrentMana(
                     player,
                     ManaUtil.ManaType.LUMINIS,
-                    player.getAttributeValue(AttributeInit.MAX_LUMINIS));
+                    player.getAttributeValue(MagitechAttributes.MAX_LUMINIS));
             ManaData.setCurrentMana(
                     player,
                     ManaUtil.ManaType.FLUXIA,
-                    player.getAttributeValue(AttributeInit.MAX_FLUXIA));
+                    player.getAttributeValue(MagitechAttributes.MAX_FLUXIA));
         }
     }
 }

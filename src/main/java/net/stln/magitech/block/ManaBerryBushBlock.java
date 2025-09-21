@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.stln.magitech.damage.DamageTypeInit;
+import net.stln.magitech.init.MagitechDamageTypes;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
 
@@ -97,7 +97,9 @@ public class ManaBerryBushBlock extends SweetBerryBushBlock {
                 double d0 = Math.abs(entity.getX() - entity.xOld);
                 double d1 = Math.abs(entity.getZ() - entity.zOld);
                 if (d0 >= 0.003F || d1 >= 0.003F) {
-                    entity.hurt(level.damageSources().source(DamageTypeInit.MANA_BERRY_BUSH), 1.0F);
+                    entity.hurt(
+                            level.damageSources().source(MagitechDamageTypes.MANA_BERRY_BUSH),
+                            1.0F);
                 }
             }
         }

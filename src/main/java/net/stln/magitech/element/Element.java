@@ -8,23 +8,22 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.damagesource.DamageType;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.damage.DamageTypeInit;
-import net.stln.magitech.damage.ElementAffinityRegister;
+import net.stln.magitech.init.MagitechDamageTypes;
 
 import org.jetbrains.annotations.NotNull;
 
 import com.mojang.serialization.Codec;
 
 public enum Element implements StringRepresentable {
-    NONE("none", 0xFFFFFF, 0x404040, 0xA0FFD0, 0x005060, DamageTypeInit.MANA_DAMAGE),
-    EMBER("ember", 0xFF4040, 0x400000, 0xFF4040, 0x400000, DamageTypeInit.EMBER_DAMAGE),
-    GLACE("glace", 0xA0FFFF, 0x002840, 0xA0FFFF, 0x002840, DamageTypeInit.GLACE_DAMAGE),
-    SURGE("surge", 0x6070FF, 0x100040, 0x6070FF, 0x100040, DamageTypeInit.SURGE_DAMAGE),
-    PHANTOM("phantom", 0xFFFFA0, 0x403000, 0xFFFFA0, 0x403000, DamageTypeInit.PHANTOM_DAMAGE),
-    TREMOR("tremor", 0x008080, 0x001020, 0x008080, 0x001020, DamageTypeInit.TREMOR_DAMAGE),
-    MAGIC("magic", 0xFF40C0, 0x400020, 0xFF40C0, 0x400020, DamageTypeInit.MAGIC_DAMAGE),
-    FLOW("flow", 0xA0FF40, 0x104000, 0xA0FF40, 0x104000, DamageTypeInit.FLOW_DAMAGE),
-    HOLLOW("hollow", 0x8020C0, 0x200040, 0x8020C0, 0x200040, DamageTypeInit.HOLLOW_DAMAGE);
+    NONE("none", 0xFFFFFF, 0x404040, 0xA0FFD0, 0x005060, MagitechDamageTypes.MANA_DAMAGE),
+    EMBER("ember", 0xFF4040, 0x400000, 0xFF4040, 0x400000, MagitechDamageTypes.EMBER_DAMAGE),
+    GLACE("glace", 0xA0FFFF, 0x002840, 0xA0FFFF, 0x002840, MagitechDamageTypes.GLACE_DAMAGE),
+    SURGE("surge", 0x6070FF, 0x100040, 0x6070FF, 0x100040, MagitechDamageTypes.SURGE_DAMAGE),
+    PHANTOM("phantom", 0xFFFFA0, 0x403000, 0xFFFFA0, 0x403000, MagitechDamageTypes.PHANTOM_DAMAGE),
+    TREMOR("tremor", 0x008080, 0x001020, 0x008080, 0x001020, MagitechDamageTypes.TREMOR_DAMAGE),
+    MAGIC("magic", 0xFF40C0, 0x400020, 0xFF40C0, 0x400020, MagitechDamageTypes.MAGIC_DAMAGE),
+    FLOW("flow", 0xA0FF40, 0x104000, 0xA0FF40, 0x104000, MagitechDamageTypes.FLOW_DAMAGE),
+    HOLLOW("hollow", 0x8020C0, 0x200040, 0x8020C0, 0x200040, MagitechDamageTypes.HOLLOW_DAMAGE);
 
     public static final Codec<Element> CODEC = StringRepresentable.fromEnum(Element::values);
 

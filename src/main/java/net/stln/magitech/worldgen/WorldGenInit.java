@@ -40,8 +40,8 @@ import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.biome.BiomeInit;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.tag.MagitechTags;
 import net.stln.magitech.worldgen.terrain.ScorchedGeyserFeature;
 import net.stln.magitech.worldgen.terrain.ScorchedLavaLakeFeature;
 import net.stln.magitech.worldgen.tree.RandomBranchingTrunkPlacer;
@@ -58,7 +58,7 @@ public class WorldGenInit {
                             "redstone_crystal_surface",
                             () ->
                                     new OreSurfaceFeature(
-                                            BlockInit.REDSTONE_CRYSTAL_CLUSTER
+                                            MagitechBlocks.REDSTONE_CRYSTAL_CLUSTER
                                                     .get()
                                                     .defaultBlockState(),
                                             List.of(
@@ -83,12 +83,12 @@ public class WorldGenInit {
                             "fluorite_crystal_surface",
                             () ->
                                     new OreSurfaceFeature(
-                                            BlockInit.FLUORITE_CRYSTAL_CLUSTER
+                                            MagitechBlocks.FLUORITE_CRYSTAL_CLUSTER
                                                     .get()
                                                     .defaultBlockState(),
                                             List.of(
-                                                    BlockInit.FLUORITE_ORE.get(),
-                                                    BlockInit.DEEPSLATE_FLUORITE_ORE.get()),
+                                                    MagitechBlocks.FLUORITE_ORE.get(),
+                                                    MagitechBlocks.DEEPSLATE_FLUORITE_ORE.get()),
                                             0.25));
     public static final ResourceKey<ConfiguredFeature<?, ?>>
             FLUORITE_CRYSTAL_SURFACE_CONFIGURED_KEY =
@@ -153,7 +153,7 @@ public class WorldGenInit {
                     NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("mistalia_petals"));
 
     public static final Supplier<Feature<NoneFeatureConfiguration>> SCORCHED_GEYSER_FEATURE =
-            FEATURES.register("scorched_geyser", () -> new ScorchedGeyserFeature());
+            FEATURES.register("scorched_geyser", ScorchedGeyserFeature::new);
     public static final ResourceKey<ConfiguredFeature<?, ?>> SCORCHED_GEYSER_CONFIGURED_KEY =
             ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("scorched_geyser"));
     public static final ResourceKey<PlacedFeature> SCORCHED_GEYSER_PLACED_KEY =
@@ -163,7 +163,7 @@ public class WorldGenInit {
                     NeoForgeRegistries.Keys.BIOME_MODIFIERS, Magitech.id("scorched_geyser"));
 
     public static final Supplier<Feature<NoneFeatureConfiguration>> SCORCHED_LAVA_LAKE_FEATURE =
-            FEATURES.register("scorched_lava_lake", () -> new ScorchedLavaLakeFeature());
+            FEATURES.register("scorched_lava_lake", ScorchedLavaLakeFeature::new);
     public static final ResourceKey<ConfiguredFeature<?, ?>> SCORCHED_LAVA_LAKE_CONFIGURED_KEY =
             ResourceKey.create(Registries.CONFIGURED_FEATURE, Magitech.id("scorched_lava_lake"));
     public static final ResourceKey<PlacedFeature> SCORCHED_LAVA_LAKE_PLACED_KEY =
@@ -189,20 +189,22 @@ public class WorldGenInit {
         List<OreConfiguration.TargetBlockState> fluoriteList =
                 List.of(
                         OreConfiguration.target(
-                                ruletestStone, BlockInit.FLUORITE_ORE.get().defaultBlockState()),
+                                ruletestStone,
+                                MagitechBlocks.FLUORITE_ORE.get().defaultBlockState()),
                         OreConfiguration.target(
                                 ruletestDeepslate,
-                                BlockInit.DEEPSLATE_FLUORITE_ORE.get().defaultBlockState()));
+                                MagitechBlocks.DEEPSLATE_FLUORITE_ORE.get().defaultBlockState()));
         context.register(
                 FLUORITE_ORE_CONFIGURED_KEY,
                 new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(fluoriteList, 8)));
         List<OreConfiguration.TargetBlockState> tourmalineList =
                 List.of(
                         OreConfiguration.target(
-                                ruletestStone, BlockInit.TOURMALINE_ORE.get().defaultBlockState()),
+                                ruletestStone,
+                                MagitechBlocks.TOURMALINE_ORE.get().defaultBlockState()),
                         OreConfiguration.target(
                                 ruletestDeepslate,
-                                BlockInit.DEEPSLATE_TOURMALINE_ORE.get().defaultBlockState()));
+                                MagitechBlocks.DEEPSLATE_TOURMALINE_ORE.get().defaultBlockState()));
         context.register(
                 TOURMALINE_ORE_CONFIGURED_KEY,
                 new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(tourmalineList, 8)));
@@ -214,9 +216,11 @@ public class WorldGenInit {
                 new ConfiguredFeature<>(
                         Feature.TREE,
                         new TreeConfiguration.TreeConfigurationBuilder(
-                                        BlockStateProvider.simple(BlockInit.CELIFERN_LOG.get()),
+                                        BlockStateProvider.simple(
+                                                MagitechBlocks.CELIFERN_LOG.get()),
                                         new RandomBranchingTrunkPlacer(8, 1, 3),
-                                        BlockStateProvider.simple(BlockInit.CELIFERN_LEAVES.get()),
+                                        BlockStateProvider.simple(
+                                                MagitechBlocks.CELIFERN_LEAVES.get()),
                                         new RandomSpreadFoliagePlacer(
                                                 ConstantInt.of(3),
                                                 ConstantInt.of(0),
@@ -231,10 +235,10 @@ public class WorldGenInit {
                         Feature.TREE,
                         new TreeConfiguration.TreeConfigurationBuilder(
                                         BlockStateProvider.simple(
-                                                BlockInit.CHARCOAL_BIRCH_LOG.get()),
+                                                MagitechBlocks.CHARCOAL_BIRCH_LOG.get()),
                                         new RandomShortBranchingTrunkPlacer(8, 1, 7),
                                         BlockStateProvider.simple(
-                                                BlockInit.CHARCOAL_BIRCH_LEAVES.get()),
+                                                MagitechBlocks.CHARCOAL_BIRCH_LEAVES.get()),
                                         new RandomSpreadFoliagePlacer(
                                                 ConstantInt.of(3),
                                                 ConstantInt.of(0),
@@ -251,7 +255,7 @@ public class WorldGenInit {
                                 Feature.SIMPLE_BLOCK,
                                 new SimpleBlockConfiguration(
                                         BlockStateProvider.simple(
-                                                BlockInit.MANA_BERRY_BUSH
+                                                MagitechBlocks.MANA_BERRY_BUSH
                                                         .get()
                                                         .defaultBlockState()
                                                         .setValue(SweetBerryBushBlock.AGE, 3))),
@@ -262,7 +266,7 @@ public class WorldGenInit {
         for (int i = 1; i <= 4; i++) {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 builder.add(
-                        BlockInit.MISTALIA_PETALS
+                        MagitechBlocks.MISTALIA_PETALS
                                 .get()
                                 .defaultBlockState()
                                 .setValue(PinkPetalsBlock.AMOUNT, i)
@@ -343,14 +347,14 @@ public class WorldGenInit {
                         configured.getOrThrow(CELIFERN_CONFIGURED_KEY),
                         VegetationPlacements.treePlacement(
                                 PlacementUtils.countExtra(3, 0.5f, 7),
-                                BlockInit.CELIFERN_SAPLING.get())));
+                                MagitechBlocks.CELIFERN_SAPLING.get())));
         context.register(
                 CHARCOAL_BIRCH_PLACED_KEY,
                 new PlacedFeature(
                         configured.getOrThrow(CHARCOAL_BIRCH_CONFIGURED_KEY),
                         VegetationPlacements.treePlacement(
                                 PlacementUtils.countExtra(0, 0.2f, 3),
-                                BlockInit.CHARCOAL_BIRCH_SAPLING.get())));
+                                MagitechBlocks.CHARCOAL_BIRCH_SAPLING.get())));
 
         context.register(
                 MANA_BERRY_BUSH_PLACED_KEY,
@@ -430,42 +434,42 @@ public class WorldGenInit {
         context.register(
                 CELIFERN_BIOME_MODIFIER_KEY,
                 new BiomeModifiers.AddFeaturesBiomeModifier(
-                        biomes.getOrThrow(BiomeInit.HAS_CELIFERN_FOREST),
+                        biomes.getOrThrow(MagitechTags.Biomes.HAS_CELIFERN_FOREST),
                         HolderSet.direct(placedFeatures.getOrThrow(CELIFERN_PLACED_KEY)),
                         GenerationStep.Decoration.VEGETAL_DECORATION));
 
         context.register(
                 CHARCOAL_BIRCH_BIOME_MODIFIER_KEY,
                 new BiomeModifiers.AddFeaturesBiomeModifier(
-                        biomes.getOrThrow(BiomeInit.HAS_CHARCOAL_BIRCH_FOREST),
+                        biomes.getOrThrow(MagitechTags.Biomes.HAS_CHARCOAL_BIRCH_FOREST),
                         HolderSet.direct(placedFeatures.getOrThrow(CHARCOAL_BIRCH_PLACED_KEY)),
                         GenerationStep.Decoration.VEGETAL_DECORATION));
 
         context.register(
                 MANA_BERRY_BUSH_BIOME_MODIFIER_KEY,
                 new BiomeModifiers.AddFeaturesBiomeModifier(
-                        biomes.getOrThrow(BiomeInit.HAS_MANA_BERRY_BUSH),
+                        biomes.getOrThrow(MagitechTags.Biomes.HAS_MANA_BERRY_BUSH),
                         HolderSet.direct(placedFeatures.getOrThrow(MANA_BERRY_BUSH_PLACED_KEY)),
                         GenerationStep.Decoration.VEGETAL_DECORATION));
 
         context.register(
                 MISTALIA_PETALS_BIOME_MODIFIER_KEY,
                 new BiomeModifiers.AddFeaturesBiomeModifier(
-                        biomes.getOrThrow(BiomeInit.HAS_MISTALIA_PETALS),
+                        biomes.getOrThrow(MagitechTags.Biomes.HAS_MISTALIA_PETALS),
                         HolderSet.direct(placedFeatures.getOrThrow(MISTALIA_PETALS_PLACED_KEY)),
                         GenerationStep.Decoration.VEGETAL_DECORATION));
 
         context.register(
                 SCORCHED_GEYSER_BIOME_MODIFIER_KEY,
                 new BiomeModifiers.AddFeaturesBiomeModifier(
-                        biomes.getOrThrow(BiomeInit.IS_SCORCHED),
+                        biomes.getOrThrow(MagitechTags.Biomes.IS_SCORCHED),
                         HolderSet.direct(placedFeatures.getOrThrow(SCORCHED_GEYSER_PLACED_KEY)),
                         GenerationStep.Decoration.SURFACE_STRUCTURES));
 
         context.register(
                 SCORCHED_LAVA_LAKE_BIOME_MODIFIER_KEY,
                 new BiomeModifiers.AddFeaturesBiomeModifier(
-                        biomes.getOrThrow(BiomeInit.IS_SCORCHED),
+                        biomes.getOrThrow(MagitechTags.Biomes.IS_SCORCHED),
                         HolderSet.direct(placedFeatures.getOrThrow(SCORCHED_LAVA_LAKE_PLACED_KEY)),
                         GenerationStep.Decoration.SURFACE_STRUCTURES));
     }

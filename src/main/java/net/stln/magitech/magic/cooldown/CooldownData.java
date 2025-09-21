@@ -46,15 +46,11 @@ public class CooldownData {
             @NotNull Player player, @NotNull Spell spell, @NotNull Cooldown cooldown) {
         if (player.level().isClientSide) {
             var cooldownOld = cooldownMapClient.get(player, spell);
-            if (cooldownOld != null) {
-                prevCooldownMapClient.put(player, spell, cooldownOld);
-            }
+            TableHelper.putOrRemove(prevCooldownMapClient, player, spell, cooldownOld);
             cooldownMapClient.put(player, spell, cooldown);
         } else {
             var cooldownOld = cooldownMapServer.get(player, spell);
-            if (cooldownOld != null) {
-                prevCooldownMapServer.put(player, spell, cooldownOld);
-            }
+            TableHelper.putOrRemove(prevCooldownMapServer, player, spell, cooldownOld);
             CooldownData.cooldownMapServer.put(player, spell, cooldown);
         }
     }
@@ -62,15 +58,11 @@ public class CooldownData {
     public static void removeCooldown(@NotNull Player player, @NotNull Spell spell) {
         if (player.level().isClientSide) {
             var cooldownOld = cooldownMapClient.get(player, spell);
-            if (cooldownOld != null) {
-                prevCooldownMapClient.put(player, spell, cooldownOld);
-            }
+            TableHelper.putOrRemove(prevCooldownMapClient, player, spell, cooldownOld);
             CooldownData.cooldownMapClient.remove(player, spell);
         } else {
             var cooldownOld = cooldownMapServer.get(player, spell);
-            if (cooldownOld != null) {
-                prevCooldownMapServer.put(player, spell, cooldownOld);
-            }
+            TableHelper.putOrRemove(prevCooldownMapServer, player, spell, cooldownOld);
             CooldownData.cooldownMapServer.remove(player, spell);
         }
     }

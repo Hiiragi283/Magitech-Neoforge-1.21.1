@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlockEntityTypes;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -38,7 +38,7 @@ public class AlchemetricPylonBlockEntity extends BlockEntity {
     public int tickCounter = 0;
 
     public AlchemetricPylonBlockEntity(BlockPos pos, BlockState blockState) {
-        super(BlockInit.ALCHEMETRIC_PYLON_ENTITY.get(), pos, blockState);
+        super(MagitechBlockEntityTypes.ALCHEMETRIC_PYLON.get(), pos, blockState);
     }
 
     public void clientTick(

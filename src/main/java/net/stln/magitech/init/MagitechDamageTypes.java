@@ -1,17 +1,11 @@
-package net.stln.magitech.damage;
+package net.stln.magitech.init;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.item.tool.toolitem.PartToolItem;
-import net.stln.magitech.util.DataMapHelper;
 
-public class DamageTypeInit {
+public final class MagitechDamageTypes {
 
     public static final ResourceKey<DamageType> MANA_DAMAGE = create("mana");
     public static final ResourceKey<DamageType> EMBER_DAMAGE = create("ember");
@@ -25,12 +19,12 @@ public class DamageTypeInit {
 
     public static final ResourceKey<DamageType> MANA_BERRY_BUSH = create("mana_berry_bush");
 
-    public static float getElementDamage(Player player, Entity target, ItemStack stack) {
+    /*public static float getElementDamage(Player player, Entity target, ItemStack stack) {
         ToolStats stats =
                 ((PartToolItem) stack.getItem()).getSumStats(player, player.level(), stack);
         float multiplier = DataMapHelper.getElementMultiplier(target, stats.getElement());
         return stats.getStats().get(ToolStats.ELM_ATK_STAT) * multiplier;
-    }
+    }*/
 
     private static ResourceKey<DamageType> create(String path) {
         return ResourceKey.create(Registries.DAMAGE_TYPE, Magitech.id(path));

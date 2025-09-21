@@ -1,7 +1,5 @@
 package net.stln.magitech.entity.magical;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,7 +15,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
@@ -37,23 +34,27 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.stln.magitech.element.Element;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
+import net.stln.magitech.util.ElementHelper;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import com.google.common.base.Preconditions;
 
 import software.bernie.geckolib.animatable.GeoEntity;
 
-public abstract class SpellProjectileEntity extends Projectile implements GeoEntity {
+public abstract class SpellProjectileEntity extends Projectile
+        implements GeoEntity, ElementalProjectile {
 
     public AbstractArrow.Pickup pickup = AbstractArrow.Pickup.DISALLOWED;
     protected boolean inGround;
     protected int inGroundTime;
     protected float damage;
-    @javax.annotation.Nullable private BlockState lastState;
+    private @Nullable BlockState lastState;
     private int life;
-    private SoundEvent soundEvent = this.getDefaultHitGroundSoundEvent();
-    private ItemStack firedFromWeapon = null;
+    private @NotNull SoundEvent soundEvent = this.getDefaultHitGroundSoundEvent();
+    private @NotNull ItemStack firedFromWeapon = ItemStack.EMPTY;
 
     protected SpellProjectileEntity(
             EntityType<? extends SpellProjectileEntity> entityType, Level level) {
@@ -66,25 +67,20 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
             double y,
             double z,
             Level level,
-            @javax.annotation.Nullable ItemStack firedFromWeapon,
+            @NotNull ItemStack firedFromWeapon,
             float damage) {
         this(entityType, level);
         this.setPos(x, y, z);
         this.damage = damage;
-        if (firedFromWeapon != null && level instanceof ServerLevel serverlevel) {
-            if (firedFromWeapon.isEmpty()) {
-                throw new IllegalArgumentException("Invalid weapon firing an arrow");
-            }
-
-            this.firedFromWeapon = firedFromWeapon.copy();
-        }
+        Preconditions.checkArgument(!firedFromWeapon.isEmpty(), "Invalid weapon firing an arrow");
+        this.firedFromWeapon = firedFromWeapon.copy();
     }
 
     protected SpellProjectileEntity(
             EntityType<? extends SpellProjectileEntity> entityType,
             LivingEntity owner,
             Level level,
-            @Nullable ItemStack firedFromWeapon,
+            @NotNull ItemStack firedFromWeapon,
             float damage) {
         this(
                 entityType,
@@ -141,7 +137,7 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
                 hitresult = entityhitresult;
             }
 
-            if (hitresult != null && hitresult.getType() == HitResult.Type.ENTITY) {
+            if (hitresult.getType() == HitResult.Type.ENTITY) {
                 Entity entity = ((EntityHitResult) hitresult).getEntity();
                 Entity entity1 = this.getOwner();
                 if (entity instanceof Player
@@ -213,12 +209,12 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
     }
 
     @Override
-    protected boolean canHitEntity(Entity target) {
+    protected boolean canHitEntity(@NotNull Entity target) {
         return super.canHitEntity(target);
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult result) {
+    protected void onHitEntity(@NotNull EntityHitResult result) {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
         float f = (float) this.getDeltaMovement().length();
@@ -230,41 +226,32 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         }
     }
 
-    protected @NotNull DamageSource getElementalDamageSource(
-            Entity owner, ResourceKey<DamageType> damageType) {
-        DamageSource elementalDamageSource;
-        if (owner != null) {
-            elementalDamageSource = owner.damageSources().source(damageType, owner);
-        } else {
-            elementalDamageSource = this.damageSources().source(damageType);
-        }
-        return elementalDamageSource;
-    }
-
     protected void applyDamage(Entity entity, DamageSource damageSource, float amount) {
         int i = entity.getRemainingFireTicks();
         Entity owner = this.getOwner();
 
-        if (owner instanceof LivingEntity livingentity1) {
-            livingentity1.setLastHurtMob(entity);
+        if (owner instanceof LivingEntity livingentity) {
+            livingentity.setLastHurtMob(entity);
             if (entity instanceof LivingEntity livingEntity) {
-                livingEntity.setLastHurtByMob(livingentity1);
+                livingEntity.setLastHurtByMob(livingentity);
             }
         }
 
         if (entity.hurt(damageSource, amount)) {
-            if (firedFromWeapon != null
+            if (!firedFromWeapon.isEmpty()
                     && firedFromWeapon.getItem() instanceof PartToolItem toolItem) {
-                toolItem.callTraitSpellHitEntity(
-                        this.level(), (Player) owner, entity, this.firedFromWeapon);
+                if (owner instanceof Player) {
+                    toolItem.callTraitSpellHitEntity(
+                            this.level(), (Player) owner, entity, this.firedFromWeapon);
+                }
             }
 
             if (entity instanceof LivingEntity livingentity) {
 
                 // this.doKnockback(livingentity, damageSource);
-                if (this.level() instanceof ServerLevel serverlevel1) {
+                if (this.level() instanceof ServerLevel serverlevel) {
                     EnchantmentHelper.doPostAttackEffectsWithItemSource(
-                            serverlevel1, livingentity, damageSource, this.getWeaponItem());
+                            serverlevel, livingentity, damageSource, this.getWeaponItem());
                 }
 
                 if (!this.level().isClientSide && owner instanceof ServerPlayer serverplayer) {}
@@ -285,12 +272,8 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         }
     }
 
-    protected Element getElement() {
-        return Element.NONE;
-    }
-
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult) {
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
         this.playSound(
                 this.getHitGroundSoundEvent(),
@@ -304,15 +287,15 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
     }
 
     @Override
-    public ItemStack getWeaponItem() {
+    public @NotNull ItemStack getWeaponItem() {
         return this.firedFromWeapon;
     }
 
-    protected SoundEvent getDefaultHitGroundSoundEvent() {
+    protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
         return SoundEvents.ARROW_HIT;
     }
 
-    protected final SoundEvent getHitGroundSoundEvent() {
+    protected final @NotNull SoundEvent getHitGroundSoundEvent() {
         return this.soundEvent;
     }
 
@@ -334,7 +317,7 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putShort("life", (short) this.life);
         if (this.lastState != null) {
@@ -342,9 +325,12 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
         }
         compound.putBoolean("inGround", this.inGround);
         compound.putFloat("damage", this.damage);
-        compound.putString(
-                "SoundEvent", BuiltInRegistries.SOUND_EVENT.getKey(this.soundEvent).toString());
-        if (this.firedFromWeapon != null) {
+        BuiltInRegistries.SOUND_EVENT
+                .getResourceKey(this.soundEvent)
+                .map(ResourceKey::location)
+                .map(ResourceLocation::toString)
+                .ifPresent(id -> compound.putString("SoundEvent", id));
+        if (!this.firedFromWeapon.isEmpty()) {
             compound.put(
                     "weapon", this.firedFromWeapon.save(this.registryAccess(), new CompoundTag()));
         }
@@ -352,7 +338,7 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
 
     /** (abstract) Protected helper method to read subclass entity data from NBT. */
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.life = compound.getShort("life");
         if (compound.contains("inBlockState", 10)) {
@@ -372,15 +358,18 @@ public abstract class SpellProjectileEntity extends Projectile implements GeoEnt
                             .orElse(this.getDefaultHitGroundSoundEvent());
         }
 
-        if (compound.contains("weapon", 10)) {
-            this.firedFromWeapon =
-                    ItemStack.parse(this.registryAccess(), compound.getCompound("weapon"))
-                            .orElse(null);
-        } else {
-            this.firedFromWeapon = null;
-        }
+        this.firedFromWeapon =
+                ItemStack.parse(this.registryAccess(), compound.getCompound("weapon"))
+                        .orElse(ItemStack.EMPTY);
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {}
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {}
+
+    //    ElementalProjectile    //
+
+    @Override
+    public float getElementalDamageValue(Entity entity) {
+        return ElementHelper.getElementalDamageValue(this.damage, entity, this.getElement());
+    }
 }

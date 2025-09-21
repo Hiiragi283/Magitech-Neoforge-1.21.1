@@ -1,4 +1,4 @@
-package net.stln.magitech.damage;
+package net.stln.magitech.element;
 
 public enum ElementAffinity {
     EFFICIENT(2.0F),

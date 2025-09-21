@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -20,14 +19,15 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.particle.option.WaveParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EntityUtil;
 import net.stln.magitech.util.SpellShape;
 
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
@@ -38,7 +38,6 @@ import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 
 public class Sonistorm extends Spell {
@@ -90,24 +89,18 @@ public class Sonistorm extends Spell {
     }
 
     @Override
-    protected void playAnimation(Player user) {
-        var playerAnimationData =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
-                                .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
-
-            user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(
-                    AbstractFadeModifier.standardFadeIn(3, Ease.INSINE),
-                    new KeyframeAnimationPlayer(
-                                    (KeyframeAnimation)
-                                            PlayerAnimationRegistry.getAnimation(
-                                                    Magitech.id("wand_spray")))
-                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
-                            .setFirstPersonConfiguration(
-                                    new FirstPersonConfiguration(true, true, true, true)));
-        }
+    protected void playAnimation(
+            @NotNull Player player, @NotNull ModifierLayer<IAnimation> modifierLayer) {
+        player.yBodyRot = player.yHeadRot;
+        modifierLayer.replaceAnimationWithFade(
+                AbstractFadeModifier.standardFadeIn(3, Ease.INSINE),
+                new KeyframeAnimationPlayer(
+                                (KeyframeAnimation)
+                                        PlayerAnimationRegistry.getAnimation(
+                                                Magitech.id("wand_spray")))
+                        .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                        .setFirstPersonConfiguration(
+                                new FirstPersonConfiguration(true, true, true, true)));
     }
 
     @Override
@@ -157,7 +150,7 @@ public class Sonistorm extends Spell {
                         livingEntity.getX(),
                         livingEntity.getY(),
                         livingEntity.getZ(),
-                        SoundInit.SONISTORM.get(),
+                        MagitechSounds.SONISTORM.get(),
                         SoundSource.PLAYERS,
                         1.0F,
                         0.7F + (player.getRandom().nextFloat() * 0.6F));

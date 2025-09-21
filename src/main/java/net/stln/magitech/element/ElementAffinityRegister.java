@@ -1,9 +1,8 @@
-package net.stln.magitech.damage;
+package net.stln.magitech.element;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.stln.magitech.element.Element;
 import net.stln.magitech.util.TableHelper;
 
 import org.jetbrains.annotations.NotNull;

@@ -5,9 +5,9 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.stln.magitech.element.Element;
 
-class VoidrotMobEffect extends CustomMobEffect {
+public class VoidrotMobEffect extends CustomMobEffect {
 
-    protected VoidrotMobEffect(MobEffectCategory mobEffectCategory, int i) {
+    public VoidrotMobEffect(MobEffectCategory mobEffectCategory, int i) {
         super(mobEffectCategory, i);
     }
 

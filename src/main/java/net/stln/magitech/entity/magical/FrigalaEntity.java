@@ -1,9 +1,6 @@
 package net.stln.magitech.entity.magical;
 
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
@@ -15,12 +12,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.EntityInit;
+import net.stln.magitech.init.MagitechEntities;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.particle.option.FrostParticleEffect;
-import net.stln.magitech.sound.SoundInit;
-import net.stln.magitech.util.DataMapHelper;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -37,11 +33,11 @@ public class FrigalaEntity extends SpellProjectileEntity implements GeoEntity {
     }
 
     public FrigalaEntity(Level world, Player player, float damage) {
-        super(EntityInit.FRIGALA_ENTITY.get(), player, world, null, damage);
+        super(MagitechEntities.FRIGALA_ENTITY.get(), player, world, ItemStack.EMPTY, damage);
     }
 
     public FrigalaEntity(Level world, Player player, ItemStack weapon, float damage) {
-        super(EntityInit.FRIGALA_ENTITY.get(), player, world, weapon, damage);
+        super(MagitechEntities.FRIGALA_ENTITY.get(), player, world, weapon, damage);
     }
 
     public FrigalaEntity(
@@ -51,7 +47,7 @@ public class FrigalaEntity extends SpellProjectileEntity implements GeoEntity {
             double z,
             Level world,
             ItemStack stack,
-            @Nullable ItemStack weapon,
+            @NotNull ItemStack weapon,
             float damage) {
         super(type, x, y, z, world, weapon, damage);
     }
@@ -61,7 +57,7 @@ public class FrigalaEntity extends SpellProjectileEntity implements GeoEntity {
             LivingEntity owner,
             Level world,
             ItemStack stack,
-            @Nullable ItemStack shotFrom,
+            @NotNull ItemStack shotFrom,
             float damage) {
         super(type, owner, world, shotFrom, damage);
     }
@@ -98,17 +94,10 @@ public class FrigalaEntity extends SpellProjectileEntity implements GeoEntity {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        Entity owner = this.getOwner();
-
-        ResourceKey<DamageType> damageType = this.getElement().getDamageType();
-        DamageSource elementalDamageSource = getElementalDamageSource(owner, damageType);
-
-        float finalDamage =
-                this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
-        applyDamage(entity, elementalDamageSource, finalDamage);
+        applyDamage(entity, getElementalDamageSource(), getElementalDamageValue(entity));
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.setTicksFrozen(Math.min(livingEntity.getTicksFrozen() + 120, 180));
         }
@@ -120,12 +109,12 @@ public class FrigalaEntity extends SpellProjectileEntity implements GeoEntity {
     }
 
     @Override
-    protected Element getElement() {
+    @NotNull public Element getElement() {
         return Element.GLACE;
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult) {
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
         hitParticle();
 
@@ -181,8 +170,8 @@ public class FrigalaEntity extends SpellProjectileEntity implements GeoEntity {
     }
 
     @Override
-    protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return SoundInit.GLACE_LAUNCH.get();
+    protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
+        return MagitechSounds.GLACE_LAUNCH.get();
     }
 
     @Override

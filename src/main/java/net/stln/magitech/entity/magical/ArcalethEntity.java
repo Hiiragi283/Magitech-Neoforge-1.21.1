@@ -1,10 +1,6 @@
 package net.stln.magitech.entity.magical;
 
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
@@ -16,12 +12,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.EntityInit;
+import net.stln.magitech.init.MagitechEntities;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
-import net.stln.magitech.sound.SoundInit;
-import net.stln.magitech.util.DataMapHelper;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -37,11 +32,11 @@ public class ArcalethEntity extends SpellProjectileEntity {
     }
 
     public ArcalethEntity(Level world, Player player, float damage) {
-        super(EntityInit.ARCALETH_ENTITY.get(), player, world, null, damage);
+        super(MagitechEntities.ARCALETH_ENTITY.get(), player, world, ItemStack.EMPTY, damage);
     }
 
     public ArcalethEntity(Level world, Player player, ItemStack weapon, float damage) {
-        super(EntityInit.ARCALETH_ENTITY.get(), player, world, weapon, damage);
+        super(MagitechEntities.ARCALETH_ENTITY.get(), player, world, weapon, damage);
     }
 
     public ArcalethEntity(
@@ -51,7 +46,7 @@ public class ArcalethEntity extends SpellProjectileEntity {
             double z,
             Level world,
             ItemStack stack,
-            @Nullable ItemStack weapon,
+            @NotNull ItemStack weapon,
             float damage) {
         super(type, x, y, z, world, weapon, damage);
     }
@@ -61,7 +56,7 @@ public class ArcalethEntity extends SpellProjectileEntity {
             LivingEntity owner,
             Level world,
             ItemStack stack,
-            @Nullable ItemStack shotFrom,
+            @NotNull ItemStack shotFrom,
             float damage) {
         super(type, owner, world, shotFrom, damage);
     }
@@ -99,29 +94,10 @@ public class ArcalethEntity extends SpellProjectileEntity {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        Entity owner = this.getOwner();
-
-        ResourceKey<DamageType> damageType = this.getElement().getDamageType();
-        DamageSource elementalDamageSource;
-        if (owner != null) {
-            if (this.getWeaponItem() != null) {
-                elementalDamageSource =
-                        this.getWeaponItem().has(DataComponents.CUSTOM_NAME)
-                                ? owner.damageSources().source(damageType, owner)
-                                : owner.damageSources().source(damageType);
-            } else {
-                elementalDamageSource = owner.damageSources().source(damageType);
-            }
-        } else {
-            elementalDamageSource = this.damageSources().source(damageType);
-        }
-
-        float finalDamage =
-                this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
-        applyDamage(entity, elementalDamageSource, finalDamage);
+        applyDamage(entity, getElementalDamageSource(), getElementalDamageValue(entity));
         hitParticle();
 
         if (!this.level().isClientSide) {
@@ -130,12 +106,12 @@ public class ArcalethEntity extends SpellProjectileEntity {
     }
 
     @Override
-    protected Element getElement() {
+    @NotNull public Element getElement() {
         return Element.MAGIC;
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult) {
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
         hitParticle();
 
@@ -192,8 +168,8 @@ public class ArcalethEntity extends SpellProjectileEntity {
     }
 
     @Override
-    protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return SoundInit.ARCALETH.get();
+    protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
+        return MagitechSounds.ARCALETH.get();
     }
 
     @Override

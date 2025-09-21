@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate;
+import net.stln.magitech.init.MagitechBiomes;
 
 import com.mojang.datafixers.util.Pair;
 
@@ -49,7 +50,7 @@ public class MistjadeForestRegion extends Region {
                                 ParameterUtils.Weirdness.FULL_RANGE,
                                 ParameterUtils.Weirdness.FULL_RANGE))
                 .build()
-                .forEach(point -> builder.add(point, BiomeInit.MISTJADE_FOREST));
+                .forEach(point -> builder.add(point, MagitechBiomes.MISTJADE_FOREST));
 
         // Add our points to the mapper
         builder.build().forEach(mapper);

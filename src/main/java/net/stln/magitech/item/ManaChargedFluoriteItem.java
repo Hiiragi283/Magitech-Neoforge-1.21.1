@@ -16,10 +16,10 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.stln.magitech.block.entity.ManaContainerBlockEntity;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.particle.option.PowerupParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +46,7 @@ public class ManaChargedFluoriteItem extends TooltipTextItem {
                     player.getX(),
                     player.getY(),
                     player.getZ(),
-                    SoundInit.CRYSTAL_BREAK.get(),
+                    MagitechSounds.CRYSTAL_BREAK.get(),
                     SoundSource.PLAYERS,
                     1.0F,
                     1.0F);
@@ -80,7 +80,12 @@ public class ManaChargedFluoriteItem extends TooltipTextItem {
             }
             containerBlockEntity.addMana(45);
             level.playSound(
-                    player, pos, SoundInit.CRYSTAL_BREAK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+                    player,
+                    pos,
+                    MagitechSounds.CRYSTAL_BREAK.get(),
+                    SoundSource.PLAYERS,
+                    1.0F,
+                    1.0F);
             for (int i = 0; i < 40; i++) {
                 double x = pos.getCenter().x + Mth.nextDouble(player.getRandom(), -0.75, 0.75);
                 double y = pos.getCenter().y + Mth.nextDouble(player.getRandom(), -0.75, 0.75);

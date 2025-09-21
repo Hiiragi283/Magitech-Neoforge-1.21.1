@@ -10,10 +10,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.particle.option.PowerupParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -40,7 +40,7 @@ public class AggregatedNoctisItem extends TooltipTextItem {
                     player.getX(),
                     player.getY(),
                     player.getZ(),
-                    SoundInit.CRYSTAL_BREAK.get(),
+                    MagitechSounds.CRYSTAL_BREAK.get(),
                     SoundSource.PLAYERS,
                     1.0F,
                     1.0F);
@@ -74,7 +74,7 @@ public class AggregatedNoctisItem extends TooltipTextItem {
     // stack.setCount(stack.getCount() - 1);
     // }
     // containerBlockEntity.addMana(45);
-    // level.playSound(player, pos, SoundInit.CRYSTAL_BREAK.get(),
+    // level.playSound(player, pos, MagitechSounds.CRYSTAL_BREAK.get(),
     // SoundSource.PLAYERS,
     // 1.0F, 1.0F);
     // for (int i = 0; i < 40; i++) {

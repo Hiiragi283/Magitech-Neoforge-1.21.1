@@ -2,7 +2,7 @@ package net.stln.magitech.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlockEntityTypes;
 
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -16,7 +16,7 @@ public class ManaVesselBlockEntity extends ManaContainerBlockEntity implements G
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public ManaVesselBlockEntity(BlockPos pos, BlockState blockState) {
-        super(BlockInit.MANA_VESSEL_ENTITY.get(), pos, blockState);
+        super(MagitechBlockEntityTypes.MANA_VESSEL.get(), pos, blockState);
         maxMana = 300;
     }
 

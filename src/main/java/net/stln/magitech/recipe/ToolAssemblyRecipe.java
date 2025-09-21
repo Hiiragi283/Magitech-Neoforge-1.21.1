@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.PartMaterialComponent;
 import net.stln.magitech.item.tool.ToolPart;
@@ -137,12 +138,12 @@ public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return RecipeInit.TOOL_ASSEMBLY_TYPE.get();
+        return MagitechRecipes.TOOL_ASSEMBLY_TYPE.get();
     }
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return RecipeInit.TOOL_ASSEMBLY_SERIALIZER.get();
+        return MagitechRecipes.TOOL_ASSEMBLY_SERIALIZER.get();
     }
 
     public interface Factory<T extends ToolAssemblyRecipe> {
@@ -156,7 +157,7 @@ public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
         private final MapCodec<T> codec;
         private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
-        protected Serializer(ToolAssemblyRecipe.Factory<T> factory) {
+        public Serializer(ToolAssemblyRecipe.Factory<T> factory) {
             this.factory = factory;
             this.codec =
                     RecordCodecBuilder.mapCodec(

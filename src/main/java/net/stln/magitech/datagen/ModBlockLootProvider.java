@@ -20,7 +20,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
 import net.stln.magitech.item.ItemInit;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,150 +33,155 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        dropSelf(BlockInit.ENGINEERING_WORKBENCH.get());
-        dropSelf(BlockInit.ASSEMBLY_WORKBENCH.get());
-        dropSelf(BlockInit.REPAIRING_WORKBENCH.get());
-        dropSelf(BlockInit.UPGRADE_WORKBENCH.get());
-        dropSelf(BlockInit.ZARDIUS_CRUCIBLE.get());
-        dropSelf(BlockInit.ALCHEMETRIC_PYLON.get());
-        dropSelf(BlockInit.ATHANOR_PILLAR.get());
-        dropSelf(BlockInit.MANA_NODE.get());
-        dropSelf(BlockInit.MANA_VESSEL.get());
+        dropSelf(MagitechBlocks.ENGINEERING_WORKBENCH.get());
+        dropSelf(MagitechBlocks.ASSEMBLY_WORKBENCH.get());
+        dropSelf(MagitechBlocks.REPAIRING_WORKBENCH.get());
+        dropSelf(MagitechBlocks.UPGRADE_WORKBENCH.get());
+        dropSelf(MagitechBlocks.ZARDIUS_CRUCIBLE.get());
+        dropSelf(MagitechBlocks.ALCHEMETRIC_PYLON.get());
+        dropSelf(MagitechBlocks.ATHANOR_PILLAR.get());
+        dropSelf(MagitechBlocks.MANA_NODE.get());
+        dropSelf(MagitechBlocks.MANA_VESSEL.get());
         add(
-                BlockInit.FLUORITE_ORE.get(),
-                block -> createOreDrop(BlockInit.FLUORITE_ORE.get(), ItemInit.FLUORITE.get()));
+                MagitechBlocks.FLUORITE_ORE.get(),
+                block -> createOreDrop(MagitechBlocks.FLUORITE_ORE.get(), ItemInit.FLUORITE.get()));
         add(
-                BlockInit.DEEPSLATE_FLUORITE_ORE.get(),
+                MagitechBlocks.DEEPSLATE_FLUORITE_ORE.get(),
                 block ->
                         createOreDrop(
-                                BlockInit.DEEPSLATE_FLUORITE_ORE.get(), ItemInit.FLUORITE.get()));
+                                MagitechBlocks.DEEPSLATE_FLUORITE_ORE.get(),
+                                ItemInit.FLUORITE.get()));
         add(
-                BlockInit.TOURMALINE_ORE.get(),
-                block -> createOreDrop(BlockInit.TOURMALINE_ORE.get(), ItemInit.TOURMALINE.get()));
-        add(
-                BlockInit.DEEPSLATE_TOURMALINE_ORE.get(),
+                MagitechBlocks.TOURMALINE_ORE.get(),
                 block ->
                         createOreDrop(
-                                BlockInit.DEEPSLATE_TOURMALINE_ORE.get(),
+                                MagitechBlocks.TOURMALINE_ORE.get(), ItemInit.TOURMALINE.get()));
+        add(
+                MagitechBlocks.DEEPSLATE_TOURMALINE_ORE.get(),
+                block ->
+                        createOreDrop(
+                                MagitechBlocks.DEEPSLATE_TOURMALINE_ORE.get(),
                                 ItemInit.TOURMALINE.get()));
         add(
-                BlockInit.FLUORITE_CRYSTAL_CLUSTER.get(),
+                MagitechBlocks.FLUORITE_CRYSTAL_CLUSTER.get(),
                 block ->
                         createMultipleOreDrops(
-                                BlockInit.FLUORITE_CRYSTAL_CLUSTER.get(),
+                                MagitechBlocks.FLUORITE_CRYSTAL_CLUSTER.get(),
                                 ItemInit.FLUORITE.get(),
                                 1,
                                 2));
         add(
-                BlockInit.REDSTONE_CRYSTAL_CLUSTER.get(),
+                MagitechBlocks.REDSTONE_CRYSTAL_CLUSTER.get(),
                 block ->
                         createMultipleOreDrops(
-                                BlockInit.REDSTONE_CRYSTAL_CLUSTER.get(),
+                                MagitechBlocks.REDSTONE_CRYSTAL_CLUSTER.get(),
                                 ItemInit.REDSTONE_CRYSTAL.get(),
                                 1,
                                 2));
         add(
-                BlockInit.SULFUR_CRYSTAL_CLUSTER.get(),
+                MagitechBlocks.SULFUR_CRYSTAL_CLUSTER.get(),
                 block ->
                         createMultipleOreDrops(
-                                BlockInit.SULFUR_CRYSTAL_CLUSTER.get(),
+                                MagitechBlocks.SULFUR_CRYSTAL_CLUSTER.get(),
                                 ItemInit.SULFUR.get(),
                                 1,
                                 2));
-        dropSelf(BlockInit.SULFUR_BLOCK.get());
-        dropSelf(BlockInit.ALCHECRYSITE.get());
-        dropSelf(BlockInit.ALCHECRYSITE_STAIRS.get());
+        dropSelf(MagitechBlocks.SULFUR_BLOCK.get());
+        dropSelf(MagitechBlocks.ALCHECRYSITE.get());
+        dropSelf(MagitechBlocks.ALCHECRYSITE_STAIRS.get());
         add(
-                BlockInit.ALCHECRYSITE_SLAB.get(),
-                block -> createSlabItemTable(BlockInit.ALCHECRYSITE_SLAB.get()));
-        dropSelf(BlockInit.ALCHECRYSITE_WALL.get());
-        dropSelf(BlockInit.POLISHED_ALCHECRYSITE.get());
-        dropSelf(BlockInit.POLISHED_ALCHECRYSITE_STAIRS.get());
+                MagitechBlocks.ALCHECRYSITE_SLAB.get(),
+                block -> createSlabItemTable(MagitechBlocks.ALCHECRYSITE_SLAB.get()));
+        dropSelf(MagitechBlocks.ALCHECRYSITE_WALL.get());
+        dropSelf(MagitechBlocks.POLISHED_ALCHECRYSITE.get());
+        dropSelf(MagitechBlocks.POLISHED_ALCHECRYSITE_STAIRS.get());
         add(
-                BlockInit.POLISHED_ALCHECRYSITE_SLAB.get(),
-                block -> createSlabItemTable(BlockInit.POLISHED_ALCHECRYSITE_SLAB.get()));
-        dropSelf(BlockInit.POLISHED_ALCHECRYSITE_WALL.get());
-        dropSelf(BlockInit.ALCHECRYSITE_BRICKS.get());
-        dropSelf(BlockInit.ALCHECRYSITE_BRICK_STAIRS.get());
+                MagitechBlocks.POLISHED_ALCHECRYSITE_SLAB.get(),
+                block -> createSlabItemTable(MagitechBlocks.POLISHED_ALCHECRYSITE_SLAB.get()));
+        dropSelf(MagitechBlocks.POLISHED_ALCHECRYSITE_WALL.get());
+        dropSelf(MagitechBlocks.ALCHECRYSITE_BRICKS.get());
+        dropSelf(MagitechBlocks.ALCHECRYSITE_BRICK_STAIRS.get());
         add(
-                BlockInit.ALCHECRYSITE_BRICK_SLAB.get(),
-                block -> createSlabItemTable(BlockInit.ALCHECRYSITE_BRICK_SLAB.get()));
-        dropSelf(BlockInit.ALCHECRYSITE_BRICK_WALL.get());
-        dropSelf(BlockInit.ALCHECRYSITE_TILES.get());
-        dropSelf(BlockInit.FLUORITE_BLOCK.get());
-        dropSelf(BlockInit.FLUORITE_BRICKS.get());
-        dropSelf(BlockInit.FLUORITE_BRICK_STAIRS.get());
+                MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get(),
+                block -> createSlabItemTable(MagitechBlocks.ALCHECRYSITE_BRICK_SLAB.get()));
+        dropSelf(MagitechBlocks.ALCHECRYSITE_BRICK_WALL.get());
+        dropSelf(MagitechBlocks.ALCHECRYSITE_TILES.get());
+        dropSelf(MagitechBlocks.FLUORITE_BLOCK.get());
+        dropSelf(MagitechBlocks.FLUORITE_BRICKS.get());
+        dropSelf(MagitechBlocks.FLUORITE_BRICK_STAIRS.get());
         add(
-                BlockInit.FLUORITE_BRICK_SLAB.get(),
-                block -> createSlabItemTable(BlockInit.FLUORITE_BRICK_SLAB.get()));
-        dropSelf(BlockInit.FLUORITE_BRICK_WALL.get());
-        dropSelf(BlockInit.CELIFERN_LOG.get());
-        dropSelf(BlockInit.CELIFERN_WOOD.get());
-        dropSelf(BlockInit.STRIPPED_CELIFERN_LOG.get());
-        dropSelf(BlockInit.STRIPPED_CELIFERN_WOOD.get());
-        dropSelf(BlockInit.CELIFERN_PLANKS.get());
-        dropSelf(BlockInit.CELIFERN_STAIRS.get());
+                MagitechBlocks.FLUORITE_BRICK_SLAB.get(),
+                block -> createSlabItemTable(MagitechBlocks.FLUORITE_BRICK_SLAB.get()));
+        dropSelf(MagitechBlocks.FLUORITE_BRICK_WALL.get());
+        dropSelf(MagitechBlocks.CELIFERN_LOG.get());
+        dropSelf(MagitechBlocks.CELIFERN_WOOD.get());
+        dropSelf(MagitechBlocks.STRIPPED_CELIFERN_LOG.get());
+        dropSelf(MagitechBlocks.STRIPPED_CELIFERN_WOOD.get());
+        dropSelf(MagitechBlocks.CELIFERN_PLANKS.get());
+        dropSelf(MagitechBlocks.CELIFERN_STAIRS.get());
         add(
-                BlockInit.CELIFERN_SLAB.get(),
-                block -> createSlabItemTable(BlockInit.CELIFERN_SLAB.get()));
-        dropSelf(BlockInit.CELIFERN_FENCE.get());
-        dropSelf(BlockInit.CELIFERN_FENCE_GATE.get());
-        add(BlockInit.CELIFERN_DOOR.get(), block -> createDoorTable(BlockInit.CELIFERN_DOOR.get()));
-        dropSelf(BlockInit.CELIFERN_TRAPDOOR.get());
-        dropSelf(BlockInit.CELIFERN_PRESSURE_PLATE.get());
-        dropSelf(BlockInit.CELIFERN_BUTTON.get());
+                MagitechBlocks.CELIFERN_SLAB.get(),
+                block -> createSlabItemTable(MagitechBlocks.CELIFERN_SLAB.get()));
+        dropSelf(MagitechBlocks.CELIFERN_FENCE.get());
+        dropSelf(MagitechBlocks.CELIFERN_FENCE_GATE.get());
         add(
-                BlockInit.CELIFERN_LEAVES.get(),
+                MagitechBlocks.CELIFERN_DOOR.get(),
+                block -> createDoorTable(MagitechBlocks.CELIFERN_DOOR.get()));
+        dropSelf(MagitechBlocks.CELIFERN_TRAPDOOR.get());
+        dropSelf(MagitechBlocks.CELIFERN_PRESSURE_PLATE.get());
+        dropSelf(MagitechBlocks.CELIFERN_BUTTON.get());
+        add(
+                MagitechBlocks.CELIFERN_LEAVES.get(),
                 block ->
                         this.createLeavesDrops(
                                 block,
-                                BlockInit.CELIFERN_SAPLING.get(),
+                                MagitechBlocks.CELIFERN_SAPLING.get(),
                                 NORMAL_LEAVES_SAPLING_CHANCES));
-        dropSelf(BlockInit.CELIFERN_SAPLING.get());
-        dropSelf(BlockInit.CELIFERN_SIGN.get());
-        dropSelf(BlockInit.CELIFERN_WALL_SIGN.get());
-        dropSelf(BlockInit.CELIFERN_HANGING_SIGN.get());
-        dropSelf(BlockInit.CELIFERN_WALL_HANGING_SIGN.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_LOG.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_WOOD.get());
-        dropSelf(BlockInit.STRIPPED_CHARCOAL_BIRCH_LOG.get());
-        dropSelf(BlockInit.STRIPPED_CHARCOAL_BIRCH_WOOD.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_PLANKS.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_STAIRS.get());
+        dropSelf(MagitechBlocks.CELIFERN_SAPLING.get());
+        dropSelf(MagitechBlocks.CELIFERN_SIGN.get());
+        dropSelf(MagitechBlocks.CELIFERN_WALL_SIGN.get());
+        dropSelf(MagitechBlocks.CELIFERN_HANGING_SIGN.get());
+        dropSelf(MagitechBlocks.CELIFERN_WALL_HANGING_SIGN.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_LOG.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_WOOD.get());
+        dropSelf(MagitechBlocks.STRIPPED_CHARCOAL_BIRCH_LOG.get());
+        dropSelf(MagitechBlocks.STRIPPED_CHARCOAL_BIRCH_WOOD.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_PLANKS.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_STAIRS.get());
         add(
-                BlockInit.CHARCOAL_BIRCH_SLAB.get(),
-                block -> createSlabItemTable(BlockInit.CHARCOAL_BIRCH_SLAB.get()));
-        dropSelf(BlockInit.CHARCOAL_BIRCH_FENCE.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_FENCE_GATE.get());
+                MagitechBlocks.CHARCOAL_BIRCH_SLAB.get(),
+                block -> createSlabItemTable(MagitechBlocks.CHARCOAL_BIRCH_SLAB.get()));
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_FENCE.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_FENCE_GATE.get());
         add(
-                BlockInit.CHARCOAL_BIRCH_DOOR.get(),
-                block -> createDoorTable(BlockInit.CHARCOAL_BIRCH_DOOR.get()));
-        dropSelf(BlockInit.CHARCOAL_BIRCH_TRAPDOOR.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_PRESSURE_PLATE.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_BUTTON.get());
+                MagitechBlocks.CHARCOAL_BIRCH_DOOR.get(),
+                block -> createDoorTable(MagitechBlocks.CHARCOAL_BIRCH_DOOR.get()));
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_TRAPDOOR.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_PRESSURE_PLATE.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_BUTTON.get());
         add(
-                BlockInit.CHARCOAL_BIRCH_LEAVES.get(),
+                MagitechBlocks.CHARCOAL_BIRCH_LEAVES.get(),
                 block ->
                         this.createLeavesDrops(
                                 block,
-                                BlockInit.CHARCOAL_BIRCH_SAPLING.get(),
+                                MagitechBlocks.CHARCOAL_BIRCH_SAPLING.get(),
                                 NORMAL_LEAVES_SAPLING_CHANCES));
-        dropSelf(BlockInit.CHARCOAL_BIRCH_SAPLING.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_SIGN.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_WALL_SIGN.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_HANGING_SIGN.get());
-        dropSelf(BlockInit.CHARCOAL_BIRCH_WALL_HANGING_SIGN.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_SAPLING.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_SIGN.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_WALL_SIGN.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_HANGING_SIGN.get());
+        dropSelf(MagitechBlocks.CHARCOAL_BIRCH_WALL_HANGING_SIGN.get());
         add(
-                BlockInit.SCORCHED_GRASS_SOIL.get(),
-                block -> createSingleItemTableWithSilkTouch(block, BlockInit.SCORCHED_SOIL));
-        dropSelf(BlockInit.SCORCHED_SOIL.get());
+                MagitechBlocks.SCORCHED_GRASS_SOIL.get(),
+                block -> createSingleItemTableWithSilkTouch(block, MagitechBlocks.SCORCHED_SOIL));
+        dropSelf(MagitechBlocks.SCORCHED_SOIL.get());
         add(
-                BlockInit.MISTALIA_PETALS.get(),
-                block -> createPetalsDrops(BlockInit.MISTALIA_PETALS.get()));
+                MagitechBlocks.MISTALIA_PETALS.get(),
+                block -> createPetalsDrops(MagitechBlocks.MISTALIA_PETALS.get()));
         HolderLookup.RegistryLookup<Enchantment> registrylookup =
                 this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         this.add(
-                BlockInit.MANA_BERRY_BUSH.get(),
+                MagitechBlocks.MANA_BERRY_BUSH.get(),
                 block ->
                         this.applyExplosionDecay(
                                 block,
@@ -186,7 +191,7 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
                                                         .when(
                                                                 LootItemBlockStatePropertyCondition
                                                                         .hasBlockStateProperties(
-                                                                                BlockInit
+                                                                                MagitechBlocks
                                                                                         .MANA_BERRY_BUSH
                                                                                         .get())
                                                                         .setProperties(
@@ -217,7 +222,7 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
                                                         .when(
                                                                 LootItemBlockStatePropertyCondition
                                                                         .hasBlockStateProperties(
-                                                                                BlockInit
+                                                                                MagitechBlocks
                                                                                         .MANA_BERRY_BUSH
                                                                                         .get())
                                                                         .setProperties(
@@ -264,6 +269,6 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
 
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
-        return BlockInit.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+        return MagitechBlocks.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
     }
 }

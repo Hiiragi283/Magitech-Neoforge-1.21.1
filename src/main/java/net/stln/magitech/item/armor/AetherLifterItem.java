@@ -2,10 +2,7 @@ package net.stln.magitech.item.armor;
 
 import java.util.function.Consumer;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -17,23 +14,22 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
+import net.stln.magitech.client.render.PlayerAnimatorInit;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.particle.option.SquareFieldParticleEffect;
 import net.stln.magitech.particle.option.SquareParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EntityUtil;
 import net.stln.magitech.util.TickScheduler;
 
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
-import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
-import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.GeoRenderProvider;
@@ -104,22 +100,17 @@ public class AetherLifterItem extends TooltipArmorItem implements GeoItem {
                     player.getX(),
                     player.getY(),
                     player.getZ(),
-                    SoundInit.AETHER_LIFTER_JUMP.get(),
+                    MagitechSounds.AETHER_LIFTER_JUMP.get(),
                     SoundSource.PLAYERS,
                     1,
                     Mth.nextFloat(player.getRandom(), 0.8F, 1.2F));
 
             if (level.isClientSide) {
-
-                var playerAnimationData =
-                        (ModifierLayer<IAnimation>)
-                                PlayerAnimationAccess.getPlayerAssociatedData(
-                                                (AbstractClientPlayer) player)
-                                        .get(Magitech.id("animation"));
-                if (playerAnimationData != null) {
+                var modifierLayer = PlayerAnimatorInit.getPlayerAnimation(player);
+                if (modifierLayer != null) {
 
                     player.yBodyRot = player.yHeadRot;
-                    playerAnimationData.replaceAnimationWithFade(
+                    modifierLayer.replaceAnimationWithFade(
                             AbstractFadeModifier.standardFadeIn(4, Ease.INOUTSINE),
                             new KeyframeAnimationPlayer(
                                             (KeyframeAnimation)

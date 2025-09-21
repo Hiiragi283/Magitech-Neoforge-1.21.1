@@ -14,12 +14,14 @@ import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.entity.magical.TremivoxEntity;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.cooldown.CooldownData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.SpellShape;
+
+import org.jetbrains.annotations.NotNull;
 
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
@@ -48,14 +50,14 @@ public class Tremivox extends Spell {
     }
 
     private static void playShootAnimation(Player user) {
-        var playerAnimationData =
+        var modifierLayer =
                 (ModifierLayer<IAnimation>)
                         PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
                                 .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
+        if (modifierLayer != null) {
 
             user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(
+            modifierLayer.replaceAnimationWithFade(
                     AbstractFadeModifier.standardFadeIn(1, Ease.INSINE),
                     new KeyframeAnimationPlayer(
                                     (KeyframeAnimation)
@@ -113,7 +115,7 @@ public class Tremivox extends Spell {
                         user.getX(),
                         user.getY(),
                         user.getZ(),
-                        SoundInit.TREMIVOX.get(),
+                        MagitechSounds.TREMIVOX.get(),
                         SoundSource.PLAYERS);
 
                 if (!level.isClientSide && !isHost) {
@@ -145,23 +147,17 @@ public class Tremivox extends Spell {
     }
 
     @Override
-    protected void playAnimation(Player user) {
-        var playerAnimationData =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
-                                .get(Magitech.id("animation"));
-        if (playerAnimationData != null) {
-
-            user.yBodyRot = user.yHeadRot;
-            playerAnimationData.replaceAnimationWithFade(
-                    AbstractFadeModifier.standardFadeIn(2, Ease.INSINE),
-                    new KeyframeAnimationPlayer(
-                                    (KeyframeAnimation)
-                                            PlayerAnimationRegistry.getAnimation(
-                                                    Magitech.id("charge_wand")))
-                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
-                            .setFirstPersonConfiguration(
-                                    new FirstPersonConfiguration(true, true, true, true)));
-        }
+    protected void playAnimation(
+            @NotNull Player player, @NotNull ModifierLayer<IAnimation> modifierLayer) {
+        player.yBodyRot = player.yHeadRot;
+        modifierLayer.replaceAnimationWithFade(
+                AbstractFadeModifier.standardFadeIn(2, Ease.INSINE),
+                new KeyframeAnimationPlayer(
+                                (KeyframeAnimation)
+                                        PlayerAnimationRegistry.getAnimation(
+                                                Magitech.id("charge_wand")))
+                        .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                        .setFirstPersonConfiguration(
+                                new FirstPersonConfiguration(true, true, true, true)));
     }
 }

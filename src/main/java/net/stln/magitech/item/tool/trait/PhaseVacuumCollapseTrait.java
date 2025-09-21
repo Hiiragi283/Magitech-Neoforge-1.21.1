@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.entity.effect.MobEffectInit;
+import net.stln.magitech.init.MagitechMobEffects;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.particle.option.VoidGlowParticleEffect;
 import net.stln.magitech.util.EffectUtil;
@@ -35,7 +35,7 @@ public class PhaseVacuumCollapseTrait extends Trait {
         if (target instanceof LivingEntity livingEntity && player.getRandom().nextFloat() > 0.5) {
 
             livingEntity.addEffect(
-                    new MobEffectInstance(MobEffectInit.PHASELOCK, 10 * traitLevel, 0));
+                    new MobEffectInstance(MagitechMobEffects.PHASELOCK, 10 * traitLevel, 0));
 
             EffectUtil.entityEffect(
                     level,

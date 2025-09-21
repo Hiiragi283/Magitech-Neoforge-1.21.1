@@ -18,11 +18,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.stln.magitech.damage.DamageTypeInit;
 import net.stln.magitech.element.Element;
+import net.stln.magitech.init.MagitechDamageTypes;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.particle.option.FrostParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.EffectUtil;
 
 import org.joml.Vector3f;
@@ -104,7 +104,7 @@ public class ShatterpiercerTrait extends Trait {
                 level.playSound(
                         player,
                         pos,
-                        SoundInit.FROST_BREAK.get(),
+                        MagitechSounds.FROST_BREAK.get(),
                         SoundSource.PLAYERS,
                         0.1F,
                         0.7F + (player.getRandom().nextFloat() * 0.6F));
@@ -124,7 +124,7 @@ public class ShatterpiercerTrait extends Trait {
         if (target instanceof LivingEntity livingEntity) {
             if (livingEntity.getPercentFrozen() > 0.8F) {
                 Vec3 range = new Vec3(3, 3, 3);
-                ResourceKey<DamageType> damageType = DamageTypeInit.GLACE_DAMAGE;
+                ResourceKey<DamageType> damageType = MagitechDamageTypes.GLACE_DAMAGE;
                 DamageSource damageSource =
                         stack.has(DataComponents.CUSTOM_NAME)
                                 ? player.damageSources().source(damageType, player)
@@ -187,7 +187,7 @@ public class ShatterpiercerTrait extends Trait {
                         pos.x,
                         pos.y,
                         pos.z,
-                        SoundInit.FROST_BREAK.get(),
+                        MagitechSounds.FROST_BREAK.get(),
                         SoundSource.PLAYERS,
                         1.0F,
                         0.7F + (player.getRandom().nextFloat() * 0.6F));

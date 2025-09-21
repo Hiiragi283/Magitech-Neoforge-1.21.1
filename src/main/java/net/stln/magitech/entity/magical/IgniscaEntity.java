@@ -1,9 +1,6 @@
 package net.stln.magitech.entity.magical;
 
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
@@ -14,12 +11,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.EntityInit;
+import net.stln.magitech.init.MagitechEntities;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.particle.option.FlameParticleEffect;
-import net.stln.magitech.sound.SoundInit;
-import net.stln.magitech.util.DataMapHelper;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -36,11 +32,11 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
     }
 
     public IgniscaEntity(Level world, LivingEntity owner, float damage) {
-        super(EntityInit.IGNISCA_ENTITY.get(), owner, world, null, damage);
+        super(MagitechEntities.IGNISCA_ENTITY.get(), owner, world, ItemStack.EMPTY, damage);
     }
 
     public IgniscaEntity(Level world, LivingEntity owner, ItemStack weapon, float damage) {
-        super(EntityInit.IGNISCA_ENTITY.get(), owner, world, weapon, damage);
+        super(MagitechEntities.IGNISCA_ENTITY.get(), owner, world, weapon, damage);
     }
 
     public IgniscaEntity(
@@ -50,7 +46,7 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
             double z,
             Level world,
             ItemStack stack,
-            @Nullable ItemStack weapon,
+            @NotNull ItemStack weapon,
             float damage) {
         super(type, x, y, z, world, weapon, damage);
     }
@@ -60,7 +56,7 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
             LivingEntity owner,
             Level world,
             ItemStack stack,
-            @Nullable ItemStack shotFrom,
+            @NotNull ItemStack shotFrom,
             float damage) {
         super(type, owner, world, shotFrom, damage);
     }
@@ -97,17 +93,10 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        Entity owner = this.getOwner();
-
-        ResourceKey<DamageType> damageType = this.getElement().getDamageType();
-        DamageSource elementalDamageSource = getElementalDamageSource(owner, damageType);
-
-        float finalDamage =
-                this.damage * DataMapHelper.getElementMultiplier(entity, this.getElement());
-        applyDamage(entity, elementalDamageSource, finalDamage);
+        applyDamage(entity, getElementalDamageSource(), getElementalDamageValue(entity));
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.setRemainingFireTicks(
                     Math.min(livingEntity.getRemainingFireTicks() + 80, 200));
@@ -120,12 +109,12 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
     }
 
     @Override
-    protected Element getElement() {
+    @NotNull public Element getElement() {
         return Element.EMBER;
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult) {
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
         hitParticle();
 
@@ -181,8 +170,8 @@ public class IgniscaEntity extends SpellProjectileEntity implements GeoEntity {
     }
 
     @Override
-    protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return SoundInit.FIREBALL.get();
+    protected @NotNull SoundEvent getDefaultHitGroundSoundEvent() {
+        return MagitechSounds.FIREBALL.get();
     }
 
     @Override

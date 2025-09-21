@@ -1,4 +1,4 @@
-package net.stln.magitech.entity;
+package net.stln.magitech.init;
 
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -37,9 +37,9 @@ import net.stln.magitech.entity.magical.VoltarisEntity;
 import net.stln.magitech.entity.mob.WeaverEntity;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID)
-public class EntityInit {
+public final class MagitechEntities {
 
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
+    public static final DeferredRegister<EntityType<?>> REGISTER =
             DeferredRegister.create(Registries.ENTITY_TYPE, Magitech.MOD_ID);
 
     public static final Supplier<EntityType<IgniscaEntity>> IGNISCA_ENTITY =
@@ -100,21 +100,21 @@ public class EntityInit {
 
     public static void registerModEntities(IEventBus eventBus) {
         Magitech.LOGGER.info("Registering Entity for " + Magitech.MOD_ID);
-        ENTITY_TYPES.register(eventBus);
+        REGISTER.register(eventBus);
     }
 
     public static void registerModEntitiesRenderer() {
         Magitech.LOGGER.info("Registering Entity Renderer for " + Magitech.MOD_ID);
-        EntityRenderers.register(EntityInit.IGNISCA_ENTITY.get(), IgniscaRenderer::new);
-        EntityRenderers.register(EntityInit.FRIGALA_ENTITY.get(), FrigalaRenderer::new);
-        EntityRenderers.register(EntityInit.VOLTARIS_ENTITY.get(), VoltarisRenderer::new);
-        EntityRenderers.register(EntityInit.MIRAZIEN_ENTITY.get(), MirazienRenderer::new);
-        EntityRenderers.register(EntityInit.TREMIVOX_ENTITY.get(), TremivoxRenderer::new);
-        EntityRenderers.register(EntityInit.ARCALETH_ENTITY.get(), ArcalethRenderer::new);
-        EntityRenderers.register(EntityInit.AELTHERIN_ENTITY.get(), AeltherinRenderer::new);
-        EntityRenderers.register(EntityInit.NULLIXIS_ENTITY.get(), NullixisRenderer::new);
+        EntityRenderers.register(MagitechEntities.IGNISCA_ENTITY.get(), IgniscaRenderer::new);
+        EntityRenderers.register(MagitechEntities.FRIGALA_ENTITY.get(), FrigalaRenderer::new);
+        EntityRenderers.register(MagitechEntities.VOLTARIS_ENTITY.get(), VoltarisRenderer::new);
+        EntityRenderers.register(MagitechEntities.MIRAZIEN_ENTITY.get(), MirazienRenderer::new);
+        EntityRenderers.register(MagitechEntities.TREMIVOX_ENTITY.get(), TremivoxRenderer::new);
+        EntityRenderers.register(MagitechEntities.ARCALETH_ENTITY.get(), ArcalethRenderer::new);
+        EntityRenderers.register(MagitechEntities.AELTHERIN_ENTITY.get(), AeltherinRenderer::new);
+        EntityRenderers.register(MagitechEntities.NULLIXIS_ENTITY.get(), NullixisRenderer::new);
 
-        EntityRenderers.register(EntityInit.WEAVER_ENTITY.get(), WeaverRenderer::new);
+        EntityRenderers.register(MagitechEntities.WEAVER_ENTITY.get(), WeaverRenderer::new);
     }
 
     private static <T extends Entity> Supplier<EntityType<T>> registerMobEntity(
@@ -122,7 +122,7 @@ public class EntityInit {
             EntityType.EntityFactory<T> factory,
             MobCategory category,
             UnaryOperator<EntityType.Builder<T>> operator) {
-        return ENTITY_TYPES.register(
+        return REGISTER.register(
                 path,
                 id -> operator.apply(EntityType.Builder.of(factory, category)).build(id.getPath()));
     }

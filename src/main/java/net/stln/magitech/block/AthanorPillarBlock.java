@@ -1,7 +1,5 @@
 package net.stln.magitech.block;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -29,6 +27,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.stln.magitech.block.entity.AthanorPillarBlockEntity;
+import net.stln.magitech.init.MagitechBlockEntityTypes;
+
+import org.jetbrains.annotations.Nullable;
 
 import com.mojang.serialization.MapCodec;
 
@@ -86,7 +87,7 @@ public class AthanorPillarBlock extends BaseEntityBlock {
     @Nullable @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTicker(level, blockEntityType, BlockInit.ATHANOR_PILLAR_ENTITY.get());
+        return createTicker(level, blockEntityType, MagitechBlockEntityTypes.ATHANOR_PILLAR.get());
     }
 
     @Override

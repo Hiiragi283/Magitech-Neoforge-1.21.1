@@ -25,8 +25,9 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.damage.DamageTypeInit;
-import net.stln.magitech.entity.effect.MobEffectInit;
+import net.stln.magitech.init.MagitechDamageTypes;
+import net.stln.magitech.init.MagitechMobEffects;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.material.ToolMaterial;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
@@ -34,7 +35,6 @@ import net.stln.magitech.particle.option.PowerupNoCullParticleEffect;
 import net.stln.magitech.particle.option.PowerupParticleEffect;
 import net.stln.magitech.particle.option.WaveNoCullParticleEffect;
 import net.stln.magitech.particle.option.WaveParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.ComponentHelper;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.EntityUtil;
@@ -120,7 +120,7 @@ public class BlindResonanceTrait extends Trait {
             Entity target) {
         super.onDamageEntity(player, level, stack, traitLevel, stats, target);
         if (target instanceof LivingEntity livingEntity) {
-            ResourceKey<DamageType> damageType = DamageTypeInit.TREMOR_DAMAGE;
+            ResourceKey<DamageType> damageType = MagitechDamageTypes.TREMOR_DAMAGE;
             DamageSource damageSource = player.damageSources().source(damageType, player);
 
             target.invulnerableTime = 0;
@@ -211,14 +211,14 @@ public class BlindResonanceTrait extends Trait {
                     hand == InteractionHand.MAIN_HAND
                             ? EquipmentSlot.MAINHAND
                             : EquipmentSlot.OFFHAND);
-            player.addEffect(new MobEffectInstance(MobEffectInit.ECHOLOCATION, 60));
+            player.addEffect(new MobEffectInstance(MagitechMobEffects.ECHOLOCATION, 60));
         }
         level.playSound(
                 player,
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                SoundInit.ECHOLOCATION.get(),
+                MagitechSounds.ECHOLOCATION.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 0.7F + (player.getRandom().nextFloat() * 0.6F));

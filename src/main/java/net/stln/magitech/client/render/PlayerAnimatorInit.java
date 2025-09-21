@@ -1,15 +1,21 @@
 package net.stln.magitech.client.render;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.entity.status.AttributeInit;
+import net.stln.magitech.init.MagitechAttributes;
 import net.stln.magitech.magic.mana.UsedHandData;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import dev.kosmx.playerAnim.api.TransformType;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
@@ -19,17 +25,40 @@ import dev.kosmx.playerAnim.api.layered.modifier.AdjustmentModifier;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.kosmx.playerAnim.api.layered.modifier.SpeedModifier;
 import dev.kosmx.playerAnim.core.util.Vec3f;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
 
 /** This is an example implementation of PlayerAnimator resourceLoading and playerMapping */
 @EventBusSubscriber(modid = Magitech.MOD_ID, value = Dist.CLIENT)
 public class PlayerAnimatorInit {
 
+    public static final ResourceLocation AMINATION_ID = Magitech.id("animation");
+
+    @SuppressWarnings("unchecked")
+    public static @Nullable ModifierLayer<IAnimation> getPlayerAnimation(@NotNull Player player) {
+        if (player instanceof AbstractClientPlayer clientPlayer) {
+            IAnimation data =
+                    PlayerAnimationAccess.getPlayerAssociatedData(clientPlayer).get(AMINATION_ID);
+            if (data instanceof ModifierLayer<?> modifierLayer) {
+                return (ModifierLayer<IAnimation>) modifierLayer;
+            }
+        }
+        return null;
+    }
+
+    public static void usePlayerAnimation(
+            @NotNull Player player, @NotNull Consumer<ModifierLayer<IAnimation>> consumer) {
+        var animation = getPlayerAnimation(player);
+        if (animation != null) {
+            consumer.accept(animation);
+        }
+    }
+
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         // Set the player construct callback. It can be a lambda function.
         PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(
-                Magitech.id("animation"),
+                AMINATION_ID,
                 42,
                 (abstractClientPlayer -> {
                     UsedHandData.setUsedHand(abstractClientPlayer, false);
@@ -98,7 +127,7 @@ public class PlayerAnimatorInit {
                                                     (delta
                                                             * abstractClientPlayer
                                                                     .getAttributeValue(
-                                                                            AttributeInit
+                                                                            MagitechAttributes
                                                                                     .CASTING_SPEED)));
                                 }
                             });

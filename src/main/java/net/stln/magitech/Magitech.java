@@ -11,27 +11,28 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.stln.magitech.advancement.CriterionInit;
-import net.stln.magitech.biome.BiomeInit;
-import net.stln.magitech.block.BlockInit;
-import net.stln.magitech.compat.curios.ValidatorInit;
+import net.stln.magitech.compat.curios.CuriosInit;
 import net.stln.magitech.data.DataMapTypeInit;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.EntityInit;
-import net.stln.magitech.entity.effect.MobEffectInit;
-import net.stln.magitech.entity.status.AttributeInit;
-import net.stln.magitech.gui.GuiInit;
+import net.stln.magitech.init.MagitechAttributes;
+import net.stln.magitech.init.MagitechBiomes;
+import net.stln.magitech.init.MagitechBlockEntityTypes;
+import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechCriteria;
+import net.stln.magitech.init.MagitechEntities;
+import net.stln.magitech.init.MagitechLootFunctions;
+import net.stln.magitech.init.MagitechMenuTypes;
+import net.stln.magitech.init.MagitechMobEffects;
+import net.stln.magitech.init.MagitechRecipes;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.creative_tab.CreativeTabInit;
 import net.stln.magitech.item.tool.material.MaterialInit;
 import net.stln.magitech.item.tool.register.ToolMaterialRegister;
 import net.stln.magitech.item.tool.upgrade.UpgradeInit;
-import net.stln.magitech.loot.LootFunctionInit;
 import net.stln.magitech.magic.spell.SpellInit;
 import net.stln.magitech.particle.ParticleInit;
-import net.stln.magitech.recipe.RecipeInit;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.worldgen.WorldGenInit;
 import net.stln.magitech.worldgen.tree.TreeGrowerInit;
 
@@ -70,27 +71,28 @@ public class Magitech {
         // Register the Deferred Register to the mod event bus so blocks get registered
         ComponentInit.registerComponents(modEventBus);
 
-        BlockInit.registerBlocks(modEventBus);
+        MagitechBlocks.registerBlocks(modEventBus);
+        MagitechBlockEntityTypes.register(modEventBus);
         ItemInit.registerItems(modEventBus);
 
-        AttributeInit.registerEntityAttributes(modEventBus);
+        MagitechAttributes.registerEntityAttributes(modEventBus);
         CreativeTabInit.registerCreativeTabs(modEventBus);
-        CriterionInit.registerCriteria(modEventBus);
+        MagitechCriteria.registerCriteria(modEventBus);
         Element.registerElements();
         DataMapTypeInit.registerDataMapTypes(modEventBus);
-        EntityInit.registerModEntities(modEventBus);
-        GuiInit.registerMenus(modEventBus);
-        LootFunctionInit.registerFunctions(modEventBus);
+        MagitechEntities.registerModEntities(modEventBus);
+        MagitechMenuTypes.registerMenus(modEventBus);
+        MagitechLootFunctions.registerFunctions(modEventBus);
         MaterialInit.registerMaterials(modEventBus);
-        MobEffectInit.registerMobEffects(modEventBus);
+        MagitechMobEffects.registerMobEffects(modEventBus);
         ParticleInit.registerParticleClient(modEventBus);
-        RecipeInit.registerRecipes(modEventBus);
-        SoundInit.registerSoundEvents(modEventBus);
+        MagitechRecipes.registerRecipes(modEventBus);
+        MagitechSounds.registerSoundEvents(modEventBus);
         SpellInit.registerSpells(modEventBus);
         ToolMaterialRegister.init();
         TreeGrowerInit.registerTrunkPlacerTypes(modEventBus);
         UpgradeInit.registerUpgrades();
-        ValidatorInit.registerValidators();
+        CuriosInit.registerValidators();
         WorldGenInit.registerFeatures(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
@@ -109,8 +111,8 @@ public class Magitech {
     private void commonSetup(final FMLCommonSetupEvent event) {
         // Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
         // WorldGenInit.registerBiomeModifiers();
-        BlockInit.registerStrippableBlocks();
-        BiomeInit.registerBiomeRegions(event);
+        MagitechBlocks.registerStrippableBlocks();
+        MagitechBiomes.registerBiomeRegions(event);
     }
 
     // Add the example block item to the building blocks tab

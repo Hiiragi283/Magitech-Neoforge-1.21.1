@@ -6,6 +6,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.stln.magitech.init.MagitechCriteria;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +19,7 @@ public class ToolUpgradeTrigger extends SimpleCriterionTrigger<ToolUpgradeTrigge
         return ToolUpgradeTrigger.TriggerInstance.CODEC;
     }
 
-    public void trigger(ServerPlayer player, ItemStack item, int tier) {
+    public void trigger(@NotNull ServerPlayer player, @NotNull ItemStack item, int tier) {
         this.trigger(player, p_27675_ -> p_27675_.matches(item, tier));
     }
 
@@ -51,14 +52,14 @@ public class ToolUpgradeTrigger extends SimpleCriterionTrigger<ToolUpgradeTrigge
                                         .apply(p_337356_, ToolUpgradeTrigger.TriggerInstance::new));
 
         public static Criterion<TriggerInstance> toolUpgrade() {
-            return CriterionInit.TOOL_UPGRADE
+            return MagitechCriteria.TOOL_UPGRADE
                     .get()
                     .createCriterion(
                             new ToolUpgradeTrigger.TriggerInstance(
                                     Optional.empty(), Optional.empty(), MinMaxBounds.Ints.ANY));
         }
 
-        public boolean matches(ItemStack stack, int tier) {
+        public boolean matches(@NotNull ItemStack stack, int tier) {
             return (item.isEmpty() || item.get().test(stack)) && this.tier.matches(tier);
         }
     }

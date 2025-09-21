@@ -15,13 +15,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.entity.effect.MobEffectInit;
+import net.stln.magitech.init.MagitechMobEffects;
+import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.BeamSpell;
 import net.stln.magitech.particle.option.BeamParticleEffect;
 import net.stln.magitech.particle.option.VoidGlowParticleEffect;
-import net.stln.magitech.sound.SoundInit;
 import net.stln.magitech.util.*;
 
 import org.joml.Vector3f;
@@ -205,7 +205,7 @@ public class Voidlance extends BeamSpell {
                     if (!level.isClientSide) {
                         if (target instanceof LivingEntity livingTarget) {
                             livingTarget.addEffect(
-                                    new MobEffectInstance(MobEffectInit.VOIDROT, 80, 0),
+                                    new MobEffectInstance(MagitechMobEffects.VOIDROT, 80, 0),
                                     livingTarget);
                         }
                         if (target != null) {
@@ -227,7 +227,7 @@ public class Voidlance extends BeamSpell {
                 hitPos.x(),
                 hitPos.y(),
                 hitPos.z(),
-                SoundInit.VOIDLANCE.get(),
+                MagitechSounds.VOIDLANCE.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 0.6F + (user.getRandom().nextFloat() * 0.6F));
@@ -237,7 +237,7 @@ public class Voidlance extends BeamSpell {
     @Override
     protected void applyEffectToLivingTarget(Level level, Player user, LivingEntity target) {
         super.applyEffectToLivingTarget(level, user, target);
-        target.addEffect(new MobEffectInstance(MobEffectInit.VOIDROT, 80, 0), target);
+        target.addEffect(new MobEffectInstance(MagitechMobEffects.VOIDROT, 80, 0), target);
     }
 
     @Override
@@ -247,7 +247,7 @@ public class Voidlance extends BeamSpell {
                 user.getX(),
                 user.getY(),
                 user.getZ(),
-                SoundInit.VOIDLANCE.get(),
+                MagitechSounds.VOIDLANCE.get(),
                 SoundSource.PLAYERS,
                 1.0F,
                 0.6F + (user.getRandom().nextFloat() * 0.6F));

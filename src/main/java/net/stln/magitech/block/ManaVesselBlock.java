@@ -1,7 +1,5 @@
 package net.stln.magitech.block;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -14,6 +12,7 @@ import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.block.entity.ManaVesselBlockEntity;
 import net.stln.magitech.particle.option.SquareParticleEffect;
 
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import com.mojang.serialization.MapCodec;
@@ -23,7 +22,7 @@ public class ManaVesselBlock extends BaseEntityBlock {
     public static final MapCodec<AlchemetricPylonBlock> CODEC =
             simpleCodec(AlchemetricPylonBlock::new);
 
-    protected ManaVesselBlock(Properties properties) {
+    public ManaVesselBlock(Properties properties) {
         super(properties);
     }
 

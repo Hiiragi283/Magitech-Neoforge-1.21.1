@@ -1,4 +1,4 @@
-package net.stln.magitech.gui;
+package net.stln.magitech.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.stln.magitech.init.MagitechMenuTypes;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.ThreadBoundItem;
 import net.stln.magitech.item.ThreadPageItem;
@@ -23,14 +24,14 @@ import net.stln.magitech.util.CuriosHelper;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ThreadboundMenuType extends AbstractContainerMenu {
+public class ThreadboundMenu extends AbstractContainerMenu {
 
     private final ItemStack threadbound;
     private final SimpleContainer container = new SimpleContainer(15);
     private final int containerRows = 3;
     private final int containerColumns = 5;
 
-    public ThreadboundMenuType(int containerId, Inventory playerInv) {
+    public ThreadboundMenu(int containerId, Inventory playerInv) {
         this(
                 containerId,
                 playerInv,
@@ -41,9 +42,9 @@ public class ThreadboundMenuType extends AbstractContainerMenu {
                         : playerInv.player.getItemInHand(InteractionHand.OFF_HAND));
     }
 
-    public ThreadboundMenuType(
+    public ThreadboundMenu(
             int containerId, Inventory playerInv, Player player, ItemStack threadbound) {
-        super(GuiInit.THREADBOUND_MENU.get(), containerId);
+        super(MagitechMenuTypes.THREADBOUND.get(), containerId);
 
         if (!(threadbound.getItem() instanceof ThreadBoundItem)) {
             threadbound = CuriosHelper.getThreadBoundStack(player).orElse(ItemStack.EMPTY);

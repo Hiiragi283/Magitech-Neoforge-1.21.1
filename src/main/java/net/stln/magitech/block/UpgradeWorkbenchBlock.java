@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.stln.magitech.gui.ToolUpgradeMenu;
+import net.stln.magitech.inventory.ToolUpgradeMenu;
 
 import com.mojang.serialization.MapCodec;
 

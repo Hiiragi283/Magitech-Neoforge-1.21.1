@@ -7,7 +7,7 @@ import net.neoforged.neoforge.client.model.generators.ModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.MagitechRegistries;
-import net.stln.magitech.block.BlockInit;
+import net.stln.magitech.init.MagitechBlocks;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.tool.model.ModelRegistrar;
 
@@ -90,25 +90,28 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ItemInit.MANA_BERRIES.get());
         basicItem(ItemInit.MANA_PIE.get());
 
-        basicItem(BlockInit.CELIFERN_DOOR_ITEM.get());
-        getBuilder(BlockInit.CELIFERN_SAPLING_ITEM.get().toString())
+        basicItem(MagitechBlocks.CELIFERN_DOOR_ITEM.get());
+        getBuilder(MagitechBlocks.CELIFERN_SAPLING_ITEM.get().toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture(
                         "layer0",
-                        Magitech.id("block/" + BlockInit.CELIFERN_SAPLING_ITEM.getId().getPath()));
-        basicItem(BlockInit.CELIFERN_SIGN_ITEM.get());
-        basicItem(BlockInit.CELIFERN_HANGING_SIGN_ITEM.get());
-        basicItem(BlockInit.CHARCOAL_BIRCH_DOOR_ITEM.get());
-        getBuilder(BlockInit.CHARCOAL_BIRCH_SAPLING_ITEM.get().toString())
+                        Magitech.id(
+                                "block/" + MagitechBlocks.CELIFERN_SAPLING_ITEM.getId().getPath()));
+        basicItem(MagitechBlocks.CELIFERN_SIGN_ITEM.get());
+        basicItem(MagitechBlocks.CELIFERN_HANGING_SIGN_ITEM.get());
+        basicItem(MagitechBlocks.CHARCOAL_BIRCH_DOOR_ITEM.get());
+        getBuilder(MagitechBlocks.CHARCOAL_BIRCH_SAPLING_ITEM.get().toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture(
                         "layer0",
                         Magitech.id(
                                 "block/"
-                                        + BlockInit.CHARCOAL_BIRCH_SAPLING_ITEM.getId().getPath()));
-        basicItem(BlockInit.CHARCOAL_BIRCH_SIGN_ITEM.get());
-        basicItem(BlockInit.CHARCOAL_BIRCH_HANGING_SIGN_ITEM.get());
-        basicItem(BlockInit.MISTALIA_PETALS_ITEM.get());
+                                        + MagitechBlocks.CHARCOAL_BIRCH_SAPLING_ITEM
+                                                .getId()
+                                                .getPath()));
+        basicItem(MagitechBlocks.CHARCOAL_BIRCH_SIGN_ITEM.get());
+        basicItem(MagitechBlocks.CHARCOAL_BIRCH_HANGING_SIGN_ITEM.get());
+        basicItem(MagitechBlocks.MISTALIA_PETALS_ITEM.get());
 
         MagitechRegistries.TOOL_MATERIAL.stream()
                 .forEach(

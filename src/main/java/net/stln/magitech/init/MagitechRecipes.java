@@ -1,4 +1,4 @@
-package net.stln.magitech.recipe;
+package net.stln.magitech.init;
 
 import java.util.function.Supplier;
 
@@ -11,12 +11,13 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
+import net.stln.magitech.recipe.*;
 
 import org.jetbrains.annotations.NotNull;
 
 import com.mojang.serialization.MapCodec;
 
-public class RecipeInit {
+public final class MagitechRecipes {
 
     // Serializers
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
