@@ -120,7 +120,7 @@ public class BlindResonanceTrait extends Trait {
             Entity target) {
         super.onDamageEntity(player, level, stack, traitLevel, stats, target);
         if (target instanceof LivingEntity livingEntity) {
-            ResourceKey<DamageType> damageType = MagitechDamageTypes.TREMOR_DAMAGE;
+            ResourceKey<DamageType> damageType = MagitechDamageTypes.TREMOR;
             DamageSource damageSource = player.damageSources().source(damageType, player);
 
             target.invulnerableTime = 0;

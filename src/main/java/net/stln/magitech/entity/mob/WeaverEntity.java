@@ -114,11 +114,12 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
         this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
     }
 
+    @SuppressWarnings("deprecation")
     @Nullable @Override
     public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            MobSpawnType spawnType,
+            @NotNull ServerLevelAccessor level,
+            @NotNull DifficultyInstance difficulty,
+            @NotNull MobSpawnType spawnType,
             @Nullable SpawnGroupData spawnGroupData) {
         spawnGroupData = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
         RandomSource randomsource = level.getRandom();
@@ -127,7 +128,7 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
         this.setCanPickUpLoot(randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier());
         if (this.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
             LocalDate localdate = LocalDate.now();
-            int i = localdate.get(ChronoField.DAY_OF_MONTH);
+            int i = localdate.getDayOfMonth();
             int j = localdate.get(ChronoField.MONTH_OF_YEAR);
             if (j == 10 && i == 31 && randomsource.nextFloat() < 0.25F) {
                 this.setItemSlot(
@@ -254,8 +255,7 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
 
                         if (!level.isClientSide) {
                             DamageSource elementalDamageSource =
-                                    this.damageSources()
-                                            .source(MagitechDamageTypes.SURGE_DAMAGE, this);
+                                    this.damageSources().source(MagitechDamageTypes.SURGE, this);
                             for (Entity entity : entities) {
                                 if (!entity.isInvulnerableTo(elementalDamageSource)) {
                                     this.setLastHurtMob(entity);
@@ -408,7 +408,7 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
 
                     if (!level.isClientSide) {
                         DamageSource elementalDamageSource =
-                                this.damageSources().source(MagitechDamageTypes.GLACE_DAMAGE, this);
+                                this.damageSources().source(MagitechDamageTypes.GLACE, this);
                         if (beamTarget != null) {
                             beamTarget.hurt(elementalDamageSource, 4);
                             if (beamTarget instanceof LivingEntity livingTarget) {
@@ -442,12 +442,12 @@ public class WeaverEntity extends Monster implements GeoEntity, RangedAttackMob 
     }
 
     @Override
-    public boolean canFireProjectileWeapon(ProjectileWeaponItem projectileWeapon) {
+    public boolean canFireProjectileWeapon(@NotNull ProjectileWeaponItem projectileWeapon) {
         return true;
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(@NotNull DamageSource source, float amount) {
         boolean result = super.hurt(source, amount);
         if (result && amount > 0) {
             this.triggerAnim("controller", "damage");

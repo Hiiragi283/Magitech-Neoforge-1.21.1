@@ -44,6 +44,7 @@ import net.stln.magitech.recipe.input.GroupedMultiStackRecipeInput;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.StructureHelper;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -56,7 +57,7 @@ public class AthanorPillarBlockEntity extends BlockEntity {
             new ItemStackHandler(1) {
 
                 @Override
-                protected int getStackLimit(int slot, ItemStack stack) {
+                protected int getStackLimit(int slot, @NotNull ItemStack stack) {
                     return 1;
                 }
 
@@ -99,15 +100,16 @@ public class AthanorPillarBlockEntity extends BlockEntity {
                             MagitechRecipes.ATHANOR_PILLAR_INFUSION_TYPE.get(), input, level);
 
             if (recipeHolder.isPresent()
-                    && blockEntity
-                            .inventory
-                            .getStackInSlot(0)
-                            .is(recipeHolder.get().value().getBase().getItem())) {
+                    && recipeHolder
+                            .get()
+                            .value()
+                            .base()
+                            .test(blockEntity.inventory.getStackInSlot(0))) {
                 boolean flag = true;
                 for (int i = 0; i < 5; i++) {
                     BlockPos vesselPos = getVesselPos(pos, i);
                     if (((ManaVesselBlockEntity) level.getBlockEntity(vesselPos)).getMana()
-                            < recipeHolder.get().value().getMana() / 5) {
+                            < recipeHolder.get().value().mana() / 5) {
                         flag = false;
                     }
                 }
@@ -128,7 +130,7 @@ public class AthanorPillarBlockEntity extends BlockEntity {
                             BlockPos vesselPos = getVesselPos(pos, i);
                             BlockState state1 = level.getBlockState(vesselPos);
                             ((ManaVesselBlockEntity) level.getBlockEntity(vesselPos))
-                                    .subMana(recipeHolder.get().value().getMana() / 5);
+                                    .subMana(recipeHolder.get().value().mana() / 5);
                             setChanged(level, vesselPos, state1);
                             level.sendBlockUpdated(vesselPos, state1, state1, 3);
                             blockEntity.craftingProgress = 0;
@@ -383,7 +385,7 @@ public class AthanorPillarBlockEntity extends BlockEntity {
         };
     }
 
-    public static BlockPos getVesselPos(BlockPos pos, int i) {
+    public static @Nullable BlockPos getVesselPos(@NotNull BlockPos pos, int i) {
         return switch (i) {
             case 0 -> pos.offset(3, 0, 3);
             case 1 -> pos.offset(-3, 0, 3);

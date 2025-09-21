@@ -1,0 +1,28 @@
+{
+  "type": "magitech:zardius_crucible",
+  "fluid_ingredient": {
+    "amount": 2000,
+    "tag": "c:lava"
+  },
+  "ingredients": [
+    {
+      "tag": "c:nether_stars"
+    },
+    {
+      "tag": "c:gunpowders"
+    },
+    {
+      "item": "magitech:ember_crystal"
+    },
+    {
+      "item": "magitech:magic_crystal"
+    },
+    {
+      "item": "magitech:tremor_crystal"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "magitech:nether_star_brilliance"
+  }
+}

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -25,29 +24,59 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackRecipeInput> {
+public record AthanorPillarInfusionRecipe(
+        String group,
+        Ingredient base,
+        List<List<Ingredient>> ingredients,
+        ItemStack result,
+        int mana)
+        implements Recipe<GroupedMultiStackRecipeInput> {
+    public static final MapCodec<AthanorPillarInfusionRecipe> CODEC =
+            RecordCodecBuilder.mapCodec(
+                    instance ->
+                            instance.group(
+                                            Codec.STRING
+                                                    .optionalFieldOf("group", "")
+                                                    .forGetter(AthanorPillarInfusionRecipe::group),
+                                            Ingredient.CODEC_NONEMPTY
+                                                    .fieldOf("base")
+                                                    .forGetter(AthanorPillarInfusionRecipe::base),
+                                            Ingredient.LIST_CODEC
+                                                    .listOf()
+                                                    .fieldOf("ingredients")
+                                                    .forGetter(
+                                                            AthanorPillarInfusionRecipe
+                                                                    ::ingredients),
+                                            ItemStack.STRICT_CODEC
+                                                    .fieldOf("result")
+                                                    .forGetter(AthanorPillarInfusionRecipe::result),
+                                            Codec.INT
+                                                    .optionalFieldOf("mana", 0)
+                                                    .forGetter(AthanorPillarInfusionRecipe::mana))
+                                    .apply(instance, AthanorPillarInfusionRecipe::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, AthanorPillarInfusionRecipe>
+            STREAM_CODEC =
+                    StreamCodec.composite(
+                            ByteBufCodecs.STRING_UTF8,
+                            AthanorPillarInfusionRecipe::group,
+                            Ingredient.CONTENTS_STREAM_CODEC,
+                            AthanorPillarInfusionRecipe::base,
+                            Ingredient.CONTENTS_STREAM_CODEC
+                                    .apply(ByteBufCodecs.list())
+                                    .apply(ByteBufCodecs.list()),
+                            AthanorPillarInfusionRecipe::ingredients,
+                            ItemStack.STREAM_CODEC,
+                            AthanorPillarInfusionRecipe::result,
+                            ByteBufCodecs.INT,
+                            AthanorPillarInfusionRecipe::mana,
+                            AthanorPillarInfusionRecipe::new);
 
-    protected final List<List<Ingredient>> ingredients;
-    protected final ItemStack result;
-    protected final String group;
-    protected final ItemStack base;
-    protected final int mana;
-
-    public AthanorPillarInfusionRecipe(
-            String group,
-            ItemStack base,
-            List<List<Ingredient>> ingredients,
-            int mana,
-            ItemStack result) {
-        this.base = base;
-        this.mana = mana;
-        this.ingredients = ingredients;
-        this.group = group;
-        this.result = result;
+    public @NotNull List<Ingredient> getInnerIngredients(int index) {
+        return List.copyOf(ingredients.get(index));
     }
 
     @Override
-    public boolean matches(GroupedMultiStackRecipeInput input, @NotNull Level level) {
+    public boolean matches(@NotNull GroupedMultiStackRecipeInput input, @NotNull Level level) {
         if (input.outerSize() != this.ingredients.size()) {
             return false;
         } else {
@@ -58,7 +87,7 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
                                 && !this.ingredients.get(i).isEmpty())) {
                     return false;
                 }
-                var nonEmptyItems = new java.util.ArrayList<ItemStack>(input.ingredientCount());
+                var nonEmptyItems = new ArrayList<ItemStack>(input.ingredientCount());
                 for (var item : group) {
                     if (!item.isEmpty()) {
                         nonEmptyItems.add(item);
@@ -79,10 +108,11 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
         }
     }
 
+    @Override
     public @NotNull ItemStack assemble(
             @NotNull GroupedMultiStackRecipeInput input,
             HolderLookup.@NotNull Provider registries) {
-        return this.result.copy();
+        return getResultItem(registries);
     }
 
     @Override
@@ -91,26 +121,8 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
     }
 
     @Override
-    public @NotNull NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> flatList = NonNullList.create();
-        for (List<Ingredient> group : ingredients) {
-            flatList.addAll(group);
-        }
-        return flatList;
-    }
-
-    public NonNullList<Ingredient> getInnerIngredients(int index) {
-        return NonNullList.copyOf(this.ingredients.get(index));
-    }
-
-    @Override
     public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
         return result.copy();
-    }
-
-    @Override
-    public @NotNull RecipeType<?> getType() {
-        return MagitechRecipes.ATHANOR_PILLAR_INFUSION_TYPE.get();
     }
 
     @Override
@@ -118,84 +130,8 @@ public class AthanorPillarInfusionRecipe implements Recipe<GroupedMultiStackReci
         return MagitechRecipes.ATHANOR_PILLAR_INFUSION_SERIALIZER.get();
     }
 
-    public ItemStack getBase() {
-        return base;
-    }
-
-    public int getMana() {
-        return mana;
-    }
-
-    public interface Factory<T extends AthanorPillarInfusionRecipe> {
-
-        T create(
-                String group,
-                ItemStack base,
-                List<List<Ingredient>> ingredients,
-                int mana,
-                ItemStack result);
-    }
-
-    public static class Serializer<T extends AthanorPillarInfusionRecipe>
-            implements RecipeSerializer<T> {
-
-        final AthanorPillarInfusionRecipe.Factory<T> factory;
-        private final MapCodec<T> codec;
-        private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
-
-        public Serializer(AthanorPillarInfusionRecipe.Factory<T> factory) {
-            this.factory = factory;
-            this.codec =
-                    RecordCodecBuilder.mapCodec(
-                            p_340781_ ->
-                                    p_340781_
-                                            .group(
-                                                    Codec.STRING
-                                                            .optionalFieldOf("group", "")
-                                                            .forGetter(
-                                                                    p_300947_ -> p_300947_.group),
-                                                    ItemStack.STRICT_CODEC
-                                                            .fieldOf("base")
-                                                            .forGetter(p_300947_ -> p_300947_.base),
-                                                    Ingredient.LIST_CODEC
-                                                            .listOf()
-                                                            .fieldOf("ingredients")
-                                                            .forGetter(
-                                                                    p_300947_ ->
-                                                                            p_300947_.ingredients),
-                                                    Codec.INT
-                                                            .optionalFieldOf("mana", 0)
-                                                            .forGetter(p_300947_ -> p_300947_.mana),
-                                                    ItemStack.STRICT_CODEC
-                                                            .fieldOf("result")
-                                                            .forGetter(
-                                                                    p_302316_ -> p_302316_.result))
-                                            .apply(p_340781_, factory::create));
-            this.streamCodec =
-                    StreamCodec.composite(
-                            ByteBufCodecs.STRING_UTF8,
-                            r -> r.group,
-                            ItemStack.STREAM_CODEC,
-                            r -> r.base,
-                            Ingredient.CONTENTS_STREAM_CODEC
-                                    .apply(ByteBufCodecs.list())
-                                    .apply(ByteBufCodecs.list()),
-                            r -> r.ingredients,
-                            ByteBufCodecs.INT,
-                            r -> r.mana,
-                            ItemStack.STREAM_CODEC,
-                            r -> r.result,
-                            factory::create);
-        }
-
-        @Override
-        public @NotNull MapCodec<T> codec() {
-            return this.codec;
-        }
-
-        @Override
-        public @NotNull StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
-            return this.streamCodec;
-        }
+    @Override
+    public @NotNull RecipeType<?> getType() {
+        return MagitechRecipes.ATHANOR_PILLAR_INFUSION_TYPE.get();
     }
 }

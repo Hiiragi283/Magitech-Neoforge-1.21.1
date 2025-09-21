@@ -3,7 +3,6 @@ package net.stln.magitech.magic.spell.hollow;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
+import net.stln.magitech.client.render.PlayerAnimatorInit;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
@@ -36,7 +36,6 @@ import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 
 public class Tenebport extends Spell {
@@ -51,23 +50,20 @@ public class Tenebport extends Spell {
         return SpellShape.UTILITY;
     }
 
-    protected static void playShootAnimation(Player user) {
-        var modifierLayer =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
-                                .get(Magitech.id("animation"));
-        if (modifierLayer != null) {
-
-            user.yBodyRot = user.yHeadRot;
-            modifierLayer.setAnimation(
-                    new KeyframeAnimationPlayer(
-                                    (KeyframeAnimation)
-                                            PlayerAnimationRegistry.getAnimation(
-                                                    Magitech.id("wand_shoot")))
-                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
-                            .setFirstPersonConfiguration(
-                                    new FirstPersonConfiguration(true, true, true, true)));
-        }
+    protected static void playShootAnimation(Player player) {
+        PlayerAnimatorInit.usePlayerAnimation(
+                player,
+                modifierLayer -> {
+                    player.yBodyRot = player.yHeadRot;
+                    modifierLayer.setAnimation(
+                            new KeyframeAnimationPlayer(
+                                            (KeyframeAnimation)
+                                                    PlayerAnimationRegistry.getAnimation(
+                                                            Magitech.id("wand_shoot")))
+                                    .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                                    .setFirstPersonConfiguration(
+                                            new FirstPersonConfiguration(true, true, true, true)));
+                });
     }
 
     @Override

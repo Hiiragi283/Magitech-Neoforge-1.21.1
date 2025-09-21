@@ -124,7 +124,7 @@ public class ShatterpiercerTrait extends Trait {
         if (target instanceof LivingEntity livingEntity) {
             if (livingEntity.getPercentFrozen() > 0.8F) {
                 Vec3 range = new Vec3(3, 3, 3);
-                ResourceKey<DamageType> damageType = MagitechDamageTypes.GLACE_DAMAGE;
+                ResourceKey<DamageType> damageType = MagitechDamageTypes.GLACE;
                 DamageSource damageSource =
                         stack.has(DataComponents.CUSTOM_NAME)
                                 ? player.damageSources().source(damageType, player)

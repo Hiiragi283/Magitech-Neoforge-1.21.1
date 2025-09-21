@@ -111,8 +111,8 @@ public class BeamSpell extends Spell {
                     List<Entity> entities =
                             EntityUtil.getEntitiesInBox(level, user, hitPos, new Vec3(1, 1, 1));
                     for (Entity entity : entities) {
-                        if (entity instanceof ItemEntity) {
-                            applyEffectToItem(level, user, entity);
+                        if (entity instanceof ItemEntity itemEntity) {
+                            applyEffectToItem(level, user, itemEntity);
                         }
                     }
                 }

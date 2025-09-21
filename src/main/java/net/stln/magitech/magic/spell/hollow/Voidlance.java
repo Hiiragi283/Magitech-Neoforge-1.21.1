@@ -96,15 +96,15 @@ public class Voidlance extends BeamSpell {
                         user.position().add(0, user.getBbHeight() * 0.7, 0).add(forward.scale(0.5));
                 addVisualEffect(level, user, start, hitPos);
                 playBeamSound(level, user);
-                final List<Vec3>[] vec3s = new List[] {new ArrayList<>()};
+                List<Vec3> vec3s = new ArrayList<>();
                 TickScheduler.schedule(
                         2,
-                        () -> vec3s[0] = addBeam(stack, level, user, hitPos, 1),
+                        () -> vec3s.addAll(addBeam(stack, level, user, hitPos, 1)),
                         level.isClientSide);
                 TickScheduler.schedule(
                         4,
                         () -> {
-                            for (Vec3 hit : vec3s[0]) {
+                            for (Vec3 hit : vec3s) {
                                 addBeam(stack, level, user, hit, 2);
                             }
                         },

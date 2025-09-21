@@ -22,7 +22,7 @@ import vazkii.patchouli.api.IVariableProvider;
 public class AthanorPillarInfusionRecipeProcessor implements IComponentProcessor {
 
     private final List<List<Ingredient>> inputs = new ArrayList<>();
-    private ItemStack base = ItemStack.EMPTY;
+    private Ingredient base = Ingredient.EMPTY;
     private ItemStack output = ItemStack.EMPTY;
     private int mana = 0;
     Recipe<?> recipe;
@@ -51,8 +51,8 @@ public class AthanorPillarInfusionRecipeProcessor implements IComponentProcessor
             for (int i = 0; i < 3; i++) {
                 inputs.add(r.getInnerIngredients(i));
             }
-            mana = r.getMana();
-            base = r.getBase();
+            mana = r.mana();
+            base = r.base();
             output = r.getResultItem(access);
         }
     }
@@ -91,7 +91,7 @@ public class AthanorPillarInfusionRecipeProcessor implements IComponentProcessor
             }
         }
         if (key.equals("base")) {
-            returnStack = Ingredient.of(base.copy());
+            returnStack = base;
         }
         if (key.equals("result")) {
             returnStack = Ingredient.of(output.copy());

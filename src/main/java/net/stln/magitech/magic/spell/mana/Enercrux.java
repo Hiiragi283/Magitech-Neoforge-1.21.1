@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.block.entity.ManaContainerBlockEntity;
-import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.BeamSpell;
@@ -32,10 +31,6 @@ public class Enercrux extends BeamSpell {
         baseDamage = 5.0F;
         baseMaxRange = 8;
         beamradius = 0.3;
-    }
-
-    public Element getElement() {
-        return Element.NONE;
     }
 
     public SpellShape getSpellShape() {

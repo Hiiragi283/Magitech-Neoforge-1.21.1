@@ -2,7 +2,6 @@ package net.stln.magitech.magic.spell;
 
 import java.util.*;
 
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -58,7 +57,6 @@ import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 
 public abstract class Spell implements SpellLike {
@@ -76,10 +74,7 @@ public abstract class Spell implements SpellLike {
 
     @OnlyIn(Dist.CLIENT)
     private static void stopAnim(Player player) {
-        var modifierLayer =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) player)
-                                .get(PlayerAnimatorInit.AMINATION_ID);
+        var modifierLayer = PlayerAnimatorInit.getPlayerAnimation(player);
         if (modifierLayer != null
                 && modifierLayer.getAnimation()
                         instanceof KeyframeAnimationPlayer keyframeAnimationPlayer) {
@@ -497,37 +492,32 @@ public abstract class Spell implements SpellLike {
         return list;
     }
 
-    protected void applyEffectToItem(Level level, Player user, Entity target) {
-        if (target instanceof ItemEntity item) {
-            var recipeInput = new SpellRecipeInput(item.getItem(), this);
-            level.getRecipeManager()
-                    .getRecipeFor(MagitechRecipes.SPELL_CONVERSION_TYPE.get(), recipeInput, level)
-                    .map(RecipeHolder::value)
-                    .ifPresent(
-                            recipe -> {
-                                ItemStack stack =
-                                        recipe.assemble(recipeInput, level.registryAccess());
-                                int count = item.getItem().getCount() * stack.getCount();
-                                while (count > 0) {
-                                    int spawnCount = Math.min(stack.getMaxStackSize(), count);
-                                    ItemStack result = stack.copy();
-                                    result.setCount(spawnCount);
-                                    ItemEntity newItem =
-                                            new ItemEntity(
-                                                    level,
-                                                    item.getX(),
-                                                    item.getY(),
-                                                    item.getZ(),
-                                                    result,
-                                                    Mth.nextFloat(item.getRandom(), -0.3F, 0.3F),
-                                                    0.3,
-                                                    Mth.nextFloat(item.getRandom(), -0.3F, 0.3F));
-                                    level.addFreshEntity(newItem);
-                                    count -= spawnCount;
-                                }
-                                item.discard();
-                            });
-        }
+    protected void applyEffectToItem(Level level, Player user, ItemEntity itemEntity) {
+        var recipeInput = new SpellRecipeInput(itemEntity.getItem(), this);
+        level.getRecipeManager()
+                .getRecipeFor(MagitechRecipes.SPELL_CONVERSION_TYPE.get(), recipeInput, level)
+                .map(RecipeHolder::value)
+                .ifPresent(
+                        recipe -> {
+                            ItemStack stack = recipe.assemble(recipeInput, level.registryAccess());
+                            int count = itemEntity.getItem().getCount() * stack.getCount();
+                            while (count > 0) {
+                                int spawnCount = Math.min(stack.getMaxStackSize(), count);
+                                ItemEntity newItem =
+                                        new ItemEntity(
+                                                level,
+                                                itemEntity.getX(),
+                                                itemEntity.getY(),
+                                                itemEntity.getZ(),
+                                                stack.copyWithCount(spawnCount),
+                                                Mth.nextFloat(itemEntity.getRandom(), -0.3F, 0.3F),
+                                                0.3,
+                                                Mth.nextFloat(itemEntity.getRandom(), -0.3F, 0.3F));
+                                level.addFreshEntity(newItem);
+                                count -= spawnCount;
+                            }
+                            itemEntity.discard();
+                        });
     }
 
     @Override

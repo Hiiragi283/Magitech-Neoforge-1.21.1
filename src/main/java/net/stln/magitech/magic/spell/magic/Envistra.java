@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
+import net.stln.magitech.client.render.PlayerAnimatorInit;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
@@ -39,7 +39,6 @@ import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 
 public class Envistra extends Spell {
@@ -49,23 +48,20 @@ public class Envistra extends Spell {
         this.baseMaxRange = 10;
     }
 
-    protected static void playShootAnimation(Player user) {
-        var modifierLayer =
-                (ModifierLayer<IAnimation>)
-                        PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) user)
-                                .get(Magitech.id("animation"));
-        if (modifierLayer != null) {
-
-            user.yBodyRot = user.yHeadRot;
-            modifierLayer.setAnimation(
-                    new KeyframeAnimationPlayer(
-                                    (KeyframeAnimation)
-                                            PlayerAnimationRegistry.getAnimation(
-                                                    Magitech.id("wand_blink")))
-                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
-                            .setFirstPersonConfiguration(
-                                    new FirstPersonConfiguration(true, true, true, true)));
-        }
+    protected static void playShootAnimation(Player player) {
+        PlayerAnimatorInit.usePlayerAnimation(
+                player,
+                modifierLayer -> {
+                    player.yBodyRot = player.yHeadRot;
+                    modifierLayer.setAnimation(
+                            new KeyframeAnimationPlayer(
+                                            (KeyframeAnimation)
+                                                    PlayerAnimationRegistry.getAnimation(
+                                                            Magitech.id("wand_blink")))
+                                    .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL)
+                                    .setFirstPersonConfiguration(
+                                            new FirstPersonConfiguration(true, true, true, true)));
+                });
     }
 
     public Element getElement() {

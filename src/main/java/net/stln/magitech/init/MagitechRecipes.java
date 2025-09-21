@@ -22,14 +22,12 @@ public final class MagitechRecipes {
     // Serializers
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
             DeferredRegister.create(Registries.RECIPE_SERIALIZER, Magitech.MOD_ID);
-    public static final Supplier<
-                    AthanorPillarInfusionRecipe.Serializer<AthanorPillarInfusionRecipe>>
+    public static final Supplier<RecipeSerializer<AthanorPillarInfusionRecipe>>
             ATHANOR_PILLAR_INFUSION_SERIALIZER =
                     registerSerializer(
                             "athanor_pillar_infusion",
-                            () ->
-                                    new AthanorPillarInfusionRecipe.Serializer<>(
-                                            AthanorPillarInfusionRecipe::new));
+                            AthanorPillarInfusionRecipe.CODEC,
+                            AthanorPillarInfusionRecipe.STREAM_CODEC);
     public static final Supplier<RecipeSerializer<PartCuttingRecipe>> PART_CUTTING_SERIALIZER =
             registerSerializer(
                     "part_cutting", PartCuttingRecipe.CODEC, PartCuttingRecipe.STREAM_CODEC);

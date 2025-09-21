@@ -1,0 +1,25 @@
+{
+  "type": "magitech:zardius_crucible",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:water"
+  },
+  "ingredients": [
+    {
+      "tag": "c:gems/fluorite"
+    },
+    {
+      "tag": "magitech:aspect_crystal_base"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:coals"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "magitech:ember_crystal"
+  }
+}

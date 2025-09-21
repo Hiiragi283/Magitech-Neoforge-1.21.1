@@ -12,9 +12,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.init.MagitechBlocks;
-import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.item.tool.material.ToolMaterial;
-import net.stln.magitech.recipe.ToolMaterialRecipe;
 import net.stln.magitech.recipe.ZardiusCrucibleRecipe;
 import net.stln.magitech.util.ClientHelper;
 
@@ -131,11 +128,6 @@ public class ZardiusCrucibleRecipeCategory
             @NotNull IFocusGroup focuses,
             @NotNull RecipeManager recipeManager,
             @NotNull RegistryAccess access) {
-        List<ToolMaterialRecipe> materialRecipes =
-                ClientHelper.getAllRecipes(MagitechRecipes.TOOL_MATERIAL_TYPE);
-        List<ToolMaterial> materials =
-                materialRecipes.stream().map(ToolMaterialRecipe::getToolMaterial).toList();
-
         List<Ingredient> ingredients = recipe.getIngredients();
 
         for (int i = 0; i < ingredients.size(); i++) {

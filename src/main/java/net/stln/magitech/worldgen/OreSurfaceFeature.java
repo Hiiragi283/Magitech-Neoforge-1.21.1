@@ -1,9 +1,8 @@
 package net.stln.magitech.worldgen;
 
-import java.util.List;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -17,11 +16,11 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 public class OreSurfaceFeature extends Feature<NoneFeatureConfiguration> {
 
     private final BlockState blockToPlace;
-    private final List<Block> blockToPlaced;
+    private final TagKey<Block> blockToPlaced;
     private final double propability;
 
     public OreSurfaceFeature(
-            BlockState blockToPlace, List<Block> blockToPlaced, double propability) {
+            BlockState blockToPlace, TagKey<Block> blockToPlaced, double propability) {
         super(NoneFeatureConfiguration.CODEC);
         this.blockToPlace = blockToPlace;
         this.blockToPlaced = blockToPlaced;
@@ -40,12 +39,7 @@ public class OreSurfaceFeature extends Feature<NoneFeatureConfiguration> {
                     pos.set(chunkPos.getMinBlockX() + dx, dy, chunkPos.getMinBlockZ() + dz);
                     BlockState state = level.getBlockState(pos);
 
-                    boolean isTargetBlock = false;
-                    for (Block block : blockToPlaced) {
-                        if (state.is(block)) {
-                            isTargetBlock = true;
-                        }
-                    }
+                    boolean isTargetBlock = state.is(blockToPlaced);
                     if (isTargetBlock) {
                         for (Direction dir : Direction.values()) {
                             BlockPos facePos = pos.relative(dir);

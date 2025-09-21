@@ -93,8 +93,7 @@ public class AthanorPillarInfusionRecipeCategory
                 guiGraphics,
                 Minecraft.getInstance().font,
                 Component.translatable("recipe.magitech.required_mana")
-                        .append(": " + (recipe.getMana() / 5) + " x 5")
-                        .getString(),
+                        .append(": " + (recipe.mana() / 5) + " x 5"),
                 0,
                 128,
                 Element.NONE);
@@ -123,7 +122,7 @@ public class AthanorPillarInfusionRecipeCategory
                 materialRecipes.stream().map(ToolMaterialRecipe::getToolMaterial).toList();
 
         List<Ingredient> ingredients = recipe.getIngredients();
-        builder.addSlot(RecipeIngredientRole.INPUT, 55, 55).addItemStack(recipe.getBase());
+        builder.addSlot(RecipeIngredientRole.INPUT, 55, 55).addIngredients(recipe.base());
 
         builder.addSlot(RecipeIngredientRole.INPUT, 37, 37)
                 .addIngredients(getOrDefault(ingredients, 0));

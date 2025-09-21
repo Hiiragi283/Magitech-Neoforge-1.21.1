@@ -1,0 +1,37 @@
+{
+  "type": "magitech:zardius_crucible",
+  "fluid_ingredient": {
+    "amount": 2000,
+    "tag": "c:water"
+  },
+  "ingredients": [
+    {
+      "item": "magitech:nether_star_brilliance"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "item": "minecraft:glow_ink_sac"
+    },
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "tag": "c:gems/diamond"
+    },
+    {
+      "tag": "c:gems/diamond"
+    },
+    {
+      "item": "magitech:glace_crystal"
+    },
+    {
+      "item": "magitech:glace_crystal"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "magitech:radiant_steel_ingot"
+  }
+}

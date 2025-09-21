@@ -12,7 +12,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.stln.magitech.compat.curios.CuriosInit;
-import net.stln.magitech.data.DataMapTypeInit;
+import net.stln.magitech.data.MagitechDataMapTypes;
+import net.stln.magitech.datagen.server.bootstrap.MagitechWorldGenInit;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechAttributes;
 import net.stln.magitech.init.MagitechBiomes;
@@ -33,7 +34,6 @@ import net.stln.magitech.init.MagitechToolMaterials;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.tool.register.ToolMaterialRegister;
 import net.stln.magitech.item.tool.upgrade.UpgradeInit;
-import net.stln.magitech.worldgen.WorldGenInit;
 import net.stln.magitech.worldgen.tree.TreeGrowerInit;
 
 import org.slf4j.Logger;
@@ -79,7 +79,7 @@ public class Magitech {
         MagitechCreativeTabs.registerCreativeTabs(modEventBus);
         MagitechCriteria.registerCriteria(modEventBus);
         Element.registerElements();
-        DataMapTypeInit.registerDataMapTypes(modEventBus);
+        MagitechDataMapTypes.registerDataMapTypes(modEventBus);
         MagitechEntities.registerModEntities(modEventBus);
         MagitechMenuTypes.registerMenus(modEventBus);
         MagitechLootFunctions.registerFunctions(modEventBus);
@@ -93,7 +93,7 @@ public class Magitech {
         TreeGrowerInit.registerTrunkPlacerTypes(modEventBus);
         UpgradeInit.registerUpgrades();
         CuriosInit.registerValidators();
-        WorldGenInit.registerFeatures(modEventBus);
+        MagitechWorldGenInit.registerFeatures(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod)
@@ -110,7 +110,7 @@ public class Magitech {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         // Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
-        // WorldGenInit.registerBiomeModifiers();
+        // MagitechWorldGenInit.registerBiomeModifiers();
         MagitechBlocks.registerStrippableBlocks();
         MagitechBiomes.registerBiomeRegions(event);
     }

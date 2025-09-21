@@ -1,0 +1,25 @@
+{
+  "type": "magitech:zardius_crucible",
+  "fluid_ingredient": {
+    "amount": 250,
+    "tag": "c:water"
+  },
+  "ingredients": [
+    {
+      "tag": "c:gems/mana_charged_fluorite"
+    },
+    {
+      "tag": "magitech:aspect_crystal_base"
+    },
+    {
+      "tag": "c:ingots/copper"
+    },
+    {
+      "tag": "c:ingots/copper"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "magitech:surge_crystal"
+  }
+}

@@ -10,7 +10,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.worldgen.WorldGenInit;
+import net.stln.magitech.datagen.server.bootstrap.MagitechWorldGenInit;
 
 import com.mojang.serialization.MapCodec;
 
@@ -28,13 +28,13 @@ public class TreeGrowerInit {
             new TreeGrower(
                     Magitech.MOD_ID + ":celifern",
                     Optional.empty(),
-                    Optional.of(WorldGenInit.CELIFERN_CONFIGURED_KEY),
+                    Optional.of(MagitechWorldGenInit.CELIFERN_CONFIGURED_KEY),
                     Optional.empty());
     public static final TreeGrower CHARCOAL_BIRCH =
             new TreeGrower(
                     Magitech.MOD_ID + ":charcoal_birch",
                     Optional.empty(),
-                    Optional.of(WorldGenInit.CHARCOAL_BIRCH_CONFIGURED_KEY),
+                    Optional.of(MagitechWorldGenInit.CHARCOAL_BIRCH_CONFIGURED_KEY),
                     Optional.empty());
 
     private static <P extends TrunkPlacer>

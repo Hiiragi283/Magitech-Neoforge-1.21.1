@@ -1,7 +1,7 @@
 {
   "type": "magitech:athanor_pillar_infusion",
   "base": {
-    "id": "magitech:boots_frame"
+    "item": "magitech:boots_frame"
   },
   "ingredients": [
     [

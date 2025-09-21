@@ -1,0 +1,28 @@
+{
+  "type": "magitech:zardius_crucible",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "tag": "c:water"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:calcite"
+    },
+    {
+      "tag": "c:gems/fluorite"
+    },
+    {
+      "item": "minecraft:deepslate"
+    },
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "item": "magitech:magic_crystal"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "magitech:alchecrysite"
+  }
+}

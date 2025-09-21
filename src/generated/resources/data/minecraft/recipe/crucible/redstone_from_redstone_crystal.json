@@ -1,0 +1,28 @@
+{
+  "type": "magitech:zardius_crucible",
+  "fluid_ingredient": {
+    "amount": 100,
+    "tag": "c:water"
+  },
+  "ingredients": [
+    {
+      "item": "magitech:redstone_crystal"
+    },
+    {
+      "item": "magitech:redstone_crystal"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "c:gems/mana_charged_fluorite"
+    }
+  ],
+  "result": {
+    "count": 5,
+    "id": "minecraft:redstone"
+  }
+}

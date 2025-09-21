@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -23,6 +24,7 @@ import net.stln.magitech.recipe.input.CrucibleRecipeInput;
 import org.jetbrains.annotations.NotNull;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -34,7 +36,7 @@ public record ZardiusCrucibleRecipe(
         Optional<FluidStack> resultFluid)
         implements Recipe<CrucibleRecipeInput> {
 
-    public static final MapCodec<ZardiusCrucibleRecipe> CODEC =
+    public static final MapCodec<ZardiusCrucibleRecipe> RAW_CODEC =
             RecordCodecBuilder.mapCodec(
                     instance ->
                             instance.group(
@@ -56,6 +58,8 @@ public record ZardiusCrucibleRecipe(
                                                     .optionalFieldOf("fluid_result")
                                                     .forGetter(ZardiusCrucibleRecipe::resultFluid))
                                     .apply(instance, ZardiusCrucibleRecipe::new));
+    public static final MapCodec<ZardiusCrucibleRecipe> CODEC =
+            RAW_CODEC.validate(ZardiusCrucibleRecipe::validate);
     public static final StreamCodec<RegistryFriendlyByteBuf, ZardiusCrucibleRecipe> STREAM_CODEC =
             StreamCodec.composite(
                     ByteBufCodecs.STRING_UTF8,
@@ -69,6 +73,13 @@ public record ZardiusCrucibleRecipe(
                     FluidStack.STREAM_CODEC.apply(ByteBufCodecs::optional),
                     ZardiusCrucibleRecipe::resultFluid,
                     ZardiusCrucibleRecipe::new);
+
+    private static @NotNull DataResult<ZardiusCrucibleRecipe> validate(
+            @NotNull ZardiusCrucibleRecipe recipe) {
+        if (recipe.result.isEmpty() && recipe.resultFluid.isEmpty()) {
+            return DataResult.error(() -> "Either item or fluid result is required");
+        } else return DataResult.success(recipe);
+    }
 
     @Override
     public boolean matches(@NotNull CrucibleRecipeInput input, @NotNull Level level) {
@@ -94,6 +105,11 @@ public record ZardiusCrucibleRecipe(
     @Override
     public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
         return result.orElse(ItemStack.EMPTY);
+    }
+
+    @Override
+    public @NotNull NonNullList<Ingredient> getIngredients() {
+        return NonNullList.copyOf(ingredients());
     }
 
     @Override

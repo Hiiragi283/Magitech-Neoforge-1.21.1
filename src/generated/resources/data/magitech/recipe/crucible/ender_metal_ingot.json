@@ -1,0 +1,31 @@
+{
+  "type": "magitech:zardius_crucible",
+  "fluid_ingredient": {
+    "amount": 500,
+    "tag": "c:water"
+  },
+  "ingredients": [
+    {
+      "tag": "c:ender_pearls"
+    },
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:ingots/iron"
+    },
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "tag": "c:ingots/copper"
+    },
+    {
+      "item": "magitech:hollow_crystal"
+    }
+  ],
+  "result": {
+    "count": 5,
+    "id": "magitech:ender_metal_ingot"
+  }
+}
