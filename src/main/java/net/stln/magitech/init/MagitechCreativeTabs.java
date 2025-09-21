@@ -6,9 +6,9 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.MagitechRegistries;
@@ -1023,7 +1023,7 @@ public class MagitechCreativeTabs {
                                     .withTabsBefore(MAGITECH_TOOL_TAB.getKey())
                                     .displayItems(
                                             (parameters, output) -> {
-                                                List<ItemLike> partList =
+                                                List<DeferredItem<PartItem>> partList =
                                                         List.of(
                                                                 ItemInit.LIGHT_BLADE,
                                                                 ItemInit.HEAVY_BLADE,
@@ -1037,124 +1037,17 @@ public class MagitechCreativeTabs {
                                                                 ItemInit.PLATE,
                                                                 ItemInit.CATALYST,
                                                                 ItemInit.CONDUCTOR);
-                                                for (ItemLike item : partList) {
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.WOOD));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.STONE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .DEEPSLATE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.COPPER));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.BONE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.MOSS));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.IRON));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.GOLD));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .AMETHYST));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.CITRINE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .REDSTONE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.LAPIS));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.CALCITE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .DRIPSTONE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .FLUORITE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.DIAMOND));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.EMERALD));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .ENDER_METAL));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials.QUARTZ));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .GLOWSTONE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .NETHERITE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .RADIANT_STEEL));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .FRIGIDITE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .TRANSLUCIUM));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .RESONITE));
-                                                    output.accept(
-                                                            PartToolGenerator.generatePart(
-                                                                    (PartItem) item,
-                                                                    MagitechToolMaterials
-                                                                            .ABYSSITE));
+                                                for (DeferredItem<PartItem> item : partList) {
+                                                    MagitechToolMaterials.REGISTER
+                                                            .getMaterials()
+                                                            .map(
+                                                                    material ->
+                                                                            PartToolGenerator
+                                                                                    .generatePart(
+                                                                                            item
+                                                                                                    .get(),
+                                                                                            material))
+                                                            .forEach(output::accept);
                                                 }
                                             })
                                     .build());

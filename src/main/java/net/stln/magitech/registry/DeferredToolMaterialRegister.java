@@ -2,6 +2,7 @@ package net.stln.magitech.registry;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -16,6 +17,10 @@ public class DeferredToolMaterialRegister extends DeferredRegister<ToolMaterial>
 
     public DeferredToolMaterialRegister(String namespace) {
         super(MagitechRegistries.Keys.TOOL_MATERIAL, namespace);
+    }
+
+    public @NotNull Stream<DeferredToolMaterial<?>> getMaterials() {
+        return getEntries().stream().map(holder -> (DeferredToolMaterial<?>) holder);
     }
 
     @SuppressWarnings("unchecked")
