@@ -22,7 +22,7 @@ import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechDamageTypes;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.particle.option.FrostParticleEffect;
+import net.stln.magitech.particle.FrostParticleEffect;
 import net.stln.magitech.util.EffectUtil;
 
 import org.joml.Vector3f;

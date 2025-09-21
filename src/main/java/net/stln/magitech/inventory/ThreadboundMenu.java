@@ -10,11 +10,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechMenuTypes;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.ThreadBoundItem;
 import net.stln.magitech.item.ThreadPageItem;
-import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.SpellComponent;
 import net.stln.magitech.item.component.ThreadPageComponent;
 import net.stln.magitech.magic.spell.Spell;
@@ -74,7 +74,9 @@ public class ThreadboundMenu extends AbstractContainerMenu {
         List<Spell> spells = ComponentHelper.getSpells(threadbound).spells();
         for (int i = 0; i < Math.min(spells.size(), container.getContainerSize()); i++) {
             ItemStack stack = new ItemStack(ItemInit.THREAD_PAGE.get());
-            stack.set(ComponentInit.THREAD_PAGE_COMPONENT, new ThreadPageComponent(spells.get(i)));
+            stack.set(
+                    MagitechDataComponents.THREAD_PAGE_COMPONENT,
+                    new ThreadPageComponent(spells.get(i)));
             container.setItem(i, stack);
         }
     }
@@ -151,6 +153,6 @@ public class ThreadboundMenu extends AbstractContainerMenu {
         for (int i = 0; i < 15; i++) {
             ComponentHelper.getThreadPageSpell(container.getItem(i)).ifPresent(spells::add);
         }
-        threadbound.set(ComponentInit.SPELL_COMPONENT, new SpellComponent(spells));
+        threadbound.set(MagitechDataComponents.SPELL_COMPONENT, new SpellComponent(spells));
     }
 }

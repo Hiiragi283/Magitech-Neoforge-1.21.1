@@ -17,7 +17,7 @@ import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechEntities;
 import net.stln.magitech.init.MagitechMobEffects;
 import net.stln.magitech.init.MagitechSounds;
-import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
+import net.stln.magitech.particle.UnstableSquareParticleEffect;
 
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;

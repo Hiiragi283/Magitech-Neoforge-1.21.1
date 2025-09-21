@@ -20,7 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.init.MagitechDamageTypes;
 import net.stln.magitech.item.ItemInit;
-import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
+import net.stln.magitech.particle.UnstableSquareParticleEffect;
 
 import org.joml.Vector3f;
 

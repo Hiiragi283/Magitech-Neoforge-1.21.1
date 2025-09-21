@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.particle.option.PowerupParticleEffect;
+import net.stln.magitech.particle.PowerupParticleEffect;
 
 import org.joml.Vector3f;
 

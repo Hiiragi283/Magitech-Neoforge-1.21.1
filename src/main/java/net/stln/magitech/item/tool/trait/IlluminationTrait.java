@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.particle.option.PowerupParticleEffect;
+import net.stln.magitech.particle.PowerupParticleEffect;
 
 import org.joml.Vector3f;
 

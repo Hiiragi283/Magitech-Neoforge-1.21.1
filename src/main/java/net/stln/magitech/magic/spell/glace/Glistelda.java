@@ -20,7 +20,9 @@ import net.stln.magitech.init.MagitechMobEffects;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.particle.option.*;
+import net.stln.magitech.particle.FrostParticleEffect;
+import net.stln.magitech.particle.SquareFieldParticleEffect;
+import net.stln.magitech.particle.SquareParticleEffect;
 import net.stln.magitech.util.*;
 
 import org.jetbrains.annotations.NotNull;

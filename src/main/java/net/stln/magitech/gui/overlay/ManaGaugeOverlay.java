@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.item.component.ComponentInit;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.item.component.SpellComponent;
 import net.stln.magitech.item.tool.toolitem.SpellCasterItem;
 import net.stln.magitech.magic.cooldown.Cooldown;
@@ -214,7 +214,8 @@ public class ManaGaugeOverlay implements LayeredDraw.Layer {
                         }
                     } else {
                         threadbound.set(
-                                ComponentInit.SPELL_COMPONENT, spellComponent.setSelected(0));
+                                MagitechDataComponents.SPELL_COMPONENT,
+                                spellComponent.setSelected(0));
                     }
 
                     guiGraphics.blit(TEXTURE, x - 1, y + 59 - manaGaugeHeight, 0, 144, 6, 10);

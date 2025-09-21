@@ -24,10 +24,10 @@ import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
 import net.stln.magitech.item.tool.toolitem.SpellCasterItem;
-import net.stln.magitech.particle.option.MembraneParticleEffect;
-import net.stln.magitech.particle.option.PowerupParticleEffect;
-import net.stln.magitech.particle.option.SquareFieldParticleEffect;
-import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
+import net.stln.magitech.particle.MembraneParticleEffect;
+import net.stln.magitech.particle.PowerupParticleEffect;
+import net.stln.magitech.particle.SquareFieldParticleEffect;
+import net.stln.magitech.particle.UnstableSquareParticleEffect;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.EntityUtil;
 

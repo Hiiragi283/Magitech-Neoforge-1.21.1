@@ -13,8 +13,8 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.MaterialComponent;
 import net.stln.magitech.util.ClientHelper;
 
@@ -76,7 +76,7 @@ public record PartCuttingRecipe(String group, int inputCount, ItemStack result)
                     .ifPresent(
                             toolMaterial ->
                                     itemStack.set(
-                                            ComponentInit.MATERIAL_COMPONENT,
+                                            MagitechDataComponents.MATERIAL_COMPONENT,
                                             new MaterialComponent(toolMaterial)));
         }
         return itemStack;

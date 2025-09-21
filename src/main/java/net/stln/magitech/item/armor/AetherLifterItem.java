@@ -16,8 +16,8 @@ import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.client.render.PlayerAnimatorInit;
 import net.stln.magitech.init.MagitechSounds;
-import net.stln.magitech.particle.option.SquareFieldParticleEffect;
-import net.stln.magitech.particle.option.SquareParticleEffect;
+import net.stln.magitech.particle.SquareFieldParticleEffect;
+import net.stln.magitech.particle.SquareParticleEffect;
 import net.stln.magitech.util.EntityUtil;
 import net.stln.magitech.util.TickScheduler;
 

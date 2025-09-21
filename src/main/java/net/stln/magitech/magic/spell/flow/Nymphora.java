@@ -17,7 +17,9 @@ import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.particle.option.*;
+import net.stln.magitech.particle.BlowParticleEffect;
+import net.stln.magitech.particle.SquareFieldParticleEffect;
+import net.stln.magitech.particle.SquareParticleEffect;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.SpellShape;
 

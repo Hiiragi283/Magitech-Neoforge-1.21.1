@@ -15,8 +15,8 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.PartMaterialComponent;
 import net.stln.magitech.item.tool.ToolPart;
 import net.stln.magitech.item.tool.ToolType;
@@ -80,7 +80,7 @@ public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
         if (!toolMaterials.isEmpty()) {
             ItemStack stack = result.copy();
             stack.set(
-                    ComponentInit.PART_MATERIAL_COMPONENT,
+                    MagitechDataComponents.PART_MATERIAL_COMPONENT,
                     new PartMaterialComponent(toolMaterials));
             return stack;
         }
@@ -100,7 +100,7 @@ public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
             }
             for (int i = 0; i < input.size(); i++) {
                 if (input.getItem(i).getItem() instanceof PartItem partItem
-                        && input.getItem(i).has(ComponentInit.MATERIAL_COMPONENT.get())) {
+                        && input.getItem(i).has(MagitechDataComponents.MATERIAL_COMPONENT.get())) {
                     boolean found = partList.contains(partItem.getPart());
                     int index = partList.indexOf(partItem.getPart());
                     if (found) {

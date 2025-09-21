@@ -15,7 +15,7 @@ import net.stln.magitech.client.render.block.ZardiusCrucibleBlockEntityRenderer;
 import net.stln.magitech.event.EventInit;
 import net.stln.magitech.init.MagitechBlockEntityTypes;
 import net.stln.magitech.init.MagitechEntities;
-import net.stln.magitech.particle.ParticleInit;
+import net.stln.magitech.init.MagitechParticleTypes;
 
 @Mod(value = Magitech.MOD_ID, dist = Dist.CLIENT)
 public class MagitechClient {
@@ -32,7 +32,7 @@ public class MagitechClient {
     }
 
     private void registerParticleFactories(RegisterParticleProvidersEvent event) {
-        ParticleInit.registerParticleFactories(event);
+        MagitechParticleTypes.registerParticleFactories(event);
     }
 
     private void registerBlockEntityRenderer(EntityRenderersEvent.RegisterRenderers event) {

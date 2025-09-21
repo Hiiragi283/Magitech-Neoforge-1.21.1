@@ -36,7 +36,7 @@ import net.stln.magitech.entity.mob.ai.RangedSpellAttackGoal;
 import net.stln.magitech.init.MagitechDamageTypes;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.network.RangedEntityAttackPayload;
-import net.stln.magitech.particle.option.*;
+import net.stln.magitech.particle.*;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.EntityUtil;
 import net.stln.magitech.util.TickScheduler;

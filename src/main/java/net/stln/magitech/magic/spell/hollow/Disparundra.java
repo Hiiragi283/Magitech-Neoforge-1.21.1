@@ -19,8 +19,8 @@ import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.particle.option.BeamParticleEffect;
-import net.stln.magitech.particle.option.VoidGlowParticleEffect;
+import net.stln.magitech.particle.BeamParticleEffect;
+import net.stln.magitech.particle.VoidGlowParticleEffect;
 import net.stln.magitech.util.*;
 
 import org.jetbrains.annotations.NotNull;

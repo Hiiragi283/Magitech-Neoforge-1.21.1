@@ -10,7 +10,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.stln.magitech.item.component.ComponentInit;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.item.tool.ToolPart;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.material.ToolMaterial;
@@ -68,12 +68,15 @@ public abstract class PartItem extends Item {
     }
 
     protected void setTier(ItemStack stack, ToolStats finalStats) {
-        stack.update(ComponentInit.TIER_COMPONENT, finalStats.getTier(), UnaryOperator.identity());
+        stack.update(
+                MagitechDataComponents.TIER_COMPONENT,
+                finalStats.getTier(),
+                UnaryOperator.identity());
     }
 
     public void addStatsHoverText(
             @NotNull ItemStack stack, List<Component> tooltipComponents, boolean shiftDown) {
-        if (stack.has(ComponentInit.MATERIAL_COMPONENT)) {
+        if (stack.has(MagitechDataComponents.MATERIAL_COMPONENT)) {
             ToolStats finalStats = getDefaultStats(stack);
             setTier(stack, finalStats);
             var tier = ComponentHelper.getTier(stack);

@@ -14,8 +14,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.MaterialComponent;
 import net.stln.magitech.item.component.PartMaterialComponent;
 import net.stln.magitech.item.tool.material.ToolMaterial;
@@ -139,7 +139,7 @@ public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<T
 
                 ItemStack partStack = value.getItems()[0].copy(); // NOTE: 複数アイテムある場合は適宜対応
                 partStack.set(
-                        ComponentInit.MATERIAL_COMPONENT,
+                        MagitechDataComponents.MATERIAL_COMPONENT,
                         new MaterialComponent(materials.get(materialIndex)));
                 parts.add(partStack);
                 toolMaterials.add(materials.get(materialIndex));
@@ -148,7 +148,7 @@ public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<T
             // 完成品 ItemStack を生成
             ItemStack resultStack = recipe.getResultItem(access).copy();
             resultStack.set(
-                    ComponentInit.PART_MATERIAL_COMPONENT,
+                    MagitechDataComponents.PART_MATERIAL_COMPONENT,
                     new PartMaterialComponent(toolMaterials));
             results.add(resultStack);
         }
@@ -160,7 +160,8 @@ public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<T
             for (ToolMaterial material : materials) {
                 // 複数アイテムに対応する場合は ingredient.getItems() をループすることも可能
                 ItemStack base = ingredient.getItems()[0].copy();
-                base.set(ComponentInit.MATERIAL_COMPONENT, new MaterialComponent(material));
+                base.set(
+                        MagitechDataComponents.MATERIAL_COMPONENT, new MaterialComponent(material));
                 variants.add(base);
             }
             partInputStacks.add(variants); // 1パーツに対する複数素材のスタック

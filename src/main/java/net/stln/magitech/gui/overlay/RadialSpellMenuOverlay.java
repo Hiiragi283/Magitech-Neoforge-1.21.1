@@ -14,7 +14,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.client.event.KeyMappingEvent;
 import net.stln.magitech.element.Element;
-import net.stln.magitech.item.component.ComponentInit;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.item.component.SpellComponent;
 import net.stln.magitech.item.tool.toolitem.SpellCasterItem;
 import net.stln.magitech.magic.cooldown.Cooldown;
@@ -234,7 +234,7 @@ public class RadialSpellMenuOverlay extends Screen {
         CuriosHelper.getThreadBoundStack(player)
                 .ifPresent(
                         stack -> {
-                            if (stack.has(ComponentInit.SPELL_COMPONENT) && select >= 0) {
+                            if (stack.has(MagitechDataComponents.SPELL_COMPONENT) && select >= 0) {
                                 PacketDistributor.sendToServer(
                                         new ThreadBoundSelectPayload(select, player.getUUID()));
                                 ComponentHelper.updateSpells(

@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.material.ToolMaterial;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
-import net.stln.magitech.particle.option.PowerupParticleEffect;
+import net.stln.magitech.particle.PowerupParticleEffect;
 import net.stln.magitech.util.ComponentHelper;
 import net.stln.magitech.util.EffectUtil;
 

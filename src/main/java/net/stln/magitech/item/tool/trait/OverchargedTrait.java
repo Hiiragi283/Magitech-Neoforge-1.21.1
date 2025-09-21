@@ -13,7 +13,7 @@ import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.toolitem.SpellCasterItem;
 import net.stln.magitech.magic.mana.ManaData;
 import net.stln.magitech.magic.mana.ManaUtil;
-import net.stln.magitech.particle.option.PowerupParticleEffect;
+import net.stln.magitech.particle.PowerupParticleEffect;
 import net.stln.magitech.util.EffectUtil;
 
 import org.joml.Vector3f;

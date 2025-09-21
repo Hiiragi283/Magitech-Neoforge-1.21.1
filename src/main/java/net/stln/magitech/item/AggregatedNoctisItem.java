@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaData;
 import net.stln.magitech.magic.mana.ManaUtil;
-import net.stln.magitech.particle.option.PowerupParticleEffect;
+import net.stln.magitech.particle.PowerupParticleEffect;
 import net.stln.magitech.util.EffectUtil;
 
 import org.jetbrains.annotations.NotNull;

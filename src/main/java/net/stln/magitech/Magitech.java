@@ -18,21 +18,21 @@ import net.stln.magitech.init.MagitechAttributes;
 import net.stln.magitech.init.MagitechBiomes;
 import net.stln.magitech.init.MagitechBlockEntityTypes;
 import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechCreativeTabs;
 import net.stln.magitech.init.MagitechCriteria;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechEntities;
 import net.stln.magitech.init.MagitechLootFunctions;
 import net.stln.magitech.init.MagitechMenuTypes;
 import net.stln.magitech.init.MagitechMobEffects;
+import net.stln.magitech.init.MagitechParticleTypes;
 import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.init.MagitechSounds;
+import net.stln.magitech.init.MagitechSpells;
+import net.stln.magitech.init.MagitechToolMaterials;
 import net.stln.magitech.item.ItemInit;
-import net.stln.magitech.item.component.ComponentInit;
-import net.stln.magitech.item.creative_tab.CreativeTabInit;
-import net.stln.magitech.item.tool.material.MaterialInit;
 import net.stln.magitech.item.tool.register.ToolMaterialRegister;
 import net.stln.magitech.item.tool.upgrade.UpgradeInit;
-import net.stln.magitech.magic.spell.SpellInit;
-import net.stln.magitech.particle.ParticleInit;
 import net.stln.magitech.worldgen.WorldGenInit;
 import net.stln.magitech.worldgen.tree.TreeGrowerInit;
 
@@ -69,26 +69,26 @@ public class Magitech {
         modEventBus.addListener(this::commonSetup);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
-        ComponentInit.registerComponents(modEventBus);
+        MagitechDataComponents.registerComponents(modEventBus);
 
         MagitechBlocks.registerBlocks(modEventBus);
         MagitechBlockEntityTypes.register(modEventBus);
         ItemInit.registerItems(modEventBus);
 
         MagitechAttributes.registerEntityAttributes(modEventBus);
-        CreativeTabInit.registerCreativeTabs(modEventBus);
+        MagitechCreativeTabs.registerCreativeTabs(modEventBus);
         MagitechCriteria.registerCriteria(modEventBus);
         Element.registerElements();
         DataMapTypeInit.registerDataMapTypes(modEventBus);
         MagitechEntities.registerModEntities(modEventBus);
         MagitechMenuTypes.registerMenus(modEventBus);
         MagitechLootFunctions.registerFunctions(modEventBus);
-        MaterialInit.registerMaterials(modEventBus);
+        MagitechToolMaterials.registerMaterials(modEventBus);
         MagitechMobEffects.registerMobEffects(modEventBus);
-        ParticleInit.registerParticleClient(modEventBus);
+        MagitechParticleTypes.registerParticleClient(modEventBus);
         MagitechRecipes.registerRecipes(modEventBus);
         MagitechSounds.registerSoundEvents(modEventBus);
-        SpellInit.registerSpells(modEventBus);
+        MagitechSpells.registerSpells(modEventBus);
         ToolMaterialRegister.init();
         TreeGrowerInit.registerTrunkPlacerTypes(modEventBus);
         UpgradeInit.registerUpgrades();

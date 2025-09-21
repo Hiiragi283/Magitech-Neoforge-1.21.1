@@ -14,8 +14,8 @@ import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechEntities;
 import net.stln.magitech.init.MagitechSounds;
-import net.stln.magitech.particle.option.SparkParticleEffect;
-import net.stln.magitech.particle.option.ZapParticleEffect;
+import net.stln.magitech.particle.SparkParticleEffect;
+import net.stln.magitech.particle.ZapParticleEffect;
 
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;

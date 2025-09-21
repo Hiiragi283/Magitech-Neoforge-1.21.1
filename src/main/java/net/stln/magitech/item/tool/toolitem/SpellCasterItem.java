@@ -30,7 +30,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechAttributes;
-import net.stln.magitech.item.component.ComponentInit;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.item.component.SpellComponent;
 import net.stln.magitech.item.tool.ToolStats;
 import net.stln.magitech.item.tool.register.ToolMaterialRegister;
@@ -201,8 +201,8 @@ public abstract class SpellCasterItem extends PartToolItem {
     /*
      * public @NotNull Component getName(@NotNull ItemStack stack) {
      * MutableComponent component = Component.empty(); if
-     * (stack.has(ComponentInit.PART_MATERIAL_COMPONENT)) { List<ToolMaterial>
-     * materials = stack.get(ComponentInit.PART_MATERIAL_COMPONENT).materials();
+     * (stack.has(MagitechDataComponents.PART_MATERIAL_COMPONENT)) { List<ToolMaterial>
+     * materials = stack.get(MagitechDataComponents.PART_MATERIAL_COMPONENT).materials();
      * ToolType toolType = ((SpellCasterItem) stack.getItem()).getToolType();
      *
      * if (materials.size() == toolType.getSize() && materials.get(0) != null &&
@@ -233,7 +233,8 @@ public abstract class SpellCasterItem extends PartToolItem {
         Map<String, Float> map = finalStats.getStats();
 
         stack.set(
-                ComponentInit.BROKEN_COMPONENT, stack.getDamageValue() + 1 >= stack.getMaxDamage());
+                MagitechDataComponents.BROKEN_COMPONENT,
+                stack.getDamageValue() + 1 >= stack.getMaxDamage());
 
         Map<String, Float> mod = ToolMaterialRegister.getModStats(this.getToolType()).getStats();
         EquipmentSlotGroup hand =
@@ -559,7 +560,7 @@ public abstract class SpellCasterItem extends PartToolItem {
                     player.releaseUsingItem();
                 }
             } else {
-                threadbound.set(ComponentInit.SPELL_COMPONENT, spells.setSelected(0));
+                threadbound.set(MagitechDataComponents.SPELL_COMPONENT, spells.setSelected(0));
             }
         }
         player.awardStat(Stats.ITEM_USED.get(this));

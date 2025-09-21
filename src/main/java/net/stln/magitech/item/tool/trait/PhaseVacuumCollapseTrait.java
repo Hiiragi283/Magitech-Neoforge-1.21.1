@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.init.MagitechMobEffects;
 import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.particle.option.VoidGlowParticleEffect;
+import net.stln.magitech.particle.VoidGlowParticleEffect;
 import net.stln.magitech.util.EffectUtil;
 
 import org.joml.Vector3f;

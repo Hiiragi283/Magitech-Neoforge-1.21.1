@@ -12,9 +12,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.MagitechRegistries;
+import net.stln.magitech.init.MagitechSpells;
 import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.component.SpellComponent;
-import net.stln.magitech.magic.spell.SpellInit;
 import net.stln.magitech.util.ComponentHelper;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID)
@@ -36,7 +36,7 @@ public class PlayerFirstSpawnEvent {
 
         if (!persisted.getBoolean("hasReceivedInitialItems")) {
             ItemStack stack = new ItemStack(ItemInit.GLISTENING_LEXICON.get());
-            var enercrux = SpellInit.ENERCRUX;
+            var enercrux = MagitechSpells.ENERCRUX;
             MagitechRegistries.SPELL
                     .holders()
                     .filter(holder -> !holder.is(enercrux))
@@ -48,7 +48,7 @@ public class PlayerFirstSpawnEvent {
                                         stack,
                                         spellComponent ->
                                                 new SpellComponent(
-                                                        List.of(SpellInit.ENERCRUX, spell)));
+                                                        List.of(MagitechSpells.ENERCRUX, spell)));
                                 player.getInventory().add(stack);
 
                                 persisted.putBoolean("hasReceivedInitialItems", true);

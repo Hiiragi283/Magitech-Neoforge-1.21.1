@@ -23,9 +23,9 @@ import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.cooldown.CooldownData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.particle.option.BeamParticleEffect;
-import net.stln.magitech.particle.option.MembraneParticleEffect;
-import net.stln.magitech.particle.option.SquareParticleEffect;
+import net.stln.magitech.particle.BeamParticleEffect;
+import net.stln.magitech.particle.MembraneParticleEffect;
+import net.stln.magitech.particle.SquareParticleEffect;
 import net.stln.magitech.util.*;
 
 import org.jetbrains.annotations.NotNull;

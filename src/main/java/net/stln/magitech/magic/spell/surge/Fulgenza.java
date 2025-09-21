@@ -21,9 +21,9 @@ import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.charge.ChargeData;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.BeamSpell;
-import net.stln.magitech.particle.option.BeamParticleEffect;
-import net.stln.magitech.particle.option.SparkParticleEffect;
-import net.stln.magitech.particle.option.ZapParticleEffect;
+import net.stln.magitech.particle.BeamParticleEffect;
+import net.stln.magitech.particle.SparkParticleEffect;
+import net.stln.magitech.particle.ZapParticleEffect;
 import net.stln.magitech.util.*;
 
 import org.joml.Vector3f;

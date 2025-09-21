@@ -19,8 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.stln.magitech.init.MagitechBlocks;
 import net.stln.magitech.init.MagitechCriteria;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechMenuTypes;
-import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.UpgradeComponent;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
 import net.stln.magitech.item.tool.upgrade.Upgrade;
@@ -46,7 +46,7 @@ public class ToolUpgradeMenu extends AbstractContainerMenu {
      * Stores the game time of the last time the player took items from the the crafting result
      * slot. This is used to prevent the sound from being played multiple times on the same tick.
      */
-    List<Upgrade> upgrades = List.of();
+    public List<Upgrade> upgrades = List.of();
 
     int upgradeSize = 3;
     long lastSoundTime;
@@ -133,12 +133,12 @@ public class ToolUpgradeMenu extends AbstractContainerMenu {
         if (isValidUpgrade(id)) {
             ItemStack stack = container.getItem(0);
             stack.update(
-                    ComponentInit.UPGRADE_COMPONENT,
+                    MagitechDataComponents.UPGRADE_COMPONENT,
                     UpgradeComponent.EMPTY,
                     upgradeComponent ->
                             upgradeComponent.addUpgrade(new UpgradeInstance(1, upgrades.get(id))));
             stack.set(
-                    ComponentInit.UPGRADE_SEED_COMPONENT,
+                    MagitechDataComponents.UPGRADE_SEED_COMPONENT,
                     player.getRandom().nextInt(Integer.MAX_VALUE));
             ComponentHelper.updateUpgradePoint(stack, value -> value - 1);
             this.container.setItem(0, stack);
@@ -202,13 +202,16 @@ public class ToolUpgradeMenu extends AbstractContainerMenu {
             this.upgrades = List.of();
             return;
         }
-        if (!stack.has(ComponentInit.UPGRADE_SEED_COMPONENT)) {
+        if (!stack.has(MagitechDataComponents.UPGRADE_SEED_COMPONENT)) {
             stack.set(
-                    ComponentInit.UPGRADE_SEED_COMPONENT, new Random().nextInt(Integer.MAX_VALUE));
+                    MagitechDataComponents.UPGRADE_SEED_COMPONENT,
+                    new Random().nextInt(Integer.MAX_VALUE));
         }
         upgrades =
                 UpgradeUtil.getUpgrades(
-                        upgradeSize, stack.get(ComponentInit.UPGRADE_SEED_COMPONENT), stack);
+                        upgradeSize,
+                        stack.get(MagitechDataComponents.UPGRADE_SEED_COMPONENT),
+                        stack);
     }
 
     @Override

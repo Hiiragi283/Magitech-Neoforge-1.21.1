@@ -13,8 +13,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.particle.option.SquareFieldParticleEffect;
-import net.stln.magitech.particle.option.UnstableSquareParticleEffect;
+import net.stln.magitech.particle.SquareFieldParticleEffect;
+import net.stln.magitech.particle.UnstableSquareParticleEffect;
 import net.stln.magitech.util.EffectUtil;
 
 import org.joml.Vector3f;

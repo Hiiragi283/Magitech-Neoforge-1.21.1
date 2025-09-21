@@ -37,7 +37,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.stln.magitech.block.ZardiusCrucibleBlock;
 import net.stln.magitech.init.MagitechBlockEntityTypes;
 import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.particle.option.SquareParticleEffect;
+import net.stln.magitech.particle.SquareParticleEffect;
 import net.stln.magitech.recipe.ZardiusCrucibleRecipe;
 import net.stln.magitech.recipe.input.CrucibleRecipeInput;
 

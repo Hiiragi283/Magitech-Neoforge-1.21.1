@@ -6,8 +6,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
-import net.stln.magitech.particle.option.PowerupNoCullParticleEffect;
-import net.stln.magitech.particle.option.WaveNoCullParticleEffect;
+import net.stln.magitech.particle.PowerupNoCullParticleEffect;
+import net.stln.magitech.particle.WaveNoCullParticleEffect;
 
 import org.joml.Vector3f;
 

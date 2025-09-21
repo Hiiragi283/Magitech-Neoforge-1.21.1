@@ -17,7 +17,7 @@ import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.Spell;
-import net.stln.magitech.particle.option.*;
+import net.stln.magitech.particle.FlameParticleEffect;
 import net.stln.magitech.util.*;
 
 import org.jetbrains.annotations.NotNull;

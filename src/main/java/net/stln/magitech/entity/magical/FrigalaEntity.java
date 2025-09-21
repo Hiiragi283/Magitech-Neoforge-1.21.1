@@ -14,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechEntities;
 import net.stln.magitech.init.MagitechSounds;
-import net.stln.magitech.particle.option.FrostParticleEffect;
+import net.stln.magitech.particle.FrostParticleEffect;
 
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;

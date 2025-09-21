@@ -5,8 +5,8 @@ import java.util.Map;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.stln.magitech.init.MagitechToolMaterials;
 import net.stln.magitech.item.tool.ToolStats;
-import net.stln.magitech.item.tool.material.MaterialInit;
 import net.stln.magitech.util.ComponentHelper;
 
 public class HeatTreatmentTrait extends Trait {
@@ -15,7 +15,7 @@ public class HeatTreatmentTrait extends Trait {
     public ToolStats modifyStats1(ItemStack stack, int traitLevel, ToolStats stats) {
         super.modifyStats1(stack, traitLevel, stats);
         ToolStats defaultStats = ToolStats.DEFAULT;
-        if (ComponentHelper.getPartMaterials(stack).contains(MaterialInit.AMETHYST)) {
+        if (ComponentHelper.getPartMaterials(stack).contains(MagitechToolMaterials.AMETHYST)) {
             Map<String, Float> statsMap = stats.getStats();
             Map<String, Float> modified = new HashMap<>(defaultStats.getStats());
             float mul = 0.35F * traitLevel;
@@ -34,7 +34,7 @@ public class HeatTreatmentTrait extends Trait {
     public ToolStats modifySpellCasterStats1(ItemStack stack, int traitLevel, ToolStats stats) {
         super.modifySpellCasterStats1(stack, traitLevel, stats);
         ToolStats defaultStats = ToolStats.DEFAULT;
-        if (ComponentHelper.getPartMaterials(stack).contains(MaterialInit.AMETHYST)) {
+        if (ComponentHelper.getPartMaterials(stack).contains(MagitechToolMaterials.AMETHYST)) {
             Map<String, Float> statsMap = stats.getStats();
             Map<String, Float> modified = new HashMap<>(defaultStats.getStats());
             float mul = 0.35F * traitLevel;

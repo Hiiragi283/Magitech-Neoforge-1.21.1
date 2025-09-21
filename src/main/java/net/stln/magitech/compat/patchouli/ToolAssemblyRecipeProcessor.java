@@ -11,8 +11,8 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.MaterialComponent;
 import net.stln.magitech.item.component.PartMaterialComponent;
 import net.stln.magitech.item.tool.material.ToolMaterial;
@@ -90,14 +90,14 @@ public class ToolAssemblyRecipeProcessor implements IComponentProcessor {
                 if (key.equals("input" + i) && size > i) {
                     returnStack = inputs.get(i).copy();
                     returnStack.set(
-                            ComponentInit.MATERIAL_COMPONENT,
+                            MagitechDataComponents.MATERIAL_COMPONENT,
                             new MaterialComponent(materialList.get(i)));
                 }
             }
             if (key.equals("result")) {
                 returnStack = output.copy();
                 returnStack.set(
-                        ComponentInit.PART_MATERIAL_COMPONENT,
+                        MagitechDataComponents.PART_MATERIAL_COMPONENT,
                         new PartMaterialComponent(materialList));
             }
             stacks.add(returnStack);

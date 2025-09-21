@@ -17,8 +17,8 @@ import net.stln.magitech.init.MagitechMobEffects;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.magic.mana.ManaUtil;
 import net.stln.magitech.magic.spell.BeamSpell;
-import net.stln.magitech.particle.option.BeamParticleEffect;
-import net.stln.magitech.particle.option.MembraneParticleEffect;
+import net.stln.magitech.particle.BeamParticleEffect;
+import net.stln.magitech.particle.MembraneParticleEffect;
 import net.stln.magitech.util.EffectUtil;
 import net.stln.magitech.util.SpellShape;
 

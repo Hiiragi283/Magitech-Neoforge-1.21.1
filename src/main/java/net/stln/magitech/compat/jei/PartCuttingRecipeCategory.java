@@ -12,8 +12,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.item.component.ComponentInit;
 import net.stln.magitech.item.component.MaterialComponent;
 import net.stln.magitech.recipe.PartCuttingRecipe;
 import net.stln.magitech.recipe.ToolMaterialRecipe;
@@ -101,7 +101,7 @@ public class PartCuttingRecipeCategory extends AbstractMagitechRecipeCategory<Pa
             }
             ItemStack resultStack = recipe.getResultItem(access).copy();
             resultStack.set(
-                    ComponentInit.MATERIAL_COMPONENT,
+                    MagitechDataComponents.MATERIAL_COMPONENT,
                     new MaterialComponent(materialRecipe.getToolMaterial()));
             results.add(resultStack);
         }
