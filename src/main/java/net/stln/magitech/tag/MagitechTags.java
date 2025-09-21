@@ -7,6 +7,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.stln.magitech.Magitech;
+import net.stln.magitech.MagitechRegistries;
+import net.stln.magitech.item.tool.upgrade.Upgrade;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -70,6 +72,14 @@ public final class MagitechTags {
 
         private static @NotNull TagKey<Item> createMod(@NotNull String path) {
             return TagKey.create(Registries.ITEM, Magitech.id(path));
+        }
+    }
+
+    public static final class Upgrades {
+        public static final TagKey<Upgrade> IS_SPELL = createMod("is_spell");
+
+        private static @NotNull TagKey<Upgrade> createMod(@NotNull String path) {
+            return TagKey.create(MagitechRegistries.Keys.UPGRADE, Magitech.id(path));
         }
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.recipe.input.GroupedMultiStackRecipeInput;
+import net.stln.magitech.util.StreamUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -123,6 +125,13 @@ public record AthanorPillarInfusionRecipe(
     @Override
     public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
         return result.copy();
+    }
+
+    @Override
+    public @NotNull NonNullList<Ingredient> getIngredients() {
+        return ingredients().stream()
+                .flatMap(List::stream)
+                .collect(StreamUtil.nonNullListCollector());
     }
 
     @Override

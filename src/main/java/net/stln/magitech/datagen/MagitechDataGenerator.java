@@ -21,10 +21,7 @@ import net.stln.magitech.datagen.server.MagitechDataMapProvider;
 import net.stln.magitech.datagen.server.MagitechEntityLootTableProvider;
 import net.stln.magitech.datagen.server.bootstrap.MagitechDataRegistryProvider;
 import net.stln.magitech.datagen.server.recipe.MagitechRecipeProvider;
-import net.stln.magitech.datagen.server.tag.MagitechBiomeTagsProvider;
-import net.stln.magitech.datagen.server.tag.MagitechBlockTagsProvider;
-import net.stln.magitech.datagen.server.tag.MagitechDamageTypeTagsProvider;
-import net.stln.magitech.datagen.server.tag.MagitechItemTagsProvider;
+import net.stln.magitech.datagen.server.tag.*;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID)
 public class MagitechDataGenerator {
@@ -77,6 +74,10 @@ public class MagitechDataGenerator {
         generator.addProvider(
                 event.includeServer(),
                 new MagitechDamageTypeTagsProvider(packOutput, lookupProvider, fileHelper));
+
+        generator.addProvider(
+                event.includeServer(),
+                new MagitechUpgradeTypeTagsProvider(packOutput, lookupProvider, fileHelper));
 
         // Client
         generator.addProvider(

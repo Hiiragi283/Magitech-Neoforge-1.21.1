@@ -17,6 +17,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.inventory.ToolAssemblyMenu;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.wispforest.owo.ui.container.Containers;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.core.OwoUIAdapter;
@@ -87,7 +89,8 @@ public class ToolAssemblyScreen extends AbstractContainerScreen<ToolAssemblyMenu
      * @param partialTick the partial tick time.
      */
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(
+            @NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
 
@@ -103,7 +106,8 @@ public class ToolAssemblyScreen extends AbstractContainerScreen<ToolAssemblyMenu
 
     /** Called when the mouse is clicked over a slot or outside the gui. */
     @Override
-    protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
+    protected void slotClicked(
+            @NotNull Slot slot, int slotId, int mouseButton, @NotNull ClickType type) {
         super.slotClicked(slot, slotId, mouseButton, type);
     }
 }

@@ -10,6 +10,8 @@ import net.stln.magitech.Magitech;
 import net.stln.magitech.item.tool.partitem.PartItem;
 import net.stln.magitech.item.tool.toolitem.PartToolItem;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.wispforest.owo.ui.component.Components;
 import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.container.Containers;
@@ -26,14 +28,13 @@ public class ToolStatsPanel {
             Magitech.id("textures/gui/tool_stats_panel.png");
 
     public static void addPanel(
-            FlowLayout root,
-            Positioning positioning,
-            ItemStack stack,
-            net.minecraft.network.chat.Component title,
-            List<Component> whenEmpty) {
-        List<net.minecraft.network.chat.Component> components = new ArrayList<>();
-        if (stack != null && stack.getItem() instanceof PartToolItem toolItem) {
-
+            @NotNull FlowLayout root,
+            @NotNull Positioning positioning,
+            @NotNull ItemStack stack,
+            @NotNull Component title,
+            @NotNull List<Component> whenEmpty) {
+        List<Component> components = new ArrayList<>();
+        if (stack.getItem() instanceof PartToolItem toolItem) {
             toolItem.addStatsHoverText(stack, components);
         } else {
             components.addAll(whenEmpty);
@@ -42,14 +43,13 @@ public class ToolStatsPanel {
     }
 
     public static void addPartPanel(
-            FlowLayout root,
-            Positioning positioning,
-            ItemStack stack,
-            net.minecraft.network.chat.Component title,
-            List<Component> whenEmpty) {
-        List<net.minecraft.network.chat.Component> components = new ArrayList<>();
-        if (stack != null && stack.getItem() instanceof PartItem partItem) {
-
+            @NotNull FlowLayout root,
+            @NotNull Positioning positioning,
+            @NotNull ItemStack stack,
+            @NotNull Component title,
+            @NotNull List<Component> whenEmpty) {
+        List<Component> components = new ArrayList<>();
+        if (stack.getItem() instanceof PartItem partItem) {
             partItem.addStatsHoverText(stack, components, true);
         } else {
             components.addAll(whenEmpty);
@@ -58,11 +58,11 @@ public class ToolStatsPanel {
     }
 
     public static void addPanel(
-            FlowLayout root,
-            Positioning positioning,
-            ItemStack stack,
-            List<Component> components,
-            net.minecraft.network.chat.Component title) {
+            @NotNull FlowLayout root,
+            @NotNull Positioning positioning,
+            @NotNull ItemStack stack,
+            @NotNull List<Component> components,
+            @NotNull Component title) {
         // アイテムスロット背景
         var slotBg = Components.texture(TEXTURE, 0, 0, 160, 199);
         slotBg.sizing(Sizing.fixed(160), Sizing.fixed(199));
@@ -74,7 +74,7 @@ public class ToolStatsPanel {
         FlowLayout layout =
                 Containers.verticalFlow(Sizing.content(), Sizing.content()).gap(4); // ラベル間の隙間
 
-        for (net.minecraft.network.chat.Component component : components) {
+        for (Component component : components) {
             LabelComponent label = Components.label(component).shadow(true);
             layout.child(label);
         }

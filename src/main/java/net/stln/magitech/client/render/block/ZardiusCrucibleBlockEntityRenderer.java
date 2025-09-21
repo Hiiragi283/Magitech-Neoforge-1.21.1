@@ -66,9 +66,9 @@ public class ZardiusCrucibleBlockEntityRenderer
             float floatOffset = 0;
             float floatRandomizer = intToRandPattern(i + 2) * 500;
             if ((renderCount + floatRandomizer) % 500 < 250) {
-                floatOffset = ((float) (renderCount + floatRandomizer) % 500) / 250 - 0.5f;
+                floatOffset = ((renderCount + floatRandomizer) % 500) / 250 - 0.5f;
             } else {
-                floatOffset = ((float) -(renderCount + floatRandomizer) % 500) / 250 + 1.5f;
+                floatOffset = (-(renderCount + floatRandomizer) % 500) / 250 + 1.5f;
             }
             if (isLit) {
                 floatOffset *= 2;

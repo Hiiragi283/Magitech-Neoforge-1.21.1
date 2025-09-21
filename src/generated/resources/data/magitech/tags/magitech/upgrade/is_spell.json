@@ -1,0 +1,12 @@
+{
+  "values": [
+    "magitech:caster_power_upgrade",
+    "magitech:caster_elemental_power_upgrade",
+    "magitech:caster_charge_upgrade",
+    "magitech:caster_cooldown_upgrade",
+    "magitech:caster_defence_upgrade",
+    "magitech:caster_projectile_speed_upgrade",
+    "magitech:caster_efficiency_upgrade",
+    "magitech:caster_durability_upgrade"
+  ]
+}

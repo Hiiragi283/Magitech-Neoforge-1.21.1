@@ -231,11 +231,6 @@ public class PartCuttingMenu extends AbstractContainerMenu {
         this.broadcastChanges();
     }
 
-    @Override
-    public MenuType<?> getType() {
-        return MagitechMenuTypes.PART_CUTTING.get();
-    }
-
     public void registerUpdateListener(Runnable listener) {
         this.slotUpdateListener = listener;
     }

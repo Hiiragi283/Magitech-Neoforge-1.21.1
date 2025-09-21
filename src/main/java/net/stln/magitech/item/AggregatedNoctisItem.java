@@ -26,15 +26,13 @@ public class AggregatedNoctisItem extends TooltipTextItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(
-            Level level, Player player, InteractionHand usedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(
+            @NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         double currentMana = ManaData.getCurrentMana(player, ManaUtil.ManaType.NOCTIS);
         double maxMana = ManaUtil.getMaxMana(player, ManaUtil.ManaType.NOCTIS);
         if (currentMana < maxMana) {
-            if (!player.isCreative()) {
-                stack.setCount(stack.getCount() - 1);
-            }
+            stack.consume(1, player);
             level.playSound(
                     player,
                     player.getX(),

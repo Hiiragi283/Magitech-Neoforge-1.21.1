@@ -28,7 +28,6 @@ import net.stln.magitech.item.tool.toolitem.PartToolItem;
 import net.stln.magitech.item.tool.toolitem.SpellCasterItem;
 import net.stln.magitech.item.tool.upgrade.Upgrade;
 import net.stln.magitech.item.tool.upgrade.UpgradeInstance;
-import net.stln.magitech.item.tool.upgrade.UpgradeRegister;
 import net.stln.magitech.util.ClientHelper;
 import net.stln.magitech.util.ComponentHelper;
 import net.stln.magitech.util.RenderHelper;
@@ -251,11 +250,11 @@ public class ToolUpgradeScreen extends AbstractContainerScreen<ToolUpgradeMenu> 
                 if (mouseX >= x && mouseX < x + 117 && mouseY >= i1 && mouseY < i1 + 18) {
                     yOffset += 24;
                 }
-                ResourceLocation id = UpgradeRegister.getId(currentUpgrades.get(i));
                 guiGraphics.blit(BG_LOCATION, x, i1, 0, yOffset, 117, 18);
                 guiGraphics.drawString(
                         this.font,
-                        Component.translatable("upgrade." + id.getNamespace() + "." + id.getPath())
+                        Component.translatable(
+                                        currentUpgrades.get(i).getId().toLanguageKey("upgrade"))
                                 .withColor(0xE0E0E0)
                                 .append(Component.literal(" Lv." + level).withColor(0xF0D080)),
                         x + 5,

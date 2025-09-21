@@ -1,13 +1,11 @@
 package net.stln.magitech.item;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -25,39 +23,16 @@ import net.stln.magitech.util.ComponentHelper;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import vazkii.patchouli.api.PatchouliAPI;
 import vazkii.patchouli.common.book.Book;
 import vazkii.patchouli.common.book.BookRegistry;
 import vazkii.patchouli.common.item.PatchouliDataComponents;
 
-public class ThreadBoundItem extends TooltipTextItem implements ICurioItem {
+public class ThreadBoundItem extends MagitechCurioItem {
 
-    Map<Holder<Attribute>, AttributeModifier> attributeModifiers = new HashMap<>();
-
-    public ThreadBoundItem(Properties settings) {
-        super(settings);
-    }
-
-    @Override
-    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(
-            SlotContext slotContext, ResourceLocation id, ItemStack stack) {
-        ImmutableMultimap.Builder<Holder<Attribute>, AttributeModifier> modifierMultimap =
-                ImmutableMultimap.builder();
-        for (Map.Entry<Holder<Attribute>, AttributeModifier> modifier :
-                attributeModifiers.entrySet()) {
-            modifierMultimap.put(modifier.getKey(), modifier.getValue());
-        }
-        return modifierMultimap.build();
-    }
-
-    public ThreadBoundItem attributeModifier(Map<Holder<Attribute>, AttributeModifier> map) {
-        attributeModifiers = map;
-        return this;
+    public ThreadBoundItem(
+            Map<Holder<Attribute>, AttributeModifier> attributeModifierMap, Properties properties) {
+        super(attributeModifierMap, properties);
     }
 
     @Override

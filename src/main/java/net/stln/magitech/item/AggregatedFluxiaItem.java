@@ -32,15 +32,13 @@ public class AggregatedFluxiaItem extends TooltipTextItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(
-            Level level, Player player, InteractionHand usedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(
+            @NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         double currentMana = ManaData.getCurrentMana(player, ManaUtil.ManaType.FLUXIA);
         double maxMana = ManaUtil.getMaxMana(player, ManaUtil.ManaType.FLUXIA);
         if (currentMana < maxMana) {
-            if (!player.isCreative()) {
-                stack.setCount(stack.getCount() - 1);
-            }
+            stack.consume(1, player);
             level.playSound(
                     player,
                     player.getX(),
@@ -68,7 +66,7 @@ public class AggregatedFluxiaItem extends TooltipTextItem {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getItemInHand();
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
@@ -76,9 +74,7 @@ public class AggregatedFluxiaItem extends TooltipTextItem {
         BlockEntity entity = level.getBlockEntity(pos);
         if (entity instanceof ManaContainerBlockEntity containerBlockEntity
                 && !containerBlockEntity.isFull()) {
-            if (!player.isCreative()) {
-                stack.setCount(stack.getCount() - 1);
-            }
+            stack.consume(1, player);
             containerBlockEntity.addMana(45);
             level.playSound(
                     player,

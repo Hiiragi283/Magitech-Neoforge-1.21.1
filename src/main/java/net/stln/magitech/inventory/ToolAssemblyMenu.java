@@ -234,11 +234,6 @@ public class ToolAssemblyMenu extends AbstractContainerMenu {
         return itemstack;
     }
 
-    @Override
-    public MenuType<?> getType() {
-        return MagitechMenuTypes.TOOL_ASSEMBLY.get();
-    }
-
     /**
      * Called to determine if the current slot is valid for the stack merging (double-click) code.
      * The stack passed in is null for the initial slot that was double-clicked.

@@ -82,16 +82,14 @@ public class ZardiusCrucibleBlockEntity extends BlockEntity {
     }
 
     public NonNullList<ItemStack> getRenderStack() {
-        NonNullList<ItemStack> stack = NonNullList.create();
+        NonNullList<ItemStack> stacks = NonNullList.withSize(inventory.getSlots(), ItemStack.EMPTY);
         for (int i = 0; i < inventory.getSlots(); i++) {
-            if (!this.inventory.getStackInSlot(i).isEmpty()) {
-                stack.add(this.inventory.getStackInSlot(i));
+            var stackIn = inventory.getStackInSlot(i);
+            if (!stackIn.isEmpty()) {
+                stacks.set(i, stackIn);
             }
         }
-        if (stack.isEmpty()) {
-            stack.add(ItemStack.EMPTY);
-        }
-        return stack;
+        return stacks;
     }
 
     public void serverTick(Level level, BlockPos pos, BlockState state) {

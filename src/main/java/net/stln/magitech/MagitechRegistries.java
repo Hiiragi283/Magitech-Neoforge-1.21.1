@@ -6,6 +6,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 import net.stln.magitech.item.tool.material.ToolMaterial;
+import net.stln.magitech.item.tool.upgrade.Upgrade;
 import net.stln.magitech.magic.spell.Spell;
 
 public final class MagitechRegistries {
@@ -17,11 +18,15 @@ public final class MagitechRegistries {
     public static final Registry<ToolMaterial> TOOL_MATERIAL =
             new RegistryBuilder<>(Keys.TOOL_MATERIAL).sync(true).create();
 
+    public static final Registry<Upgrade> UPGRADE =
+            new RegistryBuilder<>(Keys.UPGRADE).sync(true).create();
+
     public static void register(IEventBus eventBus) {
         eventBus.addListener(
                 (NewRegistryEvent event) -> {
                     event.register(SPELL);
                     event.register(TOOL_MATERIAL);
+                    event.register(UPGRADE);
                 });
         Magitech.LOGGER.info("Registering Spells for" + Magitech.MOD_ID);
     }
@@ -34,5 +39,8 @@ public final class MagitechRegistries {
                 ResourceKey.createRegistryKey(Magitech.id("spell"));
         public static final ResourceKey<? extends Registry<ToolMaterial>> TOOL_MATERIAL =
                 ResourceKey.createRegistryKey(Magitech.id("tool_material"));
+
+        public static final ResourceKey<? extends Registry<Upgrade>> UPGRADE =
+                ResourceKey.createRegistryKey(Magitech.id("upgrade"));
     }
 }

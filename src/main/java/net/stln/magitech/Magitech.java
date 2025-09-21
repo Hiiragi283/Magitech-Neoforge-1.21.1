@@ -32,8 +32,8 @@ import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.init.MagitechSpells;
 import net.stln.magitech.init.MagitechToolMaterials;
+import net.stln.magitech.init.MagitechUpgrades;
 import net.stln.magitech.item.tool.register.ToolMaterialRegister;
-import net.stln.magitech.item.tool.upgrade.UpgradeInit;
 import net.stln.magitech.worldgen.tree.TreeGrowerInit;
 
 import org.slf4j.Logger;
@@ -91,7 +91,7 @@ public class Magitech {
         MagitechSpells.registerSpells(modEventBus);
         ToolMaterialRegister.init();
         TreeGrowerInit.registerTrunkPlacerTypes(modEventBus);
-        UpgradeInit.registerUpgrades();
+        MagitechUpgrades.registerUpgrades(modEventBus);
         CuriosInit.registerValidators();
         MagitechWorldGenInit.registerFeatures(modEventBus);
 

@@ -34,330 +34,326 @@ public class MagitechItems {
             ITEMS.registerItem(
                     "glistening_lexicon",
                     (properties) ->
-                            new ThreadBoundItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.MAX_MANA,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            20,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MANA_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.2,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.NOCTIS_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.2,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.LUMINIS_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.2,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.FLUXIA_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.2,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MAX_NOCTIS,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            10,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MAX_LUMINIS,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            10,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MAX_FLUXIA,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            10,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_VALUE))),
+                            new ThreadBoundItem(
+                                    Map.of(
+                                            MagitechAttributes.MAX_MANA,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    20,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MANA_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.2,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.NOCTIS_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.2,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.LUMINIS_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.2,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.FLUXIA_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.2,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MAX_NOCTIS,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    10,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MAX_LUMINIS,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    10,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MAX_FLUXIA,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    10,
+                                                    AttributeModifier.Operation.ADD_VALUE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
     public static final DeferredItem<ThreadBoundItem> THE_FIRE_THAT_THINKS =
             ITEMS.registerItem(
                     "the_fire_that_thinks",
                     (properties) ->
-                            new ThreadBoundItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.MAX_MANA,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            100,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MANA_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            1,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.NOCTIS_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.2,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.LUMINIS_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.2,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.FLUXIA_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.2,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MAX_NOCTIS,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            15,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MAX_LUMINIS,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            15,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MAX_FLUXIA,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            15,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.2,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MANA_EFFICIENCY,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            -0.1,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_VALUE))),
+                            new ThreadBoundItem(
+                                    Map.of(
+                                            MagitechAttributes.MAX_MANA,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    100,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MANA_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    1,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.NOCTIS_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.2,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.LUMINIS_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.2,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.FLUXIA_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.2,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MAX_NOCTIS,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    15,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MAX_LUMINIS,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    15,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MAX_FLUXIA,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    15,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.SPELL_POWER,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.2,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MANA_EFFICIENCY,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    -0.1,
+                                                    AttributeModifier.Operation.ADD_VALUE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
     public static final DeferredItem<ThreadBoundItem> ARCANE_ENGINEERING_COMPENDIUM =
             ITEMS.registerItem(
                     "arcane_engineering_compendium",
                     (properties) ->
-                            new ThreadBoundItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.MAX_MANA,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            300,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MANA_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            4,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.NOCTIS_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.3,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.LUMINIS_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.3,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.FLUXIA_REGEN,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            0.3,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MAX_NOCTIS,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            30,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MAX_LUMINIS,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            30,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MAX_FLUXIA,
-                                                    new AttributeModifier(
-                                                            THREADBOUND_ID,
-                                                            30,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_VALUE))),
+                            new ThreadBoundItem(
+                                    Map.of(
+                                            MagitechAttributes.MAX_MANA,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    300,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MANA_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    4,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.NOCTIS_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.3,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.LUMINIS_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.3,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.FLUXIA_REGEN,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    0.3,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MAX_NOCTIS,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    30,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MAX_LUMINIS,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    30,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MAX_FLUXIA,
+                                            new AttributeModifier(
+                                                    THREADBOUND_ID,
+                                                    30,
+                                                    AttributeModifier.Operation.ADD_VALUE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
-    public static final DeferredItem<RingItem> MANA_RING =
+    public static final DeferredItem<MagitechCurioItem> MANA_RING =
             ITEMS.registerItem(
                     "mana_ring",
                     (properties) ->
-                            new RingItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.MAX_MANA,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            50,
-                                                            AttributeModifier.Operation.ADD_VALUE),
-                                                    MagitechAttributes.MANA_REGEN,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            1,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_VALUE))),
+                            new MagitechCurioItem(
+                                    Map.of(
+                                            MagitechAttributes.MAX_MANA,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    50,
+                                                    AttributeModifier.Operation.ADD_VALUE),
+                                            MagitechAttributes.MANA_REGEN,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    1,
+                                                    AttributeModifier.Operation.ADD_VALUE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
-    public static final DeferredItem<RingItem> GALEVENT_RING =
+    public static final DeferredItem<MagitechCurioItem> GALEVENT_RING =
             ITEMS.registerItem(
                     "galevent_ring",
                     (properties) ->
-                            new RingItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.COOLDOWN_SPEED,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.3,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE))),
+                            new MagitechCurioItem(
+                                    Map.of(
+                                            MagitechAttributes.COOLDOWN_SPEED,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.3,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
-    public static final DeferredItem<RingItem> CHARGEBIND_RING =
+    public static final DeferredItem<MagitechCurioItem> CHARGEBIND_RING =
             ITEMS.registerItem(
                     "chargebind_ring",
                     (properties) ->
-                            new RingItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.CASTING_SPEED,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.25,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE))),
+                            new MagitechCurioItem(
+                                    Map.of(
+                                            MagitechAttributes.CASTING_SPEED,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.25,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
-    public static final DeferredItem<RingItem> TORSION_RING =
+    public static final DeferredItem<MagitechCurioItem> TORSION_RING =
             ITEMS.registerItem(
                     "torsion_ring",
                     (properties) ->
-                            new RingItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.PROJECTILE_SPEED,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.6,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE))),
+                            new MagitechCurioItem(
+                                    Map.of(
+                                            MagitechAttributes.PROJECTILE_SPEED,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.6,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
-    public static final DeferredItem<RingItem> UMBRAL_RING =
+    public static final DeferredItem<MagitechCurioItem> UMBRAL_RING =
             ITEMS.registerItem(
                     "umbral_ring",
                     (properties) ->
-                            new RingItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.GLACE_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.1,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.SURGE_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.1,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.TREMOR_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.2,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.HOLLOW_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.2,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.MANA_EFFICIENCY,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            -0.15,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE))),
+                            new MagitechCurioItem(
+                                    Map.of(
+                                            MagitechAttributes.GLACE_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.1,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.SURGE_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.1,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.TREMOR_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.2,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.HOLLOW_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.2,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.MANA_EFFICIENCY,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    -0.15,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
-    public static final DeferredItem<RingItem> DAWN_RING =
+    public static final DeferredItem<MagitechCurioItem> DAWN_RING =
             ITEMS.registerItem(
                     "dawn_ring",
                     (properties) ->
-                            new RingItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.SURGE_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.2,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.PHANTOM_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.2,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.FLOW_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.2,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.MANA_EFFICIENCY,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            -0.15,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE))),
+                            new MagitechCurioItem(
+                                    Map.of(
+                                            MagitechAttributes.SURGE_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.2,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.PHANTOM_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.2,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.FLOW_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.2,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.MANA_EFFICIENCY,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    -0.15,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
-    public static final DeferredItem<RingItem> FLUXBOUND_RING =
+    public static final DeferredItem<MagitechCurioItem> FLUXBOUND_RING =
             ITEMS.registerItem(
                     "fluxbound_ring",
                     (properties) ->
-                            new RingItem(properties)
-                                    .attributeModifier(
-                                            Map.of(
-                                                    MagitechAttributes.EMBER_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.2,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.GLACE_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.2,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.MAGIC_SPELL_POWER,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            0.2,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE),
-                                                    MagitechAttributes.MANA_EFFICIENCY,
-                                                    new AttributeModifier(
-                                                            Magitech.id("ring"),
-                                                            -0.15,
-                                                            AttributeModifier.Operation
-                                                                    .ADD_MULTIPLIED_BASE))),
+                            new MagitechCurioItem(
+                                    Map.of(
+                                            MagitechAttributes.EMBER_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.2,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.GLACE_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.2,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.MAGIC_SPELL_POWER,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    0.2,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE),
+                                            MagitechAttributes.MANA_EFFICIENCY,
+                                            new AttributeModifier(
+                                                    Magitech.id("ring"),
+                                                    -0.15,
+                                                    AttributeModifier.Operation
+                                                            .ADD_MULTIPLIED_BASE)),
+                                    properties),
                     new Item.Properties().stacksTo(1));
 
     public static final DeferredItem<PartItem> LIGHT_BLADE =
