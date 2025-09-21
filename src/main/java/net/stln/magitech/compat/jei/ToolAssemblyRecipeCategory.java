@@ -25,9 +25,7 @@ import net.stln.magitech.util.ClientHelper;
 
 import org.jetbrains.annotations.NotNull;
 
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -44,14 +42,8 @@ public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<T
     public static final RecipeType<ToolAssemblyRecipe> TOOL_ASSEMBLY_RECIPE_TYPE =
             new RecipeType<>(UID, ToolAssemblyRecipe.class);
 
-    public ToolAssemblyRecipeCategory(IDrawable icon) {
-        super(icon);
-    }
-
     public ToolAssemblyRecipeCategory(IGuiHelper helper) {
-        this(
-                helper.createDrawableIngredient(
-                        VanillaTypes.ITEM_STACK, new ItemStack(MagitechBlocks.ASSEMBLY_WORKBENCH)));
+        super(helper, MagitechBlocks.ASSEMBLY_WORKBENCH);
     }
 
     @Override

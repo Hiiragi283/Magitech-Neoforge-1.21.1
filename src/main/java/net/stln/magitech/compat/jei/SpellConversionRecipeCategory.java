@@ -13,9 +13,7 @@ import net.stln.magitech.util.ComponentHelper;
 
 import org.jetbrains.annotations.NotNull;
 
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -31,14 +29,8 @@ public class SpellConversionRecipeCategory
     public static final RecipeType<SpellConversionRecipe> SPELL_CONVERSION_RECIPE_TYPE =
             new RecipeType<>(UID, SpellConversionRecipe.class);
 
-    public SpellConversionRecipeCategory(IDrawable icon) {
-        super(icon);
-    }
-
     public SpellConversionRecipeCategory(IGuiHelper helper) {
-        this(
-                helper.createDrawableIngredient(
-                        VanillaTypes.ITEM_STACK, new ItemStack(ItemInit.WAND.get())));
+        super(helper, ItemInit.WAND);
     }
 
     @Override

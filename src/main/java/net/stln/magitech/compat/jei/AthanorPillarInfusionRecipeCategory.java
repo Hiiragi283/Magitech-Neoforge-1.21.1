@@ -7,24 +7,17 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.element.Element;
 import net.stln.magitech.init.MagitechBlocks;
-import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.item.tool.material.ToolMaterial;
 import net.stln.magitech.recipe.AthanorPillarInfusionRecipe;
-import net.stln.magitech.recipe.ToolMaterialRecipe;
-import net.stln.magitech.util.ClientHelper;
 import net.stln.magitech.util.RenderHelper;
 
 import org.jetbrains.annotations.NotNull;
 
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -42,14 +35,8 @@ public class AthanorPillarInfusionRecipeCategory
             ATHANOR_PILLAR_INFUSION_RECIPE_TYPE =
                     new RecipeType<>(UID, AthanorPillarInfusionRecipe.class);
 
-    public AthanorPillarInfusionRecipeCategory(IDrawable icon) {
-        super(icon);
-    }
-
     public AthanorPillarInfusionRecipeCategory(IGuiHelper helper) {
-        this(
-                helper.createDrawableIngredient(
-                        VanillaTypes.ITEM_STACK, new ItemStack(MagitechBlocks.ATHANOR_PILLAR)));
+        super(helper, MagitechBlocks.ATHANOR_PILLAR);
     }
 
     @Override
@@ -116,11 +103,6 @@ public class AthanorPillarInfusionRecipeCategory
             @NotNull IFocusGroup focuses,
             @NotNull RecipeManager recipeManager,
             @NotNull RegistryAccess access) {
-        List<ToolMaterialRecipe> materialRecipes =
-                ClientHelper.getAllRecipes(MagitechRecipes.TOOL_MATERIAL_TYPE);
-        List<ToolMaterial> materials =
-                materialRecipes.stream().map(ToolMaterialRecipe::getToolMaterial).toList();
-
         List<Ingredient> ingredients = recipe.getIngredients();
         builder.addSlot(RecipeIngredientRole.INPUT, 55, 55).addIngredients(recipe.base());
 

@@ -7,7 +7,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.stln.magitech.Magitech;
@@ -17,9 +16,10 @@ import net.stln.magitech.util.ClientHelper;
 
 import org.jetbrains.annotations.NotNull;
 
-import mezz.jei.api.constants.VanillaTypes;
+import com.mojang.datafixers.util.Pair;
+
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotRichTooltipCallback;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.neoforge.NeoForgeTypes;
@@ -36,14 +36,8 @@ public class ZardiusCrucibleRecipeCategory
     public static final RecipeType<ZardiusCrucibleRecipe> ZARDIUS_CRUCIBLE_RECIPE_TYPE =
             new RecipeType<>(UID, ZardiusCrucibleRecipe.class);
 
-    public ZardiusCrucibleRecipeCategory(IDrawable icon) {
-        super(icon);
-    }
-
     public ZardiusCrucibleRecipeCategory(IGuiHelper helper) {
-        this(
-                helper.createDrawableIngredient(
-                        VanillaTypes.ITEM_STACK, new ItemStack(MagitechBlocks.ZARDIUS_CRUCIBLE)));
+        super(helper, MagitechBlocks.ZARDIUS_CRUCIBLE);
     }
 
     @Override
@@ -65,39 +59,9 @@ public class ZardiusCrucibleRecipeCategory
             double mouseY) {
         super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
         int size = recipe.getIngredients().size();
-
         for (int i = 0; i < size; i++) {
-            int x, y;
-
-            if (size <= 3) {
-                // 横1列（中央寄せ、Y + 9）
-                int totalWidth = size * 18;
-                int startX = 19 + (36 - totalWidth) / 2; // 中央寄せ（基準幅36）
-                x = startX + i * 18;
-                y = 4 + 9;
-            } else if (size == 4) {
-                // 2x2 グリッド（中央寄せ）
-                int row = i / 2;
-                int col = i % 2;
-                x = 19 + col * 18; // 横方向中央に調整
-                y = 4 + row * 18;
-            } else if (size < 7) {
-                // 2列3行（左→右→下に）
-                int row = i / 3;
-                int col = i % 3;
-                int totalWidth = 3 * 18;
-                x = 19 + col * 18 + (36 - totalWidth) / 2;
-                y = 4 + row * 18;
-            } else {
-                // 2列で縦並び（なるべく均等）
-                int row = i / 4;
-                int col = i % 4;
-                int totalWidth = 4 * 18;
-                x = 19 + col * 18 + (36 - totalWidth) / 2;
-                y = 4 + row * 18;
-            }
-
-            guiGraphics.blit(TEXTURE, x, y, 0, 0, 18, 18);
+            Pair<Integer, Integer> pair = getSlotPosition(i, size);
+            guiGraphics.blit(TEXTURE, pair.getFirst(), pair.getSecond(), 0, 0, 18, 18);
         }
         guiGraphics.blit(TEXTURE, 73, 13, 18, 0, 18, 18);
         guiGraphics.blit(TEXTURE, 95, 17, 0, 18, 21, 10);
@@ -129,58 +93,16 @@ public class ZardiusCrucibleRecipeCategory
             @NotNull RecipeManager recipeManager,
             @NotNull RegistryAccess access) {
         List<Ingredient> ingredients = recipe.getIngredients();
-
         for (int i = 0; i < ingredients.size(); i++) {
-            int x, y;
-
-            if (ingredients.size() <= 3) {
-                // 横1列（中央寄せ、Y + 9）
-                int totalWidth = ingredients.size() * 18;
-                int startX = 19 + (36 - totalWidth) / 2; // 中央寄せ（基準幅36）
-                x = startX + i * 18;
-                y = 4 + 9;
-            } else if (ingredients.size() == 4) {
-                // 2x2 グリッド（中央寄せ）
-                int row = i / 2;
-                int col = i % 2;
-                x = 19 + col * 18; // 横方向中央に調整
-                y = 4 + row * 18;
-            } else if (ingredients.size() < 7) {
-                // 2列3行（左→右→下に）
-                int row = i / 3;
-                int col = i % 3;
-                int totalWidth = 3 * 18;
-                x = 19 + col * 18 + (36 - totalWidth) / 2;
-                y = 4 + row * 18;
-            } else {
-                // 2列で縦並び（なるべく均等）
-                int row = i / 4;
-                int col = i % 4;
-                int totalWidth = 4 * 18;
-                x = 19 + col * 18 + (36 - totalWidth) / 2;
-                y = 4 + row * 18;
-            }
-
-            builder.addSlot(RecipeIngredientRole.INPUT, x + 1, y + 1)
+            Pair<Integer, Integer> pair = getSlotPosition(i, ingredients.size());
+            builder.addSlot(RecipeIngredientRole.INPUT, pair.getFirst() + 1, pair.getSecond() + 1)
                     .addIngredients(ingredients.get(i));
         }
         builder.addSlot(RecipeIngredientRole.INPUT, 74, 14)
                 .addIngredients(
                         NeoForgeTypes.FLUID_STACK,
                         Arrays.stream(recipe.fluidIngredient().getFluids()).toList())
-                .addRichTooltipCallback(
-                        (recipeSlotView, tooltip) -> {
-                            recipeSlotView
-                                    .getDisplayedIngredient(NeoForgeTypes.FLUID_STACK)
-                                    .ifPresent(
-                                            fluid -> {
-                                                int amount = fluid.getAmount();
-                                                // mB単位で表示
-                                                tooltip.add(
-                                                        Component.literal(amount + " mB")
-                                                                .withColor(0x808080));
-                                            });
-                        });
+                .addRichTooltipCallback(FLUID_TOOLTIP);
         if (!recipe.getResultItem(access).isEmpty()) {
             builder.addSlot(RecipeIngredientRole.OUTPUT, 121, 14)
                     .addItemStack(recipe.getResultItem(access));
@@ -190,23 +112,52 @@ public class ZardiusCrucibleRecipeCategory
                         fluidStack ->
                                 builder.addSlot(RecipeIngredientRole.INPUT, 139, 14)
                                         .addIngredient(NeoForgeTypes.FLUID_STACK, fluidStack)
-                                        .addRichTooltipCallback(
-                                                (recipeSlotView, tooltip) -> {
-                                                    recipeSlotView
-                                                            .getDisplayedIngredient(
-                                                                    NeoForgeTypes.FLUID_STACK)
-                                                            .ifPresent(
-                                                                    fluid -> {
-                                                                        int amount =
-                                                                                fluid.getAmount();
-                                                                        // mB単位で表示
-                                                                        tooltip.add(
-                                                                                Component.literal(
-                                                                                                amount
-                                                                                                        + " mB")
-                                                                                        .withColor(
-                                                                                                0x808080));
-                                                                    });
-                                                }));
+                                        .addRichTooltipCallback(FLUID_TOOLTIP));
+    }
+
+    private static final IRecipeSlotRichTooltipCallback FLUID_TOOLTIP =
+            (recipeSlotView, tooltip) ->
+                    recipeSlotView
+                            .getDisplayedIngredient(NeoForgeTypes.FLUID_STACK)
+                            .ifPresent(
+                                    fluid -> {
+                                        int amount = fluid.getAmount();
+                                        // mB単位で表示
+                                        tooltip.add(
+                                                Component.literal(amount + " mB")
+                                                        .withColor(0x808080));
+                                    });
+
+    private static @NotNull Pair<Integer, Integer> getSlotPosition(int index, int size) {
+        int x, y;
+
+        if (size <= 3) {
+            // 横1列（中央寄せ、Y + 9）
+            int totalWidth = size * 18;
+            int startX = 19 + (36 - totalWidth) / 2; // 中央寄せ（基準幅36）
+            x = startX + index * 18;
+            y = 4 + 9;
+        } else if (size == 4) {
+            // 2x2 グリッド（中央寄せ）
+            int row = index / 2;
+            int col = index % 2;
+            x = 19 + col * 18; // 横方向中央に調整
+            y = 4 + row * 18;
+        } else if (size < 7) {
+            // 2列3行（左→右→下に）
+            int row = index / 3;
+            int col = index % 3;
+            int totalWidth = 3 * 18;
+            x = 19 + col * 18 + (36 - totalWidth) / 2;
+            y = 4 + row * 18;
+        } else {
+            // 2列で縦並び（なるべく均等）
+            int row = index / 4;
+            int col = index % 4;
+            int totalWidth = 4 * 18;
+            x = 19 + col * 18 + (36 - totalWidth) / 2;
+            y = 4 + row * 18;
+        }
+        return Pair.of(x, y);
     }
 }

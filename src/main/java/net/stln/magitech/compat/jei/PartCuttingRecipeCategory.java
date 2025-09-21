@@ -1,9 +1,11 @@
 package net.stln.magitech.compat.jei;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,9 +23,7 @@ import net.stln.magitech.util.ClientHelper;
 
 import org.jetbrains.annotations.NotNull;
 
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -38,15 +38,8 @@ public class PartCuttingRecipeCategory extends AbstractMagitechRecipeCategory<Pa
     public static final RecipeType<PartCuttingRecipe> PART_CUTTING_RECIPE_TYPE =
             new RecipeType<>(UID, PartCuttingRecipe.class);
 
-    public PartCuttingRecipeCategory(IDrawable icon) {
-        super(icon);
-    }
-
     public PartCuttingRecipeCategory(IGuiHelper helper) {
-        this(
-                helper.createDrawableIngredient(
-                        VanillaTypes.ITEM_STACK,
-                        new ItemStack(MagitechBlocks.ENGINEERING_WORKBENCH)));
+        super(helper, MagitechBlocks.ENGINEERING_WORKBENCH);
     }
 
     @Override
@@ -91,22 +84,28 @@ public class PartCuttingRecipeCategory extends AbstractMagitechRecipeCategory<Pa
             @NotNull RegistryAccess access) {
         List<ToolMaterialRecipe> materialRecipes =
                 ClientHelper.getAllRecipes(MagitechRecipes.TOOL_MATERIAL_TYPE);
-        List<ItemStack> inputs = new ArrayList<>();
-        List<ItemStack> results = new ArrayList<>();
-        for (ToolMaterialRecipe materialRecipe : materialRecipes) {
-            Ingredient ingredient = materialRecipe.getIngredients().getFirst();
-            for (ItemStack itemStack : ingredient.getItems()) {
-                if (itemStack.isEmpty()) continue;
-                inputs.add(itemStack.copyWithCount(recipe.inputCount()));
-            }
-            ItemStack resultStack = recipe.getResultItem(access).copy();
-            resultStack.set(
-                    MagitechDataComponents.MATERIAL_COMPONENT,
-                    new MaterialComponent(materialRecipe.getToolMaterial()));
-            results.add(resultStack);
-        }
-        builder.addSlot(RecipeIngredientRole.INPUT, 19, 5).addItemStacks(inputs);
+        builder.addSlot(RecipeIngredientRole.INPUT, 19, 5)
+                .addItemStacks(
+                        materialRecipes.stream()
+                                .map(ToolMaterialRecipe::getIngredients)
+                                .flatMap(NonNullList::stream)
+                                .map(Ingredient::getItems)
+                                .flatMap(Arrays::stream)
+                                .toList());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 66, 5)
+                .addItemStacks(
+                        materialRecipes.stream()
+                                .map(
+                                        recipe1 -> {
+                                            var stack = recipe1.getResultItem(access).copy();
+                                            stack.set(
+                                                    MagitechDataComponents.MATERIAL_COMPONENT,
+                                                    new MaterialComponent(
+                                                            recipe1.getToolMaterial()));
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 66, 5).addItemStacks(results);
+                                            return stack;
+                                        })
+                                .filter(Predicate.not(ItemStack::isEmpty))
+                                .toList());
     }
 }

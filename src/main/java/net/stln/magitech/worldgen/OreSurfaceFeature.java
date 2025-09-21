@@ -17,14 +17,14 @@ public class OreSurfaceFeature extends Feature<NoneFeatureConfiguration> {
 
     private final BlockState blockToPlace;
     private final TagKey<Block> blockToPlaced;
-    private final double propability;
+    private final double probavility;
 
     public OreSurfaceFeature(
-            BlockState blockToPlace, TagKey<Block> blockToPlaced, double propability) {
+            BlockState blockToPlace, TagKey<Block> blockToPlaced, double probavility) {
         super(NoneFeatureConfiguration.CODEC);
         this.blockToPlace = blockToPlace;
         this.blockToPlaced = blockToPlaced;
-        this.propability = propability;
+        this.probavility = probavility;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class OreSurfaceFeature extends Feature<NoneFeatureConfiguration> {
                             BlockPos facePos = pos.relative(dir);
                             if ((level.getBlockState(facePos).isAir()
                                             || level.getBlockState(facePos).is(Blocks.WATER))
-                                    && level.getRandom().nextFloat() < propability) {
+                                    && level.getRandom().nextFloat() < probavility) {
                                 BlockState blockState = blockToPlace;
                                 if (blockToPlace.hasProperty(BlockStateProperties.FACING)) {
                                     blockState =
