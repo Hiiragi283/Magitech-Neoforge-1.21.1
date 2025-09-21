@@ -23,6 +23,7 @@ import net.stln.magitech.init.MagitechCreativeTabs;
 import net.stln.magitech.init.MagitechCriteria;
 import net.stln.magitech.init.MagitechDataComponents;
 import net.stln.magitech.init.MagitechEntities;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.init.MagitechLootFunctions;
 import net.stln.magitech.init.MagitechMenuTypes;
 import net.stln.magitech.init.MagitechMobEffects;
@@ -31,7 +32,6 @@ import net.stln.magitech.init.MagitechRecipes;
 import net.stln.magitech.init.MagitechSounds;
 import net.stln.magitech.init.MagitechSpells;
 import net.stln.magitech.init.MagitechToolMaterials;
-import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.tool.register.ToolMaterialRegister;
 import net.stln.magitech.item.tool.upgrade.UpgradeInit;
 import net.stln.magitech.worldgen.tree.TreeGrowerInit;
@@ -73,7 +73,7 @@ public class Magitech {
 
         MagitechBlocks.registerBlocks(modEventBus);
         MagitechBlockEntityTypes.register(modEventBus);
-        ItemInit.registerItems(modEventBus);
+        MagitechItems.registerItems(modEventBus);
 
         MagitechAttributes.registerEntityAttributes(modEventBus);
         MagitechCreativeTabs.registerCreativeTabs(modEventBus);

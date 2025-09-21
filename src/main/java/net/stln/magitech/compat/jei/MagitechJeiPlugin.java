@@ -5,8 +5,8 @@ import net.stln.magitech.Magitech;
 import net.stln.magitech.gui.PartCuttingScreen;
 import net.stln.magitech.gui.ToolAssemblyScreen;
 import net.stln.magitech.init.MagitechBlocks;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.util.ClientHelper;
 
 import org.jetbrains.annotations.NotNull;
@@ -92,7 +92,7 @@ public class MagitechJeiPlugin implements IModPlugin {
                 MagitechBlocks.ASSEMBLY_WORKBENCH.toStack(),
                 ToolAssemblyRecipeCategory.TOOL_ASSEMBLY_RECIPE_TYPE);
         registration.addRecipeCatalyst(
-                ItemInit.WAND.toStack(),
+                MagitechItems.WAND.toStack(),
                 SpellConversionRecipeCategory.SPELL_CONVERSION_RECIPE_TYPE);
         registration.addRecipeCatalyst(
                 MagitechBlocks.ZARDIUS_CRUCIBLE_ITEM.toStack(),

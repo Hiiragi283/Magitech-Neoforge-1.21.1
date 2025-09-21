@@ -21,7 +21,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.stln.magitech.init.MagitechBlocks;
-import net.stln.magitech.item.ItemInit;
+import net.stln.magitech.init.MagitechItems;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,30 +44,33 @@ public class MagitechBlockLootProvider extends BlockLootSubProvider {
         dropSelf(MagitechBlocks.MANA_VESSEL.get());
         add(
                 MagitechBlocks.FLUORITE_ORE.get(),
-                block -> createOreDrop(MagitechBlocks.FLUORITE_ORE.get(), ItemInit.FLUORITE.get()));
+                block ->
+                        createOreDrop(
+                                MagitechBlocks.FLUORITE_ORE.get(), MagitechItems.FLUORITE.get()));
         add(
                 MagitechBlocks.DEEPSLATE_FLUORITE_ORE.get(),
                 block ->
                         createOreDrop(
                                 MagitechBlocks.DEEPSLATE_FLUORITE_ORE.get(),
-                                ItemInit.FLUORITE.get()));
+                                MagitechItems.FLUORITE.get()));
         add(
                 MagitechBlocks.TOURMALINE_ORE.get(),
                 block ->
                         createOreDrop(
-                                MagitechBlocks.TOURMALINE_ORE.get(), ItemInit.TOURMALINE.get()));
+                                MagitechBlocks.TOURMALINE_ORE.get(),
+                                MagitechItems.TOURMALINE.get()));
         add(
                 MagitechBlocks.DEEPSLATE_TOURMALINE_ORE.get(),
                 block ->
                         createOreDrop(
                                 MagitechBlocks.DEEPSLATE_TOURMALINE_ORE.get(),
-                                ItemInit.TOURMALINE.get()));
+                                MagitechItems.TOURMALINE.get()));
         add(
                 MagitechBlocks.FLUORITE_CRYSTAL_CLUSTER.get(),
                 block ->
                         createMultipleOreDrops(
                                 MagitechBlocks.FLUORITE_CRYSTAL_CLUSTER.get(),
-                                ItemInit.FLUORITE.get(),
+                                MagitechItems.FLUORITE.get(),
                                 1,
                                 2));
         add(
@@ -75,7 +78,7 @@ public class MagitechBlockLootProvider extends BlockLootSubProvider {
                 block ->
                         createMultipleOreDrops(
                                 MagitechBlocks.REDSTONE_CRYSTAL_CLUSTER.get(),
-                                ItemInit.REDSTONE_CRYSTAL.get(),
+                                MagitechItems.REDSTONE_CRYSTAL.get(),
                                 1,
                                 2));
         add(
@@ -83,7 +86,7 @@ public class MagitechBlockLootProvider extends BlockLootSubProvider {
                 block ->
                         createMultipleOreDrops(
                                 MagitechBlocks.SULFUR_CRYSTAL_CLUSTER.get(),
-                                ItemInit.SULFUR.get(),
+                                MagitechItems.SULFUR.get(),
                                 1,
                                 2));
         dropSelf(MagitechBlocks.SULFUR_BLOCK.get());
@@ -204,8 +207,7 @@ public class MagitechBlockLootProvider extends BlockLootSubProvider {
                                                                                                 3)))
                                                         .add(
                                                                 LootItem.lootTableItem(
-                                                                        ItemInit.MANA_BERRIES
-                                                                                .get()))
+                                                                        MagitechItems.MANA_BERRIES))
                                                         .apply(
                                                                 SetItemCountFunction.setCount(
                                                                         UniformGenerator.between(
@@ -235,8 +237,7 @@ public class MagitechBlockLootProvider extends BlockLootSubProvider {
                                                                                                 2)))
                                                         .add(
                                                                 LootItem.lootTableItem(
-                                                                        ItemInit.MANA_BERRIES
-                                                                                .get()))
+                                                                        MagitechItems.MANA_BERRIES))
                                                         .apply(
                                                                 SetItemCountFunction.setCount(
                                                                         UniformGenerator.between(

@@ -12,8 +12,8 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.init.MagitechRecipes;
-import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.magic.spell.Spell;
 import net.stln.magitech.recipe.input.SpellRecipeInput;
 
@@ -84,7 +84,7 @@ public record SpellConversionRecipe(
 
     @Override
     public @NotNull ItemStack getToastSymbol() {
-        return ItemInit.FLUORITE.toStack();
+        return MagitechItems.FLUORITE.toStack();
     }
 
     @Override

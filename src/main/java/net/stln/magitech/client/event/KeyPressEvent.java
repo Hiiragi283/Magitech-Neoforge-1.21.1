@@ -9,7 +9,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.item.ItemInit;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.item.ThreadBoundItem;
 import net.stln.magitech.item.armor.AetherLifterItem;
 import net.stln.magitech.item.armor.FlamglideStriderItem;
@@ -52,7 +52,7 @@ public class KeyPressEvent {
             }
         }
         while (KeyMappingEvent.DOUBLE_JUMP.get().consumeClick()) {
-            if (player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemInit.AETHER_LIFTER.get()
+            if (player.getItemBySlot(EquipmentSlot.FEET).is(MagitechItems.AETHER_LIFTER)
                     && onGroundMarker > 2) {
                 PacketDistributor.sendToServer(new DoubleJumpPayload(jumpCount, player.getUUID()));
                 AetherLifterItem.doubleJump(
@@ -61,8 +61,7 @@ public class KeyPressEvent {
             }
         }
         while (KeyMappingEvent.LONG_JUMP.get().consumeClick()) {
-            if (player.getItemBySlot(EquipmentSlot.FEET).getItem()
-                            == ItemInit.FLAMGLIDE_STRIDER.get()
+            if (player.getItemBySlot(EquipmentSlot.FEET).is(MagitechItems.FLAMGLIDE_STRIDER)
                     && onGroundMarker < 2
                     && player.isSprinting()) {
                 PacketDistributor.sendToServer(new LongJumpPayload(jumpCount, player.getUUID()));

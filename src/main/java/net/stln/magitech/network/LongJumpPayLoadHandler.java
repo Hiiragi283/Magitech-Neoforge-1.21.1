@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.stln.magitech.item.ItemInit;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.item.armor.FlamglideStriderItem;
 import net.stln.magitech.util.ServerHelper;
 
@@ -19,7 +19,7 @@ public class LongJumpPayLoadHandler {
             return;
         }
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
-        if (boots.getItem() == ItemInit.FLAMGLIDE_STRIDER.get()) {
+        if (boots.is(MagitechItems.FLAMGLIDE_STRIDER)) {
             FlamglideStriderItem.longJump(player, payload.jumpCount(), boots);
         }
     }
@@ -31,7 +31,7 @@ public class LongJumpPayLoadHandler {
             return;
         }
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
-        if (boots.getItem() == ItemInit.FLAMGLIDE_STRIDER.get()) {
+        if (boots.is(MagitechItems.FLAMGLIDE_STRIDER)) {
             FlamglideStriderItem.longJump(player, payload.jumpCount(), boots);
         }
         ServerHelper.getOptionalServer()

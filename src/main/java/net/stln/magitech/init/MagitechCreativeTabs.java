@@ -12,7 +12,6 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.MagitechRegistries;
-import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.ThreadboundGenerator;
 import net.stln.magitech.item.tool.partitem.PartItem;
 import net.stln.magitech.item.tool.toolitem.PartToolGenerator;
@@ -29,7 +28,7 @@ public class MagitechCreativeTabs {
                     () ->
                             CreativeModeTab.builder()
                                     .title(Component.translatable("itemGroup.magitech.magitech"))
-                                    .icon(() -> ItemInit.GLISTENING_LEXICON.toStack())
+                                    .icon(() -> MagitechItems.GLISTENING_LEXICON.toStack())
                                     .displayItems(
                                             (parameters, output) -> {
                                                 var registries = parameters.holders();
@@ -45,64 +44,65 @@ public class MagitechCreativeTabs {
 
                                                 output.accept(
                                                         ThreadboundGenerator.generateThreadbound(
-                                                                ItemInit.GLISTENING_LEXICON,
+                                                                MagitechItems.GLISTENING_LEXICON,
                                                                 allSpells));
                                                 output.accept(
                                                         ThreadboundGenerator.generateThreadbound(
-                                                                ItemInit.THE_FIRE_THAT_THINKS,
+                                                                MagitechItems.THE_FIRE_THAT_THINKS,
                                                                 allSpells));
                                                 output.accept(
                                                         ThreadboundGenerator.generateThreadbound(
-                                                                ItemInit
+                                                                MagitechItems
                                                                         .ARCANE_ENGINEERING_COMPENDIUM,
                                                                 allSpells));
-                                                output.accept(ItemInit.AETHER_LIFTER);
-                                                output.accept(ItemInit.FLAMGLIDE_STRIDER);
-                                                output.accept(ItemInit.MANA_RING);
-                                                output.accept(ItemInit.GALEVENT_RING);
-                                                output.accept(ItemInit.CHARGEBIND_RING);
-                                                output.accept(ItemInit.TORSION_RING);
-                                                output.accept(ItemInit.UMBRAL_RING);
-                                                output.accept(ItemInit.DAWN_RING);
-                                                output.accept(ItemInit.FLUXBOUND_RING);
-                                                output.accept(ItemInit.ALCHAEFABRIC);
-                                                output.accept(ItemInit.AEGIS_WEAVE);
-                                                output.accept(ItemInit.FLUORITE);
-                                                output.accept(ItemInit.MANA_CHARGED_FLUORITE);
-                                                output.accept(ItemInit.TOURMALINE);
-                                                output.accept(ItemInit.EMBER_CRYSTAL);
-                                                output.accept(ItemInit.GLACE_CRYSTAL);
-                                                output.accept(ItemInit.SURGE_CRYSTAL);
-                                                output.accept(ItemInit.PHANTOM_CRYSTAL);
-                                                output.accept(ItemInit.TREMOR_CRYSTAL);
-                                                output.accept(ItemInit.MAGIC_CRYSTAL);
-                                                output.accept(ItemInit.FLOW_CRYSTAL);
-                                                output.accept(ItemInit.HOLLOW_CRYSTAL);
-                                                output.accept(ItemInit.AGGREGATED_NOCTIS);
-                                                output.accept(ItemInit.AGGREGATED_LUMINIS);
-                                                output.accept(ItemInit.AGGREGATED_FLUXIA);
-                                                output.accept(ItemInit.CITRINE);
-                                                output.accept(ItemInit.CHROMIUM_INGOT);
-                                                output.accept(ItemInit.REDSTONE_CRYSTAL);
-                                                output.accept(ItemInit.POLISHED_REDSTONE_CRYSTAL);
-                                                output.accept(ItemInit.SULFUR);
-                                                output.accept(ItemInit.ENDER_METAL_INGOT);
-                                                output.accept(ItemInit.NETHER_STAR_BRILLIANCE);
-                                                output.accept(ItemInit.RADIANT_STEEL_INGOT);
-                                                output.accept(ItemInit.FRIGIDITE);
-                                                output.accept(ItemInit.POLISHED_FRIGIDITE);
-                                                output.accept(ItemInit.TRANSLUCIUM);
-                                                output.accept(ItemInit.POLISHED_TRANSLUCIUM);
-                                                output.accept(ItemInit.RESONITE);
-                                                output.accept(ItemInit.POLISHED_RESONITE);
-                                                output.accept(ItemInit.ABYSSITE);
-                                                output.accept(ItemInit.POLISHED_ABYSSITE);
-                                                output.accept(ItemInit.MANA_DEEXCITER_CORE);
-                                                output.accept(ItemInit.ASPECT_COLLECTOR);
-                                                output.accept(ItemInit.BOOTS_FRAME);
-                                                output.accept(ItemInit.MANA_BERRIES);
-                                                output.accept(ItemInit.MANA_PIE);
-                                                output.accept(ItemInit.WEAVER_SPAWN_EGG);
+                                                output.accept(MagitechItems.AETHER_LIFTER);
+                                                output.accept(MagitechItems.FLAMGLIDE_STRIDER);
+                                                output.accept(MagitechItems.MANA_RING);
+                                                output.accept(MagitechItems.GALEVENT_RING);
+                                                output.accept(MagitechItems.CHARGEBIND_RING);
+                                                output.accept(MagitechItems.TORSION_RING);
+                                                output.accept(MagitechItems.UMBRAL_RING);
+                                                output.accept(MagitechItems.DAWN_RING);
+                                                output.accept(MagitechItems.FLUXBOUND_RING);
+                                                output.accept(MagitechItems.ALCHAEFABRIC);
+                                                output.accept(MagitechItems.AEGIS_WEAVE);
+                                                output.accept(MagitechItems.FLUORITE);
+                                                output.accept(MagitechItems.MANA_CHARGED_FLUORITE);
+                                                output.accept(MagitechItems.TOURMALINE);
+                                                output.accept(MagitechItems.EMBER_CRYSTAL);
+                                                output.accept(MagitechItems.GLACE_CRYSTAL);
+                                                output.accept(MagitechItems.SURGE_CRYSTAL);
+                                                output.accept(MagitechItems.PHANTOM_CRYSTAL);
+                                                output.accept(MagitechItems.TREMOR_CRYSTAL);
+                                                output.accept(MagitechItems.MAGIC_CRYSTAL);
+                                                output.accept(MagitechItems.FLOW_CRYSTAL);
+                                                output.accept(MagitechItems.HOLLOW_CRYSTAL);
+                                                output.accept(MagitechItems.AGGREGATED_NOCTIS);
+                                                output.accept(MagitechItems.AGGREGATED_LUMINIS);
+                                                output.accept(MagitechItems.AGGREGATED_FLUXIA);
+                                                output.accept(MagitechItems.CITRINE);
+                                                output.accept(MagitechItems.CHROMIUM_INGOT);
+                                                output.accept(MagitechItems.REDSTONE_CRYSTAL);
+                                                output.accept(
+                                                        MagitechItems.POLISHED_REDSTONE_CRYSTAL);
+                                                output.accept(MagitechItems.SULFUR);
+                                                output.accept(MagitechItems.ENDER_METAL_INGOT);
+                                                output.accept(MagitechItems.NETHER_STAR_BRILLIANCE);
+                                                output.accept(MagitechItems.RADIANT_STEEL_INGOT);
+                                                output.accept(MagitechItems.FRIGIDITE);
+                                                output.accept(MagitechItems.POLISHED_FRIGIDITE);
+                                                output.accept(MagitechItems.TRANSLUCIUM);
+                                                output.accept(MagitechItems.POLISHED_TRANSLUCIUM);
+                                                output.accept(MagitechItems.RESONITE);
+                                                output.accept(MagitechItems.POLISHED_RESONITE);
+                                                output.accept(MagitechItems.ABYSSITE);
+                                                output.accept(MagitechItems.POLISHED_ABYSSITE);
+                                                output.accept(MagitechItems.MANA_DEEXCITER_CORE);
+                                                output.accept(MagitechItems.ASPECT_COLLECTOR);
+                                                output.accept(MagitechItems.BOOTS_FRAME);
+                                                output.accept(MagitechItems.MANA_BERRIES);
+                                                output.accept(MagitechItems.MANA_PIE);
+                                                output.accept(MagitechItems.WEAVER_SPAWN_EGG);
                                             })
                                     .build());
 
@@ -1018,25 +1018,25 @@ public class MagitechCreativeTabs {
                                     .icon(
                                             () ->
                                                     PartToolGenerator.generatePart(
-                                                            ItemInit.LIGHT_BLADE.get(),
+                                                            MagitechItems.LIGHT_BLADE.get(),
                                                             MagitechToolMaterials.FLUORITE))
                                     .withTabsBefore(MAGITECH_TOOL_TAB.getKey())
                                     .displayItems(
                                             (parameters, output) -> {
                                                 List<DeferredItem<PartItem>> partList =
                                                         List.of(
-                                                                ItemInit.LIGHT_BLADE,
-                                                                ItemInit.HEAVY_BLADE,
-                                                                ItemInit.LIGHT_HANDLE,
-                                                                ItemInit.HEAVY_HANDLE,
-                                                                ItemInit.TOOL_BINDING,
-                                                                ItemInit.HANDGUARD,
-                                                                ItemInit.STRIKE_HEAD,
-                                                                ItemInit.SPIKE_HEAD,
-                                                                ItemInit.REINFORCED_STICK,
-                                                                ItemInit.PLATE,
-                                                                ItemInit.CATALYST,
-                                                                ItemInit.CONDUCTOR);
+                                                                MagitechItems.LIGHT_BLADE,
+                                                                MagitechItems.HEAVY_BLADE,
+                                                                MagitechItems.LIGHT_HANDLE,
+                                                                MagitechItems.HEAVY_HANDLE,
+                                                                MagitechItems.TOOL_BINDING,
+                                                                MagitechItems.HANDGUARD,
+                                                                MagitechItems.STRIKE_HEAD,
+                                                                MagitechItems.SPIKE_HEAD,
+                                                                MagitechItems.REINFORCED_STICK,
+                                                                MagitechItems.PLATE,
+                                                                MagitechItems.CATALYST,
+                                                                MagitechItems.CONDUCTOR);
                                                 for (DeferredItem<PartItem> item : partList) {
                                                     MagitechToolMaterials.REGISTER
                                                             .getMaterials()

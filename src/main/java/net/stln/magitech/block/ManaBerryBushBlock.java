@@ -19,9 +19,10 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.init.MagitechDamageTypes;
-import net.stln.magitech.item.ItemInit;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.particle.UnstableSquareParticleEffect;
 
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 public class ManaBerryBushBlock extends SweetBerryBushBlock {
@@ -31,18 +32,26 @@ public class ManaBerryBushBlock extends SweetBerryBushBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        return new ItemStack(ItemInit.MANA_BERRIES.get());
+    public @NotNull ItemStack getCloneItemStack(
+            @NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
+        return MagitechItems.MANA_BERRIES.toStack();
     }
 
     @Override
-    protected InteractionResult useWithoutItem(
-            BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    protected @NotNull InteractionResult useWithoutItem(
+            BlockState state,
+            @NotNull Level level,
+            @NotNull BlockPos pos,
+            @NotNull Player player,
+            @NotNull BlockHitResult hitResult) {
         int i = state.getValue(AGE);
         boolean flag = i == 3;
         if (i > 1) {
             int j = 1 + level.random.nextInt(2);
-            popResource(level, pos, new ItemStack(ItemInit.MANA_BERRIES.get(), j + (flag ? 1 : 0)));
+            popResource(
+                    level,
+                    pos,
+                    new ItemStack(MagitechItems.MANA_BERRIES.get(), j + (flag ? 1 : 0)));
             level.playSound(
                     null,
                     pos,
@@ -50,7 +59,7 @@ public class ManaBerryBushBlock extends SweetBerryBushBlock {
                     SoundSource.BLOCKS,
                     1.0F,
                     0.8F + level.random.nextFloat() * 0.4F);
-            BlockState blockstate = state.setValue(AGE, Integer.valueOf(1));
+            BlockState blockstate = state.setValue(AGE, 1);
             level.setBlock(pos, blockstate, 2);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockstate));
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -60,7 +69,11 @@ public class ManaBerryBushBlock extends SweetBerryBushBlock {
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+    public void animateTick(
+            @NotNull BlockState state,
+            Level level,
+            @NotNull BlockPos pos,
+            @NotNull RandomSource random) {
         if ((long) level.random.nextInt(200) <= level.getGameTime() % 200L) {
             Vec3 vec3 = Vec3.atCenterOf(pos);
             double d0 = vec3.x + Mth.nextDouble(level.random, -1.0, 1.0) * (0.4);
@@ -86,7 +99,11 @@ public class ManaBerryBushBlock extends SweetBerryBushBlock {
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    protected void entityInside(
+            @NotNull BlockState state,
+            @NotNull Level level,
+            @NotNull BlockPos pos,
+            @NotNull Entity entity) {
         if (entity instanceof LivingEntity
                 && entity.getType() != EntityType.FOX
                 && entity.getType() != EntityType.BEE) {

@@ -2,7 +2,7 @@ package net.stln.magitech.item.tool.toolitem;
 
 import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.init.MagitechDataComponents;
-import net.stln.magitech.item.ItemInit;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.item.component.MaterialComponent;
 import net.stln.magitech.item.component.PartMaterialComponent;
 import net.stln.magitech.item.tool.material.ToolMaterialLike;
@@ -18,7 +18,7 @@ public class PartToolGenerator {
 
     public static ItemStack generateDagger(
             ToolMaterialLike handle, ToolMaterialLike blade, ToolMaterialLike handguard) {
-        ItemStack dagger = new ItemStack(ItemInit.DAGGER.get());
+        ItemStack dagger = MagitechItems.DAGGER.toStack();
         dagger.set(
                 MagitechDataComponents.PART_MATERIAL_COMPONENT,
                 new PartMaterialComponent(handle, blade, handguard));
@@ -34,7 +34,7 @@ public class PartToolGenerator {
             ToolMaterialLike blade,
             ToolMaterialLike handguard,
             ToolMaterialLike toolBinding) {
-        ItemStack lightSword = new ItemStack(ItemInit.LIGHT_SWORD.get());
+        ItemStack lightSword = MagitechItems.LIGHT_SWORD.toStack();
         lightSword.set(
                 MagitechDataComponents.PART_MATERIAL_COMPONENT,
                 new PartMaterialComponent(handle, blade, handguard, toolBinding));
@@ -50,7 +50,7 @@ public class PartToolGenerator {
             ToolMaterialLike blade,
             ToolMaterialLike toolBinding,
             ToolMaterialLike handguard) {
-        ItemStack heavySword = new ItemStack(ItemInit.HEAVY_SWORD.get());
+        ItemStack heavySword = MagitechItems.HEAVY_SWORD.toStack();
         heavySword.set(
                 MagitechDataComponents.PART_MATERIAL_COMPONENT,
                 new PartMaterialComponent(handle, blade, toolBinding, handguard));
@@ -63,7 +63,7 @@ public class PartToolGenerator {
 
     public static ItemStack generatePickaxe(
             ToolMaterialLike handle, ToolMaterialLike spikeHead, ToolMaterialLike toolBinding) {
-        ItemStack pickaxe = new ItemStack(ItemInit.PICKAXE.get());
+        ItemStack pickaxe = MagitechItems.PICKAXE.toStack();
         pickaxe.set(
                 MagitechDataComponents.PART_MATERIAL_COMPONENT,
                 new PartMaterialComponent(handle, spikeHead, toolBinding));
@@ -79,7 +79,7 @@ public class PartToolGenerator {
             ToolMaterialLike strikeHead,
             ToolMaterialLike plate,
             ToolMaterialLike toolBinding) {
-        ItemStack heavySword = new ItemStack(ItemInit.HAMMER.get());
+        ItemStack heavySword = MagitechItems.HAMMER.toStack();
         heavySword.set(
                 MagitechDataComponents.PART_MATERIAL_COMPONENT,
                 new PartMaterialComponent(handle, strikeHead, plate, toolBinding));
@@ -95,7 +95,7 @@ public class PartToolGenerator {
             ToolMaterialLike blade,
             ToolMaterialLike strikeHead,
             ToolMaterialLike toolBinding) {
-        ItemStack heavySword = new ItemStack(ItemInit.AXE.get());
+        ItemStack heavySword = MagitechItems.AXE.toStack();
         heavySword.set(
                 MagitechDataComponents.PART_MATERIAL_COMPONENT,
                 new PartMaterialComponent(handle, blade, strikeHead, toolBinding));
@@ -111,7 +111,7 @@ public class PartToolGenerator {
             ToolMaterialLike blade,
             ToolMaterialLike plate,
             ToolMaterialLike toolBinding) {
-        ItemStack heavySword = new ItemStack(ItemInit.SHOVEL.get());
+        ItemStack heavySword = MagitechItems.SHOVEL.toStack();
         heavySword.set(
                 MagitechDataComponents.PART_MATERIAL_COMPONENT,
                 new PartMaterialComponent(handle, blade, plate, toolBinding));
@@ -127,7 +127,7 @@ public class PartToolGenerator {
             ToolMaterialLike handle,
             ToolMaterialLike blade,
             ToolMaterialLike toolBinding) {
-        ItemStack scythe = new ItemStack(ItemInit.SCYTHE.get());
+        ItemStack scythe = MagitechItems.SCYTHE.toStack();
         scythe.set(
                 MagitechDataComponents.PART_MATERIAL_COMPONENT,
                 new PartMaterialComponent(reinforcedStick, handle, blade, toolBinding));
@@ -143,7 +143,7 @@ public class PartToolGenerator {
             ToolMaterialLike lightHandle,
             ToolMaterialLike conductor,
             ToolMaterialLike toolBinding) {
-        ItemStack wand = new ItemStack(ItemInit.WAND.get());
+        ItemStack wand = MagitechItems.WAND.toStack();
         wand.set(
                 MagitechDataComponents.PART_MATERIAL_COMPONENT,
                 new PartMaterialComponent(catalyst, lightHandle, conductor, toolBinding));

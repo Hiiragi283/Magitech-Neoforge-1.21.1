@@ -5,9 +5,9 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.init.MagitechDataComponents;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.init.MagitechSpells;
 import net.stln.magitech.init.MagitechToolMaterials;
-import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.component.*;
 
 import vazkii.patchouli.common.item.PatchouliDataComponents;
@@ -19,7 +19,7 @@ public class ModifyDefaultComponentsEvent {
     public static void modifyDefault(
             net.neoforged.neoforge.event.ModifyDefaultComponentsEvent event) {
         event.modify(
-                ItemInit.DAGGER,
+                MagitechItems.DAGGER,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
@@ -29,18 +29,7 @@ public class ModifyDefaultComponentsEvent {
                                                 MagitechToolMaterials.IRON))
                                 .build());
         event.modify(
-                ItemInit.LIGHT_SWORD,
-                builder ->
-                        builder.set(
-                                        MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
-                                        new PartMaterialComponent(
-                                                MagitechToolMaterials.IRON,
-                                                MagitechToolMaterials.IRON,
-                                                MagitechToolMaterials.IRON,
-                                                MagitechToolMaterials.IRON))
-                                .build());
-        event.modify(
-                ItemInit.HEAVY_SWORD,
+                MagitechItems.LIGHT_SWORD,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
@@ -51,17 +40,7 @@ public class ModifyDefaultComponentsEvent {
                                                 MagitechToolMaterials.IRON))
                                 .build());
         event.modify(
-                ItemInit.PICKAXE,
-                builder ->
-                        builder.set(
-                                        MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
-                                        new PartMaterialComponent(
-                                                MagitechToolMaterials.IRON,
-                                                MagitechToolMaterials.IRON,
-                                                MagitechToolMaterials.IRON))
-                                .build());
-        event.modify(
-                ItemInit.HAMMER,
+                MagitechItems.HEAVY_SWORD,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
@@ -72,7 +51,17 @@ public class ModifyDefaultComponentsEvent {
                                                 MagitechToolMaterials.IRON))
                                 .build());
         event.modify(
-                ItemInit.AXE,
+                MagitechItems.PICKAXE,
+                builder ->
+                        builder.set(
+                                        MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
+                                        new PartMaterialComponent(
+                                                MagitechToolMaterials.IRON,
+                                                MagitechToolMaterials.IRON,
+                                                MagitechToolMaterials.IRON))
+                                .build());
+        event.modify(
+                MagitechItems.HAMMER,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
@@ -83,7 +72,7 @@ public class ModifyDefaultComponentsEvent {
                                                 MagitechToolMaterials.IRON))
                                 .build());
         event.modify(
-                ItemInit.SHOVEL,
+                MagitechItems.AXE,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
@@ -94,7 +83,7 @@ public class ModifyDefaultComponentsEvent {
                                                 MagitechToolMaterials.IRON))
                                 .build());
         event.modify(
-                ItemInit.SCYTHE,
+                MagitechItems.SHOVEL,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
@@ -105,7 +94,18 @@ public class ModifyDefaultComponentsEvent {
                                                 MagitechToolMaterials.IRON))
                                 .build());
         event.modify(
-                ItemInit.WAND,
+                MagitechItems.SCYTHE,
+                builder ->
+                        builder.set(
+                                        MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
+                                        new PartMaterialComponent(
+                                                MagitechToolMaterials.IRON,
+                                                MagitechToolMaterials.IRON,
+                                                MagitechToolMaterials.IRON,
+                                                MagitechToolMaterials.IRON))
+                                .build());
+        event.modify(
+                MagitechItems.WAND,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.PART_MATERIAL_COMPONENT.get(),
@@ -117,7 +117,7 @@ public class ModifyDefaultComponentsEvent {
                                 .build());
 
         event.modify(
-                ItemInit.LIGHT_BLADE,
+                MagitechItems.LIGHT_BLADE,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -127,7 +127,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.HEAVY_BLADE,
+                MagitechItems.HEAVY_BLADE,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -137,7 +137,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.LIGHT_HANDLE,
+                MagitechItems.LIGHT_HANDLE,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -147,7 +147,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.HEAVY_HANDLE,
+                MagitechItems.HEAVY_HANDLE,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -157,7 +157,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.TOOL_BINDING,
+                MagitechItems.TOOL_BINDING,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -167,7 +167,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.HANDGUARD,
+                MagitechItems.HANDGUARD,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -177,7 +177,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.STRIKE_HEAD,
+                MagitechItems.STRIKE_HEAD,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -187,7 +187,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.SPIKE_HEAD,
+                MagitechItems.SPIKE_HEAD,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -197,7 +197,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.REINFORCED_STICK,
+                MagitechItems.REINFORCED_STICK,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -207,7 +207,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.PLATE,
+                MagitechItems.PLATE,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -217,7 +217,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.CATALYST,
+                MagitechItems.CATALYST,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -227,7 +227,7 @@ public class ModifyDefaultComponentsEvent {
                                         UpgradeComponent.EMPTY)
                                 .build());
         event.modify(
-                ItemInit.CONDUCTOR,
+                MagitechItems.CONDUCTOR,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.MATERIAL_COMPONENT.get(),
@@ -239,7 +239,7 @@ public class ModifyDefaultComponentsEvent {
 
         if (ModList.get().isLoaded("patchouli")) {
             event.modify(
-                    ItemInit.GLISTENING_LEXICON,
+                    MagitechItems.GLISTENING_LEXICON,
                     builder ->
                             builder.set(
                                             MagitechDataComponents.SPELL_COMPONENT.get(),
@@ -249,7 +249,7 @@ public class ModifyDefaultComponentsEvent {
                                             Magitech.id("glistening_lexicon"))
                                     .build());
             event.modify(
-                    ItemInit.THE_FIRE_THAT_THINKS,
+                    MagitechItems.THE_FIRE_THAT_THINKS,
                     builder ->
                             builder.set(
                                             MagitechDataComponents.SPELL_COMPONENT.get(),
@@ -259,7 +259,7 @@ public class ModifyDefaultComponentsEvent {
                                             Magitech.id("the_fire_that_thinks"))
                                     .build());
             event.modify(
-                    ItemInit.ARCANE_ENGINEERING_COMPENDIUM,
+                    MagitechItems.ARCANE_ENGINEERING_COMPENDIUM,
                     builder ->
                             builder.set(
                                             MagitechDataComponents.SPELL_COMPONENT.get(),
@@ -267,21 +267,21 @@ public class ModifyDefaultComponentsEvent {
                                     .build());
         } else {
             event.modify(
-                    ItemInit.GLISTENING_LEXICON,
+                    MagitechItems.GLISTENING_LEXICON,
                     builder ->
                             builder.set(
                                             MagitechDataComponents.SPELL_COMPONENT.get(),
                                             SpellComponent.EMPTY)
                                     .build());
             event.modify(
-                    ItemInit.THE_FIRE_THAT_THINKS,
+                    MagitechItems.THE_FIRE_THAT_THINKS,
                     builder ->
                             builder.set(
                                             MagitechDataComponents.SPELL_COMPONENT.get(),
                                             SpellComponent.EMPTY)
                                     .build());
             event.modify(
-                    ItemInit.ARCANE_ENGINEERING_COMPENDIUM,
+                    MagitechItems.ARCANE_ENGINEERING_COMPENDIUM,
                     builder ->
                             builder.set(
                                             MagitechDataComponents.SPELL_COMPONENT.get(),
@@ -289,7 +289,7 @@ public class ModifyDefaultComponentsEvent {
                                     .build());
         }
         event.modify(
-                ItemInit.THREAD_PAGE,
+                MagitechItems.THREAD_PAGE,
                 builder ->
                         builder.set(
                                         MagitechDataComponents.THREAD_PAGE_COMPONENT.get(),

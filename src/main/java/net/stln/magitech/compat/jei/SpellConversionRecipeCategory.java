@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.item.ItemInit;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.recipe.SpellConversionRecipe;
 import net.stln.magitech.util.ComponentHelper;
 
@@ -30,7 +30,7 @@ public class SpellConversionRecipeCategory
             new RecipeType<>(UID, SpellConversionRecipe.class);
 
     public SpellConversionRecipeCategory(IGuiHelper helper) {
-        super(helper, ItemInit.WAND);
+        super(helper, MagitechItems.WAND);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class SpellConversionRecipeCategory
             @NotNull RegistryAccess access) {
         builder.addSlot(RecipeIngredientRole.INPUT, 19, 13).addIngredients(recipe.ingredient());
 
-        ItemStack threadPage = new ItemStack(ItemInit.THREAD_PAGE.get());
+        ItemStack threadPage = new ItemStack(MagitechItems.THREAD_PAGE.get());
         ComponentHelper.setThreadPage(threadPage, recipe.spell());
         builder.addSlot(RecipeIngredientRole.INPUT, 69, 25).addItemStack(threadPage);
 

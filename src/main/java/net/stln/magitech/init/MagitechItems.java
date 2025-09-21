@@ -1,4 +1,4 @@
-package net.stln.magitech.item;
+package net.stln.magitech.init;
 
 import java.util.Map;
 
@@ -16,16 +16,14 @@ import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.init.MagitechAttributes;
-import net.stln.magitech.init.MagitechBlocks;
-import net.stln.magitech.init.MagitechEntities;
+import net.stln.magitech.item.*;
 import net.stln.magitech.item.armor.AetherLifterItem;
 import net.stln.magitech.item.armor.FlamglideStriderItem;
 import net.stln.magitech.item.component.TooltipTextPlaceableItem;
 import net.stln.magitech.item.tool.partitem.*;
 import net.stln.magitech.item.tool.toolitem.*;
 
-public class ItemInit {
+public class MagitechItems {
 
     public static final DeferredRegister.Items ITEMS =
             DeferredRegister.createItems(Magitech.MOD_ID);

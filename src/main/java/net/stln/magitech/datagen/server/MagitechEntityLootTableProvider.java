@@ -13,7 +13,7 @@ import net.minecraft.world.level.storage.loot.predicates.TimeCheck;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.stln.magitech.init.MagitechEntities;
-import net.stln.magitech.item.ItemInit;
+import net.stln.magitech.init.MagitechItems;
 
 public class MagitechEntityLootTableProvider extends EntityLootSubProvider {
 
@@ -34,7 +34,7 @@ public class MagitechEntityLootTableProvider extends EntityLootSubProvider {
                                                         .setPeriod(24000))
                                         .add(
                                                 LootItem.lootTableItem(
-                                                        ItemInit.AGGREGATED_LUMINIS.get()))
+                                                        MagitechItems.AGGREGATED_LUMINIS))
                                         .apply(
                                                 EnchantedCountIncreaseFunction.lootingMultiplier(
                                                         this.registries,
@@ -58,7 +58,7 @@ public class MagitechEntityLootTableProvider extends EntityLootSubProvider {
                                                                         .setPeriod(24000)))
                                         .add(
                                                 LootItem.lootTableItem(
-                                                        ItemInit.AGGREGATED_FLUXIA.get()))
+                                                        MagitechItems.AGGREGATED_FLUXIA))
                                         .apply(
                                                 EnchantedCountIncreaseFunction.lootingMultiplier(
                                                         this.registries,
@@ -71,7 +71,7 @@ public class MagitechEntityLootTableProvider extends EntityLootSubProvider {
                                                         .setPeriod(24000))
                                         .add(
                                                 LootItem.lootTableItem(
-                                                        ItemInit.AGGREGATED_NOCTIS.get()))
+                                                        MagitechItems.AGGREGATED_NOCTIS.get()))
                                         .apply(
                                                 EnchantedCountIncreaseFunction.lootingMultiplier(
                                                         this.registries,

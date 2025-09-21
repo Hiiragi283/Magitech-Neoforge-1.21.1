@@ -11,8 +11,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.init.MagitechDataComponents;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.init.MagitechMenuTypes;
-import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.ThreadBoundItem;
 import net.stln.magitech.item.ThreadPageItem;
 import net.stln.magitech.item.component.SpellComponent;
@@ -73,7 +73,7 @@ public class ThreadboundMenu extends AbstractContainerMenu {
 
         List<Spell> spells = ComponentHelper.getSpells(threadbound).spells();
         for (int i = 0; i < Math.min(spells.size(), container.getContainerSize()); i++) {
-            ItemStack stack = new ItemStack(ItemInit.THREAD_PAGE.get());
+            ItemStack stack = MagitechItems.THREAD_PAGE.toStack();
             stack.set(
                     MagitechDataComponents.THREAD_PAGE_COMPONENT,
                     new ThreadPageComponent(spells.get(i)));

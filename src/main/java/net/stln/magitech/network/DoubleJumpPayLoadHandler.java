@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.stln.magitech.item.ItemInit;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.item.armor.AetherLifterItem;
 import net.stln.magitech.util.ServerHelper;
 
@@ -19,7 +19,7 @@ public class DoubleJumpPayLoadHandler {
             return;
         }
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
-        if (boots.getItem() == ItemInit.AETHER_LIFTER.get()) {
+        if (boots.is(MagitechItems.AETHER_LIFTER)) {
             AetherLifterItem.doubleJump(player, payload.jumpCount(), boots);
         }
     }
@@ -31,7 +31,7 @@ public class DoubleJumpPayLoadHandler {
             return;
         }
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
-        if (boots.getItem() == ItemInit.AETHER_LIFTER.get()) {
+        if (boots.is(MagitechItems.AETHER_LIFTER)) {
             AetherLifterItem.doubleJump(player, payload.jumpCount(), boots);
         }
         ServerHelper.getOptionalServer()

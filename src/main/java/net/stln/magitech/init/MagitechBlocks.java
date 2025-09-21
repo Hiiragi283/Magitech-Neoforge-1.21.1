@@ -21,7 +21,6 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.block.*;
-import net.stln.magitech.item.ItemInit;
 import net.stln.magitech.item.TooltipTextBlockItem;
 import net.stln.magitech.item.TooltipTextSignItem;
 import net.stln.magitech.worldgen.tree.TreeGrowerInit;
@@ -591,7 +590,7 @@ public final class MagitechBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_SIGN));
 
     public static final DeferredItem<BlockItem> CELIFERN_SIGN_ITEM =
-            ItemInit.ITEMS.registerItem(
+            MagitechItems.ITEMS.registerItem(
                     "celifern_sign",
                     properties ->
                             new TooltipTextSignItem(
@@ -612,7 +611,7 @@ public final class MagitechBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_HANGING_SIGN));
 
     public static final DeferredItem<BlockItem> CELIFERN_HANGING_SIGN_ITEM =
-            ItemInit.ITEMS.registerItem(
+            MagitechItems.ITEMS.registerItem(
                     "celifern_hanging_sign",
                     properties ->
                             new TooltipTextSignItem(
@@ -783,7 +782,7 @@ public final class MagitechBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_SIGN));
 
     public static final DeferredItem<BlockItem> CHARCOAL_BIRCH_SIGN_ITEM =
-            ItemInit.ITEMS.registerItem(
+            MagitechItems.ITEMS.registerItem(
                     "charcoal_birch_sign",
                     properties ->
                             new TooltipTextSignItem(
@@ -804,7 +803,7 @@ public final class MagitechBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WALL_HANGING_SIGN));
 
     public static final DeferredItem<BlockItem> CHARCOAL_BIRCH_HANGING_SIGN_ITEM =
-            ItemInit.ITEMS.registerItem(
+            MagitechItems.ITEMS.registerItem(
                     "charcoal_birch_hanging_sign",
                     properties ->
                             new TooltipTextSignItem(
@@ -873,7 +872,7 @@ public final class MagitechBlocks {
 
     private static DeferredItem<BlockItem> registerBlockItem(
             DeferredBlock<?> block, UnaryOperator<Item.Properties> operator) {
-        return ItemInit.ITEMS.registerItem(
+        return MagitechItems.ITEMS.registerItem(
                 block.getId().getPath(),
                 properties -> new TooltipTextBlockItem(block.get(), operator.apply(properties)));
     }

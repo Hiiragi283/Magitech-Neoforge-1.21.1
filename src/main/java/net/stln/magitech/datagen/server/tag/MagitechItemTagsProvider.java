@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.item.ItemInit;
+import net.stln.magitech.init.MagitechItems;
 import net.stln.magitech.tag.MagitechTags;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,20 +33,20 @@ public class MagitechItemTagsProvider extends ItemTagsProvider {
         addMaterials();
 
         tag(ItemTags.FOOT_ARMOR)
-                .add(ItemInit.AETHER_LIFTER.get())
-                .add(ItemInit.FLAMGLIDE_STRIDER.get());
+                .add(MagitechItems.AETHER_LIFTER.get())
+                .add(MagitechItems.FLAMGLIDE_STRIDER.get());
 
-        tag(Tags.Items.FOODS_BERRY).add(ItemInit.MANA_BERRIES.get());
+        tag(Tags.Items.FOODS_BERRY).add(MagitechItems.MANA_BERRIES.get());
 
         // Curios
         tag(CuriosTags.RING)
-                .add(ItemInit.CHARGEBIND_RING.get())
-                .add(ItemInit.DAWN_RING.get())
-                .add(ItemInit.FLUXBOUND_RING.get())
-                .add(ItemInit.GALEVENT_RING.get())
-                .add(ItemInit.MANA_RING.get())
-                .add(ItemInit.TORSION_RING.get())
-                .add(ItemInit.UMBRAL_RING.get());
+                .add(MagitechItems.CHARGEBIND_RING.get())
+                .add(MagitechItems.DAWN_RING.get())
+                .add(MagitechItems.FLUXBOUND_RING.get())
+                .add(MagitechItems.GALEVENT_RING.get())
+                .add(MagitechItems.MANA_RING.get())
+                .add(MagitechItems.TORSION_RING.get())
+                .add(MagitechItems.UMBRAL_RING.get());
     }
 
     private void copy() {
@@ -70,12 +70,12 @@ public class MagitechItemTagsProvider extends ItemTagsProvider {
                 .addTag(MagitechTags.Items.GEMS_SULFUR)
                 .addTag(MagitechTags.Items.GEMS_TOURMALINE);
 
-        tag(MagitechTags.Items.GEMS_CITRINE).add(ItemInit.CITRINE.get());
-        tag(MagitechTags.Items.GEMS_FLUORITE).add(ItemInit.FLUORITE.get());
+        tag(MagitechTags.Items.GEMS_CITRINE).add(MagitechItems.CITRINE.get());
+        tag(MagitechTags.Items.GEMS_FLUORITE).add(MagitechItems.FLUORITE.get());
         tag(MagitechTags.Items.GEMS_MANA_CHARGED_FLUORITE)
-                .add(ItemInit.MANA_CHARGED_FLUORITE.get());
-        tag(MagitechTags.Items.GEMS_REDSTONE_CRYSTAL).add(ItemInit.REDSTONE_CRYSTAL.get());
-        tag(MagitechTags.Items.GEMS_SULFUR).add(ItemInit.SULFUR.get());
-        tag(MagitechTags.Items.GEMS_TOURMALINE).add(ItemInit.TOURMALINE.get());
+                .add(MagitechItems.MANA_CHARGED_FLUORITE.get());
+        tag(MagitechTags.Items.GEMS_REDSTONE_CRYSTAL).add(MagitechItems.REDSTONE_CRYSTAL.get());
+        tag(MagitechTags.Items.GEMS_SULFUR).add(MagitechItems.SULFUR.get());
+        tag(MagitechTags.Items.GEMS_TOURMALINE).add(MagitechItems.TOURMALINE.get());
     }
 }
