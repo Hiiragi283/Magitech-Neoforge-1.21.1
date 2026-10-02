@@ -1,4 +1,4 @@
-package net.stln.magitech.compat.jei;
+package net.stln.magitech.compat.jei.category;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

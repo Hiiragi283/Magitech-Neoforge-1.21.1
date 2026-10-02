@@ -31,7 +31,7 @@ import java.util.Objects;
 
 public class ToolAssemblyRecipe implements Recipe<MultiStackRecipeInput> {
     protected final List<Ingredient> ingredients;
-    protected final ItemStack result;
+    public final ItemStack result; // TODO
     protected final String group;
 
     public ToolAssemblyRecipe(String group, List<Ingredient> ingredients, ItemStack result) {

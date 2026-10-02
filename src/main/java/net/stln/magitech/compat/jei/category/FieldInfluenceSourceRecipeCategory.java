@@ -1,7 +1,6 @@
-package net.stln.magitech.compat.jei;
+package net.stln.magitech.compat.jei.category;
 
 import com.mojang.serialization.Codec;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -15,9 +14,10 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.stln.magitech.content.block.BlockInit;
-import net.stln.magitech.content.item.ItemInit;
 import net.stln.magitech.Magitech;
+import net.stln.magitech.compat.jei.JeiRecipeTypeInit;
+import net.stln.magitech.compat.jei.ingredient.FieldInfluenceIngredient;
+import net.stln.magitech.content.block.BlockInit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,12 +27,12 @@ public class FieldInfluenceSourceRecipeCategory implements IRecipeCategory<Field
     private final IDrawable icon;
 
     public FieldInfluenceSourceRecipeCategory(IGuiHelper helper) {
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, BlockInit.ENVIROMETER.toStack());
+        this.icon = helper.createDrawableItemLike(BlockInit.ENVIROMETER);
     }
 
     @Override
     public @NotNull RecipeType<FieldInfluenceSourceJeiRecipe> getRecipeType() {
-        return RecipeHolderTypeInit.FIELD_INFLUENCE_SOURCE_TYPE;
+        return JeiRecipeTypeInit.FIELD_INFLUENCE_SOURCE_TYPE;
     }
 
     @Override

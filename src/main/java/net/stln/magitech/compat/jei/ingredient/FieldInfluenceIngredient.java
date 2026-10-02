@@ -1,4 +1,4 @@
-package net.stln.magitech.compat.jei;
+package net.stln.magitech.compat.jei.ingredient;
 
 import com.mojang.serialization.Codec;
 import mezz.jei.api.ingredients.IIngredientHelper;

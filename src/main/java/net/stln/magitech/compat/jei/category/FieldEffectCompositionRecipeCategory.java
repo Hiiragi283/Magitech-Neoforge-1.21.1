@@ -1,7 +1,6 @@
-package net.stln.magitech.compat.jei;
+package net.stln.magitech.compat.jei.category;
 
 import com.mojang.serialization.Codec;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -15,11 +14,11 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.MagitechRegistries;
+import net.stln.magitech.compat.jei.JeiRecipeTypeInit;
+import net.stln.magitech.compat.jei.ingredient.FETIngredientHelper;
+import net.stln.magitech.compat.jei.ingredient.FieldInfluenceIngredient;
 import net.stln.magitech.content.block.BlockInit;
-import net.stln.magitech.content.item.ItemInit;
 import net.stln.magitech.core.api.field_effect.FieldInfluence;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,12 +39,12 @@ public class FieldEffectCompositionRecipeCategory implements IRecipeCategory<Fie
     private final IDrawable icon;
 
     public FieldEffectCompositionRecipeCategory(IGuiHelper helper) {
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, BlockInit.ENVIROMETER.toStack());
+        this.icon = helper.createDrawableItemLike(BlockInit.ENVIROMETER);
     }
 
     @Override
     public @NotNull RecipeType<FieldEffectCompositionJeiRecipe> getRecipeType() {
-        return RecipeHolderTypeInit.FIELD_EFFECT_COMPOSITION_TYPE;
+        return JeiRecipeTypeInit.FIELD_EFFECT_COMPOSITION_TYPE;
     }
 
     @Override
@@ -59,7 +58,7 @@ public class FieldEffectCompositionRecipeCategory implements IRecipeCategory<Fie
     }
 
     @Override
-    public Codec<FieldEffectCompositionJeiRecipe> getCodec(ICodecHelper codecHelper, IRecipeManager recipeManager) {
+    public @NotNull Codec<FieldEffectCompositionJeiRecipe> getCodec(@NotNull ICodecHelper codecHelper, @NotNull IRecipeManager recipeManager) {
         return FieldEffectCompositionJeiRecipe.CODEC;
     }
 
@@ -108,11 +107,7 @@ public class FieldEffectCompositionRecipeCategory implements IRecipeCategory<Fie
                     .addIngredients(FieldInfluenceIngredient.TYPE, List.of(FieldInfluenceIngredient.of(influences.get(index))));
         }
 
-        ResourceLocation effectId = MagitechRegistries.FIELD_EFFECT_TYPE.getKey(recipe.fieldEffect());
-        if (effectId != null) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 56, 88)
-                    .addIngredients(FieldEffectIngredient.TYPE, java.util.List.of(FieldEffectIngredient.of(effectId)));
-        }
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 56, 88).addIngredient(FETIngredientHelper.TYPE, recipe.fieldEffect());
     }
 
     private static List<FieldInfluence> expandInfluences(List<FieldInfluence> influences) {
