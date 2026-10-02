@@ -19,12 +19,12 @@ public class RecipeInit {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Magitech.MOD_ID);
     public static final Supplier<RecipeSerializer<PartCuttingRecipe>> PART_CUTTING_SERIALIZER = registerSerializer("part_cutting", PartCuttingRecipe.CODEC, PartCuttingRecipe.STREAM_CODEC);
     public static final Supplier<RecipeSerializer<SpellConversionRecipe>> SPELL_CONVERSION_SERIALIZER = registerSerializer("spell_conversion", SpellConversionRecipe.CODEC, SpellConversionRecipe.STREAM_CODEC);
-    public static final Supplier<ToolAssemblyRecipe.Serializer<ToolAssemblyRecipe>> TOOL_ASSEMBLY_SERIALIZER = registerSerializer("tool_assembly", () -> new ToolAssemblyRecipe.Serializer<>(ToolAssemblyRecipe::new));
-    public static final Supplier<ToolMaterialRecipe.Serializer<ToolMaterialRecipe>> TOOL_MATERIAL_SERIALIZER = registerSerializer("tool_material", () -> new ToolMaterialRecipe.Serializer<>(ToolMaterialRecipe::new));
-    public static final Supplier<RecipeSerializer<ZardiusCrucibleRecipe>> ZARDIUS_CRUCIBLE_SERIALIZER = registerSerializer("zardius_crucible", () -> new ZardiusCrucibleRecipe.Serializer<>(ZardiusCrucibleRecipe::new));
-    public static final Supplier<RecipeSerializer<InfusionRecipe>> INFUSION_SERIALIZER = registerSerializer("infusion", () -> new InfusionRecipe.Serializer<>(InfusionRecipe::new));
-    public static final Supplier<RecipeSerializer<CrushingRecipe>> CRUSHING_SERIALIZER = registerSerializer("crushing", () -> new CrushingRecipe.Serializer<>(CrushingRecipe::new));
-    public static final Supplier<RecipeSerializer<CompressingRecipe>> COMPRESSING_SERIALIZER = registerSerializer("compressing", () -> new CompressingRecipe.Serializer<>(CompressingRecipe::new));
+    public static final Supplier<RecipeSerializer<ToolAssemblyRecipe>> TOOL_ASSEMBLY_SERIALIZER = registerSerializer("tool_assembly", ToolAssemblyRecipe.CODEC, ToolAssemblyRecipe.STREAM_CODEC);
+    public static final Supplier<RecipeSerializer<ToolMaterialRecipe>> TOOL_MATERIAL_SERIALIZER = registerSerializer("tool_material", ToolMaterialRecipe.CODEC, ToolMaterialRecipe.STREAM_CODEC);
+    public static final Supplier<RecipeSerializer<ZardiusCrucibleRecipe>> ZARDIUS_CRUCIBLE_SERIALIZER = registerSerializer("zardius_crucible", ZardiusCrucibleRecipe.CODEC, ZardiusCrucibleRecipe.STREAM_CODEC);
+    public static final Supplier<RecipeSerializer<InfusionRecipe>> INFUSION_SERIALIZER = registerSerializer("infusion", InfusionRecipe.CODEC, InfusionRecipe.STREAM_CODEC);
+    public static final Supplier<RecipeSerializer<CrushingRecipe>> CRUSHING_SERIALIZER = registerSerializer("crushing", CrushingRecipe.CODEC, CrushingRecipe.STREAM_CODEC);
+    public static final Supplier<RecipeSerializer<CompressingRecipe>> COMPRESSING_SERIALIZER = registerSerializer("compressing", CompressingRecipe.CODEC, CompressingRecipe.STREAM_CODEC);
     public static final Supplier<RecipeSerializer<FieldEffectRecipe>> FIELD_EFFECT_SERIALIZER = registerSerializer("field_effect", FieldEffectRecipe.CODEC, FieldEffectRecipe.STREAM_CODEC);
     // Types
     public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, Magitech.MOD_ID);
@@ -37,10 +37,6 @@ public class RecipeInit {
     public static final Supplier<RecipeType<CrushingRecipe>> CRUSHING_TYPE = registerType("crushing");
     public static final Supplier<RecipeType<CompressingRecipe>> COMPRESSING_TYPE = registerType("compressing");
     public static final Supplier<RecipeType<FieldEffectRecipe>> FIELD_EFFECT_TYPE = registerType("field_effect");
-
-    private static <T extends RecipeSerializer<?>> @NotNull Supplier<T> registerSerializer(@NotNull String name, @NotNull Supplier<T> supplier) {
-        return SERIALIZERS.register(name, supplier);
-    }
 
     private static <T extends Recipe<?>> @NotNull Supplier<RecipeSerializer<T>> registerSerializer(@NotNull String name, @NotNull MapCodec<T> codec, @NotNull StreamCodec<RegistryFriendlyByteBuf, T> streamCodec) {
         return SERIALIZERS.register(name, () -> new RecipeSerializer<>() {
@@ -65,6 +61,4 @@ public class RecipeInit {
         SERIALIZERS.register(eventBus);
         TYPES.register(eventBus);
     }
-
-
 }

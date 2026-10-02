@@ -70,7 +70,7 @@ public class ToolAssemblyRecipeCategory extends AbstractMagitechRecipeCategory<T
         }
 
         // 完成品 ItemStack を生成
-        ItemStack resultStack = recipe.result.copy();
+        ItemStack resultStack = recipe.result().copy();
         resultStack.set(ComponentInit.PART_MATERIAL_COMPONENT, new PartMaterialComponent(toolMaterials));
         results.add(resultStack);
 
