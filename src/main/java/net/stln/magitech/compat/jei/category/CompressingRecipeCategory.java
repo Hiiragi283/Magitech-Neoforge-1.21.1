@@ -11,11 +11,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.compat.jei.JeiRecipeTypeInit;
+import net.stln.magitech.compat.jei.MagitechJeiHelper;
 import net.stln.magitech.content.block.BlockInit;
 import net.stln.magitech.content.recipe.CompressingRecipe;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class CompressingRecipeCategory extends AbstractMagitechRecipeCategory<CompressingRecipe> {
     public static final ResourceLocation TEXTURE = Magitech.id("textures/gui/jei/compressing_recipe.png");
@@ -45,7 +44,7 @@ public class CompressingRecipeCategory extends AbstractMagitechRecipeCategory<Co
 
     @Override
     protected void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull CompressingRecipe recipe, @NotNull IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 16, 16).addItemStacks(List.of(recipe.getSizedIngredient().getItems()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 16, 16).addItemStacks(MagitechJeiHelper.getDisplayStacks(recipe.getSizedIngredient()));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 80, 16).addItemStack(recipe.output);
     }

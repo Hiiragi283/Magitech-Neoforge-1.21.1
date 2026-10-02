@@ -9,22 +9,19 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.content.block.BlockInit;
+import net.stln.magitech.compat.jei.MagitechJeiHelper;
 import net.stln.magitech.content.recipe.ZardiusCrucibleRecipe;
 import net.stln.magitech.helper.EnergyFormatter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BookZardiusCrucibleRecipePageRenderer extends BookRecipePageRenderer<ZardiusCrucibleRecipe, BookZardiusCrucibleRecipePage> {
 
@@ -85,13 +82,13 @@ public class BookZardiusCrucibleRecipePageRenderer extends BookRecipePageRendere
 
         SizedFluidIngredient fluidIngredient = value.getFluidIngredient();
 
-        this.parentScreen.renderFluidStacks(guiGraphics, x + 51, y + 15, mouseX, mouseY, List.of(fluidIngredient.getFluids()).stream().map(NeoFluidHolder::new).collect(Collectors.toList()));
+        this.parentScreen.renderFluidStacks(guiGraphics, x + 51, y + 15, mouseX, mouseY, Stream.of(fluidIngredient.getFluids()).map(NeoFluidHolder::new).collect(Collectors.toList()));
 
         for (int i = 0; i < size; i++) {
             int wx = x + 16, wy = y + 52 + i * 17;
             wy -= (size - 1) * 17 / 2; // 中央寄せのためにX座標を調整
 
-            this.parentScreen.renderItemStacks(guiGraphics, wx, wy, mouseX, mouseY, List.of(ingredients.get(i).getItems()));
+            this.parentScreen.renderItemStacks(guiGraphics, wx, wy, mouseX, mouseY, MagitechJeiHelper.getDisplayStacks(ingredients.get(i)));
         }
 
         this.parentScreen.renderFluidStack(guiGraphics, x + 51, y + 87, mouseX, mouseY, new NeoFluidHolder(value.getResultFluid()));

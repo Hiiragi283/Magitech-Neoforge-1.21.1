@@ -46,7 +46,7 @@ public class FieldInfluenceSourceRecipeCategory implements IRecipeCategory<Field
     }
 
     @Override
-    public Codec<FieldInfluenceSourceJeiRecipe> getCodec(ICodecHelper codecHelper, IRecipeManager recipeManager) {
+    public @NotNull Codec<FieldInfluenceSourceJeiRecipe> getCodec(@NotNull ICodecHelper codecHelper, @NotNull IRecipeManager recipeManager) {
         return FieldInfluenceSourceJeiRecipe.CODEC;
     }
 
@@ -78,6 +78,6 @@ public class FieldInfluenceSourceRecipeCategory implements IRecipeCategory<Field
     ) {
         builder.addSlot(RecipeIngredientRole.INPUT, 16, 16).addItemStack(recipe.machine());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 80, 16)
-                .addIngredients(FieldInfluenceIngredient.TYPE, java.util.List.of(FieldInfluenceIngredient.of(recipe.influence())));
+                .addIngredient(FieldInfluenceIngredient.TYPE, FieldInfluenceIngredient.of(recipe.influence()));
     }
 }

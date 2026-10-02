@@ -3,25 +3,20 @@ package net.stln.magitech.compat.modonomicon;
 import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.render.page.BookRecipePageRenderer;
 import com.mojang.blaze3d.systems.RenderSystem;
-import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.content.item.ItemInit;
+import net.stln.magitech.compat.jei.MagitechJeiHelper;
 import net.stln.magitech.content.recipe.InfusionRecipe;
-import net.stln.magitech.helper.ComponentHelper;
 import net.stln.magitech.helper.EnergyFormatter;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class BookInfusionRecipePageRenderer extends BookRecipePageRenderer<InfusionRecipe, BookInfusionRecipePage> {
@@ -81,15 +76,13 @@ public class BookInfusionRecipePageRenderer extends BookRecipePageRenderer<Infus
         int height = (int) (Math.min((double) value.getMana() / GAUGE_MAX_MANA * 72, 72));
         guiGraphics.blit(TEXTURE, x + 88, y + 24 + 72 - height, 120, 0, 16, height, 136, 136);
 
-        SizedIngredient base = value.getBase();
-
-        this.parentScreen.renderItemStacks(guiGraphics, x + 52, y + 16, mouseX, mouseY, List.of(base.getItems()));
+        this.parentScreen.renderItemStacks(guiGraphics, x + 52, y + 16, mouseX, mouseY, MagitechJeiHelper.getDisplayStacks(value.getBase()));
 
         for (int i = 0; i < size; i++) {
             int wx = x + 16, wy = y + 52 + i * 17;
             wy -= (size - 1) * 17 / 2; // 中央寄せのためにX座標を調整
 
-            this.parentScreen.renderItemStacks(guiGraphics, wx, wy, mouseX, mouseY, List.of(ingredients.get(i).getItems()));
+            this.parentScreen.renderItemStacks(guiGraphics, wx, wy, mouseX, mouseY, MagitechJeiHelper.getDisplayStacks(ingredients.get(i)));
         }
 
         this.parentScreen.renderItemStack(guiGraphics, x + 52, y + 104, mouseX, mouseY, value.getResultItem(registries));

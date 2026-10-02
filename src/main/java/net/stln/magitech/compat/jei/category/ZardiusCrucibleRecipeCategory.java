@@ -15,12 +15,12 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.compat.jei.JeiRecipeTypeInit;
+import net.stln.magitech.compat.jei.MagitechJeiHelper;
 import net.stln.magitech.content.block.BlockInit;
 import net.stln.magitech.content.recipe.ZardiusCrucibleRecipe;
 import net.stln.magitech.helper.EnergyFormatter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ZardiusCrucibleRecipeCategory extends AbstractMagitechRecipeCategory<ZardiusCrucibleRecipe> {
@@ -61,26 +61,22 @@ public class ZardiusCrucibleRecipeCategory extends AbstractMagitechRecipeCategor
             int x = 16, y = 68 + i * 17;
             y -= (size - 1) * 17 / 2; // 中央寄せのためにX座標を調整
 
-            builder.addSlot(RecipeIngredientRole.INPUT, x, y).addItemStacks(List.of(ingredients.get(i).getItems()));
+            builder.addSlot(RecipeIngredientRole.INPUT, x, y).addItemStacks(MagitechJeiHelper.getDisplayStacks(ingredients.get(i)));
         }
         builder.addSlot(RecipeIngredientRole.OUTPUT, 56, 136).addItemStack(result);
 
         builder.addSlot(RecipeIngredientRole.INPUT, 56, 32)
-                .addIngredients(NeoForgeTypes.FLUID_STACK, Arrays.stream(recipe.getFluidIngredient().getFluids()).toList()).addRichTooltipCallback((recipeSlotView, tooltip) -> {
-                    recipeSlotView.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).ifPresent(fluid -> {
-                        int amount = fluid.getAmount();
-                        // mB単位で表示
-                        tooltip.add(Component.literal(amount + " mB").withColor(0x808080));
-                    });
-                });
+                .addIngredients(NeoForgeTypes.FLUID_STACK, MagitechJeiHelper.getDisplayStacks(recipe.getFluidIngredient())).addRichTooltipCallback((recipeSlotView, tooltip) -> recipeSlotView.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).ifPresent(fluid -> {
+                    int amount = fluid.getAmount();
+                    // mB単位で表示
+                    tooltip.add(Component.literal(amount + " mB").withColor(0x808080));
+                }));
         builder.addSlot(RecipeIngredientRole.OUTPUT, 56, 104)
-                .addIngredient(NeoForgeTypes.FLUID_STACK, recipe.getResultFluid()).addRichTooltipCallback((recipeSlotView, tooltip) -> {
-                    recipeSlotView.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).ifPresent(fluid -> {
-                        int amount = fluid.getAmount();
-                        // mB単位で表示
-                        tooltip.add(Component.literal(amount + " mB").withColor(0x808080));
-                    });
-                });
+                .addIngredient(NeoForgeTypes.FLUID_STACK, recipe.getResultFluid()).addRichTooltipCallback((recipeSlotView, tooltip) -> recipeSlotView.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).ifPresent(fluid -> {
+                    int amount = fluid.getAmount();
+                    // mB単位で表示
+                    tooltip.add(Component.literal(amount + " mB").withColor(0x808080));
+                }));
     }
 
     @Override

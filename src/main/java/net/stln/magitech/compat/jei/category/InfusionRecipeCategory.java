@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.compat.jei.JeiRecipeTypeInit;
+import net.stln.magitech.compat.jei.MagitechJeiHelper;
 import net.stln.magitech.content.block.BlockInit;
 import net.stln.magitech.content.recipe.InfusionRecipe;
 import net.stln.magitech.helper.EnergyFormatter;
@@ -53,13 +54,13 @@ public class InfusionRecipeCategory extends AbstractMagitechRecipeCategory<Infus
         List<SizedIngredient> ingredients = recipe.getSizedIngredients();
         int size = ingredients.size();
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 56, 32).addItemStacks(List.of(recipe.getBase().getItems()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 56, 32).addItemStacks(MagitechJeiHelper.getDisplayStacks(recipe.getBase()));
 
         for (int i = 0; i < size; i++) {
             int x = 16, y = 68 + i * 17;
             y -= (size - 1) * 17 / 2; // 中央寄せのためにX座標を調整
 
-            builder.addSlot(RecipeIngredientRole.INPUT, x, y).addItemStacks(List.of(ingredients.get(i).getItems()));
+            builder.addSlot(RecipeIngredientRole.INPUT, x, y).addItemStacks(MagitechJeiHelper.getDisplayStacks(ingredients.get(i)));
         }
         builder.addSlot(RecipeIngredientRole.OUTPUT, 56, 120).addItemStack(recipe.output);
     }
