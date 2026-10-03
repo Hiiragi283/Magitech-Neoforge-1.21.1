@@ -3,6 +3,7 @@ package net.stln.magitech.compat.jei;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
@@ -25,7 +26,11 @@ public final class MagitechJeiHelper {
         if (ingredient == null) {
             return List.of();
         } else {
-            return Arrays.stream(ingredient.getFluids()).map(FluidStack::copy).toList();
+            return Arrays.stream(ingredient.getFluids()).filter(stack -> {
+                // 液体流を除外する
+                var fluid = stack.getFluid();
+                return !(fluid instanceof FlowingFluid flowingFluid && flowingFluid.isSource(flowingFluid.defaultFluidState()));
+            }).map(FluidStack::copy).toList();
         }
     }
     

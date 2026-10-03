@@ -2,7 +2,7 @@
   "type": "magitech:zardius_crucible",
   "fluid_ingredient": {
     "amount": 2000,
-    "fluid": "minecraft:water"
+    "tag": "c:water"
   },
   "ingredients": [
     {
@@ -14,7 +14,7 @@
     {
       "count": 1,
       "ingredient": {
-        "item": "minecraft:glowstone"
+        "tag": "c:dusts/glowstone"
       }
     },
     {
@@ -26,13 +26,13 @@
     {
       "count": 1,
       "ingredient": {
-        "item": "minecraft:gold_ingot"
+        "tag": "c:ingots/gold"
       }
     },
     {
       "count": 4,
       "ingredient": {
-        "item": "minecraft:diamond"
+        "tag": "c:gems/diamond"
       }
     },
     {

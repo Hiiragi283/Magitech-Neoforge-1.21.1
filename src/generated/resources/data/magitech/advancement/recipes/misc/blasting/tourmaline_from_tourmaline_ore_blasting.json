@@ -5,7 +5,10 @@
       "conditions": {
         "items": [
           {
-            "items": "magitech:tourmaline_ore"
+            "items": [
+              "magitech:tourmaline_ore",
+              "magitech:deepslate_tourmaline_ore"
+            ]
           }
         ]
       },

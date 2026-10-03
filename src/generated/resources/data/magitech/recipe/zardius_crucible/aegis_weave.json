@@ -2,7 +2,7 @@
   "type": "magitech:zardius_crucible",
   "fluid_ingredient": {
     "amount": 2000,
-    "fluid": "minecraft:lava"
+    "tag": "c:lava"
   },
   "ingredients": [
     {
@@ -14,7 +14,7 @@
     {
       "count": 1,
       "ingredient": {
-        "item": "minecraft:obsidian"
+        "tag": "c:obsidians/normal"
       }
     },
     {
@@ -38,13 +38,13 @@
     {
       "count": 2,
       "ingredient": {
-        "item": "minecraft:gold_ingot"
+        "tag": "c:ingots/gold"
       }
     },
     {
       "count": 1,
       "ingredient": {
-        "item": "minecraft:diamond"
+        "tag": "c:gems/diamond"
       }
     }
   ],

@@ -44,7 +44,7 @@ public class CrushingRecipeCategory extends AbstractMagitechRecipeCategory<Crush
 
     @Override
     protected void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull CrushingRecipe recipe, @NotNull IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 16, 16).addItemStacks(MagitechJeiHelper.getDisplayStacks(recipe.getSizedIngredient()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 16, 16).addItemStacks(MagitechJeiHelper.getDisplayStacks(recipe.getIngredient()));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 80, 16).addItemStack(recipe.output);
     }

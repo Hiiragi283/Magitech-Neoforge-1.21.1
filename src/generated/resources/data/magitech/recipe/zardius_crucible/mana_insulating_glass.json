@@ -2,7 +2,7 @@
   "type": "magitech:zardius_crucible",
   "fluid_ingredient": {
     "amount": 1000,
-    "fluid": "magitech:mana_potion"
+    "tag": "c:mana_potion"
   },
   "ingredients": [
     {
@@ -14,13 +14,13 @@
     {
       "count": 4,
       "ingredient": {
-        "item": "magitech:tourmaline"
+        "tag": "c:gems/tourmaline"
       }
     },
     {
       "count": 4,
       "ingredient": {
-        "item": "minecraft:glass"
+        "tag": "c:glass_blocks"
       }
     }
   ],

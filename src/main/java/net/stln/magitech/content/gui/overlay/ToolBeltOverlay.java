@@ -9,10 +9,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.content.event.KeyMappingEvent;
-import net.stln.magitech.content.item.ItemTagKeys;
 import net.stln.magitech.content.item.component.ComponentInit;
 import net.stln.magitech.content.item.component.ToolBeltComponent;
 import net.stln.magitech.content.network.SwapToolFromBeltPayload;
@@ -133,7 +133,7 @@ public class ToolBeltOverlay extends Screen {
         }
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 
-        return stack.isEmpty() || stack.getTags().anyMatch(tag -> tag.equals(ItemTagKeys.TOOLS));
+        return stack.isEmpty() || stack.getTags().anyMatch(tag -> tag.equals(Tags.Items.TOOLS));
     }
 
     @Override

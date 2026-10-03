@@ -1,9 +1,6 @@
 package net.stln.magitech.datagen;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +13,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
@@ -26,19 +22,22 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.content.block.BlockInit;
 import net.stln.magitech.content.field_effect.effect.FieldEffectInit;
-import net.stln.magitech.content.fluid.FluidContent;
 import net.stln.magitech.content.fluid.FluidInit;
 import net.stln.magitech.content.item.ItemInit;
 import net.stln.magitech.content.item.ItemTagKeys;
 import net.stln.magitech.content.item.component.ComponentInit;
 import net.stln.magitech.content.item.component.MaterialComponent;
-import net.stln.magitech.content.recipe.*;
+import net.stln.magitech.content.recipe.FieldEffectRecipe;
+import net.stln.magitech.content.recipe.InfusionRecipe;
+import net.stln.magitech.content.recipe.PartCuttingRecipe;
+import net.stln.magitech.content.recipe.ToolMaterialRecipe;
+import net.stln.magitech.content.recipe.builder.IngredientCreator;
+import net.stln.magitech.content.recipe.builder.MagitechRecipeBuilders;
 import net.stln.magitech.core.api.field_effect.FieldEffectTypeLike;
 import net.stln.magitech.datagen.recipe.BlockSetRecipeGenerator;
 import net.stln.magitech.datagen.recipe.StoneRecipeGenerator;
 import net.stln.magitech.datagen.recipe.VanillaSimpleRecipeGenerator;
 import net.stln.magitech.datagen.recipe.WoodRecipeGenerator;
-import net.stln.magitech.feature.magic.spell.ISpell;
 import net.stln.magitech.feature.magic.spell.SpellInit;
 import net.stln.magitech.feature.tool.material.MaterialInit;
 import net.stln.magitech.feature.tool.material.ToolMaterialLike;
@@ -48,7 +47,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -56,6 +54,8 @@ public class ModRecipeProvider extends RecipeProvider {
     public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
     }
+
+    private static final IngredientCreator creator = IngredientCreator.INSTANCE;
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput output) {
@@ -84,22 +84,22 @@ public class ModRecipeProvider extends RecipeProvider {
     private static void buildVanilla(RecipeOutput output) {
         shaped(output, ItemInit.ALCHEMICAL_FLASK, 4, keys('#', i(BlockInit.MANA_INSULATING_GLASS_ITEM)), "# #", " # ");
         shaped(output, ItemInit.APPLIED_ARCANE_CIRCUITRY, 1, keys('Z', component(ItemInit.REINFORCED_ROD, MaterialInit.ZINC, false), 'B', i(Items.BOOK), 'N', i(ItemInit.AGGREGATED_NOCTIS), 'L', i(ItemInit.AGGREGATED_LUMINIS), 'F', i(ItemInit.AGGREGATED_FLUXIA)), "ZN ", "LBZ", " FZ");
-        shaped(output, BlockInit.ASSEMBLY_WORKBENCH_ITEM, 1, keys('#', tag(ItemTagKeys.STRIPPED_LOGS), 'S', tag(ItemTagKeys.STONES), 'P', ItemTags.PLANKS), "SSS", "#P#", "SPS");
-        shaped(output, BlockInit.ENGINEERING_WORKBENCH_ITEM, 1, keys('#', tag(ItemTagKeys.STRIPPED_LOGS), 'S', tag(ItemTagKeys.STONES), 'P', ItemTags.PLANKS), "SSS", "#P#", "#S#");
-        shaped(output, BlockInit.REPAIRING_WORKBENCH_ITEM, 1, keys('#', tag(ItemTagKeys.STRIPPED_LOGS), 'S', tag(ItemTagKeys.STONES), 'P', ItemTags.PLANKS), "SSS", "#S#", "SPS");
+        shaped(output, BlockInit.ASSEMBLY_WORKBENCH_ITEM, 1, keys('#', tag(Tags.Items.STRIPPED_LOGS), 'S', tag(Tags.Items.STONES), 'P', ItemTags.PLANKS), "SSS", "#P#", "SPS");
+        shaped(output, BlockInit.ENGINEERING_WORKBENCH_ITEM, 1, keys('#', tag(Tags.Items.STRIPPED_LOGS), 'S', tag(Tags.Items.STONES), 'P', ItemTags.PLANKS), "SSS", "#P#", "#S#");
+        shaped(output, BlockInit.REPAIRING_WORKBENCH_ITEM, 1, keys('#', tag(Tags.Items.STRIPPED_LOGS), 'S', tag(Tags.Items.STONES), 'P', ItemTags.PLANKS), "SSS", "#S#", "SPS");
         shaped(output, BlockInit.MYSTWOOD_ENCLOSURE_ITEM, 4, keys('#', i(BlockInit.MYSTWOOD_PLANKS_ITEM), 'V', i(BlockInit.VESPERITE_ITEM)), " # ", "#V#", " # ");
         shaped(output, BlockInit.FLUXIUM_ENCLOSURE_ITEM, 4, keys('#', i(BlockInit.MYSTWOOD_PLANKS_ITEM), 'F', i(ItemInit.FLUXIUM_INGOT)), " # ", "#F#", " # ");
         shaped(output, BlockInit.COMPRESSOR_ITEM, 1, keys('E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'I', i(ItemInit.FLUXIUM_NUGGET), 'C', i(Items.IRON_BLOCK), 'A', i(BlockInit.ALCHECRYSITE_ITEM)), " A ", "ICI", " E ");
-        shaped(output, BlockInit.CRUSHER_ITEM, 1, keys('A', i(BlockInit.ALCHECRYSITE_ITEM), 'C', tag(ItemTagKeys.INGOTS_IRON), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM)), " A ", "CEC", " A ");
+        shaped(output, BlockInit.CRUSHER_ITEM, 1, keys('A', i(BlockInit.ALCHECRYSITE_ITEM), 'C', tag(Tags.Items.INGOTS_IRON), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM)), " A ", "CEC", " A ");
         shaped(output, BlockInit.HEAT_BURNER_ITEM, 1, keys('I', i(ItemInit.FLUXIUM_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'G', i(ItemInit.EMBER_CRYSTAL), 'A', i(BlockInit.ALCHECRYSITE_ITEM)), "GAG", "IEI", "IAI");
         shaped(output, BlockInit.CHILLER_ITEM, 1, keys('I', i(ItemInit.FLUXIUM_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'G', i(ItemInit.GLACE_CRYSTAL), 'A', i(BlockInit.ALCHECRYSITE_ITEM)), "GAG", "IEI", "IAI");
-        shaped(output, BlockInit.ENVIROMETER_ITEM, 1, keys('C', tag(ItemTagKeys.INGOTS_COPPER), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'R', i(Items.REDSTONE), 'A', i(BlockInit.ALCHECRYSITE_ITEM), 'F', i(ItemInit.HIGH_PURITY_FLUORITE)), " F ", "CAC", "RER");
+        shaped(output, BlockInit.ENVIROMETER_ITEM, 1, keys('C', tag(Tags.Items.INGOTS_COPPER), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'R', i(Items.REDSTONE), 'A', i(BlockInit.ALCHECRYSITE_ITEM), 'F', i(ItemInit.HIGH_PURITY_FLUORITE)), " F ", "CAC", "RER");
         shaped(output, BlockInit.THERMAL_MANA_FURNACE_ITEM, 1, keys('I', i(ItemInit.FLUXIUM_INGOT), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'A', i(BlockInit.ALCHECRYSITE_ITEM), 'F', i(Blocks.BLAST_FURNACE), 'L', i(ItemInit.HIGH_PURITY_FLUORITE)), "ILI", "AFA", "IEI");
         shaped(output, BlockInit.DETANGLER_ITEM, 1, keys('I', i(ItemInit.FLUXIUM_INGOT), 'U', i(ItemInit.FLUXIUM_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'R', i(Items.REDSTONE)), " U ", "UIU", "RER");
         shaped(output, BlockInit.ENTANGLER_ITEM, 1, keys('U', i(ItemInit.FLUXIUM_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'R', i(Items.REDSTONE)), " U ", "U U", "RER");
         shaped(output, BlockInit.INFUSION_ALTAR_ITEM, 1, keys('V', i(BlockInit.VESPERITE_ITEM), 'M', i(BlockInit.MYSTWOOD_PLANKS_ITEM), 'F', tag(ItemTagKeys.GEMS_FLUORITE)), "VFV", " M ", "MVM");
-        shaped(output, BlockInit.ITEM_COLLECTOR_ITEM, 1, keys('N', i(Items.GOLD_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'C', tag(ItemTagKeys.INGOTS_COPPER), 'A', i(BlockInit.ALCHECRYSITE_ITEM), 'F', i(ItemInit.HIGH_PURITY_FLUORITE)), "NFN", "CEC", "NAN");
-        shaped(output, BlockInit.MANA_COLLECTOR_ITEM, 1, keys('N', i(Items.GOLD_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'C', tag(ItemTagKeys.INGOTS_COPPER), 'A', i(BlockInit.ALCHECRYSITE_ITEM), 'F', i(ItemInit.HIGH_PURITY_FLUORITE), 'R', i(Items.REDSTONE)), "NCN", "FEF", "RAR");
+        shaped(output, BlockInit.ITEM_COLLECTOR_ITEM, 1, keys('N', i(Items.GOLD_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'C', tag(Tags.Items.INGOTS_COPPER), 'A', i(BlockInit.ALCHECRYSITE_ITEM), 'F', i(ItemInit.HIGH_PURITY_FLUORITE)), "NFN", "CEC", "NAN");
+        shaped(output, BlockInit.MANA_COLLECTOR_ITEM, 1, keys('N', i(Items.GOLD_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'C', tag(Tags.Items.INGOTS_COPPER), 'A', i(BlockInit.ALCHECRYSITE_ITEM), 'F', i(ItemInit.HIGH_PURITY_FLUORITE), 'R', i(Items.REDSTONE)), "NCN", "FEF", "RAR");
         shaped(output, BlockInit.MANA_JUNCTION_ITEM, 1, keys('N', i(Items.GOLD_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'A', i(BlockInit.ALCHECRYSITE_ITEM), 'F', i(ItemInit.HIGH_PURITY_FLUORITE)), "NAN", "FEF", "NAN");
         shaped(output, BlockInit.MANA_NODE_ITEM, 1, keys('N', i(Items.GOLD_NUGGET), 'V', i(BlockInit.VESPERITE_ITEM), 'M', i(BlockInit.MYSTWOOD_PLANKS_ITEM), 'F', tag(ItemTagKeys.GEMS_FLUORITE)), " V ", "MFM", "VNV");
         shaped(output, BlockInit.MANA_PUMP_ITEM, 1, keys('U', i(ItemInit.FLUXIUM_NUGGET), 'I', i(ItemInit.FLUXIUM_INGOT), 'A', i(BlockInit.ALCHECRYSITE_ITEM), 'F', i(ItemInit.HIGH_PURITY_FLUORITE), 'R', i(Items.REDSTONE), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM)), "UFU", "RER", "IAI");
@@ -108,10 +108,10 @@ public class ModRecipeProvider extends RecipeProvider {
         shaped(output, BlockInit.MANA_STRANDER_ITEM, 1, keys('N', i(Items.GOLD_NUGGET), 'E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'A', i(BlockInit.ALCHECRYSITE_ITEM), '#', i(BlockInit.ENHANCED_MANA_NODE_ITEM), 'R', i(Items.REDSTONE)), " # ", "NEN", "RAR");
         shaped(output, BlockInit.MANA_VESSEL_ITEM, 2, keys('N', i(Items.GOLD_NUGGET), 'E', i(BlockInit.MYSTWOOD_ENCLOSURE_ITEM), 'M', i(BlockInit.MYSTWOOD_PLANKS_ITEM), 'F', i(BlockInit.FLUORITE_BLOCK_ITEM)), "MEM", "NFN", "MEM");
         shaped(output, BlockInit.PEDESTAL_PYLON_ITEM, 1, keys('V', i(BlockInit.VESPERITE_ITEM), 'M', i(BlockInit.MYSTWOOD_PLANKS_ITEM)), "VMV", " M ", "MVM");
-        shaped(output, ItemInit.MATERIALS_AND_TOOLCRAFT_DESIGN, 1, keys('B', i(Items.BOOK), 'S', component(ItemInit.REINFORCED_ROD, MaterialInit.IRON, false), 'P', component(ItemInit.PLATE, MaterialInit.STONE, false), 'L', tag(ItemTagKeys.STRIPPED_LOGS)), "PLP", "SBS", "PLP");
+        shaped(output, ItemInit.MATERIALS_AND_TOOLCRAFT_DESIGN, 1, keys('B', i(Items.BOOK), 'S', component(ItemInit.REINFORCED_ROD, MaterialInit.IRON, false), 'P', component(ItemInit.PLATE, MaterialInit.STONE, false), 'L', tag(Tags.Items.STRIPPED_LOGS)), "PLP", "SBS", "PLP");
         shaped(output, ItemInit.SULFURIC_ACID_BATTERY, 1, keys('C', component(ItemInit.REINFORCED_ROD, MaterialInit.COPPER, true), 'Z', component(ItemInit.REINFORCED_ROD, MaterialInit.ZINC, true), 'S', i(ItemInit.SULFURIC_ACID_FLASK)), "C ", "SZ");
         shaped(output, ItemInit.TOOL_BELT, 1, keys('P', component(ItemInit.PLATE, MaterialInit.IRON, true), 'L', i(Items.LEATHER)), " LP", "L L", "PL ");
-        shaped(output, BlockInit.TOOL_HANGER_ITEM, 2, keys('#', tag(ItemTagKeys.STRIPPED_LOGS), 'S', tag(ItemTagKeys.STONES), 'P', ItemTags.PLANKS), "SPS", "## ", "S  ");
+        shaped(output, BlockInit.TOOL_HANGER_ITEM, 2, keys('#', tag(Tags.Items.STRIPPED_LOGS), 'S', tag(Tags.Items.STONES), 'P', ItemTags.PLANKS), "SPS", "## ", "S  ");
         shaped(output, BlockInit.TRAP_HATCH_ITEM, 2, keys('E', i(BlockInit.FLUXIUM_ENCLOSURE_ITEM), 'I', i(ItemInit.FLUXIUM_INGOT)), "IEI");
         shaped(output, BlockInit.ZARDIUS_CRUCIBLE_ITEM, 1, RecipeCategory.REDSTONE, "wooden_door", keys('#', tag(ItemTagKeys.GEMS_TOURMALINE), 'I', i(Items.IRON_INGOT)), "I I", "I#I", "III");
         shaped(output, BlockInit.FLUORITE_BLOCK_ITEM, 1, keys('#', tag(ItemTagKeys.GEMS_FLUORITE)), "###", "###", "###");
@@ -145,15 +145,11 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private static void buildCustom(RecipeOutput output) {
         cooking(output, ItemInit.CITRINE, i(Items.AMETHYST_SHARD), 0, 200, false, "", "misc");
-        cooking(output, ItemInit.FLUORITE, i(BlockInit.DEEPSLATE_FLUORITE_ORE_ITEM), 1, 200, false, "_from_deepslate_fluorite_ore_smelting", "");
-        cooking(output, ItemInit.FLUORITE, i(BlockInit.FLUORITE_ORE_ITEM), 1, 200, false, "_from_fluorite_ore_smelting", "");
-        cooking(output, ItemInit.TOURMALINE, i(BlockInit.DEEPSLATE_TOURMALINE_ORE_ITEM), 1, 200, false, "_from_deepslate_tourmaline_ore_smelting", "");
-        cooking(output, ItemInit.TOURMALINE, i(BlockInit.TOURMALINE_ORE_ITEM), 1, 200, false, "_from_tourmaline_ore_smelting", "");
+        cooking(output, ItemInit.FLUORITE, i(BlockInit.FLUORITE_ORE_ITEM, BlockInit.DEEPSLATE_FLUORITE_ORE_ITEM), 1, 200, false, "_from_fluorite_ore_smelting", "");
+        cooking(output, ItemInit.TOURMALINE, i(BlockInit.TOURMALINE_ORE_ITEM, BlockInit.DEEPSLATE_TOURMALINE_ORE_ITEM), 1, 200, false, "_from_tourmaline_ore_smelting", "");
         cooking(output, ItemInit.ZINC_INGOT, i(ItemInit.RAW_ZINC), 0, 200, false, "_from_raw_zinc_smelting", "misc");
-        cooking(output, ItemInit.FLUORITE, i(BlockInit.DEEPSLATE_FLUORITE_ORE_ITEM), 1, 100, true, "_from_deepslate_fluorite_ore_blasting", "");
-        cooking(output, ItemInit.FLUORITE, i(BlockInit.FLUORITE_ORE_ITEM), 1, 100, true, "_from_fluorite_ore_blasting", "");
-        cooking(output, ItemInit.TOURMALINE, i(BlockInit.DEEPSLATE_TOURMALINE_ORE_ITEM), 1, 100, true, "_from_deepslate_tourmaline_ore_blasting", "");
-        cooking(output, ItemInit.TOURMALINE, i(BlockInit.TOURMALINE_ORE_ITEM), 1, 100, true, "_from_tourmaline_ore_blasting", "");
+        cooking(output, ItemInit.FLUORITE, i(BlockInit.FLUORITE_ORE_ITEM, BlockInit.DEEPSLATE_FLUORITE_ORE_ITEM), 1, 100, true, "_from_fluorite_ore_blasting", "");
+        cooking(output, ItemInit.TOURMALINE, i(BlockInit.TOURMALINE_ORE_ITEM, BlockInit.DEEPSLATE_TOURMALINE_ORE_ITEM), 1, 100, true, "_from_tourmaline_ore_blasting", "");
         cooking(output, ItemInit.ZINC_INGOT, i(ItemInit.RAW_ZINC), 0, 200, true, "_from_raw_zinc_blasting", "misc");
 
         fieldEffect(output, s(Items.SHROOMLIGHT, 1), FieldEffectInit.FREEZING, stack(Items.OCHRE_FROGLIGHT, 1));
@@ -212,20 +208,31 @@ public class ModRecipeProvider extends RecipeProvider {
         fieldEffect(output, s(Items.OXIDIZED_COPPER_TRAPDOOR, 1), FieldEffectInit.THERMAL_SHOCK, stack(Items.WEATHERED_COPPER_TRAPDOOR, 1));
         fieldEffect(output, s(Items.WEATHERED_COPPER_TRAPDOOR, 1), FieldEffectInit.THERMAL_SHOCK, stack(Items.EXPOSED_COPPER_TRAPDOOR, 1));
         fieldEffect(output, s(Items.EXPOSED_COPPER_TRAPDOOR, 1), FieldEffectInit.THERMAL_SHOCK, stack(Items.COPPER_TRAPDOOR, 1));
-
-        custom(output, "compressing", ItemInit.RESTRAINT_QUARTZ, new CompressingRecipe("", sized(i(ItemInit.RESTRAINT_QUARTZ_DUST), 4), stack(ItemInit.RESTRAINT_QUARTZ, 1)));
-        custom(output, "crushing", Items.AMETHYST_SHARD, new CrushingRecipe("", sized(i(Items.AMETHYST_BLOCK), 1), stack(Items.AMETHYST_SHARD, 4)));
-        custom(output, "crushing", Items.REDSTONE, new CrushingRecipe("", sized(i(ItemInit.REDSTONE_CRYSTAL), 1), stack(Items.REDSTONE, 3)));
-        custom(output, "crushing", ItemInit.RESTRAINT_QUARTZ_DUST, new CrushingRecipe("", sized(i(ItemInit.QUARTZ_PLANT), 4), stack(ItemInit.RESTRAINT_QUARTZ_DUST, 1)));
-        custom(output, "crushing", ItemInit.SULFUR, new CrushingRecipe("", sized(i(BlockInit.SULFUR_BLOCK_ITEM), 1), stack(ItemInit.SULFUR, 3)));
-
+        // Compressing
+        MagitechRecipeBuilders.compressing(ItemInit.RESTRAINT_QUARTZ)
+                .ingredient(creator.sizedItem(ItemInit.RESTRAINT_QUARTZ_DUST, 4))
+                .save(output);
+        // Crushing
+        MagitechRecipeBuilders.crushing(Items.AMETHYST_SHARD, 4)
+                .ingredient(creator.sizedItem(Items.AMETHYST_BLOCK, 1))
+                .save(output);
+        MagitechRecipeBuilders.crushing(Items.REDSTONE, 3)
+                .ingredient(creator.sizedItem(ItemInit.REDSTONE_CRYSTAL))
+                .save(output);
+        MagitechRecipeBuilders.crushing(ItemInit.RESTRAINT_QUARTZ_DUST)
+                .ingredient(creator.sizedItem(ItemInit.QUARTZ_PLANT, 4))
+                .save(output);
+        MagitechRecipeBuilders.crushing(ItemInit.SULFUR, 3)
+                .ingredient(creator.sizedItem(BlockInit.SULFUR_BLOCK_ITEM))
+                .save(output);
+        // Infusion
         infusion(output, ItemInit.SPECTACLES_OF_INSPECTION, "_infuser", i(BlockInit.MANA_INSULATING_GLASS), 2, 500000, 1, s(ItemInit.HIGH_PURITY_FLUORITE, 4), s(Items.LEATHER, 4), s(ItemInit.FLUXIUM_INGOT, 4), s(ItemInit.PHANTOM_CRYSTAL, 1));
         infusion(output, ItemInit.AETHER_LIFTER, i(Items.IRON_BOOTS), 1, 500000, 1, s(ItemInit.HIGH_PURITY_FLUORITE, 16), s(ItemInit.HOLLOW_CRYSTAL, 16), s(ItemInit.PHANTOM_CRYSTAL, 16), s(ItemInit.AEGIS_WEAVE, 8), s(ItemInit.FLUXIUM_INGOT, 16));
         infusion(output, ItemInit.FLAMGLIDE_STRIDER, i(Items.LEATHER_BOOTS), 1, 500000, 1, s(ItemInit.HIGH_PURITY_FLUORITE, 16), s(ItemInit.EMBER_CRYSTAL, 16), s(ItemInit.FLOW_CRYSTAL, 16), s(ItemInit.AEGIS_WEAVE, 8), s(ItemInit.FLUXIUM_INGOT, 16));
         infusion(output, ItemInit.FLUXIUM_INGOT, i(Items.IRON_INGOT), 8, 40000, 16, s(tag(ItemTagKeys.AGGREGATED_STRAND), 1), s(tag(ItemTagKeys.INGOTS_ZINC), 8));
         infusion(output, ItemInit.HIGH_PURITY_FLUORITE, "_infuser", i(ItemInit.MANA_CHARGED_FLUORITE), 2, 10000, 1);
         infusion(output, ItemInit.MANA_CHARGED_FLUORITE, "_infuser", tag(ItemTagKeys.GEMS_FLUORITE), 1, 4000, 1);
-        infusion(output, BlockInit.VESPERITE_ITEM, "_infuser", tag(ItemTagKeys.STONES), 1, 2000, 1);
+        infusion(output, BlockInit.VESPERITE_ITEM, "_infuser", tag(Tags.Items.STONES), 1, 2000, 1);
         infusion(output, BlockInit.MYSTWOOD_LOG_ITEM, "_infuser", tag(ItemTags.LOGS), 1, 2000, 1);
         infusion(output, BlockInit.ALCHECRYSITE_ITEM, "_infuser", i(BlockInit.VESPERITE_ITEM), 8, 10000, 8, s(ItemInit.HIGH_PURITY_FLUORITE, 2), s(tag(ItemTagKeys.GEMS_CITRINE), 1), s(tag(ItemTagKeys.GEMS_TOURMALINE), 2), s(Items.GOLD_NUGGET, 6));
 
@@ -323,42 +330,240 @@ public class ModRecipeProvider extends RecipeProvider {
         material(output, i(Items.STONE), MaterialInit.STONE);
         material(output, i(ItemInit.SULFURIC_ACID_BATTERY), MaterialInit.SULFURIC_ACID_BATTERY);
         material(output, tag(ItemTagKeys.GEMS_TOURMALINE), MaterialInit.TOURMALINE);
-        material(output, tag(ItemTagKeys.STRIPPED_LOGS), MaterialInit.WOOD);
+        material(output, tag(Tags.Items.STRIPPED_LOGS), MaterialInit.WOOD);
         material(output, tag(ItemTagKeys.INGOTS_ZINC), MaterialInit.ZINC);
-
-        spell(output, i(Items.PHANTOM_MEMBRANE), SpellInit.ENERCRUX, ItemInit.ALCHAEFABRIC);
-        spell(output, tag(ItemTagKeys.GEMS_FLUORITE), SpellInit.ENERCRUX, ItemInit.MANA_CHARGED_FLUORITE);
-        spell(output, Ingredient.of(ItemTags.LOGS), SpellInit.ENERCRUX, BlockInit.MYSTWOOD_LOG_ITEM);
-        spell(output, tag(ItemTagKeys.STONES), SpellInit.ENERCRUX, BlockInit.VESPERITE_ITEM);
-
-        custom(output, "tool_assemble", ItemInit.AXE, new ToolAssemblyRecipe("", List.of(i(ItemInit.TOOL_BINDING), i(ItemInit.STRIKE_HEAD), i(ItemInit.LIGHT_BLADE), i(ItemInit.HEAVY_HANDLE)), stack(ItemInit.AXE, 1)));
-        custom(output, "tool_assemble", ItemInit.DAGGER, new ToolAssemblyRecipe("", List.of(i(ItemInit.HANDGUARD), i(ItemInit.LIGHT_BLADE), i(ItemInit.LIGHT_HANDLE)), stack(ItemInit.DAGGER, 1)));
-        custom(output, "tool_assemble", ItemInit.HAMMER, new ToolAssemblyRecipe("", List.of(i(ItemInit.TOOL_BINDING), i(ItemInit.PLATE), i(ItemInit.STRIKE_HEAD), i(ItemInit.HEAVY_HANDLE)), stack(ItemInit.HAMMER, 1)));
-        custom(output, "tool_assemble", ItemInit.HEAVY_SWORD, new ToolAssemblyRecipe("", List.of(i(ItemInit.HANDGUARD), i(ItemInit.TOOL_BINDING), i(ItemInit.HEAVY_BLADE), i(ItemInit.LIGHT_HANDLE)), stack(ItemInit.HEAVY_SWORD, 1)));
-        custom(output, "tool_assemble", ItemInit.LIGHT_SWORD, new ToolAssemblyRecipe("", List.of(i(ItemInit.TOOL_BINDING), i(ItemInit.HANDGUARD), i(ItemInit.LIGHT_BLADE), i(ItemInit.LIGHT_HANDLE)), stack(ItemInit.LIGHT_SWORD, 1)));
-        custom(output, "tool_assemble", ItemInit.PICKAXE, new ToolAssemblyRecipe("", List.of(i(ItemInit.TOOL_BINDING), i(ItemInit.SPIKE_HEAD), i(ItemInit.HEAVY_HANDLE)), stack(ItemInit.PICKAXE, 1)));
-        custom(output, "tool_assemble", ItemInit.SCYTHE, new ToolAssemblyRecipe("", List.of(i(ItemInit.TOOL_BINDING), i(ItemInit.HEAVY_BLADE), i(ItemInit.HEAVY_HANDLE), i(ItemInit.REINFORCED_ROD)), stack(ItemInit.SCYTHE, 1)));
-        custom(output, "tool_assemble", ItemInit.SHOVEL, new ToolAssemblyRecipe("", List.of(i(ItemInit.TOOL_BINDING), i(ItemInit.PLATE), i(ItemInit.LIGHT_BLADE), i(ItemInit.HEAVY_HANDLE)), stack(ItemInit.SHOVEL, 1)));
-        custom(output, "tool_assemble", ItemInit.STAFF, new ToolAssemblyRecipe("", List.of(i(ItemInit.TOOL_BINDING), i(ItemInit.CONDUCTOR), i(ItemInit.HEAVY_HANDLE), i(ItemInit.CATALYST)), stack(ItemInit.STAFF, 1)));
-        custom(output, "tool_assemble", ItemInit.WAND, new ToolAssemblyRecipe("", List.of(i(ItemInit.TOOL_BINDING), i(ItemInit.CONDUCTOR), i(ItemInit.LIGHT_HANDLE), i(ItemInit.CATALYST)), stack(ItemInit.WAND, 1)));
-
-        crucible(output, List.of(s(ItemInit.ALCHAEFABRIC, 1), s(Items.OBSIDIAN, 1), s(ItemInit.GLACE_CRYSTAL, 1), s(ItemInit.PHANTOM_CRYSTAL, 1), s(Items.CHAIN, 1), s(Items.GOLD_INGOT, 2), s(Items.DIAMOND, 1)), Fluids.LAVA, 2000, 100000, stack(ItemInit.AEGIS_WEAVE, 3), Optional.empty());
-        crucible(output, List.of(s(Items.ENDER_PEARL, 1), s(Items.IRON_INGOT, 2), s(Items.GOLD_INGOT, 1), s(Items.COPPER_INGOT, 1), s(ItemInit.HOLLOW_CRYSTAL, 1)), FluidInit.HOLLOW_POTION, 250, 50000, stack(ItemInit.ENDER_METAL_INGOT, 5), Optional.empty());
-        crucible(output, List.of(s(tag(ItemTagKeys.GEMS_MANA_CHARGED_FLUORITE), 2), s(ItemInit.TOURMALINE, 4), s(Items.GLASS, 4)), FluidInit.MANA_POTION, 1000, 10000, stack(BlockInit.MANA_INSULATING_GLASS_ITEM, 6), Optional.empty());
-        crucible(output, List.of(s(ItemInit.MANA_BERRIES, 2)), Fluids.WATER, 1000, 20000, ItemStack.EMPTY, Optional.of(FluidInit.MANA_POTION.toStack(1000)));
-        crucible(output, List.of(s(Items.NETHER_STAR, 1), s(Items.GUNPOWDER, 16), s(ItemInit.EMBER_CRYSTAL, 8), s(ItemInit.MAGIC_CRYSTAL, 8), s(ItemInit.TREMOR_CRYSTAL, 8)), Fluids.LAVA, 2000, 10000, stack(ItemInit.NETHER_STAR_BRILLIANCE, 4), Optional.empty());
-        crucible(output, List.of(s(ItemInit.NETHER_STAR_BRILLIANCE, 1), s(Items.GLOWSTONE, 1), s(Items.GLOW_INK_SAC, 8), s(Items.GOLD_INGOT, 1), s(Items.DIAMOND, 4), s(ItemInit.GLACE_CRYSTAL, 4)), Fluids.WATER, 2000, 40000, stack(ItemInit.RADIANT_STEEL_INGOT, 2), Optional.empty());
-        crucible(output, List.of(s(BlockInit.CELIFERN_PLANKS_ITEM, 1), s(tag(ItemTagKeys.GEMS_SULFUR), 2)), FluidInit.MANA_POTION, 1000, 10000, stack(Items.CHARCOAL, 1), Optional.of(FluidInit.SULFURIC_ACID.toStack(1000)));
-        crucible(output, List.of(s(Items.BOOK, 1), s(Items.GOLD_INGOT, 1), s(tag(ItemTagKeys.GEMS_FLUORITE), 8), s(BlockInit.ALCHECRYSITE_ITEM, 8), s(tag(ItemTagKeys.GEMS_TOURMALINE), 1)), Fluids.WATER, 2000, 40000, stack(ItemInit.THE_FIRE_THAT_THINKS, 1), Optional.empty());
-        crucible(output, List.of(s(ItemInit.AGGREGATED_FLUXIA, 1), s(ItemInit.EMBER_CRYSTAL, 1), s(ItemTags.COALS, 1), s(tag(ItemTagKeys.GEMS_CITRINE), 1)), FluidInit.MANA_POTION, 1000, 10000, ItemStack.EMPTY, Optional.of(FluidInit.EMBER_POTION.toStack(1000)));
-        crucible(output, List.of(s(ItemInit.AGGREGATED_LUMINIS, 1), s(ItemInit.FLOW_CRYSTAL, 1), s(ItemTags.SAPLINGS, 1), s(Items.DRIPSTONE_BLOCK, 1)), FluidInit.MANA_POTION, 1000, 10000, ItemStack.EMPTY, Optional.of(FluidInit.FLOW_POTION.toStack(1000)));
-        crucible(output, List.of(s(ItemInit.AGGREGATED_FLUXIA, 1), s(ItemInit.GLACE_CRYSTAL, 1), s(Items.CALCITE, 1), s(Items.QUARTZ, 1)), FluidInit.MANA_POTION, 1000, 10000, ItemStack.EMPTY, Optional.of(FluidInit.GLACE_POTION.toStack(1000)));
-        crucible(output, List.of(s(ItemInit.AGGREGATED_FLUXIA, 1), s(tag(ItemTagKeys.FOODS_RAW_MEAT), 1), s(ItemInit.MANA_BERRIES, 1)), Fluids.WATER, 1000, 10000, ItemStack.EMPTY, Optional.of(FluidInit.HEALING_POTION.toStack(1000)));
-        crucible(output, List.of(s(ItemInit.AGGREGATED_NOCTIS, 1), s(ItemInit.HOLLOW_CRYSTAL, 1), s(Items.ENDER_PEARL, 1), s(Items.WARPED_FUNGUS, 1)), FluidInit.MANA_POTION, 1000, 10000, ItemStack.EMPTY, Optional.of(FluidInit.HOLLOW_POTION.toStack(1000)));
-        crucible(output, List.of(s(ItemInit.AGGREGATED_FLUXIA, 1), s(ItemInit.MAGIC_CRYSTAL, 1), s(tag(ItemTagKeys.GEMS_AMETHYST), 1), s(tag(ItemTagKeys.INGOTS_GOLD), 1)), FluidInit.MANA_POTION, 1000, 10000, ItemStack.EMPTY, Optional.of(FluidInit.MAGIC_POTION.toStack(1000)));
-        crucible(output, List.of(s(ItemInit.AGGREGATED_LUMINIS, 1), s(ItemInit.PHANTOM_CRYSTAL, 1), s(Items.PHANTOM_MEMBRANE, 1), s(tag(ItemTagKeys.GEMS_FLUORITE), 1)), FluidInit.MANA_POTION, 1000, 10000, ItemStack.EMPTY, Optional.of(FluidInit.PHANTOM_POTION.toStack(1000)));
-        crucible(output, List.of(s(ItemInit.AGGREGATED_LUMINIS, 1), s(ItemInit.SURGE_CRYSTAL, 1), s(tag(ItemTagKeys.INGOTS_COPPER), 1), s(tag(ItemTagKeys.GEMS_REDSTONE_CRYSTAL), 1)), FluidInit.MANA_POTION, 1000, 10000, ItemStack.EMPTY, Optional.of(FluidInit.SURGE_POTION.toStack(1000)));
-        crucible(output, List.of(s(ItemInit.AGGREGATED_NOCTIS, 1), s(ItemInit.TREMOR_CRYSTAL, 1), s(Items.DEEPSLATE, 1), s(tag(ItemTagKeys.GEMS_LAPIS), 1)), FluidInit.MANA_POTION, 1000, 10000, ItemStack.EMPTY, Optional.of(FluidInit.TREMOR_POTION.toStack(1000)));
+        // Spell
+        MagitechRecipeBuilders.spell(ItemInit.ALCHAEFABRIC)
+                .ingredient(creator.item(Items.PHANTOM_MEMBRANE))
+                .spells(SpellInit.ENERCRUX)
+                .save(output);
+        MagitechRecipeBuilders.spell(ItemInit.MANA_CHARGED_FLUORITE)
+                .ingredient(creator.item(ItemTagKeys.GEMS_FLUORITE))
+                .spells(SpellInit.ENERCRUX)
+                .save(output);
+        MagitechRecipeBuilders.spell(BlockInit.MYSTWOOD_LOG_ITEM)
+                .ingredient(creator.item(ItemTags.LOGS))
+                .spells(SpellInit.ENERCRUX)
+                .save(output);
+        MagitechRecipeBuilders.spell(BlockInit.VESPERITE_ITEM)
+                .ingredient(creator.item(Tags.Items.STONES))
+                .spells(SpellInit.ENERCRUX)
+                .save(output);
+        // Tool Assembly
+        MagitechRecipeBuilders.toolAssembly(ItemInit.AXE)
+                .ingredient(creator.item(ItemInit.TOOL_BINDING))
+                .ingredient(creator.item(ItemInit.STRIKE_HEAD))
+                .ingredient(creator.item(ItemInit.LIGHT_BLADE))
+                .ingredient(creator.item(ItemInit.HEAVY_HANDLE))
+                .save(output);
+        MagitechRecipeBuilders.toolAssembly(ItemInit.DAGGER)
+                .ingredient(creator.item(ItemInit.HANDGUARD))
+                .ingredient(creator.item(ItemInit.LIGHT_BLADE))
+                .ingredient(creator.item(ItemInit.LIGHT_HANDLE))
+                .save(output);
+        MagitechRecipeBuilders.toolAssembly(ItemInit.HAMMER)
+                .ingredient(creator.item(ItemInit.TOOL_BINDING))
+                .ingredient(creator.item(ItemInit.PLATE))
+                .ingredient(creator.item(ItemInit.STRIKE_HEAD))
+                .ingredient(creator.item(ItemInit.HEAVY_HANDLE))
+                .save(output);
+        MagitechRecipeBuilders.toolAssembly(ItemInit.HEAVY_SWORD)
+                .ingredient(creator.item(ItemInit.HANDGUARD))
+                .ingredient(creator.item(ItemInit.TOOL_BINDING))
+                .ingredient(creator.item(ItemInit.HEAVY_BLADE))
+                .ingredient(creator.item(ItemInit.LIGHT_HANDLE))
+                .save(output);
+        MagitechRecipeBuilders.toolAssembly(ItemInit.LIGHT_SWORD)
+                .ingredient(creator.item(ItemInit.TOOL_BINDING))
+                .ingredient(creator.item(ItemInit.HANDGUARD))
+                .ingredient(creator.item(ItemInit.LIGHT_BLADE))
+                .ingredient(creator.item(ItemInit.LIGHT_HANDLE))
+                .save(output);
+        MagitechRecipeBuilders.toolAssembly(ItemInit.PICKAXE)
+                .ingredient(creator.item(ItemInit.TOOL_BINDING))
+                .ingredient(creator.item(ItemInit.SPIKE_HEAD))
+                .ingredient(creator.item(ItemInit.HEAVY_HANDLE))
+                .save(output);
+        MagitechRecipeBuilders.toolAssembly(ItemInit.SCYTHE)
+                .ingredient(creator.item(ItemInit.TOOL_BINDING))
+                .ingredient(creator.item(ItemInit.HEAVY_BLADE))
+                .ingredient(creator.item(ItemInit.HEAVY_HANDLE))
+                .ingredient(creator.item(ItemInit.REINFORCED_ROD))
+                .save(output);
+        MagitechRecipeBuilders.toolAssembly(ItemInit.SHOVEL)
+                .ingredient(creator.item(ItemInit.TOOL_BINDING))
+                .ingredient(creator.item(ItemInit.PLATE))
+                .ingredient(creator.item(ItemInit.LIGHT_BLADE))
+                .ingredient(creator.item(ItemInit.HEAVY_HANDLE))
+                .save(output);
+        MagitechRecipeBuilders.toolAssembly(ItemInit.STAFF)
+                .ingredient(creator.item(ItemInit.TOOL_BINDING))
+                .ingredient(creator.item(ItemInit.CONDUCTOR))
+                .ingredient(creator.item(ItemInit.HEAVY_HANDLE))
+                .ingredient(creator.item(ItemInit.CATALYST))
+                .save(output);
+        MagitechRecipeBuilders.toolAssembly(ItemInit.WAND)
+                .ingredient(creator.item(ItemInit.TOOL_BINDING))
+                .ingredient(creator.item(ItemInit.CONDUCTOR))
+                .ingredient(creator.item(ItemInit.LIGHT_HANDLE))
+                .ingredient(creator.item(ItemInit.CATALYST))
+                .save(output);
+        // Crucible
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.ALCHAEFABRIC))
+                .ingredient(creator.sizedItem(Tags.Items.OBSIDIANS_NORMAL))
+                .ingredient(creator.sizedItem(ItemInit.GLACE_CRYSTAL))
+                .ingredient(creator.sizedItem(ItemInit.PHANTOM_CRYSTAL))
+                .ingredient(creator.sizedItem(Items.CHAIN))
+                .ingredient(creator.sizedItem(Tags.Items.INGOTS_GOLD, 2))
+                .ingredient(creator.sizedItem(Tags.Items.GEMS_DIAMOND))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.LAVA, 2000))
+                .mana(100000)
+                .result(ItemInit.AEGIS_WEAVE, 3)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(Tags.Items.ENDER_PEARLS))
+                .ingredient(creator.sizedItem(Tags.Items.INGOTS_IRON, 2))
+                .ingredient(creator.sizedItem(Tags.Items.INGOTS_GOLD))
+                .ingredient(creator.sizedItem(Tags.Items.INGOTS_COPPER))
+                .ingredient(creator.sizedItem(ItemInit.HOLLOW_CRYSTAL))
+                .fluidIngredient(creator.sizedFluid(FluidInit.HOLLOW_POTION, 250))
+                .mana(50000)
+                .result(ItemInit.ENDER_METAL_INGOT, 5)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemTagKeys.GEMS_MANA_CHARGED_FLUORITE, 2))
+                .ingredient(creator.sizedItem(ItemTagKeys.GEMS_TOURMALINE, 4))
+                .ingredient(creator.sizedItem(Tags.Items.GLASS_BLOCKS, 4))
+                .fluidIngredient(creator.sizedFluid(FluidInit.MANA_POTION, 1000))
+                .mana(10000)
+                .result(BlockInit.MANA_INSULATING_GLASS_ITEM, 6)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.MANA_BERRIES, 2))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.WATER, 1000))
+                .mana(20000)
+                .result(FluidInit.MANA_POTION, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(Tags.Items.NETHER_STARS))
+                .ingredient(creator.sizedItem(Tags.Items.GUNPOWDERS, 16))
+                .ingredient(creator.sizedItem(ItemInit.EMBER_CRYSTAL, 8))
+                .ingredient(creator.sizedItem(ItemInit.MAGIC_CRYSTAL, 8))
+                .ingredient(creator.sizedItem(ItemInit.TREMOR_CRYSTAL, 8))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.LAVA, 2000))
+                .mana(10000)
+                .result(ItemInit.NETHER_STAR_BRILLIANCE, 4)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.NETHER_STAR_BRILLIANCE))
+                .ingredient(creator.sizedItem(Tags.Items.DUSTS_GLOWSTONE))
+                .ingredient(creator.sizedItem(Items.GLOW_INK_SAC, 8))
+                .ingredient(creator.sizedItem(Tags.Items.INGOTS_GOLD))
+                .ingredient(creator.sizedItem(Tags.Items.GEMS_DIAMOND, 4))
+                .ingredient(creator.sizedItem(ItemInit.GLACE_CRYSTAL, 4))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.WATER, 2000))
+                .mana(40000)
+                .result(ItemInit.RADIANT_STEEL_INGOT, 2)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(BlockInit.CELIFERN_PLANKS_ITEM))
+                .ingredient(creator.sizedItem(ItemTagKeys.GEMS_SULFUR, 2))
+                .fluidIngredient(creator.sizedFluid(FluidInit.MANA_POTION, 1000))
+                .mana(10000)
+                .result(Items.CHARCOAL)
+                .result(FluidInit.SULFURIC_ACID, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(Items.BOOK))
+                .ingredient(creator.sizedItem(Tags.Items.INGOTS_GOLD))
+                .ingredient(creator.sizedItem(ItemTagKeys.GEMS_FLUORITE, 8))
+                .ingredient(creator.sizedItem(BlockInit.ALCHECRYSITE_ITEM, 8))
+                .ingredient(creator.sizedItem(ItemTagKeys.GEMS_TOURMALINE))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.WATER, 2000))
+                .mana(40000)
+                .result(ItemInit.THE_FIRE_THAT_THINKS)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.AGGREGATED_FLUXIA))
+                .ingredient(creator.sizedItem(ItemInit.EMBER_CRYSTAL))
+                .ingredient(creator.sizedItem(ItemTags.COALS))
+                .ingredient(creator.sizedItem(ItemTagKeys.GEMS_CITRINE))
+                .fluidIngredient(creator.sizedFluid(FluidInit.MANA_POTION, 1000))
+                .mana(10000)
+                .result(FluidInit.EMBER_POTION, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.AGGREGATED_LUMINIS))
+                .ingredient(creator.sizedItem(ItemInit.FLOW_CRYSTAL))
+                .ingredient(creator.sizedItem(ItemTags.SAPLINGS))
+                .ingredient(creator.sizedItem(Items.DRIPSTONE_BLOCK))
+                .fluidIngredient(creator.sizedFluid(FluidInit.MANA_POTION, 1000))
+                .mana(10000)
+                .result(FluidInit.FLOW_POTION, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.AGGREGATED_FLUXIA))
+                .ingredient(creator.sizedItem(ItemInit.GLACE_CRYSTAL))
+                .ingredient(creator.sizedItem(Items.CALCITE))
+                .ingredient(creator.sizedItem(Tags.Items.GEMS_QUARTZ))
+                .fluidIngredient(creator.sizedFluid(FluidInit.MANA_POTION, 1000))
+                .mana(10000)
+                .result(FluidInit.GLACE_POTION, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.AGGREGATED_FLUXIA))
+                .ingredient(creator.sizedItem(Tags.Items.FOODS_RAW_MEAT))
+                .ingredient(creator.sizedItem(ItemInit.MANA_BERRIES))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.WATER, 1000))
+                .mana(10000)
+                .result(FluidInit.HEALING_POTION, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.AGGREGATED_NOCTIS))
+                .ingredient(creator.sizedItem(ItemInit.HOLLOW_CRYSTAL))
+                .ingredient(creator.sizedItem(Tags.Items.ENDER_PEARLS))
+                .ingredient(creator.sizedItem(Items.WARPED_FUNGUS))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.WATER, 1000))
+                .mana(10000)
+                .result(FluidInit.HOLLOW_POTION, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.AGGREGATED_FLUXIA))
+                .ingredient(creator.sizedItem(ItemInit.MAGIC_CRYSTAL))
+                .ingredient(creator.sizedItem(Tags.Items.GEMS_AMETHYST))
+                .ingredient(creator.sizedItem(Tags.Items.INGOTS_GOLD))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.WATER, 1000))
+                .mana(10000)
+                .result(FluidInit.MAGIC_POTION, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.AGGREGATED_LUMINIS))
+                .ingredient(creator.sizedItem(ItemInit.PHANTOM_CRYSTAL))
+                .ingredient(creator.sizedItem(Items.PHANTOM_MEMBRANE))
+                .ingredient(creator.sizedItem(ItemTagKeys.GEMS_FLUORITE))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.WATER, 1000))
+                .mana(10000)
+                .result(FluidInit.PHANTOM_POTION, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.AGGREGATED_LUMINIS))
+                .ingredient(creator.sizedItem(ItemInit.SURGE_CRYSTAL))
+                .ingredient(creator.sizedItem(Tags.Items.INGOTS_COPPER))
+                .ingredient(creator.sizedItem(ItemTagKeys.GEMS_REDSTONE_CRYSTAL))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.WATER, 1000))
+                .mana(10000)
+                .result(FluidInit.SURGE_POTION, 1000)
+                .save(output);
+        MagitechRecipeBuilders.crucible()
+                .ingredient(creator.sizedItem(ItemInit.AGGREGATED_NOCTIS))
+                .ingredient(creator.sizedItem(ItemInit.TREMOR_CRYSTAL))
+                .ingredient(creator.sizedItem(Items.DEEPSLATE))
+                .ingredient(creator.sizedItem(Tags.Items.GEMS_LAPIS))
+                .fluidIngredient(creator.sizedFluid(Tags.Fluids.WATER, 1000))
+                .mana(10000)
+                .result(FluidInit.TREMOR_POTION, 1000)
+                .save(output);
     }
 
     private static void shaped(RecipeOutput output, ItemLike result, int count, Map<Character, Ingredient> keys, String... pattern) {
@@ -418,31 +623,11 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private static void infusion(RecipeOutput output, String folder, ItemLike result, String suffix, Ingredient base, int baseCount, long mana, int resultCount, SizedIngredient... ingredients) {
-        custom(output, recipeId(folder, result, suffix), new InfusionRecipe("", sized(base, baseCount), List.of(ingredients), mana, stack(result, resultCount)));
+        custom(output, recipeId(folder, result, suffix), new InfusionRecipe("", creator.sizedItem(base, baseCount), List.of(ingredients), mana, stack(result, resultCount)));
     }
 
     private static void material(RecipeOutput output, Ingredient ingredient, DeferredToolMaterial<?> material) {
         custom(output, Magitech.id("part_material/" + material.getId().getPath() + "_material"), new ToolMaterialRecipe("", ingredient, material.get()));
-    }
-
-    private static void spell(RecipeOutput output, Ingredient ingredient, Holder<ISpell> spell, ItemLike result) {
-        spell(output, ingredient, HolderSet.direct(spell), result);
-    }
-
-    private static void spell(RecipeOutput output, Ingredient ingredient, HolderSet<ISpell> spells, ItemLike result) {
-        custom(output, "spell_conversion", result, new SpellConversionRecipe("", ingredient, spells, stack(result, 1)));
-    }
-
-    private static void crucible(RecipeOutput output, List<SizedIngredient> ingredients, FluidContent fluid, int amount, long mana, ItemStack result, Optional<FluidStack> fluidResult) {
-        Recipe<?> recipe = new ZardiusCrucibleRecipe("", ingredients, SizedFluidIngredient.of(fluid.get(), amount), mana, result.isEmpty() ? Optional.empty() : Optional.of(result), fluidResult);
-        ResourceLocation id = fluidResult.map(stack -> recipeId("zardius_crucible", stack.getFluid())).orElseGet(() -> recipeId("zardius_crucible", result.getItem()));
-        custom(output, id, recipe);
-    }
-    
-    private static void crucible(RecipeOutput output, List<SizedIngredient> ingredients, Fluid fluid, int amount, long mana, ItemStack result, Optional<FluidStack> fluidResult) {
-        Recipe<?> recipe = new ZardiusCrucibleRecipe("", ingredients, SizedFluidIngredient.of(fluid, amount), mana, result.isEmpty() ? Optional.empty() : Optional.of(result), fluidResult);
-        ResourceLocation id = fluidResult.map(stack -> recipeId("zardius_crucible", stack.getFluid())).orElseGet(() -> recipeId("zardius_crucible", result.getItem()));
-        custom(output, id, recipe);
     }
 
     private static void fieldEffect(RecipeOutput output, SizedIngredient ingredient, FieldEffectTypeLike fieldEffect, ItemStack... results) {
@@ -465,23 +650,23 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private static ResourceLocation fieldEffectId(ItemStack input, FluidStack result) {
-        return Magitech.id("field_effect/" + itemId(input) + "_to_" + BuiltInRegistries.FLUID.getKey(result.getFluid()).getPath());
+        return Magitech.id("field_effect/" + itemId(input) + "_to_" + fluidId(result));
     }
 
     private static ResourceLocation fieldEffectId(FluidStack input, ItemStack... results) {
-        return Magitech.id("field_effect/" + BuiltInRegistries.FLUID.getKey(input.getFluid()).getPath() + "_to_" + resultId(results));
+        return Magitech.id("field_effect/" + fluidId(input) + "_to_" + resultId(results));
     }
 
     private static String itemId(ItemStack stack) {
-        return BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
+        return stack.getItemHolder().unwrapKey().orElseThrow().location().getPath();
+    }
+
+    private static String fluidId(FluidStack stack) {
+        return stack.getFluidHolder().unwrapKey().orElseThrow().location().getPath();
     }
 
     private static String resultId(ItemStack... results) {
         return Arrays.stream(results).map(ModRecipeProvider::itemId).distinct().collect(Collectors.joining("_and_"));
-    }
-
-    private static void custom(RecipeOutput output, String folder, ItemLike result, Recipe<?> recipe) {
-        custom(output, recipeId(folder, result), recipe);
     }
 
     private static void custom(RecipeOutput output, String folder, ItemLike result, String suffix, Recipe<?> recipe) {
@@ -500,32 +685,28 @@ public class ModRecipeProvider extends RecipeProvider {
         return recipeId(folder, result).withSuffix(suffix);
     }
 
-    private static ResourceLocation recipeId(String folder, Fluid result) {
-        return Magitech.id(folder + "/" + BuiltInRegistries.FLUID.getKey(result).getPath());
+    private static Ingredient i(ItemLike item) {
+        return creator.item(item);
     }
 
-    private static Ingredient i(ItemLike item) {
-        return Ingredient.of(item);
+    private static Ingredient i(ItemLike... items) {
+        return creator.item(items);
     }
 
     private static Ingredient tag(TagKey<Item> tag) {
-        return Ingredient.of(tag);
+        return creator.item(tag);
     }
 
     private static SizedIngredient s(ItemLike item, int count) {
-        return new SizedIngredient(i(item), count);
+        return creator.sizedItem(item, count);
     }
 
     private static SizedIngredient s(Ingredient ingredient, int count) {
-        return new SizedIngredient(ingredient, count);
+        return creator.sizedItem(ingredient, count);
     }
 
     private static SizedIngredient s(TagKey<Item> tag, int count) {
-        return s(tag(tag), count);
-    }
-
-    private static SizedIngredient sized(Ingredient ingredient, int count) {
-        return new SizedIngredient(ingredient, count);
+        return creator.sizedItem(tag, count);
     }
 
     private static Ingredient component(ItemLike item, ToolMaterialLike material, boolean strict) {
@@ -534,10 +715,6 @@ public class ModRecipeProvider extends RecipeProvider {
 
     private static ItemStack stack(ItemLike item, int count) {
         return new ItemStack(item, count);
-    }
-
-    private static ItemLike externalItem(String namespace, String path) {
-        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(namespace, path));
     }
 
     private static Map<Character, Ingredient> keys(Object... values) {

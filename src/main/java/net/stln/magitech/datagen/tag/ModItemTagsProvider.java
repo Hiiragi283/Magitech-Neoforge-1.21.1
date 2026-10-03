@@ -54,7 +54,7 @@ public class ModItemTagsProvider extends HolderTagsProvider<Item> {
         tag(ItemTagKeys.THREAD_BOUND).add(ItemInit.GLISTENING_LEXICON, ItemInit.MATERIALS_AND_TOOLCRAFT_DESIGN, ItemInit.THE_FIRE_THAT_THINKS, ItemInit.APPLIED_ARCANE_CIRCUITRY, ItemInit.ARCANE_ENGINEERING_COMPENDIUM);
         tag(ItemTagKeys.SYNTHESISED_TOOL).add(ItemInit.DAGGER, ItemInit.LIGHT_SWORD, ItemInit.HEAVY_SWORD, ItemInit.PICKAXE, ItemInit.HAMMER, ItemInit.AXE, ItemInit.SHOVEL, ItemInit.SCYTHE, ItemInit.WAND, ItemInit.STAFF);
         tag(ItemTagKeys.REPAIR_COMPONENT).add(Items.IRON_NUGGET.builtInRegistryHolder());
-        tag(ItemTagKeys.UPGRADE_MATERIAL_0).addTag(ItemTagKeys.STRIPPED_LOGS);
+        tag(ItemTagKeys.UPGRADE_MATERIAL_0).addTag(Tags.Items.STRIPPED_LOGS);
         tag(ItemTagKeys.UPGRADE_MATERIAL_5).add(Items.COPPER_INGOT.builtInRegistryHolder());
         tag(ItemTagKeys.UPGRADE_MATERIAL_10).add(Items.IRON_INGOT.builtInRegistryHolder());
         tag(ItemTagKeys.UPGRADE_MATERIAL_15).add(Items.DIAMOND.builtInRegistryHolder());
@@ -73,28 +73,28 @@ public class ModItemTagsProvider extends HolderTagsProvider<Item> {
         tag(ItemTagKeys.NUGGETS_FLUXIUM).add(ItemInit.FLUXIUM_NUGGET);
         tag(ItemTagKeys.INGOTS_ENDER_METAL).add(ItemInit.ENDER_METAL_INGOT);
         tag(ItemTagKeys.RAW_MATERIALS_ZINC).add(ItemInit.RAW_ZINC);
-        tag(ItemTagKeys.ORES).add(BlockInit.FLUORITE_ORE_ITEM, BlockInit.DEEPSLATE_FLUORITE_ORE_ITEM, BlockInit.TOURMALINE_ORE_ITEM, BlockInit.DEEPSLATE_TOURMALINE_ORE_ITEM, BlockInit.ZINC_ORE_ITEM, BlockInit.DEEPSLATE_ZINC_ORE_ITEM);
+        tag(Tags.Items.ORES).add(BlockInit.FLUORITE_ORE_ITEM, BlockInit.DEEPSLATE_FLUORITE_ORE_ITEM, BlockInit.TOURMALINE_ORE_ITEM, BlockInit.DEEPSLATE_TOURMALINE_ORE_ITEM, BlockInit.ZINC_ORE_ITEM, BlockInit.DEEPSLATE_ZINC_ORE_ITEM);
         tag(ItemTagKeys.AGGREGATED_STRAND).add(ItemInit.AGGREGATED_LUMINIS, ItemInit.AGGREGATED_NOCTIS, ItemInit.AGGREGATED_FLUXIA);
         tag(ItemTagKeys.TOOL_PART).add(ItemInit.LIGHT_BLADE, ItemInit.HEAVY_BLADE, ItemInit.LIGHT_HANDLE, ItemInit.HEAVY_HANDLE, ItemInit.TOOL_BINDING, ItemInit.HANDGUARD, ItemInit.STRIKE_HEAD, ItemInit.SPIKE_HEAD, ItemInit.REINFORCED_ROD, ItemInit.PLATE, ItemInit.CATALYST, ItemInit.CONDUCTOR);
-        tag(ItemTagKeys.ASPECT_CRYSTAL_BASE).addTag(ItemTagKeys.GEMS_TOURMALINE).addTag(ItemTagKeys.GEMS_QUARTZ).add(ItemInit.RESTRAINT_QUARTZ);
-        tag(ItemTagKeys.TOOLS).addTag(ItemTagKeys.SYNTHESISED_TOOL);
+        tag(ItemTagKeys.ASPECT_CRYSTAL_BASE).addTag(ItemTagKeys.GEMS_TOURMALINE).addTag(Tags.Items.GEMS_QUARTZ).add(ItemInit.RESTRAINT_QUARTZ);
+        tag(Tags.Items.TOOLS).addTag(ItemTagKeys.SYNTHESISED_TOOL);
         tag(ItemTagKeys.FOODS_BERRIES).add(ItemInit.MANA_BERRIES);
-        tag(ItemTagKeys.FOODS_BERRY).add(ItemInit.MANA_BERRIES);
-        tag(ItemTagKeys.ARMORS).add(ItemInit.AETHER_LIFTER, ItemInit.FLAMGLIDE_STRIDER);
-        tag(ItemTagKeys.ENCHANTABLES).add(ItemInit.AETHER_LIFTER, ItemInit.FLAMGLIDE_STRIDER);
-        tag(ItemTagKeys.GEMS).addTag(ItemTagKeys.GEMS_FLUORITE).addTag(ItemTagKeys.GEMS_TOURMALINE).addTag(ItemTagKeys.GEMS_MANA_CHARGED_FLUORITE).addTag(ItemTagKeys.GEMS_CITRINE).addTag(ItemTagKeys.GEMS_REDSTONE_CRYSTAL).addTag(ItemTagKeys.GEMS_SULFUR);
-        tag(ItemTagKeys.INGOTS).add(ItemInit.ZINC_INGOT, ItemInit.FLUXIUM_INGOT, ItemInit.ENDER_METAL_INGOT);
-        tag(ItemTagKeys.NUGGETS).add(ItemInit.FLUXIUM_NUGGET);
+        tag(Tags.Items.FOODS_BERRY).add(ItemInit.MANA_BERRIES);
+        tag(Tags.Items.ARMORS).add(ItemInit.AETHER_LIFTER, ItemInit.FLAMGLIDE_STRIDER);
+        tag(Tags.Items.ENCHANTABLES).add(ItemInit.AETHER_LIFTER, ItemInit.FLAMGLIDE_STRIDER);
+        tag(Tags.Items.GEMS).addTag(ItemTagKeys.GEMS_FLUORITE).addTag(ItemTagKeys.GEMS_TOURMALINE).addTag(ItemTagKeys.GEMS_MANA_CHARGED_FLUORITE).addTag(ItemTagKeys.GEMS_CITRINE).addTag(ItemTagKeys.GEMS_REDSTONE_CRYSTAL).addTag(ItemTagKeys.GEMS_SULFUR);
+        tag(Tags.Items.INGOTS).add(ItemInit.ZINC_INGOT, ItemInit.FLUXIUM_INGOT, ItemInit.ENDER_METAL_INGOT);
+        tag(Tags.Items.NUGGETS).add(ItemInit.FLUXIUM_NUGGET);
         tag(ItemTagKeys.ORES_FLUORITE).add(BlockInit.FLUORITE_ORE_ITEM, BlockInit.DEEPSLATE_FLUORITE_ORE_ITEM);
         tag(ItemTagKeys.ORES_TOURMALINE).add(BlockInit.TOURMALINE_ORE_ITEM, BlockInit.DEEPSLATE_TOURMALINE_ORE_ITEM);
         tag(ItemTagKeys.ORES_ZINC).add(BlockInit.ZINC_ORE_ITEM, BlockInit.DEEPSLATE_ZINC_ORE_ITEM);
-        tag(ItemTagKeys.RAW_MATERIALS).add(ItemInit.RAW_ZINC);
+        tag(Tags.Items.RAW_MATERIALS).add(ItemInit.RAW_ZINC);
         tag(ItemTagKeys.STORAGE_BLOCKS_RAW_ZINC).add(BlockInit.RAW_ZINC_BLOCK_ITEM);
-        tag(ItemTagKeys.STORAGE_BLOCKS).add(BlockInit.RAW_ZINC_BLOCK_ITEM, BlockInit.ZINC_BLOCK_ITEM, BlockInit.FLUXIUM_BLOCK_ITEM);
-        tag(ItemTagKeys.STRIPPED_LOGS).add(BlockInit.STRIPPED_CELIFERN_LOG_ITEM, BlockInit.STRIPPED_CHARCOAL_BIRCH_LOG_ITEM, BlockInit.STRIPPED_MYSTWOOD_LOG_ITEM);
-        tag(ItemTagKeys.STRIPPED_WOODS).add(BlockInit.STRIPPED_CELIFERN_WOOD_ITEM, BlockInit.STRIPPED_CHARCOAL_BIRCH_WOOD_ITEM, BlockInit.STRIPPED_MYSTWOOD_WOOD_ITEM);
-        tag(ItemTagKeys.ORES_IN_GROUND_STONE).add(BlockInit.FLUORITE_ORE_ITEM, BlockInit.TOURMALINE_ORE_ITEM, BlockInit.ZINC_ORE_ITEM);
-        tag(ItemTagKeys.ORES_IN_GROUND_DEEPSLATE).add(BlockInit.DEEPSLATE_FLUORITE_ORE_ITEM, BlockInit.DEEPSLATE_TOURMALINE_ORE_ITEM, BlockInit.DEEPSLATE_ZINC_ORE_ITEM);
+        tag(Tags.Items.STORAGE_BLOCKS).add(BlockInit.RAW_ZINC_BLOCK_ITEM, BlockInit.ZINC_BLOCK_ITEM, BlockInit.FLUXIUM_BLOCK_ITEM);
+        tag(Tags.Items.STRIPPED_LOGS).add(BlockInit.STRIPPED_CELIFERN_LOG_ITEM, BlockInit.STRIPPED_CHARCOAL_BIRCH_LOG_ITEM, BlockInit.STRIPPED_MYSTWOOD_LOG_ITEM);
+        tag(Tags.Items.STRIPPED_WOODS).add(BlockInit.STRIPPED_CELIFERN_WOOD_ITEM, BlockInit.STRIPPED_CHARCOAL_BIRCH_WOOD_ITEM, BlockInit.STRIPPED_MYSTWOOD_WOOD_ITEM);
+        tag(Tags.Items.ORES_IN_GROUND_STONE).add(BlockInit.FLUORITE_ORE_ITEM, BlockInit.TOURMALINE_ORE_ITEM, BlockInit.ZINC_ORE_ITEM);
+        tag(Tags.Items.ORES_IN_GROUND_DEEPSLATE).add(BlockInit.DEEPSLATE_FLUORITE_ORE_ITEM, BlockInit.DEEPSLATE_TOURMALINE_ORE_ITEM, BlockInit.DEEPSLATE_ZINC_ORE_ITEM);
         // Fluid Buckets if present
         for (FluidContent content : FluidInit.REGISTER.getContents()) {
             content.bucketHolder().ifPresent(bucketHolder -> {

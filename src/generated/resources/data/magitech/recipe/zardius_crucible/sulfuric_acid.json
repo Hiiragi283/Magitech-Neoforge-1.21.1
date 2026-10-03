@@ -2,7 +2,7 @@
   "type": "magitech:zardius_crucible",
   "fluid_ingredient": {
     "amount": 1000,
-    "fluid": "magitech:mana_potion"
+    "tag": "c:mana_potion"
   },
   "fluid_result": {
     "amount": 1000,

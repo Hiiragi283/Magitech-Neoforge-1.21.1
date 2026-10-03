@@ -23,7 +23,6 @@ import net.stln.magitech.content.recipe.CrushingRecipe;
 import net.stln.magitech.content.recipe.RecipeInit;
 import net.stln.magitech.core.api.mana.flow.ManaFlowRule;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -205,7 +204,7 @@ public class CrusherBlockEntity extends ManaMachineBlockEntity implements GeoBlo
     }
 
     private void craft(CrushingRecipe recipe, ItemStack result) {
-        inventory.extractItem(INPUT, recipe.getSizedIngredient().count(), false);
+        inventory.extractItem(INPUT, recipe.getIngredient().count(), false);
         inventory.insertItem(OUTPUT, result.copy(), false);
         progress = 0;
     }

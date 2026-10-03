@@ -185,7 +185,7 @@ public class CompressorBlockEntity extends ManaMachineBlockEntity implements Geo
     }
 
     private void craft(CompressingRecipe recipe, ItemStack result) {
-        inventory.extractItem(INPUT, recipe.getSizedIngredient().count(), false);
+        inventory.extractItem(INPUT, recipe.getIngredient().count(), false);
         inventory.insertItem(OUTPUT, result.copy(), false);
         progress = 0;
         // sync progress reset so client can stop animation immediately

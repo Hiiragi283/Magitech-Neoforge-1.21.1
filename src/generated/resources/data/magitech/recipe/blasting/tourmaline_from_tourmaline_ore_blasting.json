@@ -3,9 +3,14 @@
   "category": "misc",
   "cookingtime": 100,
   "experience": 1.0,
-  "ingredient": {
-    "item": "magitech:tourmaline_ore"
-  },
+  "ingredient": [
+    {
+      "item": "magitech:tourmaline_ore"
+    },
+    {
+      "item": "magitech:deepslate_tourmaline_ore"
+    }
+  ],
   "result": {
     "count": 1,
     "id": "magitech:tourmaline"

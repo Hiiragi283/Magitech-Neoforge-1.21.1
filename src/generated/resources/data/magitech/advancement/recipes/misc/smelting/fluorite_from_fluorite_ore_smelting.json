@@ -5,7 +5,10 @@
       "conditions": {
         "items": [
           {
-            "items": "magitech:fluorite_ore"
+            "items": [
+              "magitech:fluorite_ore",
+              "magitech:deepslate_fluorite_ore"
+            ]
           }
         ]
       },
