@@ -27,7 +27,6 @@ public class DataGeneratorInit {
         event.createProvider(ModDataMapProvider::new);
 
         event.createProvider(ModRecipeProvider::new);
-        event.createProvider(ModComponentRecipeProvider::new);
 
         event.createProvider((output, future) -> new LootTableProvider(
                 output,

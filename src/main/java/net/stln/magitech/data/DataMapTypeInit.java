@@ -14,8 +14,6 @@ public class DataMapTypeInit {
 
     public static void registerDataMapTypes(IEventBus bus) {
         Magitech.LOGGER.info("Registering Data Map Types for" + Magitech.MOD_ID);
-        bus.addListener((RegisterDataMapTypesEvent event) -> {
-            event.register(ENTITY_ELEMENT);
-        });
+        bus.addListener((RegisterDataMapTypesEvent event) -> event.register(ENTITY_ELEMENT));
     }
 }

@@ -16,6 +16,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -128,6 +129,16 @@ public class ModRecipeProvider extends RecipeProvider {
         shapeless(output, stack(ItemInit.GLISTENING_LEXICON, 1), i(Items.BOOK), tag(ItemTagKeys.GEMS_FLUORITE));
         shapeless(output, stack(ItemInit.MANA_PIE, 1), i(Items.WHEAT), i(Items.WHEAT), i(Items.SUGAR), i(ItemInit.MANA_BERRIES));
         shapeless(output, stack(Items.GUNPOWDER, 2), "_from_sulfur", tag(ItemTagKeys.GEMS_SULFUR), i(Items.CHARCOAL), i(Items.BONE_MEAL));
+
+        // Enercrux Thread Page
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemInit.THREAD_PAGE)
+                .requires(Items.PAPER)
+                .requires(Tags.Items.STRINGS)
+                .requires(Tags.Items.STRINGS)
+                .requires(Tags.Items.GLASS_BLOCKS)
+                .requires(ItemTagKeys.GEMS_FLUORITE)
+                .unlockedBy("has_fluorite", has(ItemTagKeys.GEMS_FLUORITE))
+                .save(output, Magitech.id("crafting/%s".formatted(SpellInit.ENERCRUX.getId().getPath())));
     }
 
     private static void buildCustom(RecipeOutput output) {
