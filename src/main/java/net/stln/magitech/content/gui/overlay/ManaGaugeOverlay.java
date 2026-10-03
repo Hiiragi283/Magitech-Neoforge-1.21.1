@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +26,6 @@ import net.stln.magitech.helper.ComponentHelper;
 import net.stln.magitech.helper.MathHelper;
 import net.stln.magitech.helper.RenderHelper;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Quaternionf;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
@@ -105,9 +103,9 @@ public class ManaGaugeOverlay implements LayeredDraw.Layer {
 
                             Font font = Minecraft.getInstance().font;
                             String text = MathHelper.round((double) cooldown.remaining() / 20, 1) + "s";
-                            int renderx = x + 35 - font.width(text) / 2;
-                            int rendery = y + 29;
-                            RenderHelper.renderFramedText(guiGraphics, font, text, renderx, rendery, element);
+                            int renderX = x + 35 - font.width(text) / 2;
+                            int renderY = y + 29;
+                            RenderHelper.renderFramedText(guiGraphics, font, text, renderX, renderY, element);
                         }
                     } else {
                         threadbound.set(ComponentInit.SPELL_COMPONENT, spellComponent.setSelected(0));

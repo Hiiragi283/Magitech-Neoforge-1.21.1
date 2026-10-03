@@ -14,8 +14,8 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.api.machine.inspection.client.MachineInspectionOverlay;
-import net.stln.magitech.content.gui.overlay.ManaGaugeOverlay;
 import net.stln.magitech.content.gui.overlay.ChargeGaugeOverlay;
+import net.stln.magitech.content.gui.overlay.ManaGaugeOverlay;
 
 import java.util.function.Supplier;
 
@@ -23,10 +23,24 @@ import java.util.function.Supplier;
 public class GuiInit {
     public static final DeferredRegister<MenuType<?>> REGISTER = DeferredRegister.create(Registries.MENU, Magitech.MOD_ID);
 
+    public static final Supplier<MenuType<PartCuttingMenu>> PART_CUTTING_MENU = register("part_cutting_menu", PartCuttingMenu::new);
+
+    public static final Supplier<MenuType<ToolAssemblyMenu>> TOOL_ASSEMBLY_MENU = register("tool_assembly_menu", ToolAssemblyMenu::new);
+
+    public static final Supplier<MenuType<ToolRepairingMenu>> TOOL_REPAIRING_MENU = register("tool_repairing_menu", ToolRepairingMenu::new);
+
+    public static final Supplier<MenuType<ToolUpgradeMenu>> TOOL_UPGRADE_MENU = register("tool_upgrade_menu", ToolUpgradeMenu::new);
+
+    public static final Supplier<MenuType<ThreadboundMenu>> THREADBOUND_MENU = register("threadbound_menu", ThreadboundMenu::new);
+    
     private static <T extends AbstractContainerMenu> Supplier<MenuType<T>> register(String name, MenuType.MenuSupplier<T> supplier) {
         return REGISTER.register(name, () -> new MenuType<>(supplier, FeatureFlags.VANILLA_SET));
     }
 
+    public static void registerMenus(IEventBus eventBus) {
+        REGISTER.register(eventBus);
+    }
+    
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void onRegisterOverlays(RegisterGuiLayersEvent event) {
@@ -44,23 +58,4 @@ public class GuiInit {
         event.register(TOOL_UPGRADE_MENU.get(), ToolUpgradeScreen::new);
         event.register(THREADBOUND_MENU.get(), ThreadboundScreen::new);
     }
-
-    public static final Supplier<MenuType<PartCuttingMenu>> PART_CUTTING_MENU = register("part_cutting_menu", PartCuttingMenu::new);
-
-    public static void registerMenus(IEventBus eventBus) {
-        REGISTER.register(eventBus);
-    }
-
-
-    public static final Supplier<MenuType<ToolAssemblyMenu>> TOOL_ASSEMBLY_MENU = register("tool_assembly_menu", ToolAssemblyMenu::new);
-
-
-    public static final Supplier<MenuType<ToolRepairingMenu>> TOOL_REPAIRING_MENU = register("tool_repairing_menu", ToolRepairingMenu::new);
-
-
-    public static final Supplier<MenuType<ToolUpgradeMenu>> TOOL_UPGRADE_MENU = register("tool_upgrade_menu", ToolUpgradeMenu::new);
-
-    public static final Supplier<MenuType<ThreadboundMenu>> THREADBOUND_MENU = register("threadbound_menu", ThreadboundMenu::new);
-
-
 }

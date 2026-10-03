@@ -38,9 +38,9 @@ public class ChargeGaugeOverlay implements LayeredDraw.Layer {
 
                 Font font = Minecraft.getInstance().font;
                 String text = MathHelper.round((double) (charge.remaining()) / 20, 1) + "s";
-                int renderx = guiGraphics.guiWidth() / 2 - font.width(text) / 2;
-                int rendery = guiGraphics.guiHeight() * 2 / 3 - 4;
-                RenderHelper.renderFramedText(guiGraphics, font, text, renderx, rendery, element);
+                int renderX = guiGraphics.guiWidth() / 2 - font.width(text) / 2;
+                int renderY = guiGraphics.guiHeight() * 2 / 3 - 4;
+                RenderHelper.renderFramedText(guiGraphics, font, text, renderX, renderY, element);
             }
         }
     }

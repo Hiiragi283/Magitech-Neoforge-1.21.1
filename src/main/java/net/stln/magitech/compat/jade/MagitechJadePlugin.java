@@ -13,18 +13,12 @@ public class MagitechJadePlugin implements IWailaPlugin {
     // クライアント側の登録 (表示ロジック)
     @Override
     public void registerClient(IWailaClientRegistration registration) {
-        registration.registerBlockComponent(
-                ManaContainerJadeProvider.INSTANCE,
-                ManaContainerBlock.class
-        );
+        registration.registerBlockComponent(ManaContainerJadeProvider.INSTANCE, ManaContainerBlock.class);
     }
 
     // サーバー側の登録 (データ同期ロジック)
     @Override
     public void register(IWailaCommonRegistration registration) {
-        registration.registerBlockDataProvider(
-                ManaContainerServerProvider.INSTANCE,
-                ManaContainerBlockEntity.class
-        );
+        registration.registerBlockDataProvider(ManaContainerServerProvider.INSTANCE, ManaContainerBlockEntity.class);
     }
 }

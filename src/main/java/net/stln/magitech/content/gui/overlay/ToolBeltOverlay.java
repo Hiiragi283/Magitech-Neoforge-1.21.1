@@ -77,13 +77,13 @@ public class ToolBeltOverlay extends Screen {
                     // 表示部分
 //                    String text = spell.getDescription().getString();
 //                    List<Component> componentList = spell.getTooltip(player.level(), player, player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof SpellCasterItem ? player.getItemInHand(InteractionHand.MAIN_HAND) : player.getItemInHand(InteractionHand.OFF_HAND));
-//                    int renderx = (x - font.width(text) / 2);
-//                    int rendery = (int) (y - 4 + 8 - componentList.size() * 4);
-//                    RenderHelper.renderFramedText(guiGraphics, font, text, renderx, rendery, spell.getElement());
+//                    int renderX = (x - font.width(text) / 2);
+//                    int renderY = (int) (y - 4 + 8 - componentList.size() * 4);
+//                    RenderHelper.renderFramedText(guiGraphics, font, text, renderX, renderY, spell.getElement());
 //
-//                    int tooltipx = (x - font.width(component.getString()) / 2);
+//                    int tooltipX = (x - font.width(component.getString()) / 2);
 //                    int color = component.getStyle().getColor() != null ? component.getStyle().getColor().getValue() : 0xFFFFFF;
-//                    RenderHelper.renderFramedText(guiGraphics, font, component.getString(), tooltipx, rendery + j * 10, color, color == spell.getElement().getSpellColor() ? spell.getElement().getSpellDark() : ColorHelper.Argb.mul(color, 0x404040));
+//                    RenderHelper.renderFramedText(guiGraphics, font, component.getString(), tooltipX, renderY + j * 10, color, color == spell.getElement().getSpellColor() ? spell.getElement().getSpellDark() : ColorHelper.Argb.mul(color, 0x404040));
 
                 } else if (distance <= 10) {
                     select = -1;

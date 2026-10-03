@@ -2,7 +2,6 @@ package net.stln.magitech.content.loot;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +16,7 @@ import net.stln.magitech.feature.magic.spell.ISpell;
 import net.stln.magitech.feature.magic.spell.SpellShape;
 import net.stln.magitech.helper.ComponentHelper;
 import net.stln.magitech.helper.ConfigHelper;
+import net.stln.magitech.helper.StreamHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class RandomThreadPageFunction extends LootItemConditionalFunction {
 
     @Override
     protected @NotNull ItemStack run(@NotNull ItemStack stack, @NotNull LootContext context) {
-        spells.stream().findAny().filter(Holder::isBound).ifPresent(holder -> ComponentHelper.setThreadPage(stack, holder.value()));
+        StreamHelper.findRandom(spells, context.getRandom()).ifPresent(holder -> ComponentHelper.setThreadPage(stack, holder.value()));
         return stack;
     }
 

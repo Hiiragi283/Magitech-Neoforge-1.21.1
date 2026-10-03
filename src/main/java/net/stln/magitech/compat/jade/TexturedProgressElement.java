@@ -62,12 +62,12 @@ public class TexturedProgressElement extends Element {
         int borderColor = 0x60FFFFFF; // 枠の色
         int bgColor = 0x30303030;     // バーの背景（空の部分）の色
 
-//        // 全体を枠色で塗りつぶし
+        // 全体を枠色で塗りつぶし
         gui.fill((int) x, (int) y + 1, (int) x + 1, (int) maxY - 1, borderColor);
         gui.fill((int) x, (int) y, (int) maxX, (int) y + 1, borderColor);
         gui.fill((int) maxX - 1, (int) y + 1, (int) maxX, (int) maxY - 1, borderColor);
         gui.fill((int) x, (int) maxY - 1, (int) maxX, (int) maxY, borderColor);
-//        // 1ピクセル内側を背景色で塗りつぶす（これで枠ができる）
+        // 1ピクセル内側を背景色で塗りつぶす（これで枠ができる）
         gui.fill((int) x + 1, (int) y + 1, (int) maxX - 1, (int) maxY - 1, bgColor);
 
         // --- 2. 中身（テクスチャ）の描画 ---

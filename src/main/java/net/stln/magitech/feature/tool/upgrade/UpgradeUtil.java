@@ -26,7 +26,7 @@ public class UpgradeUtil {
         ArrayList<Upgrade> list = new ArrayList<>(upgrades);
 
         // ランダムにシャッフル
-        Collections.shuffle(list, new Random(random.nextLong()));
+        Collections.shuffle(list, random::nextLong);
 
         // 指定数だけ取り出す（要素数が足りなければ全部返す）
         return list.subList(0, Math.min(count, list.size()));

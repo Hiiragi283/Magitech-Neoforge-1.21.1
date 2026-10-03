@@ -1,6 +1,7 @@
 package net.stln.magitech.content.event;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -9,20 +10,20 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.MagitechRegistries;
 import net.stln.magitech.content.item.ItemInit;
 import net.stln.magitech.content.item.component.SpellComponent;
 import net.stln.magitech.content.loot.RandomThreadPageFunction;
 import net.stln.magitech.feature.magic.spell.ISpell;
 import net.stln.magitech.feature.magic.spell.SpellInit;
 import net.stln.magitech.helper.ComponentHelper;
+import net.stln.magitech.helper.StreamHelper;
 
-import java.util.Collections;
 import java.util.List;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID)
 public class PlayerFirstSpawnEvent {
 
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         ServerPlayer player = (ServerPlayer) event.getEntity();
@@ -40,17 +41,16 @@ public class PlayerFirstSpawnEvent {
         if (!persisted.getBoolean("hasReceivedInitialItems")) {
             ItemStack stack = new ItemStack(ItemInit.GLISTENING_LEXICON.get());
             var enercrux = SpellInit.ENERCRUX;
-            List<Holder<ISpell>> list = new java.util.ArrayList<>(RandomThreadPageFunction.getAllSpells().stream()
-                    .filter(holder -> !holder.value().equals(enercrux.asSpell())).toList());
-            Collections.shuffle(list);
-            if (!list.isEmpty()) {
-                ISpell spell = list.getFirst().value();
 
-                ComponentHelper.updateSpells(stack, spellComponent -> new SpellComponent(List.of(SpellInit.ENERCRUX, spell)));
-                player.getInventory().add(stack);
+            HolderSet<ISpell> allSpells = RandomThreadPageFunction.getAllSpells();
+            StreamHelper.findRandom(allSpells.stream().filter(holder -> !holder.is(enercrux)), player.getRandom(), allSpells.size())
+                    .map(Holder::value)
+                    .ifPresent(spell -> {
+                        ComponentHelper.updateSpells(stack, spellComponent -> new SpellComponent(List.of(SpellInit.ENERCRUX, spell)));
+                        player.getInventory().add(stack);
 
-                persisted.putBoolean("hasReceivedInitialItems", true);
-            }
+                        persisted.putBoolean("hasReceivedInitialItems", true);
+                    });
         }
     }
 }
