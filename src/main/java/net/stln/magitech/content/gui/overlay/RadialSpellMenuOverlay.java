@@ -9,6 +9,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -62,7 +63,8 @@ public class RadialSpellMenuOverlay extends Screen {
 
             int index = 0;
             ISpell selectSpell = null;
-            for (ISpell spell : spellComponent.spells()) {
+            for (Holder<ISpell> holder : spellComponent.spells()) {
+                var spell = holder.value();
                 int animLength = 3;
                 float animTick = Math.min(ticks + partialTicks, animLength);
                 double scaledAnimTick = (double) animTick / animLength;

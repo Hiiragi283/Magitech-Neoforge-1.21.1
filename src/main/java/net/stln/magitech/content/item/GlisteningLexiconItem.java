@@ -60,7 +60,8 @@ public class GlisteningLexiconItem extends TooltipTextModonomiconItem implements
     public void appendHoverText(ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
         int i = 0;
         @NotNull SpellComponent spells = ComponentHelper.getSpells(stack);
-        for (ISpell spell : spells.spells()) {
+        for (Holder<ISpell> holder : spells.spells()) {
+            ISpell spell = holder.value();
             int abs = Math.abs(spells.selected() - i);
             if (abs <= 2 || Screen.hasShiftDown()) {
                 Element element = spell.getConfig().element();

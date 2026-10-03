@@ -14,12 +14,12 @@ import java.util.Optional;
 public record ChargeData(Optional<ISpell> spell, Charge charge) {
 
     public static final Codec<ChargeData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ISpell.CODEC.optionalFieldOf("spell").forGetter(ChargeData::spell),
+            ISpell.DIRECT_CODEC.optionalFieldOf("spell").forGetter(ChargeData::spell),
             Charge.CODEC.fieldOf("charge").forGetter(ChargeData::charge)
     ).apply(instance, ChargeData::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ChargeData> STREAM_CODEC = StreamCodec.composite(
-            ISpell.STREAM_CODEC.apply(ByteBufCodecs::optional), ChargeData::spell,
+            ISpell.DIRECT_STREAM_CODEC.apply(ByteBufCodecs::optional), ChargeData::spell,
             Charge.STREAM_CODEC, ChargeData::charge,
             ChargeData::new
     );

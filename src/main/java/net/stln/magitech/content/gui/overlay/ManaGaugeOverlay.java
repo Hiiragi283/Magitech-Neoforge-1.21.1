@@ -72,7 +72,7 @@ public class ManaGaugeOverlay implements LayeredDraw.Layer {
 
                     SpellComponent spellComponent = ComponentHelper.getSpells(threadbound);
                     if (spellComponent.selected() < spellComponent.spells().size() && spellComponent.selected() >= 0) {
-                        ISpell spell = spellComponent.getSelectedSpell();
+                        ISpell spell = spellComponent.getSelectedSpell().value();
 
                         // スペルアイコン
                         guiGraphics.blit(spell.getIconId(), spellX, spellY, 0, 0, 32, 32, 32, 32);

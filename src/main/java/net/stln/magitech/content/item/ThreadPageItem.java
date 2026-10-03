@@ -1,5 +1,6 @@
 package net.stln.magitech.content.item;
 
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +25,7 @@ public class ThreadPageItem extends TooltipTextItem {
     @Override
     public @NotNull Component getName(@NotNull ItemStack stack) {
         return ComponentHelper.getThreadPageSpell(stack)
+                .map(Holder::value)
                 .map(spell -> Component.translatable("item.magitech.thread_page", spell.getName()))
                 .orElseGet(() -> super.getName(stack).copy());
     }
@@ -31,7 +33,7 @@ public class ThreadPageItem extends TooltipTextItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        ComponentHelper.getThreadPageSpell(stack).ifPresent(spell -> {
+        ComponentHelper.getThreadPageSpell(stack).map(Holder::value).ifPresent(spell -> {
             tooltipComponents.add(spell.getName().withColor(spell.getConfig().element().getTextColor().getRGB()));
             Player player = ClientHelper.getPlayer();
             tooltipComponents.addAll(spell.getDescription(player.level(), player, stack));

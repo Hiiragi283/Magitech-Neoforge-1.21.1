@@ -1,11 +1,15 @@
 package net.stln.magitech.feature.magic.spell;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,10 +21,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface ISpell extends SpellLike {
+public interface ISpell {
 
-    Codec<ISpell> CODEC = MagitechRegistries.SPELL.byNameCodec();
-    StreamCodec<RegistryFriendlyByteBuf, ISpell> STREAM_CODEC = ByteBufCodecs.registry(MagitechRegistries.Keys.SPELL);
+    Codec<ISpell> DIRECT_CODEC = MagitechRegistries.SPELL.byNameCodec();
+    StreamCodec<RegistryFriendlyByteBuf, ISpell> DIRECT_STREAM_CODEC = ByteBufCodecs.registry(MagitechRegistries.Keys.SPELL);
+
+    Codec<Holder<ISpell>> HOLDER_CODEC = RegistryFixedCodec.create(MagitechRegistries.Keys.SPELL);
+    Codec<HolderSet<ISpell>> HOLDER_SET_CODEC = RegistryCodecs.homogeneousList(MagitechRegistries.Keys.SPELL);
+    StreamCodec<RegistryFriendlyByteBuf, Holder<ISpell>> HOLDER_STREAM_CODEC = ByteBufCodecs.holderRegistry(MagitechRegistries.Keys.SPELL);
+    StreamCodec<RegistryFriendlyByteBuf, HolderSet<ISpell>> HOLDER_SET_STREAM_CODEC = ByteBufCodecs.holderSet(MagitechRegistries.Keys.SPELL);
 
     // スペルの基本情報: 属性、形状、マナコストなどを定義するためのメソッド
     SpellConfig getConfig();

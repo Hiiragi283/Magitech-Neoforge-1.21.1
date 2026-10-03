@@ -6,8 +6,8 @@ import mezz.jei.api.ingredients.IIngredientRenderer;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.registration.IModIngredientRegistration;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.TooltipFlag;
@@ -16,6 +16,7 @@ import net.stln.magitech.core.api.field_effect.FieldInfluence;
 import net.stln.magitech.core.api.field_effect.FieldInfluenceType;
 import net.stln.magitech.effect.visual.FieldEffectIconRenderer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,8 +41,7 @@ public final class FieldInfluenceIngredient {
         @SuppressWarnings("removal")
         @Override
         public @NotNull String getUniqueId(@NotNull FieldInfluence ingredient, @NotNull UidContext context) {
-            ResourceLocation id = getIngredientId(ingredient);
-            return id == null ? "unknown" : id.toString();
+            return getResourceLocation(ingredient).toString();
         }
 
         @Override
@@ -126,20 +126,20 @@ public final class FieldInfluenceIngredient {
         return new FieldInfluence(influence.type(), influence.intensity());
     }
 
-    private static ResourceLocation getTypeId(FieldInfluence influence) {
+    private static @Nullable ResourceLocation getTypeId(@Nullable FieldInfluence influence) {
         return influence == null
                 ? null
                 : MagitechRegistries.FIELD_INFLUENCE_TYPE.getKey(influence.type());
     }
 
-    private static ResourceLocation getIngredientId(FieldInfluence influence) {
+    private static @Nullable ResourceLocation getIngredientId(@NotNull FieldInfluence influence) {
         ResourceLocation typeId = getTypeId(influence);
         return typeId == null
                 ? null
                 : ResourceLocation.fromNamespaceAndPath(typeId.getNamespace(), "field_influence/" + typeId.getPath());
     }
 
-    private static Component getTypeName(FieldInfluence influence) {
+    private static @NotNull Component getTypeName(@NotNull FieldInfluence influence) {
         ResourceLocation id = getTypeId(influence);
         return id == null
                 ? Component.empty()

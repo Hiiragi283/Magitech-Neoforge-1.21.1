@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -18,14 +19,12 @@ import net.stln.magitech.content.recipe.input.SpellRecipeInput;
 import net.stln.magitech.feature.magic.spell.ISpell;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
-public record SpellConversionRecipe(String group, Ingredient ingredient, ISpell spell,
+public record SpellConversionRecipe(String group, Ingredient ingredient, HolderSet<ISpell> spells,
                                     ItemStack result) implements Recipe<SpellRecipeInput> {
     public static final MapCodec<SpellConversionRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.STRING.optionalFieldOf("group", "").forGetter(SpellConversionRecipe::group),
             Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(SpellConversionRecipe::ingredient),
-            ISpell.CODEC.fieldOf("spell").forGetter(SpellConversionRecipe::spell),
+            ISpell.HOLDER_SET_CODEC.fieldOf("spells").forGetter(SpellConversionRecipe::spells),
             ItemStack.STRICT_CODEC.fieldOf("result").forGetter(SpellConversionRecipe::result)
     ).apply(instance, SpellConversionRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, SpellConversionRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -33,8 +32,8 @@ public record SpellConversionRecipe(String group, Ingredient ingredient, ISpell 
             SpellConversionRecipe::group,
             Ingredient.CONTENTS_STREAM_CODEC,
             SpellConversionRecipe::ingredient,
-            ISpell.STREAM_CODEC,
-            SpellConversionRecipe::spell,
+            ISpell.HOLDER_SET_STREAM_CODEC,
+            SpellConversionRecipe::spells,
             ItemStack.STREAM_CODEC,
             SpellConversionRecipe::result,
             SpellConversionRecipe::new
@@ -42,7 +41,7 @@ public record SpellConversionRecipe(String group, Ingredient ingredient, ISpell 
 
     @Override
     public boolean matches(@NotNull SpellRecipeInput input, @NotNull Level level) {
-        return ingredient.test(input.item()) && Objects.equals(this.spell, input.spell());
+        return ingredient.test(input.item()) && this.spells.contains(input.spell());
     }
 
     @Override

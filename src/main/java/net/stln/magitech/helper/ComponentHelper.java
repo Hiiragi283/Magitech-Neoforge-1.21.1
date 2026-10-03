@@ -1,11 +1,14 @@
 package net.stln.magitech.helper;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentHolder;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.MutableDataComponentHolder;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
+import net.stln.magitech.content.item.ItemInit;
 import net.stln.magitech.content.item.component.*;
 import net.stln.magitech.feature.magic.spell.ISpell;
-import net.stln.magitech.feature.magic.spell.SpellLike;
 import net.stln.magitech.feature.tool.material.ToolMaterial;
 import net.stln.magitech.feature.tool.upgrade.UpgradeInstance;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 public class ComponentHelper {
     // Getter
@@ -32,7 +36,7 @@ public class ComponentHelper {
         return holder.getOrDefault(ComponentInit.TOOLBELT_COMPONENT, ToolBeltComponent.EMPTY);
     }
 
-    public static @NotNull Optional<ISpell> getThreadPageSpell(@NotNull DataComponentHolder holder) {
+    public static @NotNull Optional<Holder<ISpell>> getThreadPageSpell(@NotNull DataComponentHolder holder) {
         return Optional.ofNullable(holder.get(ComponentInit.THREAD_PAGE_COMPONENT)).map(ThreadPageComponent::spell);
     }
 
@@ -81,8 +85,16 @@ public class ComponentHelper {
     }
 
     // Setter
-    public static void setThreadPage(@NotNull MutableDataComponentHolder holder, @NotNull SpellLike spell) {
+    public static void setThreadPage(@NotNull MutableDataComponentHolder holder, @NotNull Holder<ISpell> spell) {
         holder.set(ComponentInit.THREAD_PAGE_COMPONENT, new ThreadPageComponent(spell));
+    }
+
+    public static @NotNull Stream<ItemStack> createThreadPages(@NotNull HolderSet<ISpell> spells) {
+        return spells.stream().map(holder -> {
+            var threadPage = ItemInit.THREAD_PAGE.toStack();
+            threadPage.set(ComponentInit.THREAD_PAGE_COMPONENT, new ThreadPageComponent(holder));
+            return threadPage;
+        });
     }
 
     public static void updateSpells(@NotNull MutableDataComponentHolder holder, @NotNull UnaryOperator<SpellComponent> operator) {

@@ -1,6 +1,8 @@
 package net.stln.magitech.datagen;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -36,8 +38,8 @@ import net.stln.magitech.datagen.recipe.BlockSetRecipeGenerator;
 import net.stln.magitech.datagen.recipe.StoneRecipeGenerator;
 import net.stln.magitech.datagen.recipe.VanillaSimpleRecipeGenerator;
 import net.stln.magitech.datagen.recipe.WoodRecipeGenerator;
+import net.stln.magitech.feature.magic.spell.ISpell;
 import net.stln.magitech.feature.magic.spell.SpellInit;
-import net.stln.magitech.feature.magic.spell.SpellLike;
 import net.stln.magitech.feature.tool.material.MaterialInit;
 import net.stln.magitech.feature.tool.material.ToolMaterialLike;
 import net.stln.magitech.registry.DeferredToolMaterial;
@@ -423,8 +425,12 @@ public class ModRecipeProvider extends RecipeProvider {
         custom(output, Magitech.id("part_material/" + material.getId().getPath() + "_material"), new ToolMaterialRecipe("", ingredient, material.get()));
     }
 
-    private static void spell(RecipeOutput output, Ingredient ingredient, SpellLike spell, ItemLike result) {
-        custom(output, "spell_conversion", result, new SpellConversionRecipe("", ingredient, spell.asSpell(), stack(result, 1)));
+    private static void spell(RecipeOutput output, Ingredient ingredient, Holder<ISpell> spell, ItemLike result) {
+        spell(output, ingredient, HolderSet.direct(spell), result);
+    }
+
+    private static void spell(RecipeOutput output, Ingredient ingredient, HolderSet<ISpell> spells, ItemLike result) {
+        custom(output, "spell_conversion", result, new SpellConversionRecipe("", ingredient, spells, stack(result, 1)));
     }
 
     private static void crucible(RecipeOutput output, List<SizedIngredient> ingredients, FluidContent fluid, int amount, long mana, ItemStack result, Optional<FluidStack> fluidResult) {

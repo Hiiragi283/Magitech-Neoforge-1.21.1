@@ -1,6 +1,5 @@
 package net.stln.magitech.content.event;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,8 +16,6 @@ import net.stln.magitech.feature.magic.spell.ISpell;
 import net.stln.magitech.feature.magic.spell.SpellInit;
 import net.stln.magitech.helper.ComponentHelper;
 import net.stln.magitech.helper.StreamHelper;
-
-import java.util.List;
 
 @EventBusSubscriber(modid = Magitech.MOD_ID)
 public class PlayerFirstSpawnEvent {
@@ -44,9 +41,8 @@ public class PlayerFirstSpawnEvent {
 
             HolderSet<ISpell> allSpells = RandomThreadPageFunction.getAllSpells();
             StreamHelper.findRandom(allSpells.stream().filter(holder -> !holder.is(enercrux)), player.getRandom(), allSpells.size())
-                    .map(Holder::value)
                     .ifPresent(spell -> {
-                        ComponentHelper.updateSpells(stack, spellComponent -> new SpellComponent(List.of(SpellInit.ENERCRUX, spell)));
+                        ComponentHelper.updateSpells(stack, spellComponent -> new SpellComponent(HolderSet.direct(SpellInit.ENERCRUX, spell)));
                         player.getInventory().add(stack);
 
                         persisted.putBoolean("hasReceivedInitialItems", true);

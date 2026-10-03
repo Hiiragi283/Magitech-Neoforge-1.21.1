@@ -47,7 +47,7 @@ public class RandomThreadPageFunction extends LootItemConditionalFunction {
     public static @NotNull HolderSet<ISpell> getAllSpells() {
         HolderSet<ISpell> spellHolders = new AnyHolderSet<>(MagitechRegistries.SPELL.asLookup());
         if (ConfigHelper.isDashSpellsDisabled()) {
-            spellHolders = HolderSet.direct(spellHolders.stream().filter(holder -> holder.value().asSpell().getConfig().shape() != SpellShape.DASH).toList());
+            spellHolders = HolderSet.direct(spellHolders.stream().filter(holder -> holder.value().getConfig().shape() != SpellShape.DASH).toList());
         }
         return spellHolders;
     }
@@ -62,7 +62,7 @@ public class RandomThreadPageFunction extends LootItemConditionalFunction {
 
     @Override
     protected @NotNull ItemStack run(@NotNull ItemStack stack, @NotNull LootContext context) {
-        StreamHelper.findRandom(spells, context.getRandom()).ifPresent(holder -> ComponentHelper.setThreadPage(stack, holder.value()));
+        StreamHelper.findRandom(spells, context.getRandom()).ifPresent(holder -> ComponentHelper.setThreadPage(stack, holder));
         return stack;
     }
 

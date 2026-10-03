@@ -6,7 +6,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
@@ -17,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 public class ComponentInit {
 
     public static final DeferredRegister<DataComponentType<?>> COMPONENT_TYPES = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Magitech.MOD_ID);
-    public static final ResourceLocation THREAD_PAGE_COMPONENT_ID = Magitech.id("thread_page_component");
 
     public static final DataComponentType<PartMaterialComponent> PART_MATERIAL_COMPONENT = register("part_material_component", PartMaterialComponent.CODEC, PartMaterialComponent.STREAM_CODEC);
     public static final DataComponentType<MaterialComponent> MATERIAL_COMPONENT = register("material_component", MaterialComponent.CODEC, MaterialComponent.STREAM_CODEC);

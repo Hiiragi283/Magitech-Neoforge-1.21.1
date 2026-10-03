@@ -1,13 +1,13 @@
 package net.stln.magitech.content.item.creative_tab;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.holdersets.AnyHolderSet;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.MagitechRegistries;
 import net.stln.magitech.content.block.BlockInit;
@@ -24,8 +24,6 @@ import net.stln.magitech.feature.tool.tool_type.ToolTypeInit;
 import net.stln.magitech.feature.tool.tool_type.ToolTypeLike;
 import net.stln.magitech.registry.RegistryHelper;
 
-import java.util.List;
-
 public class CreativeTabInit {
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Magitech.MOD_ID);
@@ -34,9 +32,7 @@ public class CreativeTabInit {
             .title(Component.translatable("tab.magitech.magitech"))
             .icon(ItemInit.GLISTENING_LEXICON::toStack)
             .displayItems((parameters, output) -> {
-                HolderLookup.Provider registries = parameters.holders();
-                HolderLookup.RegistryLookup<ISpell> spellLookup = registries.lookupOrThrow(MagitechRegistries.Keys.SPELL);
-                List<ISpell> allSpells = spellLookup.listElements().map(Holder::value).toList();
+                HolderSet<ISpell> allSpells = new AnyHolderSet<>(parameters.holders().lookupOrThrow(MagitechRegistries.Keys.SPELL));
 
                 output.accept(ThreadboundGenerator.generateThreadbound(ItemInit.GLISTENING_LEXICON.get(), allSpells));
                 output.accept(ThreadboundGenerator.generateThreadbound(ItemInit.MATERIALS_AND_TOOLCRAFT_DESIGN.get(), allSpells));

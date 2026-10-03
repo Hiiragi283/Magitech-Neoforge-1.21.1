@@ -9,9 +9,9 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.compat.jei.JeiRecipeTypeInit;
+import net.stln.magitech.compat.jei.MagitechJeiHelper;
 import net.stln.magitech.content.item.ItemInit;
 import net.stln.magitech.content.recipe.SpellConversionRecipe;
 import net.stln.magitech.helper.ComponentHelper;
@@ -47,9 +47,8 @@ public class SpellConversionRecipeCategory extends AbstractMagitechRecipeCategor
     protected void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull SpellConversionRecipe recipe, @NotNull IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 16, 16).addIngredients(recipe.ingredient());
 
-        ItemStack threadPage = new ItemStack(ItemInit.THREAD_PAGE.get());
-        ComponentHelper.setThreadPage(threadPage, recipe.spell());
-        builder.addSlot(RecipeIngredientRole.CATALYST, 32, 48).addItemStack(threadPage);
+        builder.addSlot(RecipeIngredientRole.CATALYST, 32, 48).addItemStacks(ComponentHelper.createThreadPages(recipe.spells()).toList());
+        MagitechJeiHelper.setIngredients(builder.addSlot(RecipeIngredientRole.INPUT, 56, 40), recipe.spells());
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 112, 16).addItemStack(recipe.result());
     }
@@ -58,6 +57,5 @@ public class SpellConversionRecipeCategory extends AbstractMagitechRecipeCategor
     public void draw(@NotNull SpellConversionRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics guiGraphics, double mouseX, double mouseY) {
         super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
         guiGraphics.blit(TEXTURE, 0, 0, 0, 0, 144, 82);
-        guiGraphics.blit(recipe.spell().getIconId(), 56, 40, 0, 0, 32, 32, 32, 32);
     }
 }

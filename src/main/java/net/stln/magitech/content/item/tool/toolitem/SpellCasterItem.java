@@ -1,6 +1,6 @@
 package net.stln.magitech.content.item.tool.toolitem;
 
-import net.minecraft.network.chat.Component;
+import net.minecraft.core.Holder;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -13,16 +13,11 @@ import net.minecraft.world.level.Level;
 import net.stln.magitech.content.item.component.ComponentInit;
 import net.stln.magitech.content.item.component.SpellComponent;
 import net.stln.magitech.feature.magic.spell.ISpell;
-import net.stln.magitech.feature.tool.property.IToolProperty;
-import net.stln.magitech.feature.tool.property.ToolProperties;
-import net.stln.magitech.feature.tool.property.ToolPropertyLike;
 import net.stln.magitech.feature.tool.tool_type.ToolTypeLike;
 import net.stln.magitech.feature.tool.trait.TraitHelper;
 import net.stln.magitech.helper.ComponentHelper;
 import net.stln.magitech.helper.CuriosHelper;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public abstract class SpellCasterItem extends SynthesisedToolItem {
 
@@ -40,7 +35,8 @@ public abstract class SpellCasterItem extends SynthesisedToolItem {
         if (!threadbound.isEmpty()) {
             SpellComponent spells = ComponentHelper.getSpells(threadbound);
             if (spells.selected() < spells.spells().size()) {
-                ISpell spell = spells.getSelectedSpell();
+                Holder<ISpell> holder = spells.getSelectedSpell();
+                ISpell spell = holder.value();
                 if (spell.canCast(level, player, stack)) {
                     spell.cast(level, player, stack, usedHand, !level.isClientSide);
                     TraitHelper.getTrait(stack).forEach(((instance) -> {
@@ -73,8 +69,7 @@ public abstract class SpellCasterItem extends SynthesisedToolItem {
             InteractionHand hand = user.getMainHandItem().equals(stack) ? InteractionHand.MAIN_HAND : user.getOffhandItem().equals(stack) ? InteractionHand.OFF_HAND : null;
 
             if (!threadbound.isEmpty()) {
-                SpellComponent spellComponent = ComponentHelper.getSpells(threadbound);
-                ISpell spell = spellComponent.getSelectedSpell();
+                ISpell spell = ComponentHelper.getSpells(threadbound).getSelectedSpell().value();
                 if (spell.canContinuousCast(level, livingEntity, stack)) {
                     spell.tick(level, livingEntity, stack, hand, getUseDuration(stack, livingEntity) - remainingUseDuration, !level.isClientSide);
                 } else {
@@ -93,8 +88,7 @@ public abstract class SpellCasterItem extends SynthesisedToolItem {
         if (livingEntity instanceof Player user) {
             InteractionHand hand = user.getMainHandItem().equals(stack) ? InteractionHand.MAIN_HAND : user.getOffhandItem().equals(stack) ? InteractionHand.OFF_HAND : null;
             CuriosHelper.getThreadBoundStack(user).ifPresent(threadbound -> {
-                SpellComponent spells = ComponentHelper.getSpells(threadbound);
-                ISpell spell = spells.getSelectedSpell();
+                ISpell spell = ComponentHelper.getSpells(threadbound).getSelectedSpell().value();
 
                 spell.end(level, livingEntity, stack, hand, !level.isClientSide);
                 if (!level.isClientSide && isLongSpell(spell)) {

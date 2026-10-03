@@ -12,9 +12,9 @@ import java.util.List;
 
 public record CooldownData(HashMap<ISpell, Cooldown> cooldowns) {
 
-    public static final Codec<CooldownData> CODEC = Codec.unboundedMap(ISpell.CODEC, Cooldown.CODEC).xmap(HashMap::new, (hashMap -> hashMap)).xmap(CooldownData::new, CooldownData::cooldowns);
+    public static final Codec<CooldownData> CODEC = Codec.unboundedMap(ISpell.DIRECT_CODEC, Cooldown.CODEC).xmap(HashMap::new, (hashMap -> hashMap)).xmap(CooldownData::new, CooldownData::cooldowns);
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, CooldownData> STREAM_CODEC = ByteBufCodecs.map(HashMap::new, ISpell.STREAM_CODEC, Cooldown.STREAM_CODEC).map(CooldownData::new, CooldownData::cooldowns);
+    public static final StreamCodec<RegistryFriendlyByteBuf, CooldownData> STREAM_CODEC = ByteBufCodecs.map(HashMap::new, ISpell.DIRECT_STREAM_CODEC, Cooldown.STREAM_CODEC).map(CooldownData::new, CooldownData::cooldowns);
 
     public static CooldownData empty() {
         return new CooldownData(new java.util.HashMap<>());

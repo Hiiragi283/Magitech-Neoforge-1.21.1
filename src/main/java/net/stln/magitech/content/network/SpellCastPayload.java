@@ -15,7 +15,7 @@ public record SpellCastPayload(ISpell spell, Optional<ItemStack> wand, int id) i
     public static final ResourceLocation ID = Magitech.id("spell_cast");
     public static final Type<SpellCastPayload> TYPE = new Type<>(ID);
     public static final StreamCodec<RegistryFriendlyByteBuf, SpellCastPayload> STREAM_CODEC = StreamCodec.composite(
-            ISpell.STREAM_CODEC,
+            ISpell.DIRECT_STREAM_CODEC,
             SpellCastPayload::spell,
             ByteBufCodecs.optional(ItemStack.STREAM_CODEC),
             SpellCastPayload::wand,

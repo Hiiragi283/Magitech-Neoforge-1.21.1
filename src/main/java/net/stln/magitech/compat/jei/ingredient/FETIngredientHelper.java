@@ -12,7 +12,17 @@ import org.jetbrains.annotations.Nullable;
 public enum FETIngredientHelper implements IIngredientHelper<FieldEffectType> {
     INSTANCE;
     
-    public static final IIngredientType<FieldEffectType> TYPE = () -> FieldEffectType.class;
+    public static final IIngredientType<FieldEffectType> TYPE = new IIngredientType<>() {
+        @Override
+        public @NotNull Class<? extends FieldEffectType> getIngredientClass() {
+            return FieldEffectType.class;
+        }
+
+        @Override
+        public @NotNull String getUid() {
+            return "field_effect_type";
+        }
+    };
 
     @Override
     public @NotNull IIngredientType<FieldEffectType> getIngredientType() {

@@ -279,11 +279,6 @@ public abstract class Spell implements ISpell {
         return config;
     }
 
-    @Override
-    public @NotNull Spell asSpell() {
-        return this;
-    }
-
     public @NotNull ResourceLocation getId() {
         return Objects.requireNonNull(MagitechRegistries.SPELL.getKey(this));
     }

@@ -10,9 +10,7 @@ import net.minecraft.world.level.Level;
 import net.stln.magitech.Magitech;
 import net.stln.magitech.MagitechRegistries;
 import net.stln.magitech.compat.jei.category.*;
-import net.stln.magitech.compat.jei.ingredient.FETIngredientHelper;
-import net.stln.magitech.compat.jei.ingredient.FETIngredientRenderer;
-import net.stln.magitech.compat.jei.ingredient.FieldInfluenceIngredient;
+import net.stln.magitech.compat.jei.ingredient.*;
 import net.stln.magitech.content.block.BlockInit;
 import net.stln.magitech.content.field_effect.effect.RecipeFieldEffectType;
 import net.stln.magitech.content.field_effect.influence.FieldInfluenceInit;
@@ -42,6 +40,14 @@ public class MagitechJeiPlugin implements IModPlugin {
 
     @Override
     public void registerIngredients(@NotNull IModIngredientRegistration registration) {
+        // Spell
+        registration.register(
+                SpellIngredientHelper.TYPE,
+                MagitechRegistries.SPELL.holders().map(JeiSpellIngredient::new).toList(),
+                SpellIngredientHelper.INSTANCE,
+                new SpellIngredientRenderer(16, 16),
+                JeiSpellIngredient.CODEC
+        );
         // FieldEffectType
         registration.register(
                 FETIngredientHelper.TYPE,

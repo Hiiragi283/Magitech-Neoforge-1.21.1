@@ -2,28 +2,17 @@ package net.stln.magitech.compat.modonomicon;
 
 import com.klikli_dev.modonomicon.client.gui.book.entry.BookEntryScreen;
 import com.klikli_dev.modonomicon.client.render.page.BookRecipePageRenderer;
-import com.klikli_dev.modonomicon.fluid.NeoFluidHolder;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.fluids.FluidStack;
 import net.stln.magitech.Magitech;
-import net.stln.magitech.content.block.BlockInit;
-import net.stln.magitech.content.item.ItemInit;
-import net.stln.magitech.content.recipe.SpellConversionRecipe;
 import net.stln.magitech.content.recipe.SpellConversionRecipe;
 import net.stln.magitech.helper.ComponentHelper;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BookSpellConversionRecipePageRenderer extends BookRecipePageRenderer<SpellConversionRecipe, BookSpellConversionRecipePage> {
 
@@ -66,14 +55,11 @@ public class BookSpellConversionRecipePageRenderer extends BookRecipePageRendere
 
         SpellConversionRecipe value = recipe.value();
 
-        ItemStack threadPage = new ItemStack(ItemInit.THREAD_PAGE.get());
-        ComponentHelper.setThreadPage(threadPage, value.spell());
-
         this.parentScreen.renderItemStack(guiGraphics, x + 80, y + 16, mouseX, mouseY, value.getResultItem(registries));
         this.parentScreen.renderIngredient(guiGraphics, x + 16, y + 16, mouseX, mouseY, value.ingredient());
-        this.parentScreen.renderItemStack(guiGraphics, x + 16, y + 48, mouseX, mouseY, threadPage);
+        this.parentScreen.renderItemStacks(guiGraphics, x + 16, y + 48, mouseX, mouseY, ComponentHelper.createThreadPages(value.spells()).toList());
 
-        guiGraphics.blit(recipe.value().spell().getIconId(), x + 40, x + 39, 0, 0, 32, 32, 32, 32);
+        // guiGraphics.blit(recipe.value().spells().getIconId(), x + 40, x + 39, 0, 0, 32, 32, 32, 32); TODO
     }
 }
 
