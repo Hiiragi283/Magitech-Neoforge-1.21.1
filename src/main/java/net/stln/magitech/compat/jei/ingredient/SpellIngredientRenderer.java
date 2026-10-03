@@ -4,6 +4,7 @@ import mezz.jei.api.ingredients.IIngredientRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
+import net.stln.magitech.feature.magic.spell.ISpell;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -26,13 +27,13 @@ public class SpellIngredientRenderer implements IIngredientRenderer<JeiSpellIngr
 
     @Override
     public void render(GuiGraphics guiGraphics, JeiSpellIngredient ingredient, int posX, int posY) {
-        guiGraphics.blit(ingredient.spell().getIconId(), posX, posY, 0, 0, getWidth(), getHeight(), getWidth(), getHeight());
+        guiGraphics.blit(ISpell.getIconId(ingredient.holder()), posX, posY, 0, 0, getWidth(), getHeight(), getWidth(), getHeight());
     }
 
     @SuppressWarnings("removal")
     @Override
     public @NotNull List<Component> getTooltip(@NotNull JeiSpellIngredient ingredient, @NotNull TooltipFlag tooltipFlag) {
-        return List.of(ingredient.spell().getName());
+        return List.of(ingredient.getName());
     }
 
     @Override

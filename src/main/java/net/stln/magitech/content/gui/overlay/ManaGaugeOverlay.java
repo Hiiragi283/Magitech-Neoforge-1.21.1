@@ -72,10 +72,12 @@ public class ManaGaugeOverlay implements LayeredDraw.Layer {
 
                     SpellComponent spellComponent = ComponentHelper.getSpells(threadbound);
                     if (spellComponent.selected() < spellComponent.spells().size() && spellComponent.selected() >= 0) {
-                        ISpell spell = spellComponent.getSelectedSpell().value();
+                        var holder = spellComponent.getSelectedSpell();
+                        var spellIconId = ISpell.getIconId(holder);
+                        ISpell spell = holder.value();
 
                         // スペルアイコン
-                        guiGraphics.blit(spell.getIconId(), spellX, spellY, 0, 0, 32, 32, 32, 32);
+                        guiGraphics.blit(spellIconId, spellX, spellY, 0, 0, 32, 32, 32, 32);
 
                         ItemStack stack = !(player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof SpellCasterItem) && player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof SpellCasterItem ? player.getItemInHand(InteractionHand.OFF_HAND) : player.getItemInHand(InteractionHand.MAIN_HAND);
                         double requiredManaRatio = MagicPerformanceHelper.getEffectiveCost(player, stack, spell) / player.getAttributeValue(AttributeInit.MAX_MANA);
@@ -92,7 +94,7 @@ public class ManaGaugeOverlay implements LayeredDraw.Layer {
                             int shadeHeight = (int) (32 * (cooldown.remaining() - delta) / cooldown.length());
                             // クールダウンのシェード
                             guiGraphics.setColor(0.3F, 0.3F, 0.3F, 1F);
-                            guiGraphics.blit(spell.getIconId(), spellX, y + 5 + 32 - shadeHeight, 0, 32 - shadeHeight, 32, shadeHeight, 32, 32);
+                            guiGraphics.blit(spellIconId, spellX, y + 5 + 32 - shadeHeight, 0, 32 - shadeHeight, 32, shadeHeight, 32, 32);
 
                             // 鎖
                             guiGraphics.setColor(1F, 1F, 1F, 1F);

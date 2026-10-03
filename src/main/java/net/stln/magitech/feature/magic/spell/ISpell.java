@@ -10,6 +10,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public interface ISpell {
+    Codec<ResourceKey<ISpell>> KEY_CODEC = ResourceKey.codec(MagitechRegistries.Keys.SPELL);
 
     Codec<ISpell> DIRECT_CODEC = MagitechRegistries.SPELL.byNameCodec();
     StreamCodec<RegistryFriendlyByteBuf, ISpell> DIRECT_STREAM_CODEC = ByteBufCodecs.registry(MagitechRegistries.Keys.SPELL);
@@ -56,11 +58,19 @@ public interface ISpell {
 
     List<Component> getDescription(Level level, LivingEntity caster, ItemStack stack);
 
-    @NotNull ResourceLocation getId();
+    static @NotNull ResourceLocation getId(@NotNull Holder<ISpell> spell) {
+        return spell.unwrapKey().map(ResourceKey::location).orElseThrow(() -> new IllegalStateException("Unregistered Spell: %s".formatted(spell)));
+    }
 
-    @NotNull String getDescriptionId();
+    static @NotNull ResourceLocation getIconId(@NotNull Holder<ISpell> spell) {
+        return getId(spell).withPath("textures/spell/%s.png"::formatted);
+    }
 
-    @NotNull MutableComponent getName();
+    static @NotNull String getTranslationKey(@NotNull Holder<ISpell> spell) {
+        return getId(spell).toLanguageKey("spell");
+    }
 
-    @NotNull ResourceLocation getIconId();
+    static @NotNull MutableComponent getDisplayName(@NotNull Holder<ISpell> spell) {
+        return Component.translatable(getTranslationKey(spell));
+    }
 }

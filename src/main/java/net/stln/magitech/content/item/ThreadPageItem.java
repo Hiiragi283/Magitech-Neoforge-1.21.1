@@ -1,6 +1,5 @@
 package net.stln.magitech.content.item;
 
-import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
@@ -9,6 +8,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.stln.magitech.content.item.tooltip_item.TooltipTextItem;
+import net.stln.magitech.feature.magic.spell.ISpell;
 import net.stln.magitech.helper.ClientHelper;
 import net.stln.magitech.helper.ColorHelper;
 import net.stln.magitech.helper.ComponentHelper;
@@ -25,16 +25,17 @@ public class ThreadPageItem extends TooltipTextItem {
     @Override
     public @NotNull Component getName(@NotNull ItemStack stack) {
         return ComponentHelper.getThreadPageSpell(stack)
-                .map(Holder::value)
-                .map(spell -> Component.translatable("item.magitech.thread_page", spell.getName()))
+                .map(ISpell::getDisplayName)
+                .map(spell -> Component.translatable("item.magitech.thread_page", spell))
                 .orElseGet(() -> super.getName(stack).copy());
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        ComponentHelper.getThreadPageSpell(stack).map(Holder::value).ifPresent(spell -> {
-            tooltipComponents.add(spell.getName().withColor(spell.getConfig().element().getTextColor().getRGB()));
+        ComponentHelper.getThreadPageSpell(stack).ifPresent(holder -> {
+            var spell = holder.value();
+            tooltipComponents.add(ISpell.getDisplayName(holder).withColor(spell.getConfig().element().getTextColor().getRGB()));
             Player player = ClientHelper.getPlayer();
             tooltipComponents.addAll(spell.getDescription(player.level(), player, stack));
             List<Component> componentList = spell.getTooltip(player.level(), player, stack);

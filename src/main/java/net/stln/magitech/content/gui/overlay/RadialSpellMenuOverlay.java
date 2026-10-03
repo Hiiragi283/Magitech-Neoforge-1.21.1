@@ -62,9 +62,8 @@ public class RadialSpellMenuOverlay extends Screen {
             SpellComponent spellComponent = CuriosHelper.getThreadBoundStack(player).map(ComponentHelper::getSpells).orElse(SpellComponent.EMPTY);
 
             int index = 0;
-            ISpell selectSpell = null;
+            Holder<ISpell> selectSpell = null;
             for (Holder<ISpell> holder : spellComponent.spells()) {
-                var spell = holder.value();
                 int animLength = 3;
                 float animTick = Math.min(ticks + partialTicks, animLength);
                 double scaledAnimTick = (double) animTick / animLength;
@@ -92,20 +91,22 @@ public class RadialSpellMenuOverlay extends Screen {
                     size *= (float) (Math.clamp(selectTick / 5, 0.0, 0.5) + 1.0);
 
                     if (distance > 20) {
-                        selectSpell = spell;
+                        selectSpell = holder;
                     }
                 } else if (distance <= 10) {
                     select = -1;
                 }
-                guiGraphics.blit(spell.getIconId(), (int) (x + sin - size * 16), (int) (y + cos - size * 16), (int) (size * 32), (int) (size * 32), 0, 0, 32, 32, 32, 32);
+                ResourceLocation spellIconId = ISpell.getIconId(holder);
+                guiGraphics.blit(spellIconId, (int) (x + sin - size * 16), (int) (y + cos - size * 16), (int) (size * 32), (int) (size * 32), 0, 0, 32, 32, 32, 32);
 
                 CooldownData data = player.getData(DataAttachmentInit.SPELL_COOLDOWNS);
+                var spell = holder.value();
                 CooldownData.Cooldown cooldown = data.get(spell);
                 if (cooldown != null) {
                     int shadeHeight = (int) (32 * (cooldown.remaining() - partialTicks) / cooldown.length());
                     guiGraphics.setColor(0.3F, 0.3F, 0.3F, 1F);
                     int mulHeight = (int) (size * shadeHeight);
-                    guiGraphics.blit(spell.getIconId(), (int) (x + sin - size * 16), (int) (y + cos + (size * 16) - mulHeight), (int) (size * 32), mulHeight, 0, 32 - shadeHeight, 32, shadeHeight, 32, 32);
+                    guiGraphics.blit(spellIconId, (int) (x + sin - size * 16), (int) (y + cos + (size * 16) - mulHeight), (int) (size * 32), mulHeight, 0, 32 - shadeHeight, 32, shadeHeight, 32, 32);
 
                     guiGraphics.setColor(1F, 1F, 1F, 1F);
                     guiGraphics.blit(TEXTURE, (int) (x + sin - size * 16), (int) (y + cos - size * 16), (int) (size * 32), (int) (size * 32), 48, 96, 32, 32, 256, 256);
@@ -137,11 +138,11 @@ public class RadialSpellMenuOverlay extends Screen {
             }
             if (selectSpell != null) {
                 float squareEase = Math.min(selectTick * selectTick / 4, 4) * 2;
-                String text = selectSpell.getName().getString();
-                List<Component> componentList = selectSpell.getTooltip(player.level(), player, player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof SpellCasterItem ? player.getItemInHand(InteractionHand.MAIN_HAND) : player.getItemInHand(InteractionHand.OFF_HAND));
+                String text = ISpell.getDisplayName(selectSpell).getString();
+                List<Component> componentList = selectSpell.value().getTooltip(player.level(), player, player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof SpellCasterItem ? player.getItemInHand(InteractionHand.MAIN_HAND) : player.getItemInHand(InteractionHand.OFF_HAND));
                 int renderx = (x - font.width(text) / 2);
                 int rendery = (int) (y - 4 + 8 - squareEase - componentList.size() * 5);
-                Element element = selectSpell.getConfig().element();
+                Element element = selectSpell.value().getConfig().element();
                 RenderHelper.renderFramedText(guiGraphics, font, text, renderx, rendery, element);
                 int i = 1;
                 for (Component component : componentList) {

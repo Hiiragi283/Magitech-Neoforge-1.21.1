@@ -36,7 +36,7 @@ public enum SpellIngredientHelper implements IIngredientHelper<JeiSpellIngredien
 
     @Override
     public @NotNull String getDisplayName(JeiSpellIngredient ingredient) {
-        return ingredient.spell().getName().getString();
+        return ingredient.getName().getString();
     }
 
     @SuppressWarnings("removal")

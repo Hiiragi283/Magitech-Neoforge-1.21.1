@@ -26,12 +26,10 @@ import net.stln.magitech.feature.magic.mana.UsedHandData;
 import net.stln.magitech.feature.magic.spell.property.SpellProperties;
 import net.stln.magitech.feature.magic.spell.property.SpellProperty;
 import net.stln.magitech.helper.MathHelper;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public abstract class Spell implements ISpell {
@@ -271,27 +269,12 @@ public abstract class Spell implements ISpell {
 
     @Override
     public List<Component> getDescription(Level level, LivingEntity caster, ItemStack stack) {
-        return List.of(Component.translatable("tooltip.hint." + this.getDescriptionId()).withColor(0xC0C0C0));
+        ResourceLocation id = MagitechRegistries.SPELL.getKey(this);
+        return id == null ? List.of() : List.of(Component.translatable("tooltip.hint." + id.toLanguageKey("spell")).withColor(0xC0C0C0));
     }
 
     @Override
     public SpellConfig getConfig() {
         return config;
-    }
-
-    public @NotNull ResourceLocation getId() {
-        return Objects.requireNonNull(MagitechRegistries.SPELL.getKey(this));
-    }
-
-    public @NotNull String getDescriptionId() {
-        return getId().toLanguageKey("spell");
-    }
-
-    public @NotNull MutableComponent getName() {
-        return Component.translatable(getDescriptionId());
-    }
-
-    public @NotNull ResourceLocation getIconId() {
-        return getId().withPrefix("textures/spell/").withSuffix(".png");
     }
 }

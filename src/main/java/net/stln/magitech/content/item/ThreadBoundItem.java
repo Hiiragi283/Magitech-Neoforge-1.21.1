@@ -66,14 +66,13 @@ public class ThreadBoundItem extends TooltipTextItem implements ICurioItem, IThr
         int i = 0;
         @NotNull SpellComponent spells = ComponentHelper.getSpells(stack);
         for (Holder<ISpell> holder : spells.spells()) {
-            ISpell spell = holder.value();
             int abs = Math.abs(spells.selected() - i);
             if (abs <= 2 || Screen.hasShiftDown()) {
-                Element element = spell.getConfig().element();
+                Element element = holder.value().getConfig().element();
                 if (spells.selected() == i) {
-                    tooltipComponents.add(Component.literal("> ").append(spell.getName()).withColor(element.getTextColor().getRGB()));
+                    tooltipComponents.add(Component.literal("> ").append(ISpell.getDisplayName(holder)).withColor(element.getTextColor().getRGB()));
                 } else {
-                    tooltipComponents.add(spell.getName().withColor(element.getDark().getRGB()));
+                    tooltipComponents.add(ISpell.getDisplayName(holder).withColor(element.getDark().getRGB()));
                 }
             } else if (abs == 3) {
                 tooltipComponents.add(Component.literal("...").withColor(0x405060));
