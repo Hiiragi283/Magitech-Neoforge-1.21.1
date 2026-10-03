@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public record UpgradeComponent(List<UpgradeInstance> upgrades) {
+public record UpgradeComponent(@NotNull List<UpgradeInstance> upgrades) {
 
     public static final Codec<UpgradeComponent> CODEC = UpgradeInstance.CODEC.listOf().xmap(UpgradeComponent::new, UpgradeComponent::upgrades);
     public static final StreamCodec<ByteBuf, UpgradeComponent> STREAM_CODEC = UpgradeInstance.STREAM_CODEC.apply(ByteBufCodecs.list()).map(UpgradeComponent::new, UpgradeComponent::upgrades);

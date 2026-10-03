@@ -23,24 +23,30 @@ public class ManaContainerItem extends TooltipTextItem {
         int titleColor = 0x5a9e91;
         int color = 0xcdffde;
         IBasicManaHandler handler = stack.getCapability(ManaCapabilities.MANA_CONTAINER_ITEM);
-        ManaContainerHelper.addManaContainerItemInfo(handler.getMana(), handler.getMaxMana(), handler.getMaxFlow(), tooltipComponents, color, titleColor);
+        if (handler != null) {
+            ManaContainerHelper.addManaContainerItemInfo(handler.getMana(), handler.getMaxMana(), handler.getMaxFlow(), tooltipComponents, color, titleColor);
+        }
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        return stack.getCapability(ManaCapabilities.MANA_CONTAINER_ITEM).getMana() > 0;
+        var handler = stack.getCapability(ManaCapabilities.MANA_CONTAINER_ITEM);
+        return handler != null && handler.getMana() > 0;
     }
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        IBasicManaHandler manaHandler = stack.getCapability(ManaCapabilities.MANA_CONTAINER_ITEM);
-        return (int) Math.round(13.0 * manaHandler.fillRatio());
+        var handler = stack.getCapability(ManaCapabilities.MANA_CONTAINER_ITEM);
+        if (handler == null) return super.getBarWidth(stack);
+        return Math.toIntExact(Math.round(13.0 * handler.fillRatio()));
     }
 
     @Override
     public int getBarColor(ItemStack stack) {
-        float fillRatio = (float) stack.getCapability(ManaCapabilities.MANA_CONTAINER_ITEM).fillRatio();
+        var handler = stack.getCapability(ManaCapabilities.MANA_CONTAINER_ITEM);
+        if (handler == null) return super.getBarColor(stack);
+        float fillRatio = (float) handler.fillRatio();
         float h = Mth.lerp(fillRatio, 188, 133) / 360;
         float s = Mth.lerp(fillRatio, 66, 37) / 100;
         float v = Mth.lerp(fillRatio, 36, 100) / 100;

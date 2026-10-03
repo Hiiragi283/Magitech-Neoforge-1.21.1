@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class GlisteningLexiconItem extends TooltipTextModonomiconItem implements ICurioItem, IThreadBoundItem {
 
-    Map<Holder<Attribute>, AttributeModifier> attributeModifiers = new HashMap<>();
+    private Map<Holder<Attribute>, AttributeModifier> attributeModifiers = new HashMap<>();
 
     public GlisteningLexiconItem(Properties settings) {
         super(settings);

@@ -35,7 +35,6 @@ public class ThreadPageItem extends TooltipTextItem {
             tooltipComponents.add(spell.getName().withColor(spell.getConfig().element().getTextColor().getRGB()));
             Player player = ClientHelper.getPlayer();
             tooltipComponents.addAll(spell.getDescription(player.level(), player, stack));
-            if (player == null) return;
             List<Component> componentList = spell.getTooltip(player.level(), player, stack);
             int i = 0;
             for (Component component : componentList) {

@@ -8,14 +8,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.List;
 
 public class WoodRecipeGenerator {
 
-    public static void buildWoodRecipes(RecipeOutput output, TagKey<Item> logTag, Item log, Item wood, Item strippedLog, Item strippedWood, Item planks,
-                                        Item slab, Item stairs, Item fence, Item fenceGate, Item door, Item trapdoor,
-                                        Item pressurePlate, Item button, Item sign, Item hangingSign, Item boat, Item chestBoat) {
+    public static void buildWoodRecipes(RecipeOutput output, TagKey<Item> logTag, ItemLike log, ItemLike wood, ItemLike strippedLog, ItemLike strippedWood, ItemLike planks,
+                                        ItemLike slab, ItemLike stairs, ItemLike fence, ItemLike fenceGate, ItemLike door, ItemLike trapdoor,
+                                        ItemLike pressurePlate, ItemLike button, ItemLike sign, ItemLike hangingSign, ItemLike boat, ItemLike chestBoat) {
         new ShapelessRecipeBuilder(RecipeCategory.BUILDING_BLOCKS, planks, 4)
                 .group("planks")
                 .requires(logTag)

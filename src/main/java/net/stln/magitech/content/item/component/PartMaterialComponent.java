@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-public record PartMaterialComponent(List<ToolMaterial> materials) {
+public record PartMaterialComponent(@NotNull List<ToolMaterial> materials) {
     public static final Codec<PartMaterialComponent> CODEC = ToolMaterial.CODEC.listOf().xmap(PartMaterialComponent::new, PartMaterialComponent::materials);
     public static final StreamCodec<RegistryFriendlyByteBuf, PartMaterialComponent> STREAM_CODEC = ToolMaterial.STREAM_CODEC.apply(ByteBufCodecs.list()).map(PartMaterialComponent::new, PartMaterialComponent::materials);
 

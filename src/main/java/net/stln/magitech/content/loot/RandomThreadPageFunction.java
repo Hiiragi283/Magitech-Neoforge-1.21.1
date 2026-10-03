@@ -3,53 +3,51 @@ package net.stln.magitech.content.loot;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.stln.magitech.Magitech;
+import net.neoforged.neoforge.registries.holdersets.AnyHolderSet;
 import net.stln.magitech.MagitechRegistries;
 import net.stln.magitech.feature.magic.spell.ISpell;
-import net.stln.magitech.feature.magic.spell.Spell;
 import net.stln.magitech.feature.magic.spell.SpellShape;
 import net.stln.magitech.helper.ComponentHelper;
 import net.stln.magitech.helper.ConfigHelper;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class RandomThreadPageFunction extends LootItemConditionalFunction {
 
     public static final MapCodec<RandomThreadPageFunction> CODEC = RecordCodecBuilder.mapCodec(
             p_340803_ -> commonFields(p_340803_)
-                    .and(RegistryFixedCodec.create(MagitechRegistries.Keys.SPELL).listOf().fieldOf("spells").forGetter(RandomThreadPageFunction::getSpells))
+                    .and(RegistryCodecs.homogeneousList(MagitechRegistries.Keys.SPELL).fieldOf("spells").forGetter(RandomThreadPageFunction::getSpells))
                     .apply(p_340803_, RandomThreadPageFunction::new)
     );
 
-    protected final ArrayList<Holder<ISpell>> spells;
+    protected final @NotNull HolderSet<ISpell> spells;
 
-    public RandomThreadPageFunction(List<LootItemCondition> lootItemConditions) {
+    public RandomThreadPageFunction(@NotNull List<LootItemCondition> lootItemConditions) {
         this(lootItemConditions, getAllSpells());
     }
 
-    protected RandomThreadPageFunction(List<LootItemCondition> conditions, List<Holder<ISpell>> spells) {
+    protected RandomThreadPageFunction(List<LootItemCondition> conditions, HolderSet<ISpell> spells) {
         super(conditions);
-        if (spells.isEmpty()) {
-            this.spells = new ArrayList<>(getAllSpells());
+        if (spells.size() == 0) {
+            this.spells = getAllSpells();
         } else {
-            this.spells = new ArrayList<>(spells);
+            this.spells = spells;
         }
     }
 
-    public static @NotNull List<Holder<ISpell>> getAllSpells() {
-        List<Holder<ISpell>> spellHolders = MagitechRegistries.SPELL.holders().map(holder -> (Holder<ISpell>) holder).toList();
+    public static @NotNull HolderSet<ISpell> getAllSpells() {
+        HolderSet<ISpell> spellHolders = new AnyHolderSet<>(MagitechRegistries.SPELL.asLookup());
         if (ConfigHelper.isDashSpellsDisabled()) {
-            spellHolders = spellHolders.stream().filter(holder -> holder.value().asSpell().getConfig().shape() != SpellShape.DASH).toList();
+            spellHolders = HolderSet.direct(spellHolders.stream().filter(holder -> holder.value().asSpell().getConfig().shape() != SpellShape.DASH).toList());
         }
         return spellHolders;
     }
@@ -58,19 +56,14 @@ public class RandomThreadPageFunction extends LootItemConditionalFunction {
         return simpleBuilder(RandomThreadPageFunction::new);
     }
 
-    public List<Holder<ISpell>> getSpells() {
+    public @NotNull HolderSet<ISpell> getSpells() {
         return spells;
     }
 
     @Override
     protected @NotNull ItemStack run(@NotNull ItemStack stack, @NotNull LootContext context) {
-        Collections.shuffle(this.spells);
-        return spells.stream().findAny().map(holder -> {
-            if (holder.isBound()) {
-                ComponentHelper.setThreadPage(stack, holder.value());
-            }
-            return stack;
-        }).orElse(stack);
+        spells.stream().findAny().filter(Holder::isBound).ifPresent(holder -> ComponentHelper.setThreadPage(stack, holder.value()));
+        return stack;
     }
 
     @Override

@@ -7,10 +7,13 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.stln.magitech.feature.magic.spell.ISpell;
 import net.stln.magitech.feature.magic.spell.SpellLike;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.List;
 
-public record SpellComponent(List<ISpell> spells, int selected) {
+public record SpellComponent(@NotNull List<ISpell> spells, int selected) {
     public static final Codec<SpellComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ISpell.CODEC.listOf().fieldOf("spells").forGetter(SpellComponent::spells),
             Codec.INT.fieldOf("selected").forGetter(SpellComponent::selected)
@@ -25,15 +28,15 @@ public record SpellComponent(List<ISpell> spells, int selected) {
 
     public static final SpellComponent EMPTY = new SpellComponent(List.of(), 0);
 
-    public SpellComponent(List<SpellLike> spells) {
+    public SpellComponent(@NotNull Collection<? extends SpellLike> spells) {
         this(spells.stream().map(SpellLike::asSpell).toList(), 0);
     }
 
-    public ISpell getSelectedSpell() {
+    public @Nullable ISpell getSelectedSpell() {
         return spells.get(selected);
     }
 
-    public SpellComponent setSelected(int selected) {
+    public @NotNull SpellComponent setSelected(int selected) {
         return new SpellComponent(this.spells, selected);
     }
 }

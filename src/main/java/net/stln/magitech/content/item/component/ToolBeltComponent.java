@@ -6,10 +6,11 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public record ToolBeltComponent(List<ItemStack> stacks) {
+public record ToolBeltComponent(@NotNull List<ItemStack> stacks) {
     public static final Codec<ToolBeltComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ItemStack.OPTIONAL_CODEC.listOf(8, 8).fieldOf("stacks").forGetter(ToolBeltComponent::stacks)
     ).apply(instance, ToolBeltComponent::new));
@@ -28,5 +29,17 @@ public record ToolBeltComponent(List<ItemStack> stacks) {
         }
         newStacks.set(index, newStack);
         return new ToolBeltComponent(newStacks);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ToolBeltComponent(List<ItemStack> stacks1) && ItemStack.listMatches(this.stacks, stacks1);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public int hashCode() {
+        return ItemStack.hashStackList(stacks);
     }
 }

@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.stln.magitech.content.item.tooltip_item.AspectCrystalItem;
 import net.stln.magitech.content.sound.SoundInit;
@@ -23,13 +22,11 @@ import net.stln.magitech.core.api.mana.handler.EntityManaHandler;
 import net.stln.magitech.core.api.mana.handler.IBasicManaHandler;
 import net.stln.magitech.effect.visual.Section;
 import net.stln.magitech.effect.visual.preset.EntityVFX;
-import net.stln.magitech.effect.visual.preset.PointVFX;
 import net.stln.magitech.effect.visual.preset.PresetHelper;
 import net.stln.magitech.effect.visual.spawner.PowerupParticles;
 import net.stln.magitech.feature.element.Element;
-import net.stln.magitech.helper.EffectHelper;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
+import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.systems.particle.ParticleEffectSpawner;
 
 import java.util.List;
@@ -40,7 +37,7 @@ public class ManaChargedFluoriteItem extends AspectCrystalItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         EntityManaHandler handler = player.getCapability(ManaCapabilities.MANA_CAPABLE_ENTITY);
         if (handler != null) {
@@ -60,13 +57,13 @@ public class ManaChargedFluoriteItem extends AspectCrystalItem {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getItemInHand();
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
-        Player player = context.getPlayer();
+        @Nullable Player player = context.getPlayer();
         if (ManaTransferHelper.getManaContainer(level, pos, null) instanceof IBasicManaHandler handler) {
-            if (!player.isCreative()) {
+            if (player != null && !player.isCreative()) {
                 stack.setCount(stack.getCount() - 1);
             }
             handler.addMana(40000);

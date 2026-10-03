@@ -3,8 +3,8 @@ package net.stln.magitech.content.item.debug;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -17,8 +17,8 @@ import net.stln.magitech.core.api.field_effect.FieldInfluenceType;
 import net.stln.magitech.core.api.field_effect.data.FieldEffectManager;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -30,7 +30,7 @@ public class FieldInfluenceDebugItem extends Item {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         if (context.getPlayer() == null) {
             return InteractionResult.PASS;
@@ -77,7 +77,7 @@ public class FieldInfluenceDebugItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag flag) {
         tooltipComponents.add(Component.literal("Shift-right click: toggle HEATED / COLD"));
         tooltipComponents.add(Component.literal("Right click block: place/remove 3x3x3 field influence"));
         super.appendHoverText(stack, context, tooltipComponents, flag);

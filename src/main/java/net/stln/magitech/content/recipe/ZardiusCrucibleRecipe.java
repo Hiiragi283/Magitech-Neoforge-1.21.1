@@ -17,15 +17,17 @@ import org.jetbrains.annotations.UnmodifiableView;
 import team.lodestar.lodestone.systems.recipe.LodestoneInWorldRecipe;
 
 import java.util.List;
+import java.util.Optional;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class ZardiusCrucibleRecipe extends LodestoneInWorldRecipe<CrucibleRecipeInput> {
     public static final MapCodec<ZardiusCrucibleRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.STRING.optionalFieldOf("group", "").forGetter(r -> r.group),
             SizedIngredient.NESTED_CODEC.listOf(1, Integer.MAX_VALUE).fieldOf("ingredients").forGetter(r -> r.ingredients),
             SizedFluidIngredient.FLAT_CODEC.fieldOf("fluid_ingredient").forGetter(r -> r.fluidIngredient),
             Codec.LONG.optionalFieldOf("mana", 0L).forGetter(r -> r.mana),
-            ItemStack.STRICT_CODEC.optionalFieldOf("result", ItemStack.EMPTY).forGetter(r -> r.output),
-            FluidStack.CODEC.optionalFieldOf("fluid_result", FluidStack.EMPTY).forGetter(r -> r.resultFluid)
+            ItemStack.STRICT_CODEC.optionalFieldOf("result").forGetter(r -> r.optionalResult),
+            FluidStack.CODEC.optionalFieldOf("fluid_result").forGetter(r -> r.resultFluid)
     ).apply(instance, ZardiusCrucibleRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, ZardiusCrucibleRecipe> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
@@ -36,9 +38,9 @@ public class ZardiusCrucibleRecipe extends LodestoneInWorldRecipe<CrucibleRecipe
             r -> r.fluidIngredient,
             ByteBufCodecs.VAR_LONG,
             r -> r.mana,
-            ItemStack.STREAM_CODEC,
-            r -> r.output,
-            FluidStack.STREAM_CODEC,
+            ByteBufCodecs.optional(ItemStack.STREAM_CODEC),
+            r -> r.optionalResult,
+            ByteBufCodecs.optional(FluidStack.STREAM_CODEC),
             r -> r.resultFluid,
             ZardiusCrucibleRecipe::new
     );
@@ -46,13 +48,13 @@ public class ZardiusCrucibleRecipe extends LodestoneInWorldRecipe<CrucibleRecipe
     protected final @NotNull List<SizedIngredient> ingredients;
 
     protected final @NotNull SizedFluidIngredient fluidIngredient;
-    protected final @NotNull FluidStack resultFluid;
-    protected final @NotNull ItemStack optionalResult;
+    protected final @NotNull Optional<FluidStack> resultFluid;
+    protected final @NotNull Optional<ItemStack> optionalResult;
     protected final long mana;
     protected final @NotNull String group;
 
-    public ZardiusCrucibleRecipe(@NotNull String group, @NotNull List<SizedIngredient> ingredients, @NotNull SizedFluidIngredient fluidIngredient, long mana, @NotNull ItemStack result, @NotNull FluidStack resultFluid) {
-        super(RecipeInit.ZARDIUS_CRUCIBLE_SERIALIZER.get(), RecipeInit.ZARDIUS_CRUCIBLE_TYPE.get(), result);
+    public ZardiusCrucibleRecipe(@NotNull String group, @NotNull List<SizedIngredient> ingredients, @NotNull SizedFluidIngredient fluidIngredient, long mana, @NotNull Optional<ItemStack> result, @NotNull Optional<FluidStack> resultFluid) {
+        super(RecipeInit.ZARDIUS_CRUCIBLE_SERIALIZER.get(), RecipeInit.ZARDIUS_CRUCIBLE_TYPE.get(), result.orElse(ItemStack.EMPTY));
         this.ingredients = ingredients;
         this.mana = mana;
         this.fluidIngredient = fluidIngredient;
@@ -80,7 +82,7 @@ public class ZardiusCrucibleRecipe extends LodestoneInWorldRecipe<CrucibleRecipe
     }
 
     public @NotNull FluidStack getResultFluid() {
-        return resultFluid.copy();
+        return resultFluid.orElse(FluidStack.EMPTY);
     }
 
     public long getMana() {

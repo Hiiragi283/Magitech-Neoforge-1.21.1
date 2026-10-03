@@ -2,13 +2,13 @@ package net.stln.magitech.datagen.recipe;
 
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 
 public class StoneRecipeGenerator {
 
-    public static void buildStoneRecipesWithPolishedAndBrick(RecipeOutput output, Item stone, Item slab, Item stairs, Item wall, Item polished, Item polishedSlab, Item polishedStairs, Item polishedWall, Item brick, Item brickSlab, Item brickStairs, Item brickWall) {
+    public static void buildStoneRecipesWithPolishedAndBrick(RecipeOutput output, ItemLike stone, ItemLike slab, ItemLike stairs, ItemLike wall, ItemLike polished, ItemLike polishedSlab, ItemLike polishedStairs, ItemLike polishedWall, ItemLike brick, ItemLike brickSlab, ItemLike brickStairs, ItemLike brickWall) {
         buildStoneRecipes(output, stone, slab, stairs, wall, false);
         buildStoneRecipes(output, polished, polishedSlab, polishedStairs, polishedWall, true);
         polishingRecipe(output, stone, polished, "_stonecutting");
@@ -27,18 +27,18 @@ public class StoneRecipeGenerator {
         stonecutting(output, polished, brickWall, 1, "_from_" + RecipeBuilder.getDefaultRecipeId(polished).getPath() + "_stonecutting");
     }
 
-    public static void buildStoneRecipesWithPolished(RecipeOutput output, Item stone, Item slab, Item stairs, Item wall, Item polished, Item polishedSlab, Item polishedStairs, Item polishedWall) {
+    public static void buildStoneRecipesWithPolished(RecipeOutput output, ItemLike stone, ItemLike slab, ItemLike stairs, ItemLike wall, ItemLike polished, ItemLike polishedSlab, ItemLike polishedStairs, ItemLike polishedWall) {
         buildStoneRecipes(output, stone, slab, stairs, wall, false);
         buildStoneRecipes(output, polished, polishedSlab, polishedStairs, polishedWall, true);
         polishingRecipe(output, stone, polished, "_stonecutting");
         stonecutting(output, stone, polishedSlab, polishedStairs, polishedWall);
     }
 
-    public static void buildStoneRecipes(RecipeOutput output, Item stone, Item slab, Item stairs, Item wall) {
+    public static void buildStoneRecipes(RecipeOutput output, ItemLike stone, ItemLike slab, ItemLike stairs, ItemLike wall) {
         buildStoneRecipes(output, stone, slab, stairs, wall, false);
     }
 
-    private static void buildStoneRecipes(RecipeOutput output, Item stone, Item slab, Item stairs, Item wall, boolean fromInput) {
+    private static void buildStoneRecipes(RecipeOutput output, ItemLike stone, ItemLike slab, ItemLike stairs, ItemLike wall, boolean fromInput) {
         BlockSetRecipeGenerator.slab(output, stone, slab);
         BlockSetRecipeGenerator.stairs(output, stone, stairs);
         BlockSetRecipeGenerator.wall(output, stone, wall);
@@ -49,41 +49,41 @@ public class StoneRecipeGenerator {
         stonecutting(output, stone, wall, 1, suffix);
     }
 
-    public static void stonecutting(RecipeOutput output, Item stone, Item slab, Item stairs, Item wall) {
+    public static void stonecutting(RecipeOutput output, ItemLike stone, ItemLike slab, ItemLike stairs, ItemLike wall) {
         String inputPath = RecipeBuilder.getDefaultRecipeId(stone).getPath();
         stonecutting(output, stone, slab, 2, "_from_" + inputPath + "_stonecutting");
         stonecutting(output, stone, stairs, 1, "_from_" + inputPath + "_stonecutting");
         stonecutting(output, stone, wall, 1, "_from_" + inputPath + "_stonecutting");
     }
 
-    public static void polishingRecipe(RecipeOutput output, Item stone, Item polished) {
+    public static void polishingRecipe(RecipeOutput output, ItemLike stone, ItemLike polished) {
         polishingRecipe(output, stone, polished, "_stonecutting");
     }
 
-    private static void polishingRecipe(RecipeOutput output, Item stone, Item polished, String suffix) {
+    private static void polishingRecipe(RecipeOutput output, ItemLike stone, ItemLike polished, String suffix) {
         VanillaSimpleRecipeGenerator.twoByTwo(output, Ingredient.of(stone), new ItemStack(polished, 4));
         stonecutting(output, stone, polished, 1, suffix);
     }
 
-    public static void buildStoneRecipesFromResourceBlock(RecipeOutput output, Item stone, Item brick, Item slab, Item stairs, Item wall) {
+    public static void buildStoneRecipesFromResourceBlock(RecipeOutput output, ItemLike stone, ItemLike brick, ItemLike slab, ItemLike stairs, ItemLike wall) {
         brickFromResourceBlock(output, stone, brick);
         stonecuttingFromResourceBlock(output, stone, slab, stairs, wall);
         buildStoneRecipes(output, brick, slab, stairs, wall, true);
     }
 
-    public static void brickFromResourceBlock(RecipeOutput output, Item stone, Item brick) {
+    public static void brickFromResourceBlock(RecipeOutput output, ItemLike stone, ItemLike brick) {
         VanillaSimpleRecipeGenerator.twoByTwo(output, Ingredient.of(stone), new ItemStack(brick, 16));
         stonecutting(output, stone, brick, 4, "_stonecutting");
     }
 
-    public static void stonecuttingFromResourceBlock(RecipeOutput output, Item stone, Item slab, Item stairs, Item wall) {
+    public static void stonecuttingFromResourceBlock(RecipeOutput output, ItemLike stone, ItemLike slab, ItemLike stairs, ItemLike wall) {
         String inputPath = RecipeBuilder.getDefaultRecipeId(stone).getPath();
         stonecutting(output, stone, slab, 8, "_from_" + inputPath + "_stonecutting");
         stonecutting(output, stone, stairs, 4, "_from_" + inputPath + "_stonecutting");
         stonecutting(output, stone, wall, 4, "_from_" + inputPath + "_stonecutting");
     }
 
-    private static void stonecutting(RecipeOutput output, Item stone, Item result, int count, String suffix) {
+    private static void stonecutting(RecipeOutput output, ItemLike stone, ItemLike result, int count, String suffix) {
         BlockSetRecipeGenerator.stonecutting(output, stone, result, count, suffix);
     }
 }
