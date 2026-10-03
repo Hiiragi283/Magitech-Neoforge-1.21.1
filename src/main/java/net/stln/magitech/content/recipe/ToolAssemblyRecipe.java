@@ -101,7 +101,7 @@ public record ToolAssemblyRecipe(String group, List<Ingredient> ingredients,
                 partList.add(type.parts().get(i).part().asToolPart());
             }
             for (int i = 0; i < input.size(); i++) {
-                if (input.getItem(i).getItem() instanceof PartItem partItem && input.getItem(i).has(ComponentInit.MATERIAL_COMPONENT.get())) {
+                if (input.getItem(i).getItem() instanceof PartItem partItem && input.getItem(i).has(ComponentInit.MATERIAL_COMPONENT)) {
                     boolean found = partList.contains(partItem.getPart());
                     int index = partList.indexOf(partItem.getPart());
                     if (found) {

@@ -5,15 +5,16 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStackSimple;
 import net.stln.magitech.MagitechRegistries;
 import net.stln.magitech.content.item.component.ComponentInit;
+import org.jetbrains.annotations.NotNull;
 
 public class AlchemicalFlaskFluidHandler extends FluidHandlerItemStackSimple {
 
     public AlchemicalFlaskFluidHandler(ItemStack container, int capacity) {
-        super(ComponentInit.FLUID_CONTENT_COMPONENT, container, capacity);
+        super(() -> ComponentInit.FLUID_CONTENT_COMPONENT, container, capacity);
     }
 
     @Override
-    public int fill(FluidStack resource, FluidAction action) {
+    public int fill(@NotNull FluidStack resource, @NotNull FluidAction action) {
         if (container.getCount() < 1 || resource.isEmpty() || !canFillFluidType(resource)) {
             return 0;
         }
@@ -39,7 +40,7 @@ public class AlchemicalFlaskFluidHandler extends FluidHandlerItemStackSimple {
     }
 
     @Override
-    public FluidStack drain(FluidStack resource, FluidAction action) {
+    public @NotNull FluidStack drain(@NotNull FluidStack resource, @NotNull FluidAction action) {
         if (container.getCount() != 1 || resource.isEmpty() || !FluidStack.isSameFluidSameComponents(resource, getFluid())) {
             return FluidStack.EMPTY;
         }
@@ -57,7 +58,7 @@ public class AlchemicalFlaskFluidHandler extends FluidHandlerItemStackSimple {
     }
 
     @Override
-    public boolean isFluidValid(int tank, FluidStack stack) {
+    public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
         return MagitechRegistries.FLUID_CONTAINER_MATCHER.stream()
                 .anyMatch(matcher -> matcher.fillingMatches(container, stack));
     }

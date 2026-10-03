@@ -6,18 +6,17 @@ import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class PointToolProperty extends InitialIntegerToolProperty {
 
-    Supplier<DataComponentType<Integer>> component;
+    private final DataComponentType<Integer> component;
 
-    public PointToolProperty(float order, Supplier<DataComponentType<Integer>> component, ToolPropertyCategory group) {
+    public PointToolProperty(float order, DataComponentType<Integer> component, ToolPropertyCategory group) {
         super(order, group);
         this.component = component;
     }
 
-    public PointToolProperty(float order, Supplier<DataComponentType<Integer>> component, Color color) {
+    public PointToolProperty(float order, DataComponentType<Integer> component, Color color) {
         super(order, color);
         this.component = component;
     }
