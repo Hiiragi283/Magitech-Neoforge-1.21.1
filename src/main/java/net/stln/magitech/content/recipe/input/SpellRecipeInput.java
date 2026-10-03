@@ -5,7 +5,7 @@ import net.minecraft.world.item.crafting.RecipeInput;
 import net.stln.magitech.feature.magic.spell.ISpell;
 import org.jetbrains.annotations.NotNull;
 
-public record SpellRecipeInput(ItemStack item, ISpell spell) implements RecipeInput {
+public record SpellRecipeInput(@NotNull ItemStack item, @NotNull ISpell spell) implements RecipeInput {
     @Override
     public @NotNull ItemStack getItem(int index) {
         return item;

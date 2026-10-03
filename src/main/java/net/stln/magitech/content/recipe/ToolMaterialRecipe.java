@@ -50,6 +50,11 @@ public class ToolMaterialRecipe extends SingleItemRecipe {
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public @NotNull ItemStack getToastSymbol() {
         return BlockInit.ENGINEERING_WORKBENCH.toStack();
     }

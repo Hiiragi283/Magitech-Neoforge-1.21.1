@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public record CrucibleRecipeInput(List<ItemStack> items, FluidStack fluid) implements RecipeInput {
+public record CrucibleRecipeInput(@NotNull List<ItemStack> items, @NotNull FluidStack fluid) implements RecipeInput {
     @Override
     public @NotNull ItemStack getItem(int index) {
         return items.get(index);

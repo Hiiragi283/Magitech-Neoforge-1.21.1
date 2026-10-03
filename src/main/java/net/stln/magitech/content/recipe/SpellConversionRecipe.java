@@ -61,6 +61,11 @@ public record SpellConversionRecipe(String group, Ingredient ingredient, ISpell 
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public @NotNull String getGroup() {
         return group;
     }

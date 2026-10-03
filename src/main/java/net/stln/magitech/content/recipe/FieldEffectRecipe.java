@@ -10,11 +10,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
@@ -96,6 +92,11 @@ public class FieldEffectRecipe implements Recipe<SingleRecipeInput> {
     @Override
     public boolean matches(@NotNull SingleRecipeInput input, @NotNull Level level) {
         return matchesItem(input.item());
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
     }
 
     public boolean matchesItem(ItemStack input) {

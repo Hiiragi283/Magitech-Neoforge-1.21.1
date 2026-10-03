@@ -46,6 +46,11 @@ public class CrushingRecipe extends LodestoneInWorldRecipe<SingleRecipeInput> {
         return ingredient.test(input.item());
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+    
     public SizedIngredient getSizedIngredient() {
         return ingredient;
     }

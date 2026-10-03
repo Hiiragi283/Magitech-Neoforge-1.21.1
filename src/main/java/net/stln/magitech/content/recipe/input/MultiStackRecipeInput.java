@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public record MultiStackRecipeInput(List<ItemStack> stacks) implements RecipeInput {
+public record MultiStackRecipeInput(@NotNull List<ItemStack> stacks) implements RecipeInput {
     @Override
     public @NotNull ItemStack getItem(int index) {
         return stacks.get(index);

@@ -126,13 +126,18 @@ public record ToolAssemblyRecipe(String group, List<Ingredient> ingredients,
     }
 
     @Override
+    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
+        return result.copy();
+    }
+
+    @Override
     public @NotNull NonNullList<Ingredient> getIngredients() {
         return NonNullList.copyOf(ingredients);
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
-        return result.copy();
+    public boolean isSpecial() {
+        return true;
     }
 
     @Override

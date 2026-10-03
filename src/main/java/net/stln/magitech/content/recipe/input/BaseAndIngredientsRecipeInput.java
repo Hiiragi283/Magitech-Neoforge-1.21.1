@@ -6,10 +6,10 @@ import net.minecraft.world.item.crafting.RecipeInput;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public record BaseAndIngredientsRecipeInput(ItemStack base, List<ItemStack> stacks) implements RecipeInput {
+public record BaseAndIngredientsRecipeInput(@NotNull ItemStack base,
+                                            @NotNull List<ItemStack> stacks) implements RecipeInput {
     @Override
     public @NotNull ItemStack getItem(int index) {
         return stacks.get(index);

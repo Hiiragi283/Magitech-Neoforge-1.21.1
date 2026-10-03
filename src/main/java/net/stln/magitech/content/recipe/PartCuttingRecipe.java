@@ -39,12 +39,9 @@ public record PartCuttingRecipe(String group, int inputCount, ItemStack result) 
 
     @Override
     public boolean matches(@NotNull SingleRecipeInput input, @NotNull Level level) {
-        if (level != null) {
-            return input.item().getCount() >= inputCount
-                    && !level.getRecipeManager()
-                    .getRecipesFor(RecipeInit.TOOL_MATERIAL_TYPE.get(), input, level).isEmpty();
-        }
-        return false;
+        return input.item().getCount() >= inputCount
+                && !level.getRecipeManager()
+                .getRecipesFor(RecipeInit.TOOL_MATERIAL_TYPE.get(), input, level).isEmpty();
     }
 
     @Override
@@ -74,6 +71,11 @@ public record PartCuttingRecipe(String group, int inputCount, ItemStack result) 
     @Override
     public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
         return result().copy();
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
     }
 
     @Override

@@ -60,6 +60,11 @@ public class InfusionRecipe extends LodestoneInWorldRecipe<BaseAndIngredientsRec
         return input.test(this.base, this.ingredients);
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public SizedIngredient getBase() {
         return base;
     }
